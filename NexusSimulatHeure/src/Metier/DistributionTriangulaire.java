@@ -1,8 +1,10 @@
 package Metier;
 
-public class DistributionTriangulaire {
+public class DistributionTriangulaire implements IDistribution{
     
-    private double a,b,c;
+    private final double a;
+    private final double b;
+    private final double c;
     
     public DistributionTriangulaire(double min, double mode, double max){
         this.a = min;
@@ -10,6 +12,7 @@ public class DistributionTriangulaire {
         this.c = mode;
     }
     
+    @Override
     public double obtenirProchaineValeurAleatoire(){
         double retour;
         double x = Math.random();
