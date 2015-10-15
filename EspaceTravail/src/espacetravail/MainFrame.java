@@ -26,7 +26,14 @@ public class MainFrame extends javax.swing.JFrame implements KeyListener {
         {
             zone1.setMode(Zone.Mode.SEGMENT);
         }
-        
+        else if (ke.getKeyChar()=='3')
+        {
+            zone1.setMode(Zone.Mode.VEHICULE);
+        }
+        else if (ke.getKeyChar()=='4')
+        {
+            zone1.setMode(Zone.Mode.PASSAGER);
+        }
     }
 
     private boolean fanionClavier1 = false;

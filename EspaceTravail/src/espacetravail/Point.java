@@ -21,11 +21,10 @@ import javax.swing.BorderFactory;
  *
  * @author The Vagrant Geek
  */
-public class Point extends javax.swing.JPanel implements MouseListener, MouseMotionListener {
+public class Point extends Element implements MouseListener, MouseMotionListener {
 
     enum Mode {NORMAL, SELECTIONNE};
         
-    private double zoom = 1;
     private java.awt.Point pointPoigneeDrag;
     private Mode modeActuel = Mode.NORMAL;
     
@@ -43,16 +42,15 @@ public class Point extends javax.swing.JPanel implements MouseListener, MouseMot
         this.setOpaque(false);
     }
 
+    @Override
     public void zoom(double facteurZoom, java.awt.Point positionCurseur)
     {
-        this.zoom += facteurZoom;
+        super.zoom(facteurZoom, positionCurseur);
         
         this.setSize((int)(DIAMETRE * zoom), (int)(DIAMETRE * zoom));
-        
-        double zoomEffectif = facteurZoom > 0 ? 1 + facteurZoom : 1 / (1 + Math.abs(facteurZoom));
-        this.setLocation((int)(this.getX() * zoomEffectif), (int)(this.getY() * zoomEffectif));
     }
         
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         
@@ -72,17 +70,7 @@ public class Point extends javax.swing.JPanel implements MouseListener, MouseMot
         g2.setColor(Color.white);
         g2.fillOval(calculerZoom(POSITION_CERCLE_INTERNE), calculerZoom(POSITION_CERCLE_INTERNE), calculerZoom(LARGEUR_CERCLE_INTERNE), calculerZoom(LARGEUR_CERCLE_INTERNE));
     }
-    
-    public int calculerZoom(double d)
-    {
-        return (int)(d*zoom);
-    }
-    
-    public void deplacer(java.awt.Point delta)
-    {
-        this.setLocation(this.getX() + delta.x, this.getY() + delta.y);
-    }
-        
+       
     public int calculerCentreX()
     {
         return this.getX() + (calculerZoom(DIAMETRE) / 2);

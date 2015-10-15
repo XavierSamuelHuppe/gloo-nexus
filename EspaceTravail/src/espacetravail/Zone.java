@@ -6,31 +6,28 @@
 package espacetravail;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelListener;
 
-import java.awt.event.KeyListener;
-import java.awt.event.MouseWheelEvent;
-
 import java.util.List;
 import java.util.LinkedList;
 
-import java.awt.geom.Line2D;
-import javax.swing.JComponent;
 /**
  *
  * @author The Vagrant Geek
  */
 public class Zone extends javax.swing.JPanel implements MouseListener, MouseMotionListener, MouseWheelListener
 {
-    public enum Mode {POINT, SEGMENT};
+    public enum Mode {POINT, SEGMENT, VEHICULE, PASSAGER};
 
     private Mode mode = Mode.POINT;
     private List<Point> points = new LinkedList<Point>();
     private List<Segment> segments = new LinkedList<Segment>();
+    private List<Vehicule> vehicules = new LinkedList<Vehicule>();
+    private List<Passager> passagers = new LinkedList<Passager>();
     private double zoom = 1;
     private boolean fanionClavier1 = false;
     private java.awt.Point pointDrag = null;
@@ -52,6 +49,14 @@ public class Zone extends javax.swing.JPanel implements MouseListener, MouseMoti
     {
         this.zoom += facteurZoom;
         for(Point p : points)
+        {
+            p.zoom(facteurZoom, positionCurseur);
+        }
+        for(Vehicule v : vehicules)
+        {
+            v.zoom(facteurZoom, positionCurseur);
+        }
+        for(Passager p : passagers)
         {
             p.zoom(facteurZoom, positionCurseur);
         }
@@ -89,6 +94,26 @@ public class Zone extends javax.swing.JPanel implements MouseListener, MouseMoti
         p.repaint();
     }
     
+    private void ajouterVehicule(MouseEvent me)
+    {
+        Vehicule v = new Vehicule(me);
+        
+        vehicules.add(v);
+        
+        this.add(v);
+        v.repaint();
+    }
+    
+    private void ajouterPassager(MouseEvent me)
+    {
+        Passager p = new Passager(me);
+        
+        passagers.add(p);
+        
+        this.add(p);
+        p.repaint();
+    }
+    
     private void ajouterSegment(Point pDepart, Point pArrivee)
     {
         Segment s = new Segment(pDepart, pArrivee);
@@ -96,6 +121,7 @@ public class Zone extends javax.swing.JPanel implements MouseListener, MouseMoti
         
         this.repaint();
     }
+    
     
     public void paintComponent(Graphics g)
     {
@@ -115,7 +141,7 @@ public class Zone extends javax.swing.JPanel implements MouseListener, MouseMoti
     {
         for(Segment s : segments)
         {
-            g2.setColor(Color.BLUE);
+            g2.setColor(Color.decode("#EFE1FC"));
             g2.setStroke(new BasicStroke(TAILLE_TRAIT_SEGMENT * (float)this.zoom));
             g2.drawLine(s.getDepart().calculerCentreX(),s.getDepart().calculerCentreY(),
                         s.getArrivee().calculerCentreX(),s.getArrivee().calculerCentreY());
@@ -155,6 +181,14 @@ public class Zone extends javax.swing.JPanel implements MouseListener, MouseMoti
             {
                 p.deplacer(delta);
             }
+            for(Vehicule v : vehicules)
+            {
+                v.deplacer(delta);
+            }
+            for(Passager p : passagers)
+            {
+                p.deplacer(delta);
+            }
         }
         pointDrag = me.getPoint();
     }
@@ -187,6 +221,14 @@ public class Zone extends javax.swing.JPanel implements MouseListener, MouseMoti
             //Détecter segment le plus proche.
             //Comparer le point du clic avec les segments en utilisant
             //Line2D.ptLineDist ou Line2D.intersects.
+        }
+        else if(mode == Mode.VEHICULE)
+        {
+            ajouterVehicule(me);
+        }
+        else if(mode == Mode.PASSAGER)
+        {
+            ajouterPassager(me);
         }
     }
 
