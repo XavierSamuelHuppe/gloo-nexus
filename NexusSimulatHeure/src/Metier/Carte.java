@@ -10,21 +10,9 @@ public class Carte {
         segments = new ArrayList();
         points = new ArrayList();
     }
-
-    public List<Segment> getSegments() {
-        return segments;
-    }
-
-    public void setSegments(List<Segment> segments) {
-        this.segments = segments;
-    }
-
-    public List<Point> getPoints() {
-        return points;
-    }
-
-    public void setPoints(List<Point> points) {
-        this.points = points;
-    }
     
+    public void ajouterPoint(Position position, String nom){
+        Point nouveauPoint = new Point(nom);
+        nouveauPoint.setCoordonee(position);
+    }
 }
