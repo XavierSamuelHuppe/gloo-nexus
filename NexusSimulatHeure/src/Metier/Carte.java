@@ -18,6 +18,10 @@ public class Carte {
     }
     
     public void modifierPoint(Point pointCible, String nom, Position position){
-
+        int index = points.indexOf(pointCible);
+        Point nouveauPoint = new Point(nom);
+        nouveauPoint.setCoordonee(position);
+        points.remove(pointCible);
+        points.add(index, nouveauPoint);
     }
 }
