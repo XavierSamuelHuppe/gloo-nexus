@@ -30,10 +30,20 @@ public class Carte {
     }
     
     public List<Point> obtenirPointsAdjacents(Point point){
-        
+        List<Point> retour = new ArrayList();
+        for(Segment s : obtenirSegmentsSortant(point)){
+                retour.add(s.getPointArrivee());
+        }
+        return retour;
     }
     
     public List<Segment> obtenirSegmentsSortant(Point point){
-        
+        List<Segment> retour = new ArrayList();
+        for(Segment s : segments){
+            if(s.getPointDepart().equals(point)){
+                retour.add(s);
+            }
+        }
+        return retour;
     }
 }
