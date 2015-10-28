@@ -14,5 +14,10 @@ public class Carte {
     public void ajouterPoint(Position position, String nom){
         Point nouveauPoint = new Point(nom);
         nouveauPoint.setCoordonee(position);
+        points.add(nouveauPoint);
+    }
+    
+    public void modifierPoint(Point pointCible, String nom, Position position){
+
     }
 }
