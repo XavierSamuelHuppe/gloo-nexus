@@ -24,4 +24,8 @@ public class Carte {
         points.remove(pointCible);
         points.add(index, nouveauPoint);
     }
+    
+    public void retirerPoint(Point point){
+        points.remove(point);
+    }
 }
