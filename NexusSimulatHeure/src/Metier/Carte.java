@@ -28,4 +28,12 @@ public class Carte {
     public void retirerPoint(Point point){
         points.remove(point);
     }
+    
+    public List<Point> obtenirPointsAdjacents(Point point){
+        
+    }
+    
+    public List<Segment> obtenirSegmentsSortant(Point point){
+        
+    }
 }
