@@ -74,6 +74,12 @@ public class Vehicule extends Element {
     private static Path2D zoneGrise = null;
     private static Path2D bandesBlanches = null;
     private static Path2D fondFenetres = null;
+    /* Existe pas  encore
+    private ConteneurPassagers passagers;
+    private Circuit circuitActuel;
+    */
+    private float progres;
+    private Segment segmentActuel;
     
     private void initialiserFormes()
     {
@@ -166,4 +172,20 @@ public class Vehicule extends Element {
         g2.setColor(Color.decode("#bbe1ee"));
         g2.fill(p);
     }
+    /*
+    À changer quand Position va exister
+    public Position obtenirPosition()
+    {
+        Position xy = new Position();
+        
+        
+        return xy
+    }*/
+    
+    /*
+    À changer quand Position va exister
+    private void calculerPosition(Position posDepart, Position posArrivee)
+    {
+        //xyz
+    }*/
 }
