@@ -11,10 +11,11 @@ public class Carte {
         points = new ArrayList();
     }
     
-    public void ajouterPoint(Position position, String nom){
+    public Point ajouterPoint(Position position, String nom){
         Point nouveauPoint = new Point(nom);
         nouveauPoint.setCoordonee(position);
         points.add(nouveauPoint);
+        return nouveauPoint;
     }
     
     public void modifierPoint(Point pointCible, String nom, Position position){
@@ -45,5 +46,11 @@ public class Carte {
             }
         }
         return retour;
+    }
+    
+    public Segment ajouterSegment(Point depart, Point arrivee){
+        Segment nouveauSegment = new Segment(depart, arrivee);
+        segments.add(nouveauSegment);
+        return nouveauSegment;
     }
 }
