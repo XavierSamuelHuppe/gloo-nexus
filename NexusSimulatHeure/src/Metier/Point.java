@@ -3,9 +3,13 @@ package Metier;
 public class Point {
     private String nom;
     private Position coordonee;
+    //private List<ProfilsPassagers> profilsPassagers;
+    //private List<Source> sources;
+    private ConteneurPassagers passagers;
     
-    public Point(String nom) {
+    public Point(String nom, ConteneurPassagers passagers) {
         this.nom = nom;
+        this.passagers = passagers;
     }
 
     public String getNom() {
@@ -20,7 +24,7 @@ public class Point {
         return coordonee;
     }
     
-    public void setCoordonee(Position coordonee) {
+    public void changerPosition(Position coordonee) {
         this.coordonee = coordonee;
     }
     
