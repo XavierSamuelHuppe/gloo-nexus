@@ -12,19 +12,18 @@ public class Carte {
         points = new ArrayList();
     }
     
-    public Point ajouterPoint(Position position, String nom){
-        Point nouveauPoint = new Point(nom);
-        nouveauPoint.setCoordonee(position);
+    public Point ajouterPoint(Position position, String nom, ConteneurPassagers passagers){
+        Point nouveauPoint = new Point(nom, passagers);
+        nouveauPoint.changerPosition(position);
         points.add(nouveauPoint);
         return nouveauPoint;
     }
     
     public void modifierPoint(Point pointCible, String nom, Position position){
         int index = points.indexOf(pointCible);
-        Point nouveauPoint = new Point(nom);
-        nouveauPoint.setCoordonee(position);
-        points.remove(pointCible);
-        points.add(index, nouveauPoint);
+        Point pointAChanger = points.get(index);
+        pointAChanger.setNom(nom);
+        pointAChanger.changerPosition(position);
     }
     
     public void retirerPoint(Point point){
