@@ -1,4 +1,5 @@
 package Metier;
+import Metier.Exceptions.*;
 
 import java.util.*;
 
@@ -56,5 +57,15 @@ public class Carte {
     
     public void retirerSegment(Segment segment){
         segments.remove(segment);
+    }
+    
+    public Segment obtenirSegment(Point depart, Point arrivee){
+        for(Segment s : segments){
+            if(s.getPointDepart().equals(depart) &&
+               s.getPointArrivee().equals(arrivee)){
+                return s;
+            }
+        }
+        throw new SegmentNonTrouveException();
     }
 }
