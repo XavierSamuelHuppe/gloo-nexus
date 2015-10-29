@@ -68,4 +68,13 @@ public class Carte {
         }
         throw new SegmentNonTrouveException();
     }
+    
+    public boolean verifierExistenceSegment(Point depart, Point arrivee){
+        try{
+            obtenirSegment(depart, arrivee);
+            return true;
+        }catch(SegmentNonTrouveException e){
+            return false;
+        }
+    }
 }
