@@ -53,4 +53,8 @@ public class Carte {
         segments.add(nouveauSegment);
         return nouveauSegment;
     }
+    
+    public void retirerSegment(Segment segment){
+        segments.remove(segment);
+    }
 }
