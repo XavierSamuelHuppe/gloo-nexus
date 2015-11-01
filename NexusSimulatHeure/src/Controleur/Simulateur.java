@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package espacetravail;
+package Controleur;
 
 /**
  *
- * @author Utilisateur
+ * @author The Vagrant Geek
  */
-public class Sourcefinie extends Source {
-    public int nombreMax;
+public class Simulateur {
+    
 }

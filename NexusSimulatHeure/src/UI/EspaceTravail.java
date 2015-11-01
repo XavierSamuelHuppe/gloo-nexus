@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package espacetravail;
+package UI;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -19,7 +19,7 @@ import java.util.LinkedList;
  *
  * @author The Vagrant Geek
  */
-public class Zone extends javax.swing.JPanel implements MouseListener, MouseMotionListener, MouseWheelListener
+public class EspaceTravail extends javax.swing.JPanel implements MouseListener, MouseMotionListener, MouseWheelListener
 {
     public enum Mode {POINT, SEGMENT, VEHICULE, PASSAGER};
 
@@ -27,7 +27,6 @@ public class Zone extends javax.swing.JPanel implements MouseListener, MouseMoti
     private List<Point> points = new LinkedList<Point>();
     private List<Segment> segments = new LinkedList<Segment>();
     private List<Vehicule> vehicules = new LinkedList<Vehicule>();
-    private List<Passager> passagers = new LinkedList<Passager>();
     private double zoom = 1;
     private boolean fanionClavier1 = false;
     private java.awt.Point pointDrag = null;
@@ -36,7 +35,7 @@ public class Zone extends javax.swing.JPanel implements MouseListener, MouseMoti
     private final double PAS_ZOOM = 0.1;
     private final float TAILLE_TRAIT_SEGMENT = 5;
     
-    public Zone()
+    public EspaceTravail()
     {
         this.setBackground(Color.WHITE);
         
@@ -44,7 +43,7 @@ public class Zone extends javax.swing.JPanel implements MouseListener, MouseMoti
         this.addMouseMotionListener(this);
         this.addMouseWheelListener(this);
         
-        this.addKeyListener(new espacetravail.io.ZoneKeyListener());
+        this.addKeyListener(new UI.IO.ZoneKeyListener());
     }
     
     private void zoom(double facteurZoom, java.awt.Point positionCurseur)
@@ -57,10 +56,6 @@ public class Zone extends javax.swing.JPanel implements MouseListener, MouseMoti
         for(Vehicule v : vehicules)
         {
             v.zoom(facteurZoom, positionCurseur);
-        }
-        for(Passager p : passagers)
-        {
-            p.zoom(facteurZoom, positionCurseur);
         }
     }
     
@@ -106,15 +101,15 @@ public class Zone extends javax.swing.JPanel implements MouseListener, MouseMoti
         v.repaint();
     }
     
-    private void ajouterPassager(MouseEvent me)
-    {
-        Passager p = new Passager(me);
-        
-        passagers.add(p);
-        
-        this.add(p);
-        p.repaint();
-    }
+//    private void ajouterPassager(MouseEvent me)
+//    {
+//        Passager p = new Passager(me);
+//        
+//        passagers.add(p);
+//        
+//        this.add(p);
+//        p.repaint();
+//    }
     
     private void ajouterSegment(Point pDepart, Point pArrivee)
     {
@@ -188,10 +183,6 @@ public class Zone extends javax.swing.JPanel implements MouseListener, MouseMoti
             {
                 v.deplacer(delta);
             }
-            for(Passager p : passagers)
-            {
-                p.deplacer(delta);
-            }
         }
         pointDrag = me.getPoint();
     }
@@ -228,10 +219,6 @@ public class Zone extends javax.swing.JPanel implements MouseListener, MouseMoti
         else if(mode == Mode.VEHICULE)
         {
             ajouterVehicule(me);
-        }
-        else if(mode == Mode.PASSAGER)
-        {
-            ajouterPassager(me);
         }
     }
 

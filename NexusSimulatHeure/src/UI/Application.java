@@ -1,4 +1,4 @@
-package espacetravail;
+package UI;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -12,7 +12,7 @@ import javafx.scene.input.KeyCode;
  *
  * @author The Vagrant Geek
  */
-public class MainFrame extends javax.swing.JFrame implements KeyListener {
+public class Application extends javax.swing.JFrame implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent ke) {
@@ -20,19 +20,19 @@ public class MainFrame extends javax.swing.JFrame implements KeyListener {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         if(ke.getKeyChar()=='1')
         {
-            zone1.setMode(Zone.Mode.POINT);
+            zone1.setMode(EspaceTravail.Mode.POINT);
         }
         else if (ke.getKeyChar()=='2')
         {
-            zone1.setMode(Zone.Mode.SEGMENT);
+            zone1.setMode(EspaceTravail.Mode.SEGMENT);
         }
         else if (ke.getKeyChar()=='3')
         {
-            zone1.setMode(Zone.Mode.VEHICULE);
+            zone1.setMode(EspaceTravail.Mode.VEHICULE);
         }
         else if (ke.getKeyChar()=='4')
         {
-            zone1.setMode(Zone.Mode.PASSAGER);
+            zone1.setMode(EspaceTravail.Mode.PASSAGER);
         }
     }
 
@@ -58,7 +58,7 @@ public class MainFrame extends javax.swing.JFrame implements KeyListener {
     /**
      * Creates new form MainFrame
      */
-    public MainFrame() {
+    public Application() {
         initComponents();
         this.addKeyListener(this);
         
@@ -106,20 +106,19 @@ public class MainFrame extends javax.swing.JFrame implements KeyListener {
         PanneauPrincipal = new javax.swing.JPanel();
         PanneauCentre = new javax.swing.JSplitPane();
         PanneauGauche = new javax.swing.JSplitPane();
-        zone1 = new espacetravail.Zone();
         PanneauDetails = new javax.swing.JPanel();
         LibelleEnteteDetails = new javax.swing.JLabel();
         PanneauDetailsBoutons = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         PanneauDetailsChamps = new javax.swing.JPanel();
+        zone1 = new UI.EspaceTravail();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1024, 768));
 
         PanneauBarreOutils.setLayout(new javax.swing.BoxLayout(PanneauBarreOutils, javax.swing.BoxLayout.LINE_AXIS));
 
-        BoutonNouveau.setIcon(new javax.swing.ImageIcon(getClass().getResource("/espacetravail/icones/file-2x.png"))); // NOI18N
+        BoutonNouveau.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/file-2x.png"))); // NOI18N
         BoutonNouveau.setToolTipText("");
         BoutonNouveau.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonNouveau.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -129,7 +128,7 @@ public class MainFrame extends javax.swing.JFrame implements KeyListener {
         BoutonNouveau.setPreferredSize(new java.awt.Dimension(24, 24));
         PanneauBarreOutils.add(BoutonNouveau);
 
-        BoutonSauvegarder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/espacetravail/icones/data-transfer-download-2x.png"))); // NOI18N
+        BoutonSauvegarder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/data-transfer-download-2x.png"))); // NOI18N
         BoutonSauvegarder.setToolTipText("");
         BoutonSauvegarder.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonSauvegarder.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -139,7 +138,7 @@ public class MainFrame extends javax.swing.JFrame implements KeyListener {
         BoutonSauvegarder.setPreferredSize(new java.awt.Dimension(24, 24));
         PanneauBarreOutils.add(BoutonSauvegarder);
 
-        BoutonCharger.setIcon(new javax.swing.ImageIcon(getClass().getResource("/espacetravail/icones/data-transfer-upload-2x.png"))); // NOI18N
+        BoutonCharger.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/data-transfer-upload-2x.png"))); // NOI18N
         BoutonCharger.setToolTipText("");
         BoutonCharger.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonCharger.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -149,7 +148,7 @@ public class MainFrame extends javax.swing.JFrame implements KeyListener {
         BoutonCharger.setPreferredSize(new java.awt.Dimension(24, 24));
         PanneauBarreOutils.add(BoutonCharger);
 
-        BoutonAnnuler.setIcon(new javax.swing.ImageIcon(getClass().getResource("/espacetravail/icones/action-undo-2x.png"))); // NOI18N
+        BoutonAnnuler.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/action-undo-2x.png"))); // NOI18N
         BoutonAnnuler.setToolTipText("");
         BoutonAnnuler.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonAnnuler.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -159,7 +158,7 @@ public class MainFrame extends javax.swing.JFrame implements KeyListener {
         BoutonAnnuler.setPreferredSize(new java.awt.Dimension(24, 24));
         PanneauBarreOutils.add(BoutonAnnuler);
 
-        BoutonRepeter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/espacetravail/icones/action-redo-2x.png"))); // NOI18N
+        BoutonRepeter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/action-redo-2x.png"))); // NOI18N
         BoutonRepeter.setToolTipText("");
         BoutonRepeter.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonRepeter.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -169,7 +168,7 @@ public class MainFrame extends javax.swing.JFrame implements KeyListener {
         BoutonRepeter.setPreferredSize(new java.awt.Dimension(24, 24));
         PanneauBarreOutils.add(BoutonRepeter);
 
-        BoutonParametres.setIcon(new javax.swing.ImageIcon(getClass().getResource("/espacetravail/icones/wrench-2x.png"))); // NOI18N
+        BoutonParametres.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/wrench-2x.png"))); // NOI18N
         BoutonParametres.setToolTipText("");
         BoutonParametres.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonParametres.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -184,7 +183,7 @@ public class MainFrame extends javax.swing.JFrame implements KeyListener {
         jSeparator1.setPreferredSize(new java.awt.Dimension(10, 10));
         PanneauBarreOutils.add(jSeparator1);
 
-        BoutonModePoint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/espacetravail/icones/target-2x.png"))); // NOI18N
+        BoutonModePoint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/target-2x.png"))); // NOI18N
         BoutonModePoint.setToolTipText("");
         BoutonModePoint.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonModePoint.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -194,7 +193,7 @@ public class MainFrame extends javax.swing.JFrame implements KeyListener {
         BoutonModePoint.setPreferredSize(new java.awt.Dimension(24, 24));
         PanneauBarreOutils.add(BoutonModePoint);
 
-        BoutonModeSegment.setIcon(new javax.swing.ImageIcon(getClass().getResource("/espacetravail/icones/transfer-2x.png"))); // NOI18N
+        BoutonModeSegment.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/transfer-2x.png"))); // NOI18N
         BoutonModeSegment.setToolTipText("");
         BoutonModeSegment.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonModeSegment.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -204,7 +203,7 @@ public class MainFrame extends javax.swing.JFrame implements KeyListener {
         BoutonModeSegment.setPreferredSize(new java.awt.Dimension(24, 24));
         PanneauBarreOutils.add(BoutonModeSegment);
 
-        BoutonModeCircuit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/espacetravail/icones/fork-2x.png"))); // NOI18N
+        BoutonModeCircuit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/fork-2x.png"))); // NOI18N
         BoutonModeCircuit.setToolTipText("");
         BoutonModeCircuit.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonModeCircuit.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -214,7 +213,7 @@ public class MainFrame extends javax.swing.JFrame implements KeyListener {
         BoutonModeCircuit.setPreferredSize(new java.awt.Dimension(24, 24));
         PanneauBarreOutils.add(BoutonModeCircuit);
 
-        BoutonModeSource.setIcon(new javax.swing.ImageIcon(getClass().getResource("/espacetravail/icones/dashboard-2x.png"))); // NOI18N
+        BoutonModeSource.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/dashboard-2x.png"))); // NOI18N
         BoutonModeSource.setToolTipText("");
         BoutonModeSource.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonModeSource.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -224,7 +223,7 @@ public class MainFrame extends javax.swing.JFrame implements KeyListener {
         BoutonModeSource.setPreferredSize(new java.awt.Dimension(24, 24));
         PanneauBarreOutils.add(BoutonModeSource);
 
-        BoutonModeProfilPassager.setIcon(new javax.swing.ImageIcon(getClass().getResource("/espacetravail/icones/people-2x.png"))); // NOI18N
+        BoutonModeProfilPassager.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/people-2x.png"))); // NOI18N
         BoutonModeProfilPassager.setToolTipText("");
         BoutonModeProfilPassager.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonModeProfilPassager.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -242,7 +241,7 @@ public class MainFrame extends javax.swing.JFrame implements KeyListener {
 
         PanneauControleSimulation.setLayout(new javax.swing.BoxLayout(PanneauControleSimulation, javax.swing.BoxLayout.LINE_AXIS));
 
-        BoutonDemarrerPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/espacetravail/icones/media-play-2x.png"))); // NOI18N
+        BoutonDemarrerPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/media-play-2x.png"))); // NOI18N
         BoutonDemarrerPause.setToolTipText("");
         BoutonDemarrerPause.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonDemarrerPause.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -252,7 +251,7 @@ public class MainFrame extends javax.swing.JFrame implements KeyListener {
         BoutonDemarrerPause.setPreferredSize(new java.awt.Dimension(24, 24));
         PanneauControleSimulation.add(BoutonDemarrerPause);
 
-        BoutonArreter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/espacetravail/icones/media-stop-2x.png"))); // NOI18N
+        BoutonArreter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/media-stop-2x.png"))); // NOI18N
         BoutonArreter.setToolTipText("");
         BoutonArreter.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonArreter.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -262,7 +261,7 @@ public class MainFrame extends javax.swing.JFrame implements KeyListener {
         BoutonArreter.setPreferredSize(new java.awt.Dimension(24, 24));
         PanneauControleSimulation.add(BoutonArreter);
 
-        BoutonRedemarrer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/espacetravail/icones/media-step-backward-2x.png"))); // NOI18N
+        BoutonRedemarrer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/media-step-backward-2x.png"))); // NOI18N
         BoutonRedemarrer.setToolTipText("");
         BoutonRedemarrer.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonRedemarrer.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -272,7 +271,7 @@ public class MainFrame extends javax.swing.JFrame implements KeyListener {
         BoutonRedemarrer.setPreferredSize(new java.awt.Dimension(24, 24));
         PanneauControleSimulation.add(BoutonRedemarrer);
 
-        BoutonRalentir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/espacetravail/icones/media-skip-backward-2x.png"))); // NOI18N
+        BoutonRalentir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/media-skip-backward-2x.png"))); // NOI18N
         BoutonRalentir.setToolTipText("");
         BoutonRalentir.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonRalentir.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -282,7 +281,7 @@ public class MainFrame extends javax.swing.JFrame implements KeyListener {
         BoutonRalentir.setPreferredSize(new java.awt.Dimension(24, 24));
         PanneauControleSimulation.add(BoutonRalentir);
 
-        BoutonAccelerer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/espacetravail/icones/media-skip-forward-2x.png"))); // NOI18N
+        BoutonAccelerer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/media-skip-forward-2x.png"))); // NOI18N
         BoutonAccelerer.setToolTipText("");
         BoutonAccelerer.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonAccelerer.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -332,7 +331,6 @@ public class MainFrame extends javax.swing.JFrame implements KeyListener {
         PanneauGauche.setDividerSize(2);
         PanneauGauche.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
         PanneauCentre.setLeftComponent(PanneauGauche);
-        PanneauCentre.setRightComponent(zone1);
 
         PanneauDetails.setLayout(new java.awt.BorderLayout());
 
@@ -354,6 +352,7 @@ public class MainFrame extends javax.swing.JFrame implements KeyListener {
         PanneauDetails.add(PanneauDetailsChamps, java.awt.BorderLayout.CENTER);
 
         PanneauCentre.setTopComponent(PanneauDetails);
+        PanneauCentre.setRightComponent(zone1);
 
         PanneauPrincipal.add(PanneauCentre, java.awt.BorderLayout.CENTER);
 
@@ -379,20 +378,23 @@ public class MainFrame extends javax.swing.JFrame implements KeyListener {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Application.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Application.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Application.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Application.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainFrame().setVisible(true);
+                new Application().setVisible(true);
             }
         });
     }
@@ -435,6 +437,6 @@ public class MainFrame extends javax.swing.JFrame implements KeyListener {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private espacetravail.Zone zone1;
+    private UI.EspaceTravail zone1;
     // End of variables declaration//GEN-END:variables
 }
