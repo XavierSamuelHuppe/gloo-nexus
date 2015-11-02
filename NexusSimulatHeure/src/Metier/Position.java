@@ -2,28 +2,33 @@ package Metier;
 
 public class Position {
     
-    private int X;
-    private int Y;
+    private double X;
+    private double Y;
     
-    public Position(int X, int Y) {
+    public Position(double X, double Y) {
         this.X = X;
         this.Y = Y;
     }
 
-    public int getX() {
+    public double getX() {
         return X;
     }
 
-    public void setX(int X) {
+    public void setX(double X) {
         this.X = X;
     }
 
-    public int getY() {
+    public double getY() {
         return Y;
     }
 
-    public void setY(int Y) {
+    public void setY(double Y) {
         this.Y = Y;
     }
     
+    
+//    public static Position genererPositionAleatoire()
+//    {
+//        return new Position((double)(Math.random() * 1000.0), (double)(Math.random() * 1000.0));
+//    }
 }

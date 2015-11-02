@@ -14,6 +14,7 @@ import java.awt.event.MouseWheelListener;
 
 import java.util.List;
 import java.util.LinkedList;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -21,6 +22,9 @@ import java.util.LinkedList;
  */
 public class EspaceTravail extends javax.swing.JPanel implements MouseListener, MouseMotionListener, MouseWheelListener
 {
+    
+    private Controleur.Simulateur simulateur;
+    
     public enum Mode {POINT, SEGMENT, VEHICULE, PASSAGER};
 
     private Mode mode = Mode.POINT;
@@ -33,10 +37,15 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     private Point tempSegmentPointDepart = null;
     
     private final double PAS_ZOOM = 0.1;
-    private final float TAILLE_TRAIT_SEGMENT = 5;
+    private final int TAILLE_TRAIT_SEGMENT = 5;
+    
+    
     
     public EspaceTravail()
     {
+        //Requis pour éviter des problèmes visuels.
+        this.setLayout(null);
+        
         this.setBackground(Color.WHITE);
         
         this.addMouseListener(this);
@@ -46,17 +55,59 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         this.addKeyListener(new UI.IO.ZoneKeyListener());
     }
     
+    public void setSimulateur(Controleur.Simulateur s)
+    {
+        this.simulateur = s;
+    }
+    
+    private Application obtenirApplication()
+    {
+        return (Application)SwingUtilities.getWindowAncestor(this);
+    }
+    
+    public void deplacerPoint(UI.Point p)
+    {
+        this.simulateur.modifierPoint(p.getPointMetier(), transformerPositionEspaceTravailEnPostionGeorgraphique(transformerPositionViewportEnPositionEspaceTravail(p.getLocation())), p.getPointMetier().getNom());
+    }
+    
+    private final double ZOOM_BORNE_INFERIEURE = 0.1;
+    private final double ZOOM_BORNE_SUPERIEURE = 2;
+    
     private void zoom(double facteurZoom, java.awt.Point positionCurseur)
     {
-        this.zoom += facteurZoom;
-        for(Point p : points)
+        if((this.zoom + facteurZoom >= ZOOM_BORNE_INFERIEURE) && (this.zoom + facteurZoom <= ZOOM_BORNE_SUPERIEURE))
         {
-            p.zoom(facteurZoom, positionCurseur);
+            mettreAJourPositionReferenceApresZoom(facteurZoom, positionCurseur);
+            this.zoom += facteurZoom;
+            for(Point p : points)
+            {
+                p.zoom(facteurZoom, positionCurseur);
+            }
+    //        for(Vehicule v : vehicules)
+    //        {
+    //            v.zoom(facteurZoom, positionCurseur);
+    //        }
+
+            obtenirApplication().mettreAJourZoom(this.zoom);
         }
-        for(Vehicule v : vehicules)
-        {
-            v.zoom(facteurZoom, positionCurseur);
-        }
+
+    }
+    
+    private void mettreAJourPositionReferenceApresZoom(double facteurZoom, java.awt.Point positionCurseur)
+    {
+        this.posReferenceX += positionCurseur.x * facteurZoom;
+        this.posReferenceY += positionCurseur.y * facteurZoom;
+    }
+    
+    private void mettreAJourPositionReferenceApresDrag(java.awt.Point delta)
+    {
+        this.posReferenceX -= delta.x;
+        this.posReferenceY -= delta.y;
+    }
+    
+    private void afficherPosReference()
+    {
+        System.out.println("ref : " + posReferenceX + " " + posReferenceY);
     }
     
     public void setMode(Mode m)
@@ -80,7 +131,10 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     
     private void ajouterPoint(MouseEvent me)
     {
-        Point p = new Point(me.getX() - (Point.DIAMETRE / 2),me.getY() - (Point.DIAMETRE / 2), this.zoom);
+        Metier.Point mp = this.simulateur.ajouterPoint(transformerPositionEspaceTravailEnPostionGeorgraphique(me.getPoint()), "A");
+        
+//        Point p = new Point(me.getX() - (Point.DIAMETRE / 2),me.getY() - (Point.DIAMETRE / 2), this.zoom, mp);
+        Point p = new Point(me.getX(),me.getY(), this.zoom, mp);
         
         points.add(p);
         
@@ -122,11 +176,12 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     
     public void paintComponent(Graphics g)
     {
+        //System.out.println("EspaceTravail paintComponent");
         super.paintComponent(g);
         
         Graphics2D g2 = (Graphics2D)g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
+        
         //Les point se dessinent par eux-mêmes.
         
         //Comme les segments ne sont pas des contrôles, on doit les dessiner
@@ -140,7 +195,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         {
             //g2.setColor(Color.decode("#EFE1FC"));
             g2.setColor(Color.BLUE);
-            g2.setStroke(new BasicStroke(TAILLE_TRAIT_SEGMENT * (float)this.zoom));
+            g2.setStroke(new BasicStroke((float)(TAILLE_TRAIT_SEGMENT * this.zoom)));
             g2.drawLine(s.getDepart().calculerCentreX(),s.getDepart().calculerCentreY(),
                         s.getArrivee().calculerCentreX(),s.getArrivee().calculerCentreY());
         }
@@ -161,6 +216,10 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
                 tempSegmentPointDepart = fanionClavier1 ? p : null;
             }
         }
+        else
+        {
+            afficherDetailsPoint(p);
+        }
     }
 
     public void setFanionClavier1(boolean b)
@@ -179,27 +238,48 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
             {
                 p.deplacer(delta);
             }
+            
             for(Vehicule v : vehicules)
             {
                 v.deplacer(delta);
             }
+            
+            mettreAJourPositionReferenceApresDrag(delta);
         }
         pointDrag = me.getPoint();
     }
 
     @Override
-    public void mouseMoved(MouseEvent me) {}
+    public void mouseMoved(MouseEvent me) {
+        //afficherPosReference();
+        //afficherPoint("vp", me.getPoint());
+        java.awt.Point pET = transformerPositionViewportEnPositionEspaceTravail(me.getPoint());
+        //afficherPoint("et", pET);
+        Metier.Position p = transformerPositionEspaceTravailEnPostionGeorgraphique(pET);
+        //afficherPosition("geo", p);
+        obtenirApplication().mettreAJourCoordonnesGeographiques(p.getY(), p.getX());
+    }
 
+    private void afficherPoint(String s, java.awt.Point p)
+    {
+        System.out.println(s + " : " + p.x + " " + p.y);
+    }
+    
+    private void afficherPosition(String s, Metier.Position p)
+    {
+        System.out.println(s + " : " + p.getX() + " " + p.getY());
+    }
+    
     //Implémentations MouseWheelListener.
     @Override
     public void mouseWheelMoved(MouseWheelEvent mwe) {
         if (mwe.getPreciseWheelRotation() > 0)
         {
-            zoom(PAS_ZOOM, mwe.getPoint());
+            zoom(-PAS_ZOOM, mwe.getPoint());
         }
         else
         {
-            zoom(-PAS_ZOOM, mwe.getPoint());
+            zoom(PAS_ZOOM, mwe.getPoint());
         }
     }
 
@@ -235,4 +315,43 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
 
     @Override
     public void mouseExited(MouseEvent me) {}
+    
+    private int posReferenceX = 0;
+    private int posReferenceY = 0;
+    
+    
+    private double ratioPixelDegreLatitude = (double)(0.005 / 500.0);
+    private double ratioPixelDegreLontitude = (double)(0.005 / 500.0);
+
+    public java.awt.Point transformerPostionGeorgraphiqueEnPositionEspaceTravail(Metier.Position posGeo)
+    {
+        return new java.awt.Point((int)(posGeo.getX() / ratioPixelDegreLontitude), 
+                                  (int)(posGeo.getY() / -ratioPixelDegreLatitude));
+    }
+    
+        public Metier.Position transformerPositionEspaceTravailEnPostionGeorgraphique(java.awt.Point posET)
+    {
+        return new Metier.Position(posET.x * ratioPixelDegreLontitude, 
+                                   posET.y * -ratioPixelDegreLatitude);
+    }
+    
+    public java.awt.Point transformerPositionEspaceTravailEnPositionViewport(java.awt.Point posET)
+    {
+        return new java.awt.Point((int)(posET.x * zoom) - posReferenceX, (int)(posET.y * zoom) - posReferenceY);
+    }
+    
+    public java.awt.Point transformerPositionViewportEnPositionEspaceTravail(java.awt.Point posVP)
+    {
+        return new java.awt.Point((int)((posVP.x + posReferenceX) / zoom), (int)((posVP.y + posReferenceY) / zoom));
+    }
+    
+    
+    
+    
+    
+    
+    private void afficherDetailsPoint(Point pointCible)
+    {
+        this.obtenirApplication().afficherPointSelectionne(pointCible);
+    }
 }
