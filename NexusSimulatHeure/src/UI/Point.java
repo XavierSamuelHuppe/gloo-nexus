@@ -28,26 +28,35 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
     private java.awt.Point pointPoigneeDrag;
     private Mode modeActuel = Mode.NORMAL;
     
+    private Metier.Point pointMetier;
+    
     public static final int DIAMETRE = 32;
     private static final int POSITION_CERCLE_INTERNE = (int)Math.ceil(DIAMETRE/4.0);
     private static final int LARGEUR_CERCLE_INTERNE = (int)Math.ceil(DIAMETRE/2.0);
     
-    public Point(int x, int y, double zoom)
+    public Point(int x, int y, double zoom, Metier.Point p)
     {
         System.out.println("new Point");
+        this.pointMetier = p;
         this.zoom = zoom;
         this.setLayout(new FlowLayout());
-        this.setSize(DIAMETRE,DIAMETRE);
+        this.setSize(calculerZoom(DIAMETRE),calculerZoom(DIAMETRE));
         this.setLocation(x,y);
         this.setOpaque(false);
     }
 
+    public Metier.Point getPointMetier()
+    {
+        return this.pointMetier;
+    }
+    
+    
     @Override
     public void zoom(double facteurZoom, java.awt.Point positionCurseur)
     {
         super.zoom(facteurZoom, positionCurseur);
-        
         this.setSize((int)(DIAMETRE * zoom), (int)(DIAMETRE * zoom));
+        this.setLocation(this.obtenirEspaceTravail().transformerPositionEspaceTravailEnPositionViewport(this.obtenirEspaceTravail().transformerPostionGeorgraphiqueEnPositionEspaceTravail(this.pointMetier.getCoordonee())));
     }
         
     @Override
@@ -96,6 +105,7 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
     public void mouseDragged(MouseEvent me) {
         this.setLocation(this.getX() + me.getX() - (int)this.pointPoigneeDrag.getX(), this.getY() + me.getY() - (int)this.pointPoigneeDrag.getY());
         obtenirZone().repaint();
+        System.out.println("Point mouseDragged");
     }
  
     @Override
@@ -109,15 +119,21 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
 
     @Override
     public void mouseClicked(MouseEvent me) {
-        obtenirZone().pointSelectionne(this);
+        obtenirEspaceTravail().pointSelectionne(this);
+        this.modeActuel = Mode.SELECTIONNE;
+        this.repaint();
     }
     
     @Override
-    public void mouseReleased(MouseEvent me) {}
+    public void mouseReleased(MouseEvent me) 
+    {
+        this.obtenirEspaceTravail().deplacerPoint(this);
+    }
 
     @Override
     public void mouseEntered(MouseEvent me) {}
 
     @Override
     public void mouseExited(MouseEvent me) {}
+    
 }

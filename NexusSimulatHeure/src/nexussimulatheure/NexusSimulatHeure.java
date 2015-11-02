@@ -7,6 +7,6 @@ public class NexusSimulatHeure {
         //?
         app.setSize(1200, 800);
         app.setVisible(true);
-    }
+    } 
     
 }

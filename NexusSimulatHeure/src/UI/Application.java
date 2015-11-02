@@ -5,6 +5,9 @@ package UI;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import UI.PanneauxDetails.PanneauDetailsPoint;
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javafx.scene.input.KeyCode;
@@ -17,23 +20,40 @@ public class Application extends javax.swing.JFrame implements KeyListener {
     @Override
     public void keyTyped(KeyEvent ke) {
         System.out.println("keyTyped " + ke.getKeyChar());
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        reinitialiserCouleurBoutonsModes();
         if(ke.getKeyChar()=='1')
         {
-            zone1.setMode(EspaceTravail.Mode.POINT);
+            ZoneEspaceTravail.setMode(EspaceTravail.Mode.POINT);
+            BoutonModePoint.setBackground(Color.yellow);
         }
         else if (ke.getKeyChar()=='2')
         {
-            zone1.setMode(EspaceTravail.Mode.SEGMENT);
+            ZoneEspaceTravail.setMode(EspaceTravail.Mode.SEGMENT);
+            BoutonModeSegment.setBackground(Color.yellow);
         }
         else if (ke.getKeyChar()=='3')
         {
-            zone1.setMode(EspaceTravail.Mode.VEHICULE);
+            ZoneEspaceTravail.setMode(EspaceTravail.Mode.VEHICULE);
+            BoutonModeSource.setBackground(Color.yellow);
         }
         else if (ke.getKeyChar()=='4')
         {
-            zone1.setMode(EspaceTravail.Mode.PASSAGER);
+            ZoneEspaceTravail.setMode(EspaceTravail.Mode.PASSAGER);
+            BoutonModeProfilPassager.setBackground(Color.yellow);
         }
+        else if (ke.getKeyChar()=='9')
+        {
+            
+        }
+    }
+    
+    private void reinitialiserCouleurBoutonsModes()
+    {
+        BoutonModePoint.setBackground(Color.decode("#F0F0F0"));
+        BoutonModeSegment.setBackground(Color.decode("#F0F0F0"));
+        BoutonModeCircuit.setBackground(Color.decode("#F0F0F0"));
+        BoutonModeSource.setBackground(Color.decode("#F0F0F0"));
+        BoutonModeProfilPassager.setBackground(Color.decode("#F0F0F0"));
     }
 
     private boolean fanionClavier1 = false;
@@ -42,7 +62,7 @@ public class Application extends javax.swing.JFrame implements KeyListener {
         if(ke.getKeyCode() == KeyEvent.VK_CONTROL)
         {
             fanionClavier1 = true;
-            this.zone1.setFanionClavier1(this.fanionClavier1);
+            this.ZoneEspaceTravail.setFanionClavier1(this.fanionClavier1);
         }
     }
 
@@ -51,7 +71,7 @@ public class Application extends javax.swing.JFrame implements KeyListener {
         if(ke.getKeyCode() == KeyEvent.VK_CONTROL)
         {
             fanionClavier1 = false;
-            this.zone1.setFanionClavier1(this.fanionClavier1);
+            this.ZoneEspaceTravail.setFanionClavier1(this.fanionClavier1);
         }
     }
 
@@ -61,11 +81,48 @@ public class Application extends javax.swing.JFrame implements KeyListener {
     public Application() {
         initComponents();
         this.addKeyListener(this);
-        
-        
+
         this.BoutonNouveau.addKeyListener(this);
+        
+        this.ZoneEspaceTravail.setSimulateur(new Controleur.Simulateur());
     }
 
+    public void mettreAJourCoordonnesGeographiques(double latitude, double longitude)
+    {
+        this.LibelleCoordonneesGeographiques.setText(String.format("%1$.4f°, %2$.4f°", latitude, longitude));
+    }
+
+    public void mettreAJourZoom(double zoom)
+    {
+        this.LibelleZoom.setText(String.format("Zoom : %1$.0f", (zoom * 100)) + "%");
+    }
+    
+    public void afficherPointSelectionne(Point p)
+    {
+        this.PanneauDetails.removeAll();
+        this.PanneauDetails.add(new PanneauDetailsPoint(p.getPointMetier()), BorderLayout.CENTER);
+        this.PanneauDetails.repaint();
+        
+        this.revalidate();
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -101,18 +158,14 @@ public class Application extends javax.swing.JFrame implements KeyListener {
         jLabel6 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         PanneauEtatDroite = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        LibellePositionGeo = new javax.swing.JLabel();
+        LibelleZoom = new javax.swing.JLabel();
+        LibelleCoordonneesGeographiques = new javax.swing.JLabel();
         PanneauPrincipal = new javax.swing.JPanel();
         PanneauCentre = new javax.swing.JSplitPane();
         PanneauGauche = new javax.swing.JSplitPane();
         PanneauDetails = new javax.swing.JPanel();
         LibelleEnteteDetails = new javax.swing.JLabel();
-        PanneauDetailsBoutons = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        PanneauDetailsChamps = new javax.swing.JPanel();
-        zone1 = new UI.EspaceTravail();
+        ZoneEspaceTravail = new UI.EspaceTravail();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -308,15 +361,15 @@ public class Application extends javax.swing.JFrame implements KeyListener {
 
         PanneauEtat.add(PanneauEtatGauche, java.awt.BorderLayout.WEST);
 
-        jLabel5.setText("Zoom : 100%");
-        jLabel5.setMaximumSize(new java.awt.Dimension(100, 14));
-        jLabel5.setMinimumSize(new java.awt.Dimension(100, 14));
-        jLabel5.setPreferredSize(new java.awt.Dimension(100, 14));
-        jLabel5.setRequestFocusEnabled(false);
-        PanneauEtatDroite.add(jLabel5);
+        LibelleZoom.setText("Zoom : 100%");
+        LibelleZoom.setMaximumSize(new java.awt.Dimension(100, 14));
+        LibelleZoom.setMinimumSize(new java.awt.Dimension(100, 14));
+        LibelleZoom.setPreferredSize(new java.awt.Dimension(100, 14));
+        LibelleZoom.setRequestFocusEnabled(false);
+        PanneauEtatDroite.add(LibelleZoom);
 
-        LibellePositionGeo.setText("Position : 46.780373, -71.277205");
-        PanneauEtatDroite.add(LibellePositionGeo);
+        LibelleCoordonneesGeographiques.setText("Position : 46.780373, -71.277205");
+        PanneauEtatDroite.add(LibelleCoordonneesGeographiques);
 
         PanneauEtat.add(PanneauEtatDroite, java.awt.BorderLayout.EAST);
 
@@ -337,22 +390,8 @@ public class Application extends javax.swing.JFrame implements KeyListener {
         LibelleEnteteDetails.setText("Details");
         PanneauDetails.add(LibelleEnteteDetails, java.awt.BorderLayout.NORTH);
 
-        PanneauDetailsBoutons.setLayout(new javax.swing.BoxLayout(PanneauDetailsBoutons, javax.swing.BoxLayout.LINE_AXIS));
-
-        jButton2.setText("Annuler");
-        PanneauDetailsBoutons.add(jButton2);
-
-        jButton1.setText("Sauvegarder");
-        jButton1.setToolTipText("");
-        PanneauDetailsBoutons.add(jButton1);
-
-        PanneauDetails.add(PanneauDetailsBoutons, java.awt.BorderLayout.PAGE_END);
-
-        PanneauDetailsChamps.setLayout(new javax.swing.BoxLayout(PanneauDetailsChamps, javax.swing.BoxLayout.PAGE_AXIS));
-        PanneauDetails.add(PanneauDetailsChamps, java.awt.BorderLayout.CENTER);
-
         PanneauCentre.setTopComponent(PanneauDetails);
-        PanneauCentre.setRightComponent(zone1);
+        PanneauCentre.setRightComponent(ZoneEspaceTravail);
 
         PanneauPrincipal.add(PanneauCentre, java.awt.BorderLayout.CENTER);
 
@@ -398,7 +437,7 @@ public class Application extends javax.swing.JFrame implements KeyListener {
             }
         });
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BoutonAccelerer;
     private javax.swing.JButton BoutonAnnuler;
@@ -416,27 +455,23 @@ public class Application extends javax.swing.JFrame implements KeyListener {
     private javax.swing.JButton BoutonRedemarrer;
     private javax.swing.JButton BoutonRepeter;
     private javax.swing.JButton BoutonSauvegarder;
+    private javax.swing.JLabel LibelleCoordonneesGeographiques;
     private javax.swing.JLabel LibelleEnteteDetails;
-    private javax.swing.JLabel LibellePositionGeo;
+    private javax.swing.JLabel LibelleZoom;
     private javax.swing.JPanel PanneauBarreOutils;
     private javax.swing.JSplitPane PanneauCentre;
     private javax.swing.JPanel PanneauControleSimulation;
     private javax.swing.JPanel PanneauDetails;
-    private javax.swing.JPanel PanneauDetailsBoutons;
-    private javax.swing.JPanel PanneauDetailsChamps;
     private javax.swing.JPanel PanneauEtat;
     private javax.swing.JPanel PanneauEtatDroite;
     private javax.swing.JPanel PanneauEtatGauche;
     private javax.swing.JSplitPane PanneauGauche;
     private javax.swing.JPanel PanneauPrincipal;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private UI.EspaceTravail ZoneEspaceTravail;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private UI.EspaceTravail zone1;
     // End of variables declaration//GEN-END:variables
 }
