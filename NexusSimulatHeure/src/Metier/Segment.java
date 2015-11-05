@@ -1,8 +1,8 @@
 package Metier;
 
 public class Segment {
-    private Point pointDepart;
-    private Point pointArrivee;
+    private final Point pointDepart;
+    private final Point pointArrivee;
     
     public Segment(Point pointDepart, Point pointArrivee) {
         this.pointDepart = pointDepart;

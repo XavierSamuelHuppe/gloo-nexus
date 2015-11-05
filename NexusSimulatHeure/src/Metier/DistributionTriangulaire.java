@@ -18,9 +18,11 @@ public class DistributionTriangulaire implements IDistribution{
         double x = Math.random();
         if (x == 0) {
             retour = a;
-        } else if (x < (c - a) / (b - a)) {
+        } 
+        else if (x < (c - a) / (b - a)) {
             retour = a + Math.sqrt(x * (b - a) * (c - a));
-        } else {
+        } 
+        else {
             retour = b - Math.sqrt((1 - x) * (b - a) * (b - c));
         }
         return retour;

@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Metier;
 
-/**
- *
- * @author Utilisateur
- */
 public class ProfilPassagerHeureFin extends ProfilPassager {
     
     private int heureFin;
@@ -18,10 +9,10 @@ public class ProfilPassagerHeureFin extends ProfilPassager {
         this.heureFin = heureFin;
     }
     
-    public int getheureFin(){
+    public int getHeureFin(){
         return heureFin;
     }
-    public void setheureFin(int Fin){
+    public void setHeureFin(int Fin){
         heureFin = Fin;
     }
 }

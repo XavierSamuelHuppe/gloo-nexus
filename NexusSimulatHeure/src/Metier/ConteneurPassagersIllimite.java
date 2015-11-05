@@ -22,7 +22,7 @@ public class ConteneurPassagersIllimite implements ConteneurPassagers{
 
     @Override
     public void retirerPassager(Passager passager) {
-        passagers.remove(passagers);
+        passagers.remove(passager);
     }
     
 }
