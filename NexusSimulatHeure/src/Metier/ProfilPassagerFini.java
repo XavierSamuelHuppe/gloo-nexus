@@ -10,5 +10,18 @@ package Metier;
  * @author Utilisateur
  */
 public class ProfilPassagerFini extends ProfilPassager{
-    public int nombreMax;
+    
+    private int nombreMax;
+    
+    public ProfilPassagerFini(int nombreMax, Point point, int heureDepart, int frequence, DistributionTriangulaire distribution){
+        super(point, heureDepart, frequence, distribution);
+        this.nombreMax = nombreMax;
+    }
+    
+    public int getNombreMax(){
+        return nombreMax;
+    }
+    public void setNombreMax(int max){
+        nombreMax = max;
+    }
 }
