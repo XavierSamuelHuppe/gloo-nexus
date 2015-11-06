@@ -14,7 +14,7 @@ public class Carte {
     
     public Point ajouterPoint(Position position, String nom, ConteneurPassagers passagers){
         Point nouveauPoint = new Point(nom, passagers);
-        nouveauPoint.changerPosition(position);
+        nouveauPoint.setPosition(position);
         points.add(nouveauPoint);
         return nouveauPoint;
     }
@@ -23,7 +23,7 @@ public class Carte {
         int index = points.indexOf(pointCible);
         Point pointAChanger = points.get(index);
         pointAChanger.setNom(nom);
-        pointAChanger.changerPosition(position);
+        pointAChanger.setPosition(position);
     }
     
     public void retirerPoint(Point point){
