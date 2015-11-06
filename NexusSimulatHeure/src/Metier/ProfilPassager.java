@@ -10,18 +10,44 @@ package Metier;
  * @author Utilisateur
  */
 public class ProfilPassager {
-    public Point pointDepart;
-    public int heureDepart;
-    public int frequence;
+    private Point pointDepart;
+    private int heureDepart;
+    private int frequence;
     public DistributionTriangulaire distributionAUtiliser;
     public Statistiques statistiques;
+    
+    public ProfilPassager(Point point, int heureDepart, int frequence, DistributionTriangulaire distribution){
+        this.frequence = frequence;
+        this.heureDepart = heureDepart;
+        this.pointDepart = point;
+        this.distributionAUtiliser = distribution;
+    }
+    public Point getPointDepart(){
+        return pointDepart;
+    }
+    public int getHeureDepart(){
+        return heureDepart;
+    }
+    public int getFrequence(){
+        return frequence;
+    }
+    public void setPointDepart(Point point){
+        pointDepart = point;
+    }
+    public void setHeureDepart(int heureD){
+        heureDepart = heureD;
+    }
+    public void setFrequence(int freq){
+        frequence = freq;
+    }
+    
     
     public void pigerDonneesDepart()
     {
         //jajajajajaja
     }
     
-    /*  décommenter quand on va travailler la dessus, je sais pas trop quel genre de Mouseevent il veut. 
+    /*  décommenter quand on va travailler la dessus,  
     public Passager genererPassager()
     {
         Passager unPieton = new Passager();
