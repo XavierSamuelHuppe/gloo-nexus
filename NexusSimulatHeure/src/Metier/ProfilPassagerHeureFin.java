@@ -5,7 +5,7 @@ public class ProfilPassagerHeureFin extends ProfilPassager {
     private int heureFin;
     
     public ProfilPassagerHeureFin(int heureFin, Point point, int heureDepart, int frequence, DistributionTriangulaire distribution){
-        //super(point, heureDepart, frequence, distribution);
+        super(point, heureDepart, frequence, distribution);
         this.heureFin = heureFin;
     }
     
