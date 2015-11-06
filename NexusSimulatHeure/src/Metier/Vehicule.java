@@ -1,37 +1,54 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Metier;
 
-/**
- *
- * @author pp
- */
 public class Vehicule {
    
-    /* Existe pas  encore
     private ConteneurPassagers passagers;
     private Circuit circuitActuel;
-    */
-    public float progres;
+    public double progres;
     public Segment segmentActuel;
     
-    /*
-    À changer quand Position va exister
+    public Vehicule(Circuit circuit, Segment segment){
+        this.circuitActuel = circuit;
+        this.segmentActuel = segment;
+        this.progres = 0;
+        // passager?????????????????????????????????????????????
+    }
+    public Circuit getCircuit(){
+        return circuitActuel;
+    }
+    
+    public double getProgres(){
+        return progres;
+    }
+    public Segment getSegment(){
+        return segmentActuel;
+    }
+    
+    //Passager????
+    
+    
+    // A faire
     public Position obtenirPosition()
     {
-        Position xy = new Position();
-        
-        
-        return xy
-    }*/
+        Position xy = new Position(0,0);
+        return xy;
+    }
     
-    /*
-    À changer quand Position va exister
-    public void calculerPosition(Position posDepart, Position posArrivee)
+    //i guess que progres va jouer la dedans
+    private Position calculerPosition(Position posDepart, Position posArrivee)
     {
-        //xyz
-    }*/
+        double x,y,arrX,arrY,depX,depY;
+        Position nouvellePosition = new Position(0,0);
+        depX = posDepart.getX();
+        depY = posDepart.getY();
+        arrX = posArrivee.getX();
+        arrY = posArrivee.getY();
+        x = arrX - depX;
+        y = arrY - depY;
+        nouvellePosition.setX(x);
+        nouvellePosition.setY(y);
+        return nouvellePosition;
+        //nouvellePosition.setX();
+    }
 }
