@@ -10,7 +10,8 @@ package Metier;
  * @author Utilisateur
  */
 public class Statistiques {
-    public float TempsMoyen;
-    public float TempsMinimal;
-    public float tempsMaximal;
+    public double TempsMoyen;
+    public double TempsMinimal;
+    public double tempsMaximal;
+    
 }
