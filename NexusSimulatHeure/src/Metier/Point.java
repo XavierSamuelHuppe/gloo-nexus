@@ -1,10 +1,12 @@
 package Metier;
 
+import java.util.*;
+
 public class Point {
     private String nom;
-    private Position coordonee;
-    //private List<ProfilsPassagers> profilsPassagers;
-    //private List<Source> sources;
+    private Position position;
+    private List<ProfilPassager> profilsPassagers;
+    private List<Source> sources;
     private ConteneurPassagers passagers;
     
     public Point(String nom, ConteneurPassagers passagers) {
@@ -21,11 +23,11 @@ public class Point {
     }
 
     public Position getCoordonee() {
-        return coordonee;
+        return position;
     }
     
-    public void changerPosition(Position coordonee) {
-        this.coordonee = coordonee;
+    public void setPosition(Position position) {
+        this.position = position;
     }
     
 }

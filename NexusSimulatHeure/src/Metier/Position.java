@@ -25,10 +25,4 @@ public class Position {
     public void setY(double Y) {
         this.Y = Y;
     }
-    
-    
-//    public static Position genererPositionAleatoire()
-//    {
-//        return new Position((double)(Math.random() * 1000.0), (double)(Math.random() * 1000.0));
-//    }
 }

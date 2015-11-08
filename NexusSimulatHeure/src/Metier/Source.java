@@ -10,14 +10,40 @@ package Metier;
  * @author Pierre
  */
 public class Source {
-    public int frequence;
-    public int heureDebut;
-    public Point pointDepart;
-    /* existe pas encore
-    private Circuit circuit;
-    */
-    public DistributionTriangulaire distributionAUtiliser;
     
+    
+    private int frequence;
+    private int heureDebut;
+    private Point pointDepart;
+    private Circuit circuit;
+    
+    private DistributionTriangulaire distributionAUtiliser;
+    //Vrm pas sure pour les distribution, on verra
+    public Source(Point pointDepart, int heureDebut, int frequence, DistributionTriangulaire distribution){
+        this.frequence = frequence;
+        this.heureDebut = heureDebut;
+        this.pointDepart = pointDepart;
+        this.distributionAUtiliser = distribution;
+    }
+    
+    public Point getPointDepart(){
+        return pointDepart;
+    }
+    public int getheureDebut(){
+        return heureDebut;
+    }
+    public int getFrequence(){
+        return frequence;
+    }
+    public void setPointDepart(Point point){
+        pointDepart = point;
+    }
+    public void setheureDebut(int heureD){
+        heureDebut = heureD;
+    }
+    public void setFrequence(int freq){
+        frequence = freq;
+    }
     
     public void pigerDonneesDepart()
     {
