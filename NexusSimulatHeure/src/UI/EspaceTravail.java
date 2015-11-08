@@ -16,7 +16,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     
     private Controleur.Simulateur simulateur;
     
-    public enum Mode {POINT, SEGMENT, VEHICULE, PASSAGER};
+    public enum Mode {POINT, SEGMENT, CIRCUIT, SOURCE, PROFIL_PASSAGER};
 
     private Mode mode = Mode.POINT;
     private List<Point> points = new LinkedList<Point>();
@@ -266,10 +266,6 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
             //Détecter segment le plus proche.
             //Comparer le point du clic avec les segments en utilisant
             //Line2D.ptLineDist ou Line2D.intersects.
-        }
-        else if(mode == Mode.VEHICULE)
-        {
-            ajouterVehicule(me);
         }
     }
 

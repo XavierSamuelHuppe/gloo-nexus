@@ -3,6 +3,8 @@ package UI;
 import java.awt.Color;
 
 public class Couleurs {
+    //http://paletton.com/#uid=72P0N0kiCFn8GVde7NVmtwSqXtg
+    
     public static final java.awt.Color FOND_ESPACE_TRAVAIL = Color.decode("#FBFFF3");
     
     public static final java.awt.Color POINT = Color.decode("#5CDD5C");
@@ -17,4 +19,7 @@ public class Couleurs {
     public static final java.awt.Color VEHICULE1 = Color.decode("#FFFFFF");
     public static final java.awt.Color VEHICULE2 = Color.decode("#FFFFFF");
     
+    
+    public static final java.awt.Color UI_BARRE_BOUTONS_COULEUR_FOND = Color.decode("#E5F2FF");
+    public static final java.awt.Color UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF = Color.decode("#3399FF");
 }
