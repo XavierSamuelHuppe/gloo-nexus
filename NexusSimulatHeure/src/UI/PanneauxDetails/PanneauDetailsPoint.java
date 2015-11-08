@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package UI.PanneauxDetails;
 
 import UI.PanneauxDetails.PanneauDetails;
@@ -14,10 +9,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JTextField;
 
-/**
- *
- * @author The Vagrant Geek
- */
 public class PanneauDetailsPoint extends PanneauDetails implements java.util.Observer {
 
     private Metier.Point pointLie;

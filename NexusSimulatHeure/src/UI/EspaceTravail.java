@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package UI;
 
 import java.awt.*;
@@ -16,10 +11,6 @@ import java.util.List;
 import java.util.LinkedList;
 import javax.swing.SwingUtilities;
 
-/**
- *
- * @author The Vagrant Geek
- */
 public class EspaceTravail extends javax.swing.JPanel implements MouseListener, MouseMotionListener, MouseWheelListener
 {
     
@@ -46,7 +37,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         //Requis pour éviter des problèmes visuels.
         this.setLayout(null);
         
-        this.setBackground(Color.WHITE);
+        this.setBackground(Couleurs.FOND_ESPACE_TRAVAIL);
         
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
@@ -131,9 +122,9 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     
     private void ajouterPoint(MouseEvent me)
     {
-        Metier.Point mp = this.simulateur.ajouterPoint(transformerPositionEspaceTravailEnPostionGeorgraphique(me.getPoint()), "A");
+        //Metier.Point mp = this.simulateur.ajouterPoint(transformerPositionEspaceTravailEnPostionGeorgraphique(me.getPoint()), "A");
+        Metier.Point mp = this.simulateur.ajouterPoint(transformerPositionEspaceTravailEnPostionGeorgraphique(transformerPositionViewportEnPositionEspaceTravail(me.getPoint())), "A");
         
-//        Point p = new Point(me.getX() - (Point.DIAMETRE / 2),me.getY() - (Point.DIAMETRE / 2), this.zoom, mp);
         Point p = new Point(me.getX(),me.getY(), this.zoom, mp);
         
         points.add(p);
@@ -194,33 +185,13 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         for(Segment s : segments)
         {
             //g2.setColor(Color.decode("#EFE1FC"));
-            g2.setColor(Color.BLUE);
+            g2.setColor(Couleurs.SEGMENT);
             g2.setStroke(new BasicStroke((float)(TAILLE_TRAIT_SEGMENT * this.zoom)));
             g2.drawLine(s.getDepart().calculerCentreX(),s.getDepart().calculerCentreY(),
                         s.getArrivee().calculerCentreX(),s.getArrivee().calculerCentreY());
         }
     }
     
-    public void pointSelectionne(Point p)
-    {
-        System.out.println("pointSelectionne");
-        if(mode == Mode.SEGMENT)
-        {
-            if(tempSegmentPointDepart == null)
-            {
-                tempSegmentPointDepart = p;
-            }
-            else
-            {
-                ajouterSegment(tempSegmentPointDepart, p);
-                tempSegmentPointDepart = fanionClavier1 ? p : null;
-            }
-        }
-        else
-        {
-            afficherDetailsPoint(p);
-        }
-    }
 
     public void setFanionClavier1(boolean b)
     {
@@ -347,11 +318,49 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     
     
     
+    public void pointClique(Point p)
+    {
+        System.out.println("pointClique");
+        if(mode == Mode.SEGMENT)
+        {
+            if(tempSegmentPointDepart == null)
+            {
+                tempSegmentPointDepart = p;
+            }
+            else
+            {
+                ajouterSegment(tempSegmentPointDepart, p);
+                tempSegmentPointDepart = fanionClavier1 ? p : null;
+            }
+        }
+        else if (mode == Mode.POINT)
+        {
+            deselectionnerTousPoints();
+            p.setModeActuel(Point.Mode.SELECTIONNE);
+            afficherDetailsPoint(p);
+            p.repaint();
+        }
+    }
+        
     
     
     
     private void afficherDetailsPoint(Point pointCible)
     {
-        this.obtenirApplication().afficherPointSelectionne(pointCible);
+        this.obtenirApplication().afficherDetailsPoint(pointCible);
+    }
+    
+    
+    private void deselectionnerTousPoints()
+    {
+        for(UI.Point p : points)
+        {
+            if(p.getModeActuel() == Point.Mode.SELECTIONNE)
+            {
+                p.setModeActuel(Point.Mode.NORMAL);    
+                p.repaint();
+            }
+            
+        }
     }
 }

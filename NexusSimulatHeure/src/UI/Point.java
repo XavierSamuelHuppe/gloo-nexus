@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package UI;
 
 import java.awt.BasicStroke;
@@ -17,10 +12,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import javax.swing.BorderFactory;
 
-/**
- *
- * @author The Vagrant Geek
- */
 public class Point extends ElementEspaceTravail implements MouseListener, MouseMotionListener {
 
     enum Mode {NORMAL, SELECTIONNE};
@@ -68,15 +59,24 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         
         if(modeActuel == Mode.NORMAL)
         {
-            g2.setColor(Color.green);    
+            g2.setColor(Couleurs.POINT);    
         }
         else if(modeActuel == Mode.SELECTIONNE)
         {
-            g2.setColor(Color.blue);    
+            g2.setColor(Couleurs.POINT_SELECTIONNE);    
         }
         g2.fillOval(0, 0, calculerZoom(DIAMETRE), calculerZoom(DIAMETRE));
         
-        g2.setColor(Color.white);
+        
+        if(modeActuel == Mode.NORMAL)
+        {
+            g2.setColor(Couleurs.POINT_FOND);    
+        }
+        else if(modeActuel == Mode.SELECTIONNE)
+        {
+            g2.setColor(Couleurs.POINT_FOND_SELECTIONNE);    
+        }
+        
         g2.fillOval(calculerZoom(POSITION_CERCLE_INTERNE), calculerZoom(POSITION_CERCLE_INTERNE), calculerZoom(LARGEUR_CERCLE_INTERNE), calculerZoom(LARGEUR_CERCLE_INTERNE));
     }
        
@@ -100,9 +100,23 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         return (EspaceTravail)this.getParent();
     }
     
+    public Mode getModeActuel()
+    {
+        return this.modeActuel;
+    }
+    public void setModeActuel(Mode m)
+    {
+        this.modeActuel = m;
+    }
+        
+
+    boolean dragged = false;
+    
+    //<editor-fold desc="Implémentations MouseMotionListener, MouseListener">
     //Implémentations MouseMotionListener
     @Override
     public void mouseDragged(MouseEvent me) {
+        dragged = true;
         this.setLocation(this.getX() + me.getX() - (int)this.pointPoigneeDrag.getX(), this.getY() + me.getY() - (int)this.pointPoigneeDrag.getY());
         obtenirZone().repaint();
         System.out.println("Point mouseDragged");
@@ -119,15 +133,19 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
 
     @Override
     public void mouseClicked(MouseEvent me) {
-        obtenirEspaceTravail().pointSelectionne(this);
-        this.modeActuel = Mode.SELECTIONNE;
-        this.repaint();
+        obtenirEspaceTravail().pointClique(this);
+//        this.modeActuel = Mode.SELECTIONNE;
+//        this.repaint();
     }
     
     @Override
     public void mouseReleased(MouseEvent me) 
     {
-        this.obtenirEspaceTravail().deplacerPoint(this);
+        if(dragged)
+        {
+            this.obtenirEspaceTravail().deplacerPoint(this);    
+        }
+        dragged = false;
     }
 
     @Override
@@ -135,5 +153,7 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
 
     @Override
     public void mouseExited(MouseEvent me) {}
-    
+
+    //</editor-fold>
+
 }

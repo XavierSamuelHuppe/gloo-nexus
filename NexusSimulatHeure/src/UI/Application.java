@@ -1,20 +1,12 @@
 package UI;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 import UI.PanneauxDetails.PanneauDetailsPoint;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javafx.scene.input.KeyCode;
-/**
- *
- * @author The Vagrant Geek
- */
+
 public class Application extends javax.swing.JFrame implements KeyListener {
 
     @Override
@@ -97,7 +89,7 @@ public class Application extends javax.swing.JFrame implements KeyListener {
         this.LibelleZoom.setText(String.format("Zoom : %1$.0f", (zoom * 100)) + "%");
     }
     
-    public void afficherPointSelectionne(Point p)
+    public void afficherDetailsPoint(Point p)
     {
         this.PanneauDetails.removeAll();
         this.PanneauDetails.add(new PanneauDetailsPoint(p.getPointMetier()), BorderLayout.CENTER);
