@@ -1,5 +1,6 @@
 package UI;
 
+import UI.Constantes.Couleurs;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.FlowLayout;

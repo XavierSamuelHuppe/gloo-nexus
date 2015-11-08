@@ -1,5 +1,6 @@
 package UI;
 
+import UI.Constantes.Couleurs;
 import UI.PanneauxDetails.PanneauDetailsPoint;
 import java.awt.BorderLayout;
 import java.awt.Color;

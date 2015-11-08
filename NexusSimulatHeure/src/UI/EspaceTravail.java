@@ -1,5 +1,6 @@
 package UI;
 
+import UI.Constantes.Couleurs;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
@@ -28,9 +29,6 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     private Point tempSegmentPointDepart = null;
     
     private final double PAS_ZOOM = 0.1;
-    private final int TAILLE_TRAIT_SEGMENT = 5;
-    
-    
     
     public EspaceTravail()
     {
@@ -184,11 +182,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     {
         for(Segment s : segments)
         {
-            //g2.setColor(Color.decode("#EFE1FC"));
-            g2.setColor(Couleurs.SEGMENT);
-            g2.setStroke(new BasicStroke((float)(TAILLE_TRAIT_SEGMENT * this.zoom)));
-            g2.drawLine(s.getDepart().calculerCentreX(),s.getDepart().calculerCentreY(),
-                        s.getArrivee().calculerCentreX(),s.getArrivee().calculerCentreY());
+            s.dessiner(g2);
         }
     }
     

@@ -1,4 +1,4 @@
-package UI;
+package UI.Constantes;
 
 import java.awt.Color;
 
@@ -13,6 +13,9 @@ public class Couleurs {
     public static final java.awt.Color POINT_FOND_SELECTIONNE = Color.decode("#FFFFFF");
     
     public static final java.awt.Color SEGMENT = Color.decode("#5B8CC3");
+    public static final java.awt.Color SEGMENT_SELECTIONNE_INTERIEUR = Color.decode("#B3D0EF");
+    public static final java.awt.Color SEGMENT_SELECTIONNE_EXTERIEUR = Color.decode("#5B8CC3");
+    public static final java.awt.Color SEGMENT_TEXTE = Color.decode("#000000");
     
     public static final java.awt.Color CIRCUIT = Color.decode("#FFC46B");
     
