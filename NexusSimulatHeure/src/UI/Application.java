@@ -163,11 +163,12 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     {
         this.LibelleZoom.setText(String.format("Zoom : %1$.0f", (zoom * 100)) + "%");
     }
+
     
-    public void afficherDetailsPoint(Point p)
+    public void afficherPanneauDetails(IDetailsAffichables element)
     {
         this.PanneauDetails.removeAll();
-        this.PanneauDetails.add(new PanneauDetailsPoint(p.getPointMetier()), BorderLayout.CENTER);
+        this.PanneauDetails.add(element.obtenirPanneauDetails(), BorderLayout.CENTER);
         this.PanneauDetails.repaint();
         
         this.revalidate();

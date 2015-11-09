@@ -1,13 +1,19 @@
 package UI;
 
 import UI.Constantes.Couleurs;
+import UI.PanneauxDetails.PanneauDetails;
+import UI.PanneauxDetails.PanneauDetailsPoint;
+import UI.PanneauxDetails.PanneauDetailsSegment;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.geom.Line2D;
 
-public class Segment {
-    public enum Mode {NORMAL, SELECTIONNE};
+public class Segment implements IDetailsAffichables {
+    
+    private static final double TOLERANCE_CLIC = 5;
+    public enum Mode {NORMAL, SELECTIONNE, CIRCUIT, CIRCUIT_SELECTIONNE};
                
     private Point pointDepart;
     private Point pointArrivee;
@@ -41,37 +47,56 @@ public class Segment {
         this.modeActuel = m;
     }
     
+    public boolean estSegmentClique(java.awt.Point p)
+    {
+        return Line2D.ptSegDist((double)this.pointDepart.calculerCentreX(), (double)this.pointDepart.calculerCentreY(),
+                                (double)this.pointArrivee.calculerCentreX(), (double)this.pointArrivee.calculerCentreY(),
+                                (double)p.x, (double)p.y) <= TOLERANCE_CLIC;
+    }
+    
     public void dessiner(Graphics2D g2)
     {
         //@todo : Mettre zoom dans Segment?
         if(modeActuel == Mode.NORMAL)
         {
-            g2.setColor(Couleurs.SEGMENT);
-            g2.setStroke(new BasicStroke((float)(UI.Constantes.Rendu.TAILLE_TRAIT * obtenirZoom())));
-            g2.drawLine(this.getDepart().calculerCentreX(),this.getDepart().calculerCentreY(),
-                        this.getArrivee().calculerCentreX(),this.getArrivee().calculerCentreY());
+            dessinerTraitUnTon(g2, Couleurs.SEGMENT);
         }
         else if (modeActuel == Mode.SELECTIONNE)
         {
-            //Extérieur.
-            g2.setColor(Couleurs.SEGMENT_SELECTIONNE_EXTERIEUR);
-            g2.setStroke(new BasicStroke((float)(UI.Constantes.Rendu.TAILLE_TRAIT * obtenirZoom() * UI.Constantes.Rendu.FACTEUR_TRAIT_DEUX_TONS_EXTERIEUR)));
-            g2.drawLine(this.getDepart().calculerCentreX(),this.getDepart().calculerCentreY(),
-                        this.getArrivee().calculerCentreX(),this.getArrivee().calculerCentreY());
-            //Intérieur.
-            g2.setColor(Couleurs.SEGMENT_SELECTIONNE_INTERIEUR);
-            g2.setStroke(new BasicStroke((float)(UI.Constantes.Rendu.TAILLE_TRAIT * obtenirZoom() * UI.Constantes.Rendu.FACTEUR_TRAIT_DEUX_TONS_INTERIEUR)));
-            g2.drawLine(this.getDepart().calculerCentreX(),this.getDepart().calculerCentreY(),
-                        this.getArrivee().calculerCentreX(),this.getArrivee().calculerCentreY());
+            dessinerTraitDeuxTons(g2, Couleurs.SEGMENT_SELECTIONNE_EXTERIEUR, Couleurs.SEGMENT_SELECTIONNE_INTERIEUR);
         }
+        else if(modeActuel == Mode.CIRCUIT)
+        {
+            dessinerTraitUnTon(g2, Couleurs.CIRCUIT);
+        }
+        
         //Temps segment.
         java.awt.Point centreSegment = calculerCentreSegment();
         g2.setColor(Couleurs.SEGMENT_TEXTE);
         g2.setFont(new Font(null, Font.PLAIN, (int)(UI.Constantes.Rendu.TAILLE_POLICE_POINTS * obtenirZoom())));
         g2.drawString(obtenirTempsSegmentAffiche(), centreSegment.x, centreSegment.y + obtenirAjustementPositionYTexte());
-        
-//        g2.setColor(Color.ORANGE);
-//        g2.fillOval(centreSegment.x, centreSegment.y, 1, 1);
+    }
+    
+    private void dessinerTraitUnTon(Graphics2D g2, Color c1)
+    {
+        g2.setColor(c1);
+        g2.setStroke(new BasicStroke((float)(UI.Constantes.Rendu.TAILLE_TRAIT * obtenirZoom())));
+        g2.drawLine(this.getDepart().calculerCentreX(),this.getDepart().calculerCentreY(),
+                    this.getArrivee().calculerCentreX(),this.getArrivee().calculerCentreY());
+    }
+    
+    private void dessinerTraitDeuxTons(Graphics2D g2, Color cExt, Color cInt)
+    {
+        //Extérieur.
+        g2.setColor(cExt);
+        g2.setStroke(new BasicStroke((float)(UI.Constantes.Rendu.TAILLE_TRAIT * obtenirZoom() * UI.Constantes.Rendu.FACTEUR_TRAIT_DEUX_TONS_EXTERIEUR)));
+        g2.drawLine(this.getDepart().calculerCentreX(),this.getDepart().calculerCentreY(),
+                    this.getArrivee().calculerCentreX(),this.getArrivee().calculerCentreY());
+        //Intérieur.
+        g2.setColor(cInt);
+        g2.setStroke(new BasicStroke((float)(UI.Constantes.Rendu.TAILLE_TRAIT * obtenirZoom() * UI.Constantes.Rendu.FACTEUR_TRAIT_DEUX_TONS_INTERIEUR)));
+        g2.drawLine(this.getDepart().calculerCentreX(),this.getDepart().calculerCentreY(),
+                    this.getArrivee().calculerCentreX(),this.getArrivee().calculerCentreY());
     }
     
     private String tempsAffiche = null;
@@ -114,5 +139,14 @@ public class Segment {
         }
     }
     
+    public Metier.Segment getSegmentMetier()
+    {
+        return this.segmentMetier;
+    }
+    
+    @Override
+    public PanneauDetails obtenirPanneauDetails() {
+        return new PanneauDetailsSegment(this.getSegmentMetier());
+    }
     
 }

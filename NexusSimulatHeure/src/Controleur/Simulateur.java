@@ -7,6 +7,7 @@ public class Simulateur {
     {
         Metier.Point metierPoint = new Metier.Point(nom, new ConteneurPassagersIllimite());
         metierPoint.setPosition(pos);
+        metierPoint.setNom("LaLiLuLeLo");
         return metierPoint;
     }
     

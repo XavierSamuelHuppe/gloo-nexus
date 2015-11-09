@@ -255,11 +255,16 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         {
             ajouterPoint(me);
         }
-        else if(mode == Mode.SEGMENT)
+        else if(mode == Mode.SEGMENT || mode == Mode.CIRCUIT)
         {
-            //Détecter segment le plus proche.
-            //Comparer le point du clic avec les segments en utilisant
-            //Line2D.ptLineDist ou Line2D.intersects.
+            for(Segment s : segments)
+            {
+                if(s.estSegmentClique(me.getPoint()))
+                {
+                    segmentClique(s);
+                    break;
+                }
+            }
         }
     }
 
@@ -279,7 +284,6 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     
     private int posReferenceX = 0;
     private int posReferenceY = 0;
-    
     
     private double ratioPixelDegreLatitude = (double)(0.005 / 500.0);
     private double ratioPixelDegreLontitude = (double)(0.005 / 500.0);
@@ -310,7 +314,6 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     
     public void pointClique(Point p)
     {
-        System.out.println("pointClique");
         if(mode == Mode.SEGMENT)
         {
             if(tempSegmentPointDepart == null)
@@ -325,22 +328,42 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         }
         else if (mode == Mode.POINT)
         {
-            deselectionnerTousPoints();
+            deselectionnerTout();
             p.setModeActuel(Point.Mode.SELECTIONNE);
-            afficherDetailsPoint(p);
-            p.repaint();
+            afficherDetails(p);
+            this.repaint();
         }
     }
         
-    
-    
-    
-    private void afficherDetailsPoint(Point pointCible)
+    public void segmentClique(Segment s)
     {
-        this.obtenirApplication().afficherDetailsPoint(pointCible);
+        if(mode == Mode.SEGMENT)
+        {
+            deselectionnerTout();
+            s.setMode(Segment.Mode.SELECTIONNE);
+            afficherDetails(s);
+            this.repaint();
+        }
+        else if(mode == Mode.CIRCUIT)
+        {
+            deselectionnerTout();
+            s.setMode(Segment.Mode.CIRCUIT);
+            this.repaint();
+        }
     }
     
     
+    private void afficherDetails(IDetailsAffichables elementCible)
+    {
+        this.obtenirApplication().afficherPanneauDetails(elementCible);
+    }
+    
+    private void deselectionnerTout()
+    {
+        deselectionnerTousPoints();
+        deselectionnerTousSegments();
+    }
+       
     private void deselectionnerTousPoints()
     {
         for(UI.Point p : points)
@@ -350,7 +373,17 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
                 p.setModeActuel(Point.Mode.NORMAL);    
                 p.repaint();
             }
-            
+        }
+    }
+    
+    private void deselectionnerTousSegments()
+    {
+        for(UI.Segment s : segments)
+        {
+            if(s.getMode() == Segment.Mode.SELECTIONNE)
+            {
+                s.setMode(Segment.Mode.NORMAL);    
+            }
         }
     }
 }
