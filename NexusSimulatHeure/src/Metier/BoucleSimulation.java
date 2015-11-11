@@ -18,8 +18,8 @@ public class BoucleSimulation implements Runnable{
             }
             
             try {
-                int tempsAAttendre = 1000/sim.getFramerate();
-                Thread.sleep(tempsAAttendre);
+                int tempsAAttendreEnMili = 1000/sim.getFramerate();
+                Thread.sleep(tempsAAttendreEnMili);
             } catch(InterruptedException ex) {
                 System.out.println("Simulation stopée");
             }

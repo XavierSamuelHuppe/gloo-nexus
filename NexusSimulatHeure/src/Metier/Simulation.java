@@ -82,6 +82,9 @@ public class Simulation{
     public Etats getEtat() {
         return etat;
     }
+    public boolean estEnPause() {
+        return etat == Etats.PAUSE;
+    }
 
     public int getNombreJourSimulation() {
         return nombreJourSimulation;
