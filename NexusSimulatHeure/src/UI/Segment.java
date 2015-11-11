@@ -8,7 +8,9 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
+import java.awt.geom.Path2D;
 
 public class Segment implements IDetailsAffichables {
     
@@ -59,17 +61,17 @@ public class Segment implements IDetailsAffichables {
         //@todo : Mettre zoom dans Segment?
         if(modeActuel == Mode.NORMAL)
         {
-            dessinerTraitUnTon(g2, Couleurs.SEGMENT);
+            dessinerFlecheUnTon(g2, Couleurs.SEGMENT);
         }
         else if (modeActuel == Mode.SELECTIONNE)
         {
-            dessinerTraitDeuxTons(g2, Couleurs.SEGMENT_SELECTIONNE_EXTERIEUR, Couleurs.SEGMENT_SELECTIONNE_INTERIEUR);
+            dessinerFlecheDeuxTons(g2, Couleurs.SEGMENT_SELECTIONNE_EXTERIEUR, Couleurs.SEGMENT_SELECTIONNE_INTERIEUR);
         }
         else if(modeActuel == Mode.CIRCUIT)
         {
-            dessinerTraitUnTon(g2, Couleurs.CIRCUIT);
+            dessinerFlecheUnTon(g2, Couleurs.CIRCUIT);
         }
-        
+
         //Temps segment.
         java.awt.Point centreSegment = calculerCentreSegment();
         g2.setColor(Couleurs.SEGMENT_TEXTE);
@@ -77,26 +79,52 @@ public class Segment implements IDetailsAffichables {
         g2.drawString(obtenirTempsSegmentAffiche(), centreSegment.x, centreSegment.y + obtenirAjustementPositionYTexte());
     }
     
-    private void dessinerTraitUnTon(Graphics2D g2, Color c1)
+    private void dessinerFlecheUnTon(Graphics2D g2, Color c1)
     {
+        Path2D pointe = obtenirPointeFleche();
         g2.setColor(c1);
         g2.setStroke(new BasicStroke((float)(UI.Constantes.Rendu.TAILLE_TRAIT * obtenirZoom())));
+        g2.draw(pointe);
         g2.drawLine(this.getDepart().calculerCentreX(),this.getDepart().calculerCentreY(),
                     this.getArrivee().calculerCentreX(),this.getArrivee().calculerCentreY());
     }
     
-    private void dessinerTraitDeuxTons(Graphics2D g2, Color cExt, Color cInt)
+    private void dessinerFlecheDeuxTons(Graphics2D g2, Color cExt, Color cInt)
     {
+        Path2D pointe = obtenirPointeFleche();
         //Extérieur.
         g2.setColor(cExt);
         g2.setStroke(new BasicStroke((float)(UI.Constantes.Rendu.TAILLE_TRAIT * obtenirZoom() * UI.Constantes.Rendu.FACTEUR_TRAIT_DEUX_TONS_EXTERIEUR)));
+        g2.draw(pointe);
         g2.drawLine(this.getDepart().calculerCentreX(),this.getDepart().calculerCentreY(),
                     this.getArrivee().calculerCentreX(),this.getArrivee().calculerCentreY());
         //Intérieur.
         g2.setColor(cInt);
         g2.setStroke(new BasicStroke((float)(UI.Constantes.Rendu.TAILLE_TRAIT * obtenirZoom() * UI.Constantes.Rendu.FACTEUR_TRAIT_DEUX_TONS_INTERIEUR)));
+        g2.draw(pointe);
         g2.drawLine(this.getDepart().calculerCentreX(),this.getDepart().calculerCentreY(),
                     this.getArrivee().calculerCentreX(),this.getArrivee().calculerCentreY());
+    }
+    
+    private Path2D obtenirPointeFleche()
+    {
+        java.awt.Point pFleche = calculerPositionPointeFleche();
+        Path2D pointe = new Path2D.Double();
+        pointe.moveTo(0, 10);
+        pointe.lineTo(10, 0);
+        pointe.lineTo(0, -10);
+
+        AffineTransform transformation = AffineTransform.getTranslateInstance((int)pFleche.x, (int)pFleche.y);
+        transformation.concatenate(AffineTransform.getRotateInstance(calculerDeltaX(), calculerDeltaY()));
+        pointe = (Path2D)pointe.createTransformedShape(transformation);
+        return pointe;
+    }
+        
+    private java.awt.Point calculerPositionPointeFleche()
+    {
+        double angle = java.lang.Math.atan(this.calculerDeltaY() / this.calculerDeltaX());
+        java.awt.Point centre = calculerCentreSegment();
+        return new java.awt.Point((int)(centre.x + (0 * java.lang.Math.cos(angle))), (int)(centre.y + (0 * java.lang.Math.sin(angle))));
     }
     
     private String tempsAffiche = null;
@@ -142,6 +170,16 @@ public class Segment implements IDetailsAffichables {
     public Metier.Segment getSegmentMetier()
     {
         return this.segmentMetier;
+    }
+    
+    private double calculerDeltaX()
+    {
+        return this.pointArrivee.calculerCentreX() - this.pointDepart.calculerCentreX();
+    }
+    
+    private double calculerDeltaY()
+    {
+        return this.pointArrivee.calculerCentreY() - this.pointDepart.calculerCentreY();
     }
     
     @Override
