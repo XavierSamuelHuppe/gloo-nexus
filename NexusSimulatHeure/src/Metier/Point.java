@@ -30,4 +30,20 @@ public class Point {
         this.position = position;
     }
     
+    public void ajouterProfilPassaser(ProfilPassager profil) {
+        this.profilsPassagers.add(profil);
+    }
+    
+    public void retirerProfilPassager(ProfilPassager profil) {
+        this.profilsPassagers.remove(profil);
+    }
+    
+    public void ajouterSource(Source source) {
+        this.sources.add(source);
+    }
+    
+    public void retirerProfilPassager(Source source) {
+        this.sources.remove(source);
+    }
+    
 }
