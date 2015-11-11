@@ -1,5 +1,5 @@
 package Metier.Exceptions;
 
-public class SimulationEnActionException extends RuntimeException {
+public class SimulationEnActionException extends SimulationEnMauvaisEtat {
     
 }
