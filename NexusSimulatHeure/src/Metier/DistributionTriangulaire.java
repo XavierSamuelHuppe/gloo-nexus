@@ -1,6 +1,6 @@
 package Metier;
 
-public class DistributionTriangulaire implements IDistribution{
+public class DistributionTriangulaire implements Distribution{
     
     private final double a;
     private final double b;

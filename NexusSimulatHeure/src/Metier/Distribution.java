@@ -1,5 +1,5 @@
 package Metier;
 
-public interface IDistribution {
+public interface Distribution {
     public double obtenirProchaineValeurAleatoire();
 }
