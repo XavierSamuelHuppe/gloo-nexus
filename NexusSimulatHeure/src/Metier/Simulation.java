@@ -1,7 +1,9 @@
 package Metier;
 import java.time.*;
+import Metier.Exceptions.*;
 
 public class Simulation {
+    private boolean simulationActive;
     private Distribution distributionTempsTransitSegment;
     private Distribution distributionTempsGenerationVehicule;
     private Distribution distributionTempsGenerationPassager;
@@ -22,6 +24,7 @@ public class Simulation {
     }
     
     public void initialiserValeursParDefaut(){
+        simulationActive = false;
         distributionTempsTransitSegment = DISTRIBUTION_TEMPS_TRANSIT_SEGMENT_DEFAUT;
         distributionTempsGenerationVehicule = DISTRIBUTION_TEMPS_GENERATION_VEHICULE_DEFAUT;
         distributionTempsGenerationPassager = DISTRIBUTION_TEMPS_GENERATION_PASSAGER_DEFAUT;
@@ -29,4 +32,42 @@ public class Simulation {
         heureDebut = HEURE_DEBUT_DEFAUT;
         heureFin = HEURE_FIN_DEFAUT;
     }
+
+    public void setDistributionTempsTransitSegment(Distribution distributionTempsTransitSegment) {
+        if(simulationActive)
+            throw new SimulationEnActionException();
+        this.distributionTempsTransitSegment = distributionTempsTransitSegment;
+    }
+
+    public void setDistributionTempsGenerationVehicule(Distribution distributionTempsGenerationVehicule) {
+        if(simulationActive)
+            throw new SimulationEnActionException();
+        this.distributionTempsGenerationVehicule = distributionTempsGenerationVehicule;
+    }
+
+    public void setDistributionTempsGenerationPassager(Distribution distributionTempsGenerationPassager) {
+        if(simulationActive)
+            throw new SimulationEnActionException();
+        this.distributionTempsGenerationPassager = distributionTempsGenerationPassager;
+    }
+
+    public void setNombreJourSimulation(int nombreJourSimulation) {
+        if(simulationActive)
+            throw new SimulationEnActionException();
+        this.nombreJourSimulation = nombreJourSimulation;
+    }
+
+    public void setHeureDebut(LocalTime heureDebut) {
+        if(simulationActive)
+            throw new SimulationEnActionException();
+        this.heureDebut = heureDebut;
+    }
+
+    public void setHeureFin(LocalTime heureFin) {
+        if(simulationActive)
+            throw new SimulationEnActionException();
+        this.heureFin = heureFin;
+    }
+    
+    
 }
