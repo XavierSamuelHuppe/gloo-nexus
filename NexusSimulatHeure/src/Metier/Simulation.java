@@ -69,5 +69,4 @@ public class Simulation {
         this.heureFin = heureFin;
     }
     
-    
 }
