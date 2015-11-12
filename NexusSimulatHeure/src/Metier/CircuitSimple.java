@@ -7,6 +7,10 @@ public class CircuitSimple extends Circuit{
     private String nom;
     private List<Segment> trajet;
     
+    public CircuitSimple(String nom, List<Segment> trajet){
+        super(nom, trajet);
+    }
+    
     @Override
     public Segment obtenirProchainSegment(Segment dernierSegment) {
         int index = trajet.indexOf(dernierSegment);
