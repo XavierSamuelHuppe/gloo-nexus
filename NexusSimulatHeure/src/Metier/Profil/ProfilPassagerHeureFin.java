@@ -5,14 +5,14 @@ import Metier.DistributionTriangulaire;
 
 public class ProfilPassagerHeureFin extends ProfilPassager {
     
-    private int heureFin;
+    private double heureFin;
     
-    public ProfilPassagerHeureFin(int heureFin, Point point, int heureDepart, int frequence, DistributionTriangulaire distribution){
+    public ProfilPassagerHeureFin(double heureFin, Point point, double heureDepart, double frequence, DistributionTriangulaire distribution){
         super(point, heureDepart, frequence, distribution);
         this.heureFin = heureFin;
     }
     
-    public int getHeureFin(){
+    public double getHeureFin(){
         return heureFin;
     }
     public void setHeureFin(int Fin){
