@@ -12,13 +12,13 @@ public class BoucleSimulation implements Runnable{
     public void run() {
         while(true)
         {
-            if(sim.getEtat() == Simulation.Etats.ACTION){
-                double TempsEcouleParRatioEnSeconde = 1/sim.getFramerate() * sim.obtenirRatio();
+            if(sim.getParametres().estEnAction()){
+                double TempsEcouleParRatioEnSeconde = 1/sim.getParametres().getFramerate() * sim.getParametres().obtenirRatio();
                 sim.faireAvancerSimulation(TempsEcouleParRatioEnSeconde);
             }
             
             try {
-                int tempsAAttendreEnMili = 1000/sim.getFramerate();
+                int tempsAAttendreEnMili = 1000/sim.getParametres().getFramerate();
                 Thread.sleep(tempsAAttendreEnMili);
             } catch(InterruptedException ex) {
                 System.out.println("Simulation stopée");

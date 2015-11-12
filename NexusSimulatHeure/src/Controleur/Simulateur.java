@@ -30,7 +30,7 @@ public class Simulateur {
     }
     
     public void demarerRedemarer(){
-        if(simulation.estEnPause())
+        if(simulation.getParametres().estEnPause())
             simulation.redemarrer();
         else
             simulation.demarrer();
@@ -41,10 +41,10 @@ public class Simulateur {
     }
     
     public void modfierVitesse(int pourcentage){
-        simulation.modifierVitesse(pourcentage);
+        simulation.getParametres().modifierVitesse(pourcentage);
     }
     
     public void modfierFramerate(int pourcentage){
-        simulation.modifierFramerate(pourcentage);
+        simulation.getParametres().modifierFramerate(pourcentage);
     }
 }
