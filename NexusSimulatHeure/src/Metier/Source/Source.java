@@ -1,18 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Metier.Source;
 
 import Metier.Circuit.Circuit;
 import Metier.Carte.Point;
-import Metier.DistributionTriangulaire;
+import Metier.Distribution;
 
-/**
- *
- * @author Pierre
- */
 public class Source {
     
     
@@ -21,13 +12,12 @@ public class Source {
     private Point pointDepart;
     private Circuit circuit;
     
-    private DistributionTriangulaire distributionAUtiliser;
-    //Vrm pas sure pour les distribution, on verra
-    public Source(Point pointDepart, int heureDebut, int frequence, DistributionTriangulaire distribution){
+    private Distribution distribution;
+    public Source(Point pointDepart, int heureDebut, int frequence, Distribution distribution){
         this.frequence = frequence;
         this.heureDebut = heureDebut;
         this.pointDepart = pointDepart;
-        this.distributionAUtiliser = distribution;
+        this.distribution = distribution;
     }
     
     public Point getPointDepart(){

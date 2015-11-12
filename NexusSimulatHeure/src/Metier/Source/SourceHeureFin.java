@@ -1,29 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Metier.Source;
 
 import Metier.Carte.Point;
-import Metier.DistributionTriangulaire;
+import Metier.Distribution;
 
-/**
- *
- * @author Utilisateur
- */
 public class SourceHeureFin extends Source {
     private int heureFin;
     
-    public SourceHeureFin(int heureFin, Point point, int heureDepart, int frequence, DistributionTriangulaire distribution){
+    public SourceHeureFin(Point point, int heureDepart, int heureFin, int frequence, Distribution distribution){
         super(point, heureDepart, frequence, distribution);
         this.heureFin = heureFin;
     }
     
-    public int getheureFin(){
+    public int getHeureFin(){
         return heureFin;
     }
-    public void setheureFin(int Fin){
+    public void setHeureFin(int Fin){
         heureFin = Fin;
     }
 }
