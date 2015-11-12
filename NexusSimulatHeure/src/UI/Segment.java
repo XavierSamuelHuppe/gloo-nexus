@@ -116,6 +116,7 @@ public class Segment implements IDetailsAffichables {
 
         AffineTransform transformation = AffineTransform.getTranslateInstance((int)pFleche.x, (int)pFleche.y);
         transformation.concatenate(AffineTransform.getRotateInstance(calculerDeltaX(), calculerDeltaY()));
+        transformation.concatenate(AffineTransform.getScaleInstance(this.obtenirZoom(), this.obtenirZoom()));
         pointe = (Path2D)pointe.createTransformedShape(transformation);
         return pointe;
     }
