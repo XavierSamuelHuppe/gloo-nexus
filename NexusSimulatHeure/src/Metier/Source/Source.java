@@ -59,7 +59,7 @@ public abstract class Source {
     }/*  
     public Vehicule genererVehicule()
     {
-        //pas mal certain j'avais fait des modifs ici il y a 2 semaines, ils se sont perdu dans le void?
+        // connait capacité et son circuit
         Vehicule unChar = new Vehicule();
         return unChar;
     }*/
