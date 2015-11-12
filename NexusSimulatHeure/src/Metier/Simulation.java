@@ -71,4 +71,8 @@ public class Simulation{
         circuits.add(circuit);
     }
     
+    public void retirerCircuit(Circuit circuit){
+        circuits.remove(circuit);
+    }
+    
 }

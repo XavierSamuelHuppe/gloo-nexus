@@ -17,4 +17,13 @@ public class Segment {
         return pointArrivee;
     }
     
+    @Override
+    public boolean equals(Object o){
+        if (o == null) return false;
+        if (o == this) return true;
+        if (!(o instanceof Point))return false;
+        Segment autreSegment = (Segment)o;
+        return (pointDepart.equals(autreSegment.getPointDepart()) &&
+                pointArrivee.equals(autreSegment.getPointArrivee()));
+    }
 }
