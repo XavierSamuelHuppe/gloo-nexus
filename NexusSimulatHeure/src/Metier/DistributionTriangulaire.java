@@ -28,4 +28,8 @@ public class DistributionTriangulaire implements Distribution{
         return retour;
         //Credit: https://en.wikipedia.org/wiki/Triangular_distribution
     }
+    
+    public double obtenirMoyenne(){
+        return c;
+    }
 }

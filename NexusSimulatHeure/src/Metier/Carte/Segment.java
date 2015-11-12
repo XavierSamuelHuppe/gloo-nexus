@@ -1,12 +1,16 @@
 package Metier.Carte;
 
+import Metier.Distribution;
+
 public class Segment {
     private final Point pointDepart;
     private final Point pointArrivee;
+    private Distribution distribution;
     
-    public Segment(Point pointDepart, Point pointArrivee) {
+    public Segment(Point pointDepart, Point pointArrivee, Distribution distribution) {
         this.pointDepart = pointDepart;
         this.pointArrivee = pointArrivee;
+        this.distribution = distribution;
     }
 
     public Point getPointDepart() {
@@ -15,6 +19,10 @@ public class Segment {
 
     public Point getPointArrivee() {
         return pointArrivee;
+    }
+    
+    public double obtenirMoyenneTempsTransit() {
+        return distribution.obtenirMoyenne();
     }
     
     @Override

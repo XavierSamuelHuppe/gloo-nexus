@@ -7,6 +7,7 @@ import Metier.Carte.Point;
 import Metier.Carte.Segment;
 import Metier.Simulation.Simulation;
 import Metier.*;
+import Metier.Carte.Carte;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -134,5 +135,12 @@ public class Simulateur {
         CircuitBuilder builder = new CircuitBuilder();
         Circuit nouveauCircuit = builder.ConstruireCircuit(nom, segments);
         simulation.ajouterCircuit(nouveauCircuit);
+    }
+    
+    public void ajouterSegment(Point depart, Point arrivee){
+    }
+    
+    public void ajouterSegment(Point depart, Point arrivee, Distribution distribution){
+        
     }
 }

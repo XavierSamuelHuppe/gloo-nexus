@@ -49,10 +49,8 @@ public class Carte {
         return retour;
     }
     
-    public Segment ajouterSegment(Point depart, Point arrivee){
-        Segment nouveauSegment = new Segment(depart, arrivee);
-        segments.add(nouveauSegment);
-        return nouveauSegment;
+    public void ajouterSegment(Segment segment){
+        segments.add(segment);
     }
     
     public void retirerSegment(Segment segment){
@@ -77,4 +75,62 @@ public class Carte {
             return false;
         }
     }
+    
+    public List<Segment> plusCourtCheminEnTempsMoyen(Point depart, Point arrive){
+        Map<Point, Integer> temps = new HashMap<Point, Integer>();
+        Map<Point, Point> meilleurDernierPoint = new HashMap<Point, Point>();
+        
+        //On initialise les poids
+        for(Point p : points){
+            temps.put(p,0);
+            meilleurDernierPoint.put(p,null);
+        }
+        temps.put(depart,1);
+        
+        while(temps.size() != 0){
+            
+            //On pogne le plus petit poid
+            Integer lowestTime = 0;
+            Point lowestPoint = null;
+            
+            for(Map.Entry<Point, Integer> pair: temps.entrySet()){
+                if(lowestTime == 0 || (pair.getValue() < lowestTime)){
+                    lowestTime = pair.getValue();
+                    lowestPoint = pair.getKey();
+                }
+            }
+            temps.remove(lowestPoint);
+            
+            //On trouve ses adjacents
+            //si n'as pas de poid encore ou
+            //si nouveau poid plus petit qu'ancien, on modifie
+            for(Point p : obtenirPointsAdjacents(lowestPoint)){
+                Integer PoidAlternatif = temps.get(lowestPoint) + ((Double)(obtenirSegment(lowestPoint, p).obtenirMoyenneTempsTransit())).intValue();
+                if(temps.get(p) == 0 || (PoidAlternatif < temps.get(p) )){
+                    meilleurDernierPoint.put(p,lowestPoint);
+                    temps.put(p, PoidAlternatif);
+                }
+            }
+        }
+        
+        if(meilleurDernierPoint.get(arrive) == null){
+            throw new AucunCheminPossibleException();
+        }
+        
+        List<Segment> retour = new ArrayList<Segment>();
+        boolean pasDebut = true;
+        Point fin = arrive;
+        while(pasDebut){
+            Point avantFin = meilleurDernierPoint.get(fin);
+            Segment SegmentAAjouter = obtenirSegment(avantFin, fin);
+            retour.add(SegmentAAjouter);
+            if(avantFin.equals(depart)){
+                pasDebut = false;
+            }
+        }
+        Collections.reverse(retour);
+        return retour;
+    }
+    
+    
 }
