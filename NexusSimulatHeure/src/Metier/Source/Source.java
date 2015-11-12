@@ -29,6 +29,9 @@ public class Source {
     public int getFrequence(){
         return frequence;
     }
+    public Circuit getCircuit(){
+        return circuit;
+    }
     public void setPointDepart(Point point){
         pointDepart = point;
     }
@@ -48,4 +51,25 @@ public class Source {
         Vehicule unChar = new Vehicule();
         return unChar;
     }*/
+    
+    @Override
+    public boolean equals(Object o){
+        if (o == null) return false;
+        if (o == this) return true;
+        if (!(o instanceof Source))return false;
+        Source autreSource = (Source)o;
+        return (memeFrequence(autreSource) &&
+                memeCircuit(autreSource) &&
+                memePoint(autreSource));
+    }
+    
+    private boolean memeFrequence(Source autreSource){
+        return frequence == autreSource.getFrequence();
+    }
+    private boolean memeCircuit(Source autreSource){
+        return circuit.equals(autreSource.getCircuit());
+    }
+    private boolean memePoint(Source autreSource){
+        return pointDepart.equals(autreSource.getPointDepart());
+    }
 }
