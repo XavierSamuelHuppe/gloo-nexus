@@ -1,6 +1,7 @@
 package Controleur;
 
 import Metier.*;
+import java.time.LocalTime;
 
 public class Simulateur {
     
@@ -46,5 +47,29 @@ public class Simulateur {
     
     public void modfierFramerate(int pourcentage){
         simulation.getParametres().setFramerate(pourcentage);
+    }
+    
+    public void modifierDistributionTempsTransitSegment(Distribution dist){
+        simulation.getParametres().setDistributionTempsTransitSegment(dist);
+    }
+    
+    public void modifierDistributionTempsGenerationVehicule(Distribution dist){
+        simulation.getParametres().setDistributionTempsGenerationVehicule(dist);
+    }
+    
+    public void modifierDistributionTempsGenerationPassager(Distribution dist){
+        simulation.getParametres().setDistributionTempsGenerationPassager(dist);
+    }
+    
+    public void modifierNombreJourSimulation(int nombreJours){
+        simulation.getParametres().setNombreJourSimulation(nombreJours);
+    }
+    
+    public void modifierHeureDebut(LocalTime heure){
+        simulation.getParametres().setHeureDebut(heure);
+    }
+    
+    public void modifierHeureFin(LocalTime heure){
+        simulation.getParametres().setHeureFin(heure);
     }
 }
