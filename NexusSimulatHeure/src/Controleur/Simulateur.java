@@ -33,12 +33,12 @@ public class Simulateur {
         pointCible.setNom(nom);
     }
     
-    public void ajouterSourceHeureFin(double heureFin ,Point pointDepart, double heureDebut, double frequence){
-        simulation.ajouterSourceHeureFin(heureFin , pointDepart, heureDebut, frequence);
+    public void ajouterSourceHeureFin(double heureFin ,Point pointDepart, double heureDebut, double frequence, DistributionTriangulaire distribution){
+        simulation.ajouterSourceHeureFin(heureFin , pointDepart, heureDebut, frequence, distribution);
     }
     
-    public void ajouterSourceFinie(int nombreMax ,Point pointDepart, double heureDebut, double frequence){
-        simulation.ajoutersourceFinie(nombreMax , pointDepart, heureDebut, frequence);
+    public void ajouterSourceFinie(int nombreMax ,Point pointDepart, double heureDebut, double frequence, DistributionTriangulaire distribution){
+        simulation.ajoutersourceFinie(nombreMax , pointDepart, heureDebut, frequence, distribution);
     }
     
     public void ajouterProfilPassagerFini(int nombreMax, Point point, double heureDepart, double frequence, DistributionTriangulaire distribution){
