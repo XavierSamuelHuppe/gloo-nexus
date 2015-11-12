@@ -2,6 +2,7 @@ package Controleur;
 
 import Metier.*;
 import java.time.LocalTime;
+import java.util.*;
 
 public class Simulateur {
     
@@ -71,5 +72,11 @@ public class Simulateur {
     
     public void modifierHeureFin(LocalTime heure){
         simulation.getParametres().setHeureFin(heure);
+    }
+    
+    public void ajouterCircuit(String nom, List<Segment> segments){
+        CircuitBuilder builder = new CircuitBuilder();
+        Circuit nouveauCircuit = builder.ConstruireCircuit(nom, segments);
+        simulation.ajouterCircuit(nouveauCircuit);
     }
 }

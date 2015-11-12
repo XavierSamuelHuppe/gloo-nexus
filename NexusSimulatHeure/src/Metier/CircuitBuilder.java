@@ -1,9 +1,13 @@
 package Metier;
 
-import java.util.List;
+import Metier.Exceptions.*;
+import java.util.*;
 
 public class CircuitBuilder {
-    public static Circuit ConstruireCircuit(String nom, List<Segment> segments){
+    public Circuit ConstruireCircuit(String nom, List<Segment> segments){
+        if(segments.isEmpty())
+            throw new CreationInvalideException("Le circuit doit avoir au moins un segment");
+        
         Circuit nouveauCircuit;
         
         int indexDebut = 0;

@@ -67,12 +67,8 @@ public class Simulation{
         //faire spawner les gens
     }
     
-    public void AjouterCircuit(String nom, List<Segment> segments){
-        if(segments.size() == 0)
-            throw new CreationInvalideException("Le circuit doit avoir au moins un segment");
-        
-        Circuit nouveauCircuit = CircuitBuilder.ConstruireCircuit(nom, segments);
-        circuits.add(nouveauCircuit);
+    public void ajouterCircuit(Circuit circuit){
+        circuits.add(circuit);
     }
     
 }
