@@ -121,7 +121,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     private void ajouterPoint(MouseEvent me)
     {
         //Metier.Point mp = this.simulateur.ajouterPoint(transformerPositionEspaceTravailEnPostionGeorgraphique(me.getPoint()), "A");
-        Metier.Point mp = this.simulateur.ajouterPoint(transformerPositionEspaceTravailEnPostionGeorgraphique(transformerPositionViewportEnPositionEspaceTravail(me.getPoint())), "A");
+        Metier.Carte.Point mp = this.simulateur.ajouterPoint(transformerPositionEspaceTravailEnPostionGeorgraphique(transformerPositionViewportEnPositionEspaceTravail(me.getPoint())), "A");
         
         Point p = new Point(me.getX(),me.getY(), this.zoom, mp);
         
@@ -220,7 +220,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         //afficherPoint("vp", me.getPoint());
         java.awt.Point pET = transformerPositionViewportEnPositionEspaceTravail(me.getPoint());
         //afficherPoint("et", pET);
-        Metier.Position p = transformerPositionEspaceTravailEnPostionGeorgraphique(pET);
+        Metier.Carte.Position p = transformerPositionEspaceTravailEnPostionGeorgraphique(pET);
         //afficherPosition("geo", p);
         obtenirApplication().mettreAJourCoordonnesGeographiques(p.getY(), p.getX());
     }
@@ -230,7 +230,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         System.out.println(s + " : " + p.x + " " + p.y);
     }
     
-    private void afficherPosition(String s, Metier.Position p)
+    private void afficherPosition(String s, Metier.Carte.Position p)
     {
         System.out.println(s + " : " + p.getX() + " " + p.getY());
     }
@@ -288,15 +288,15 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     private double ratioPixelDegreLatitude = (double)(0.005 / 500.0);
     private double ratioPixelDegreLontitude = (double)(0.005 / 500.0);
 
-    public java.awt.Point transformerPostionGeorgraphiqueEnPositionEspaceTravail(Metier.Position posGeo)
+    public java.awt.Point transformerPostionGeorgraphiqueEnPositionEspaceTravail(Metier.Carte.Position posGeo)
     {
         return new java.awt.Point((int)(posGeo.getX() / ratioPixelDegreLontitude), 
                                   (int)(posGeo.getY() / -ratioPixelDegreLatitude));
     }
     
-        public Metier.Position transformerPositionEspaceTravailEnPostionGeorgraphique(java.awt.Point posET)
+        public Metier.Carte.Position transformerPositionEspaceTravailEnPostionGeorgraphique(java.awt.Point posET)
     {
-        return new Metier.Position(posET.x * ratioPixelDegreLontitude, 
+        return new Metier.Carte.Position(posET.x * ratioPixelDegreLontitude, 
                                    posET.y * -ratioPixelDegreLatitude);
     }
     

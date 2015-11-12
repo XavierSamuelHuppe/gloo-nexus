@@ -1,5 +1,7 @@
-package Metier;
+package Metier.Simulation;
 
+import Metier.Distribution;
+import Metier.DistributionTriangulaire;
 import Metier.Exceptions.SimulationEnMauvaisEtatException;
 import java.time.LocalTime;
 

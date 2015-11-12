@@ -11,9 +11,9 @@ import javax.swing.JTextField;
 
 public class PanneauDetailsSegment extends PanneauDetails implements java.util.Observer {
 
-    private Metier.Segment segmentLie;
+    private Metier.Carte.Segment segmentLie;
         
-    public PanneauDetailsSegment(Metier.Segment s)
+    public PanneauDetailsSegment(Metier.Carte.Segment s)
     {
         super();
         

@@ -3,7 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Metier;
+package Metier.Source;
+
+import Metier.Circuit.Circuit;
+import Metier.Carte.Point;
+import Metier.DistributionTriangulaire;
 
 /**
  *

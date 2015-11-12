@@ -11,13 +11,13 @@ import javax.swing.JTextField;
 
 public class PanneauDetailsPoint extends PanneauDetails implements java.util.Observer {
 
-    private Metier.Point pointLie;
+    private Metier.Carte.Point pointLie;
     
     private javax.swing.JTextField ChampTexteNom;
     private javax.swing.JTextField ChampTexteLatitude;
     private javax.swing.JTextField ChampTexteLongitude;
     
-    public PanneauDetailsPoint(Metier.Point p)
+    public PanneauDetailsPoint(Metier.Carte.Point p)
     {
         super();
         

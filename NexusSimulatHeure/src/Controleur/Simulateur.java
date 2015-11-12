@@ -1,5 +1,11 @@
 package Controleur;
 
+import Metier.Circuit.ConteneurPassagersIllimite;
+import Metier.Circuit.CircuitBuilder;
+import Metier.Circuit.Circuit;
+import Metier.Carte.Point;
+import Metier.Carte.Segment;
+import Metier.Simulation.Simulation;
 import Metier.*;
 import java.time.LocalTime;
 import java.util.*;
@@ -15,14 +21,14 @@ public class Simulateur {
         this.simulation = simulation;
     }
     
-    public Point ajouterPoint(Metier.Position pos, String nom){
-        Point metierPoint = new Metier.Point(nom, new ConteneurPassagersIllimite());
+    public Point ajouterPoint(Metier.Carte.Position pos, String nom){
+        Point metierPoint = new Metier.Carte.Point(nom, new ConteneurPassagersIllimite());
         metierPoint.setPosition(pos);
         metierPoint.setNom("LaLiLuLeLo");
         return metierPoint;
     }
     
-    public void modifierPoint(Metier.Point pointCible, Metier.Position pos, String nom){
+    public void modifierPoint(Metier.Carte.Point pointCible, Metier.Carte.Position pos, String nom){
         pointCible.setPosition(pos);
         pointCible.setNom(nom);
     }

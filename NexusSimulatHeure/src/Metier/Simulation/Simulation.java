@@ -1,7 +1,12 @@
-package Metier;
+package Metier.Simulation;
+import Metier.Carte.Carte;
+import Metier.Circuit.Circuit;
 import java.time.*;
 import java.util.*;
 import Metier.Exceptions.*;
+import Metier.Profil.ProfilPassager;
+import Metier.Source.Source;
+import Metier.Circuit.Vehicule;
 
 public class Simulation{
     private ParametreSimulation parametres;

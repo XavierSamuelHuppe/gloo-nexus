@@ -1,5 +1,6 @@
-package Metier;
+package Metier.Circuit;
 
+import Metier.Passager;
 import java.util.*;
 
 public class ConteneurPassagersIllimite implements ConteneurPassagers{

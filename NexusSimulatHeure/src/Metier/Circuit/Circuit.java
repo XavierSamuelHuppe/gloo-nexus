@@ -1,5 +1,6 @@
-package Metier;
+package Metier.Circuit;
 
+import Metier.Carte.Segment;
 import java.util.*;
 
 public abstract class Circuit {

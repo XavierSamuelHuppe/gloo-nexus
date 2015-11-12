@@ -1,5 +1,7 @@
-package Metier;
+package Metier.Circuit;
 
+import Metier.Circuit.Circuit;
+import Metier.Carte.Segment;
 import Metier.Exceptions.*;
 import java.util.List;
 

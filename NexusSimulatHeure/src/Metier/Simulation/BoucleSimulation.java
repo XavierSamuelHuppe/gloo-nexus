@@ -1,4 +1,4 @@
-package Metier;
+package Metier.Simulation;
 
 public class BoucleSimulation implements Runnable{
 

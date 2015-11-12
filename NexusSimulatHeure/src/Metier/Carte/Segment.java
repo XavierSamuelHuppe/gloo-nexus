@@ -1,4 +1,4 @@
-package Metier;
+package Metier.Carte;
 
 public class Segment {
     private final Point pointDepart;

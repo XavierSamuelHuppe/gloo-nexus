@@ -1,4 +1,7 @@
-package Metier;
+package Metier.Profil;
+
+import Metier.Carte.Point;
+import Metier.DistributionTriangulaire;
 
 public class ProfilPassagerHeureFin extends ProfilPassager {
     
