@@ -13,7 +13,7 @@ public class BoucleSimulation implements Runnable{
         while(true)
         {
             if(sim.getParametres().estEnAction()){
-                double TempsEcouleParRatioEnSeconde = 1/sim.getParametres().getFramerate() * sim.getParametres().obtenirRatio();
+                double TempsEcouleParRatioEnSeconde = 1/sim.getParametres().getFramerate() * sim.getParametres().obtenirRatioVitesse();
                 sim.faireAvancerSimulation(TempsEcouleParRatioEnSeconde);
             }
             

@@ -93,7 +93,7 @@ public class ParametreSimulation {
         return framerate;
     }
     
-        public double obtenirRatio() {
+    public double obtenirRatioVitesse() {
         double vitesseEnDouble = (new Integer(vitesse)).doubleValue();
         return vitesseEnDouble / 100;
     }
@@ -134,10 +134,10 @@ public class ParametreSimulation {
         this.heureFin = heureFin;
     }
     
-    public void modifierVitesse(int vitesse){
+    public void setVitesse(int vitesse){
         this.vitesse = vitesse;
     }
-    public void modifierFramerate(int framerate){
+    public void setFramerate(int framerate){
         this.framerate = framerate;
     }
 }

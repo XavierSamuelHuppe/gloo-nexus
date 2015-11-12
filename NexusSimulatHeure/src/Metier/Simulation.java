@@ -40,6 +40,7 @@ public class Simulation{
         
         parametres.mettreEnArret();
         boucleThread.interrupt();
+        //ré-init les données de la simulation
     }
     
     public void pauser(){
@@ -57,7 +58,13 @@ public class Simulation{
     }
             
     public void faireAvancerSimulation(double TempsEcouleParRatioEnSeconde){
+        if(!(parametres.estEnAction()))
+            throw new SimulationEnMauvaisEtatException();
         
+        //faire avancer les données de la simulation (heureCourant, journée courante
+        //faire avancer les vehicules
+        //faire spawner les vehicules
+        //faire spawner les gens
     }
     
 }

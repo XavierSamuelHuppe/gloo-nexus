@@ -41,10 +41,10 @@ public class Simulateur {
     }
     
     public void modfierVitesse(int pourcentage){
-        simulation.getParametres().modifierVitesse(pourcentage);
+        simulation.getParametres().setVitesse(pourcentage);
     }
     
     public void modfierFramerate(int pourcentage){
-        simulation.getParametres().modifierFramerate(pourcentage);
+        simulation.getParametres().setFramerate(pourcentage);
     }
 }
