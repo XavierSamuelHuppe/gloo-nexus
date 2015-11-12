@@ -80,4 +80,12 @@ public class Simulation{
         circuits.remove(circuit);
     }
     
+    public void ajouterSource(Source source){
+        sources.add(source);
+    }
+    
+    public void retirerSource(Source source){
+        sources.remove(source);
+    }
+    
 }

@@ -85,4 +85,5 @@ public class Simulateur {
         Circuit nouveauCircuit = builder.ConstruireCircuit(nom, segments);
         simulation.ajouterCircuit(nouveauCircuit);
     }
+    
 }
