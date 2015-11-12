@@ -46,4 +46,12 @@ public class Point {
         this.sources.remove(source);
     }
     
+    @Override
+    public boolean equals(Object o){
+        if (o == null) return false;
+        if (o == this) return true;
+        if (!(o instanceof Point))return false;
+        Point autrePoint = (Point)o;
+        return position.equals(autrePoint.getCoordonee());
+    }
 }
