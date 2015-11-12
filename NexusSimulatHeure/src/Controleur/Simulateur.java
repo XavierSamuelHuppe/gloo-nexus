@@ -38,7 +38,7 @@ public class Simulateur {
     }
     
     public void ajouterSourceFinie(int nombreMax ,Point pointDepart, double heureDebut, double frequence, DistributionTriangulaire distribution){
-        simulation.ajoutersourceFinie(nombreMax , pointDepart, heureDebut, frequence, distribution);
+        simulation.ajouterSourceFinie(nombreMax , pointDepart, heureDebut, frequence, distribution);
     }
     
     public void ajouterProfilPassagerFini(int nombreMax, Point point, double heureDepart, double frequence, DistributionTriangulaire distribution){
