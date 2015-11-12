@@ -24,7 +24,7 @@ public class Simulateur {
     public Point ajouterPoint(Metier.Carte.Position pos, String nom){
         Point metierPoint = new Metier.Carte.Point(nom, new ConteneurPassagersIllimite());
         metierPoint.setPosition(pos);
-        metierPoint.setNom("LaLiLuLeLo");
+        metierPoint.setNom(nom);
         return metierPoint;
     }
     
@@ -32,6 +32,56 @@ public class Simulateur {
         pointCible.setPosition(pos);
         pointCible.setNom(nom);
     }
+    
+    public void ajouterSourceHeureFin(double heureFin ,Point pointDepart, double heureDebut, double frequence){
+        simulation.ajouterSourceHeureFin(heureFin , pointDepart, heureDebut, frequence);
+    }
+    
+    public void ajouterSourceFinie(int nombreMax ,Point pointDepart, double heureDebut, double frequence){
+        simulation.ajoutersourceFinie(nombreMax , pointDepart, heureDebut, frequence);
+    }
+    
+    public void ajouterProfilPassagerFini(int nombreMax, Point point, double heureDepart, double frequence, DistributionTriangulaire distribution){
+        simulation.ajouterProfilPassagerFini(nombreMax, point, heureDepart, frequence, distribution);
+    }
+    
+    public void ajouterProfilPassagerHeureFin(double heureFin, Point point, double heureDepart, double frequence, DistributionTriangulaire distribution){
+        simulation.ajouterProfilPassagerHeureFin(heureFin, point, heureDepart, frequence, distribution);
+    }
+    
+    public void modifierSourceHeureFin(Metier.Source.SourceHeureFin sourceHeureFin, double heureFin ,Point pointDepart, double heureDebut, double frequence){
+        simulation.modifierSourceHeureFin(sourceHeureFin, heureFin , pointDepart, heureDebut, frequence);
+    }
+    
+    public void modifierSourceFinie(Metier.Source.SourceFinie sourceFinie, int nombreMax ,Point pointDepart, double heureDebut, double frequence){
+        simulation.modifierSourceFinie(sourceFinie, nombreMax ,pointDepart, heureDebut, frequence);
+    }
+    
+    public void modifierProfilPassagerFini(Metier.Profil.ProfilPassagerFini profilPassagerFini, int nombreMax, Point point, double heureDepart, double frequence, DistributionTriangulaire distribution){
+        simulation.modifierProfilPassagerFini(profilPassagerFini, nombreMax, point, heureDepart, frequence, distribution);
+        
+    }
+    
+    public void modifierProfilPassagerHeureFin(Metier.Profil.ProfilPassagerHeureFin ProfilPassagerHeureFin, double heureFin, Point point, double heureDepart, double frequence, DistributionTriangulaire distribution){
+        simulation.modifierProfilPassagerHeureFin(ProfilPassagerHeureFin,heureFin,point,heureDepart,frequence,distribution);
+    }
+    
+    public void retirerSourceHeureFin(Metier.Source.SourceHeureFin sourceHeureFin){
+        simulation.retirerSourceHeureFin(sourceHeureFin);
+    }
+    
+    public void retirerSourceFinie(Metier.Source.SourceFinie sourceFinie){
+        simulation.retirerSourceFinie(sourceFinie);
+    }
+    
+    public void retirerProfilPassagerFini(Metier.Profil.ProfilPassagerFini profilPassagerFini){
+        simulation.retirerProfilPassagerFini(profilPassagerFini);
+    }
+    
+    public void retirerProfilPassagerHeureFin(Metier.Profil.ProfilPassagerHeureFin profilPassagerHeureFin){
+        simulation.retirerProfilPassagerHeureFin(profilPassagerHeureFin);
+    }
+    
     
     public void arreter(){
         simulation.arreter();
