@@ -12,7 +12,7 @@ public abstract class ProfilPassager {
     public DistributionTriangulaire distributionAUtiliser;
     public Statistiques statistiques;
     
-    public ProfilPassager(Point point, int heureDepart, int frequence, DistributionTriangulaire distribution){
+    public ProfilPassager(Point point, double heureDepart, double frequence, DistributionTriangulaire distribution){
         this.frequence = frequence;
         this.heureDepart = heureDepart;
         this.pointDepart = point;
