@@ -67,17 +67,12 @@ public class Simulation{
         //faire spawner les gens
     }
     
-    public void AjouterCircuit(List<Segment> segments){
+    public void AjouterCircuit(String nom, List<Segment> segments){
         if(segments.size() == 0)
             throw new CreationInvalideException("Le circuit doit avoir au moins un segment");
         
-        int indexDebut = 0;
-        int indexFin = segments.size()-1;
-        if(segments.get(indexDebut).getPointDepart().equals(segments.get(indexFin).getPointArrivee())){
-            //boucle
-        }else{
-            //pas boucle
-        }
+        Circuit nouveauCircuit = CircuitBuilder.ConstruireCircuit(nom, segments);
+        circuits.add(nouveauCircuit);
     }
     
 }
