@@ -1,11 +1,11 @@
 package Metier.Simulation;
-import Metier.Carte.Carte;
+import Metier.Carte.*;
 import Metier.Circuit.Circuit;
 import java.time.*;
 import java.util.*;
 import Metier.Exceptions.*;
-import Metier.Profil.ProfilPassager;
-import Metier.Source.Source;
+import Metier.Profil.*;
+import Metier.Source.*;
 import Metier.Circuit.Vehicule;
 import Metier.DistributionTriangulaire;
 
@@ -83,7 +83,7 @@ public class Simulation{
     }
     
     public void modifierSourceHeureFin(Metier.Source.SourceHeureFin sourceHeureFin, double heureFin ,Point pointDepart, double heureDebut, double frequence){
-        
+        /*
         int index = profils.indexOf(sourceHeureFin);
         SourceHeureFin sourceAChanger = sources.get(index);
         
@@ -91,21 +91,21 @@ public class Simulation{
         sourceAChanger.setheureDebut(heureDebut);
         sourceAChanger.setPointDepart(pointDepart);
         sourceAChanger.setheureFin(heureFin);
-        
+        */
     }
     public void modifierSourceFinie(Metier.Source.SourceFinie sourceFinie, int nombreMax ,Point pointDepart, double heureDebut, double frequence){
-        
+        /*
         int index = profils.indexOf(sourceFinie);
         SourceFinie sourceAChanger = sources.get(index);
         
         sourceAChanger.setFrequence(frequence);
         sourceAChanger.setheureDebut(heureDebut);
         sourceAChanger.setPointDepart(pointDepart);
-        sourceAChanger.setNombreMax(nombreMax);
+        sourceAChanger.setNombreMax(nombreMax);*/
     }
     
     public void modifierProfilPassagerFini(Metier.Profil.ProfilPassagerFini profilPassagerFini, int nombreMax, Point point, double heureDepart, double frequence, DistributionTriangulaire distribution){
-        
+        /*
         int index = profils.indexOf(profilPassagerFini);
         ProfilPassagerFini profilAChanger = profils.get(index);
         
@@ -113,18 +113,18 @@ public class Simulation{
         profilAChanger.setHeureDepart(heureDepart);
         profilAChanger.setPointDepart(point);
         profilAChanger.setNombreMax(nombreMax);
-        
+        */
     }
     
     public void modifierProfilPassagerHeureFin(Metier.Profil.ProfilPassagerHeureFin profilPassagerHeureFin, double heureFin, Point point, double heureDepart, double frequence, DistributionTriangulaire distribution){
-        
+        /*
         int index = profils.indexOf(profilPassagerHeureFin);
         ProfilPassagerHeureFin profilAChanger = profils.get(index);
         
         profilAChanger.setFrequence(frequence);
         profilAChanger.setHeureDepart(heureDepart);
         profilAChanger.setPointDepart(point);
-        profilAChanger.setHeureFin(heureFin);
+        profilAChanger.setHeureFin(heureFin);*/
         
     }
     
@@ -145,22 +145,22 @@ public class Simulation{
     }
     
     public void ajouterSourceHeureFin(double heureFin ,Point pointDepart, double heureDebut, double frequence, DistributionTriangulaire distribution){
-        nouveauSourceHeureFin = new SourceHeureFin(heureFin , pointDepart, heureDebut, frequence, distribution);
+        SourceHeureFin nouveauSourceHeureFin = new SourceHeureFin(heureFin , pointDepart, heureDebut, frequence, distribution);
         sources.add(nouveauSourceHeureFin);
     }
     
     public void ajouterSourceFinie(int nombreMax ,Point pointDepart, double heureDebut, double frequence, DistributionTriangulaire distribution){
-        nouveauSourceFinie = new SourceFinie(nombreMax , pointDepart, heureDebut, frequence, distribution);
+        SourceFinie nouveauSourceFinie = new SourceFinie(nombreMax , pointDepart, heureDebut, frequence, distribution);
         sources.add(nouveauSourceFinie);
     }
     
     public void ajouterProfilPassagerFini(int nombreMax, Point point, double heureDepart, double frequence, DistributionTriangulaire distribution){
-        nouveauProfilPassagerFini = new ProfilPassagerFini(nombreMax, point, heureDepart, frequence, distribution);
+        ProfilPassagerFini nouveauProfilPassagerFini = new ProfilPassagerFini(nombreMax, point, heureDepart, frequence, distribution);
         profils.add(nouveauProfilPassagerFini);
     }
     
     public void ajouterProfilPassagerHeureFin(double heureFin, Point point, double heureDepart, double frequence, DistributionTriangulaire distribution){
-        nouveauProfilPassagerHeureFin = new ProfilPassagerHeureFin(heureFin, point, heureDepart, frequence, distribution);
+        ProfilPassagerHeureFin nouveauProfilPassagerHeureFin = new ProfilPassagerHeureFin(heureFin, point, heureDepart, frequence, distribution);
         profils.add(nouveauProfilPassagerHeureFin);
     }
     
