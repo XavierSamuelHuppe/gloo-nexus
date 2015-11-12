@@ -1,17 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Metier.Source;
 
 import Metier.Carte.Point;
 import Metier.DistributionTriangulaire;
 
-/**
- *
- * @author Utilisateur
- */
 public class SourceHeureFin extends Source {
     private int heureFin;
     
