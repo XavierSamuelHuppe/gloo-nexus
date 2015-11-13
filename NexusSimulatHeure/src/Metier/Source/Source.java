@@ -3,7 +3,7 @@ package Metier.Source;
 
 import Metier.Circuit.Circuit;
 import Metier.Carte.Point;
-import Metier.DistributionTriangulaire;
+import Metier.Distribution;
 import Metier.Circuit.Vehicule;
 import Metier.Carte.Segment;
 import Metier.Exceptions.CreationInvalideException;
@@ -12,16 +12,15 @@ import java.util.*;
 
 public abstract class Source {
     
-    
     private double frequence;
     private double heureDebut;
     private Point pointDepart;
     private Circuit circuitSource;
     private String typeSource;
     private int capaciteVehicule;
-    private DistributionTriangulaire distributionAUtiliser;
+    private Distribution distributionAUtiliser;
 
-    public Source(Point pointDepart, double heureDebut, double frequence, DistributionTriangulaire distribution, String typeSource, int capaciteVehicule, Circuit circuit){
+    public Source(Point pointDepart, double heureDebut, double frequence, Distribution distribution, String typeSource, int capaciteVehicule, Circuit circuit){
         this.frequence = frequence;
         this.heureDebut = heureDebut;
         this.pointDepart = pointDepart;
