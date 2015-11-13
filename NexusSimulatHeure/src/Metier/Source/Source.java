@@ -21,6 +21,7 @@ public abstract class Source {
     private Point pointDepart;
     private Circuit circuit;
     
+    private double tempsEntreGeneration;
     
     //private int capacite;
     
@@ -55,8 +56,9 @@ public abstract class Source {
     
     public void pigerDonneesDepart()
     {
-        //
-    }/*  
+        tempsEntreGeneration = distributionAUtiliser.obtenirProchaineValeurAleatoire();
+    }
+    /*  
     public Vehicule genererVehicule()
     {
         // connait capacité et son circuit
