@@ -7,6 +7,8 @@ import Metier.Carte.Point;
 import Metier.Carte.Segment;
 import Metier.Simulation.Simulation;
 import Metier.*;
+import Metier.Source.SourceBuilder;
+import Metier.Source.Source;
 import Metier.Carte.Carte;
 import java.time.LocalTime;
 import java.util.*;
@@ -34,55 +36,29 @@ public class Simulateur {
         pointCible.setNom(nom);
     }
     
-    public void ajouterSourceHeureFin(double heureFin ,Point pointDepart, double heureDebut, double frequence, DistributionTriangulaire distribution){
-        simulation.ajouterSourceHeureFin(heureFin , pointDepart, heureDebut, frequence, distribution);
+    public void ajouterSource(int nombreMax, Point pointDepart, double heureDebut, double frequence, Distribution distribution, int capaciteVehicule, Circuit circuit){
+        SourceBuilder builder = new SourceBuilder();
+        Source nouvelleSource = builder.ConstruireSource(nombreMax, pointDepart, heureDebut, frequence, distribution, capaciteVehicule, circuit);
+        simulation.ajouterSource(nouvelleSource);
+    }
+    public void ajouterSource(double heureFin, Point pointDepart, double heureDebut, double frequence, Distribution distribution, int capaciteVehicule, Circuit circuit){
+        SourceBuilder builder = new SourceBuilder();
+        Source nouvelleSource = builder.ConstruireSource(heureFin, pointDepart, heureDebut, frequence, distribution, capaciteVehicule, circuit);
+        simulation.ajouterSource(nouvelleSource);
+    }
+    public void retirerSource(Source source){
+        simulation.retirerSource(source);
     }
     
-    public void ajouterSourceFinie(int nombreMax ,Point pointDepart, double heureDebut, double frequence, DistributionTriangulaire distribution){
-        simulation.ajouterSourceFinie(nombreMax , pointDepart, heureDebut, frequence, distribution);
+    public void modifierSource(Source source, double heureFin, Point pointDepart, double heureDebut, double frequence, Distribution distribution, int capaciteVehicule, Circuit circuit){
+        simulation.retirerSource(source);
+        this.ajouterSource(heureFin, pointDepart, heureDebut, frequence, distribution, capaciteVehicule, circuit);
     }
     
-    public void ajouterProfilPassagerFini(int nombreMax, Point point, double heureDepart, double frequence, DistributionTriangulaire distribution){
-        simulation.ajouterProfilPassagerFini(nombreMax, point, heureDepart, frequence, distribution);
+    public void modifierSource(Source source, int nombreMax, Point pointDepart, double heureDebut, double frequence, Distribution distribution, int capaciteVehicule, Circuit circuit){
+        simulation.retirerSource(source);
+        this.ajouterSource(nombreMax, pointDepart, heureDebut, frequence, distribution, capaciteVehicule, circuit);
     }
-    
-    public void ajouterProfilPassagerHeureFin(double heureFin, Point point, double heureDepart, double frequence, DistributionTriangulaire distribution){
-        simulation.ajouterProfilPassagerHeureFin(heureFin, point, heureDepart, frequence, distribution);
-    }
-    
-    public void modifierSourceHeureFin(Metier.Source.SourceHeureFin sourceHeureFin, double heureFin ,Point pointDepart, double heureDebut, double frequence){
-        simulation.modifierSourceHeureFin(sourceHeureFin, heureFin , pointDepart, heureDebut, frequence);
-    }
-    
-    public void modifierSourceFinie(Metier.Source.SourceFinie sourceFinie, int nombreMax ,Point pointDepart, double heureDebut, double frequence){
-        simulation.modifierSourceFinie(sourceFinie, nombreMax ,pointDepart, heureDebut, frequence);
-    }
-    
-    public void modifierProfilPassagerFini(Metier.Profil.ProfilPassagerFini profilPassagerFini, int nombreMax, Point point, double heureDepart, double frequence, DistributionTriangulaire distribution){
-        simulation.modifierProfilPassagerFini(profilPassagerFini, nombreMax, point, heureDepart, frequence, distribution);
-        
-    }
-    
-    public void modifierProfilPassagerHeureFin(Metier.Profil.ProfilPassagerHeureFin ProfilPassagerHeureFin, double heureFin, Point point, double heureDepart, double frequence, DistributionTriangulaire distribution){
-        simulation.modifierProfilPassagerHeureFin(ProfilPassagerHeureFin,heureFin,point,heureDepart,frequence,distribution);
-    }
-    
-    public void retirerSourceHeureFin(Metier.Source.SourceHeureFin sourceHeureFin){
-        simulation.retirerSourceHeureFin(sourceHeureFin);
-    }
-    
-    public void retirerSourceFinie(Metier.Source.SourceFinie sourceFinie){
-        simulation.retirerSourceFinie(sourceFinie);
-    }
-    
-    public void retirerProfilPassagerFini(Metier.Profil.ProfilPassagerFini profilPassagerFini){
-        simulation.retirerProfilPassagerFini(profilPassagerFini);
-    }
-    
-    public void retirerProfilPassagerHeureFin(Metier.Profil.ProfilPassagerHeureFin profilPassagerHeureFin){
-        simulation.retirerProfilPassagerHeureFin(profilPassagerHeureFin);
-    }
-    
     
     public void arreter(){
         simulation.arreter();
