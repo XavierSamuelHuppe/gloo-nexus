@@ -63,6 +63,10 @@ public abstract class Source {
     {
         frequence = distributionAUtiliser.obtenirProchaineValeurAleatoire();
     }
+    
+    public void retirerDonneesDepart(){
+        frequence = 0;
+    }
     public Vehicule genererVehicule()
     {
         Segment segment = circuitSource.obtenirProchainSegment(pointDepart);
