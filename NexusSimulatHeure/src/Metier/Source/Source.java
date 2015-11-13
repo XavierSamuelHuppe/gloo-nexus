@@ -19,8 +19,6 @@ public abstract class Source {
     private Circuit circuitSource;
     private String typeSource;
     private int capaciteVehicule;
-    
-    
     private DistributionTriangulaire distributionAUtiliser;
 
     public Source(Point pointDepart, double heureDebut, double frequence, DistributionTriangulaire distribution, String typeSource, int capaciteVehicule, Circuit circuit){
@@ -76,18 +74,8 @@ public abstract class Source {
     }
     public Vehicule genererVehicule()
     {
-        Segment segment = null;
-        List<Segment> trajet = circuitSource.getTraget();
-        for(int i = trajet.size(); i >= 0; i--){
-            if (trajet.get(i).getPointDepart() == pointDepart){
-                segment = trajet.get(i);
-                break;
-            }
-        }
-        if (segment == null){
-            throw new CreationInvalideException("Le segment doit exister pour créer un vehicule dessus");
-        }
-        Vehicule vehicule = new Vehicule(circuitSource, segment);
+        Segment segment = circuitSource.obtenirProchainSegment(pointDepart);
+        Vehicule vehicule = new Vehicule(circuitSource, segment, capaciteVehicule);
         return vehicule;
     }
 }
