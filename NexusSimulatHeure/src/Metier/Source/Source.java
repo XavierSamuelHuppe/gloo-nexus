@@ -72,7 +72,7 @@ public abstract class Source {
     
     public void pigerDonneesDepart()
     {
-        //
+        frequence = distributionAUtiliser.obtenirProchaineValeurAleatoire();
     }
     public Vehicule genererVehicule()
     {
