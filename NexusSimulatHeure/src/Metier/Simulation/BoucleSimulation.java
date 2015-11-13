@@ -17,7 +17,8 @@ public class BoucleSimulation implements Runnable{
                 int framerate = sim.getParametres().getFramerate();
                 double ratioVitesse = sim.getParametres().obtenirRatioVitesse();
                 double TempsEcouleParRatioEnSeconde = (1/framerate) * ratioVitesse;
-                sim.faireAvancerSimulation(TempsEcouleParRatioEnSeconde);
+                long TempsEcouleParRatioEnNanos = ((Double)(TempsEcouleParRatioEnSeconde * 1000000000)).longValue();
+                sim.faireAvancerSimulation(TempsEcouleParRatioEnNanos);
             }
             long tEnd = System.currentTimeMillis();
             int tDelta = ((Long)(tEnd - tStart)).intValue();

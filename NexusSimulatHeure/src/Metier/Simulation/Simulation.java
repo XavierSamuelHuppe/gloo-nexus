@@ -7,13 +7,15 @@ import Metier.Exceptions.*;
 import Metier.Profil.*;
 import Metier.Source.*;
 import Metier.Circuit.Vehicule;
-import Metier.DistributionTriangulaire;
+import java.time.temporal.TemporalUnit;
 
-public class Simulation{
+public class Simulation extends Observable{
     private ParametreSimulation parametres;
     
     private Thread boucleThread;
     private BoucleSimulation boucle;
+    private LocalTime heureCourante;
+    private int JourneeCourante;
     
     private Carte carte;
     private List<Circuit> circuits;
@@ -30,7 +32,6 @@ public class Simulation{
         return parametres;
     }
     
-    
     public void demarrer(){
         if(!(parametres.estEnArret()))
             throw new SimulationEnMauvaisEtatException();
@@ -41,11 +42,16 @@ public class Simulation{
         boucle = new BoucleSimulation(this);
         boucleThread = new Thread(boucle, "boucle de la simulation");
         boucleThread.start();
+        notifyObservers();
     }
     
     private void initialiserDepartSimulation(){
+        JourneeCourante = 1;
+        initialiserDepartNouvelleJournee();
+    }
+    private void initialiserDepartNouvelleJournee(){
+        heureCourante = parametres.getHeureDebut();
         carte.initialiserDepartSimulation();
-        
         for(Source s: sources){
             s.pigerDonneesDepart();
         }
@@ -60,6 +66,9 @@ public class Simulation{
         parametres.mettreEnArret();
         boucleThread.interrupt();
         //ré-init les données de la simulation
+        //Fermer les statistiques
+        
+        notifyObservers();
     }
     
     private void terminerSimulation(){
@@ -69,6 +78,8 @@ public class Simulation{
             s.retirerDonneesDepart();
         }
         //+ dist profils
+        
+        notifyObservers();
     }
     
     public void pauser(){
@@ -76,6 +87,8 @@ public class Simulation{
             throw new SimulationEnMauvaisEtatException();
         
         parametres.mettreEnPause();
+        
+        notifyObservers();
     }
     
     public void redemarrer(){
@@ -83,16 +96,28 @@ public class Simulation{
             throw new SimulationEnMauvaisEtatException();
         
         parametres.mettreEnAction();
+        
+        notifyObservers();
     }
             
-    public void faireAvancerSimulation(double TempsEcouleParRatioEnSeconde){
+    public void faireAvancerSimulation(long TempsEcouleParRatioEnNanos){
         if(!(parametres.estEnAction()))
             throw new SimulationEnMauvaisEtatException();
         
-        //faire avancer les données de la simulation (heureCourant, journée courante
+        heureCourante = heureCourante.plusNanos(TempsEcouleParRatioEnNanos);
+        
         //faire avancer les vehicules
         //faire spawner les vehicules
         //faire spawner les gens
+        
+        if(heureCourante.isAfter(parametres.getHeureFin()) && !(JourneeCourante == parametres.getNombreJourSimulation())){
+            JourneeCourante += 1;
+            initialiserDepartNouvelleJournee();
+        }else{
+            arreter();
+        }
+                
+        notifyObservers();
     }
     
     public void ajouterCircuit(Circuit circuit){
