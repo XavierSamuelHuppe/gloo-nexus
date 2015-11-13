@@ -1,5 +1,7 @@
-package Metier;
+package Metier.Circuit;
 
+import Metier.Circuit.Circuit;
+import Metier.Carte.Segment;
 import Metier.Exceptions.*;
 import java.util.List;
 
@@ -10,6 +12,10 @@ import java.util.List;
 public class CircuitBoucle extends Circuit {
     private String nom;
     private List<Segment> trajet;
+    
+    public CircuitBoucle(String nom, List<Segment> trajet){
+        super(nom, trajet);
+    }
     
     @Override
     public Segment obtenirProchainSegment(Segment dernierSegment){

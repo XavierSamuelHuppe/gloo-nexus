@@ -1,4 +1,6 @@
-package Metier;
+package Metier.Simulation;
+
+import Metier.Passager;
 
 public class Statistiques {
     public double TempsMoyen;

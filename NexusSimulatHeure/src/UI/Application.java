@@ -1,59 +1,103 @@
 package UI;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+import UI.Constantes.Couleurs;
 import UI.PanneauxDetails.PanneauDetailsPoint;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.ActionListener;
 import javafx.scene.input.KeyCode;
-/**
- *
- * @author The Vagrant Geek
- */
-public class Application extends javax.swing.JFrame implements KeyListener {
+
+
+public class Application extends javax.swing.JFrame implements KeyListener, ActionListener {
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        switch(ae.getActionCommand())
+        {
+            case UI.Constantes.Commandes.MODE_POINT:
+                passerEnModePoint();
+                break;
+            case UI.Constantes.Commandes.MODE_SEGMENT:
+                passerEnModeSegment();
+                break;
+            case UI.Constantes.Commandes.MODE_CIRCUIT:
+                passerEnModeCircuit();
+                break;
+            case UI.Constantes.Commandes.MODE_SOURCE:
+                passerEnModeSource();
+                break;
+            case UI.Constantes.Commandes.MODE_PROFIL_PASSAGER:
+                passerEnModeProfilPassager();
+                break;
+        }
+    }
 
     @Override
     public void keyTyped(KeyEvent ke) {
         System.out.println("keyTyped " + ke.getKeyChar());
-        reinitialiserCouleurBoutonsModes();
         if(ke.getKeyChar()=='1')
         {
-            ZoneEspaceTravail.setMode(EspaceTravail.Mode.POINT);
-            BoutonModePoint.setBackground(Color.yellow);
+            passerEnModePoint();
         }
         else if (ke.getKeyChar()=='2')
         {
-            ZoneEspaceTravail.setMode(EspaceTravail.Mode.SEGMENT);
-            BoutonModeSegment.setBackground(Color.yellow);
+            passerEnModeSegment();
         }
         else if (ke.getKeyChar()=='3')
         {
-            ZoneEspaceTravail.setMode(EspaceTravail.Mode.VEHICULE);
-            BoutonModeSource.setBackground(Color.yellow);
+            passerEnModeSource();
         }
         else if (ke.getKeyChar()=='4')
         {
-            ZoneEspaceTravail.setMode(EspaceTravail.Mode.PASSAGER);
-            BoutonModeProfilPassager.setBackground(Color.yellow);
+            passerEnModeProfilPassager();
         }
-        else if (ke.getKeyChar()=='9')
-        {
-            
-        }
+    }
+    
+    public void passerEnModePoint()
+    {
+        reinitialiserCouleurBoutonsModes();
+        ZoneEspaceTravail.setMode(EspaceTravail.Mode.POINT);
+        BoutonModePoint.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
+    }
+    
+    public void passerEnModeSegment()
+    {
+        reinitialiserCouleurBoutonsModes();
+        ZoneEspaceTravail.setMode(EspaceTravail.Mode.SEGMENT);
+        BoutonModeSegment.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
+    }
+    
+    public void passerEnModeCircuit()
+    {
+        reinitialiserCouleurBoutonsModes();
+        ZoneEspaceTravail.setMode(EspaceTravail.Mode.CIRCUIT);
+        BoutonModeCircuit.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
+    }
+    
+    public void passerEnModeSource()
+    {
+        reinitialiserCouleurBoutonsModes();
+        ZoneEspaceTravail.setMode(EspaceTravail.Mode.SOURCE);
+        BoutonModeSource.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
+    }
+    
+    public void passerEnModeProfilPassager()
+    {
+        reinitialiserCouleurBoutonsModes();
+        ZoneEspaceTravail.setMode(EspaceTravail.Mode.PROFIL_PASSAGER);
+        BoutonModeProfilPassager.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
     }
     
     private void reinitialiserCouleurBoutonsModes()
     {
-        BoutonModePoint.setBackground(Color.decode("#F0F0F0"));
-        BoutonModeSegment.setBackground(Color.decode("#F0F0F0"));
-        BoutonModeCircuit.setBackground(Color.decode("#F0F0F0"));
-        BoutonModeSource.setBackground(Color.decode("#F0F0F0"));
-        BoutonModeProfilPassager.setBackground(Color.decode("#F0F0F0"));
+        BoutonModePoint.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND);
+        BoutonModeSegment.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND);
+        BoutonModeCircuit.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND);
+        BoutonModeSource.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND);
+        BoutonModeProfilPassager.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND);
     }
 
     private boolean fanionClavier1 = false;
@@ -85,6 +129,29 @@ public class Application extends javax.swing.JFrame implements KeyListener {
         this.BoutonNouveau.addKeyListener(this);
         
         this.ZoneEspaceTravail.setSimulateur(new Controleur.Simulateur());
+        
+        
+        
+        
+        initialiserBoutonsModes();
+    }
+    
+    private void initialiserBoutonsModes()
+    {
+        this.BoutonModePoint.setActionCommand(UI.Constantes.Commandes.MODE_POINT);
+        this.BoutonModePoint.addActionListener(this);
+        
+        this.BoutonModeSegment.setActionCommand(UI.Constantes.Commandes.MODE_SEGMENT);
+        this.BoutonModeSegment.addActionListener(this);
+        
+        this.BoutonModeCircuit.setActionCommand(UI.Constantes.Commandes.MODE_CIRCUIT);
+        this.BoutonModeCircuit.addActionListener(this);
+        
+        this.BoutonModeSource.setActionCommand(UI.Constantes.Commandes.MODE_SOURCE);
+        this.BoutonModeSource.addActionListener(this);
+        
+        this.BoutonModeProfilPassager.setActionCommand(UI.Constantes.Commandes.MODE_PROFIL_PASSAGER);
+        this.BoutonModeProfilPassager.addActionListener(this);        
     }
 
     public void mettreAJourCoordonnesGeographiques(double latitude, double longitude)
@@ -96,11 +163,12 @@ public class Application extends javax.swing.JFrame implements KeyListener {
     {
         this.LibelleZoom.setText(String.format("Zoom : %1$.0f", (zoom * 100)) + "%");
     }
+
     
-    public void afficherPointSelectionne(Point p)
+    public void afficherPanneauDetails(IDetailsAffichables element)
     {
         this.PanneauDetails.removeAll();
-        this.PanneauDetails.add(new PanneauDetailsPoint(p.getPointMetier()), BorderLayout.CENTER);
+        this.PanneauDetails.add(element.obtenirPanneauDetails(), BorderLayout.CENTER);
         this.PanneauDetails.repaint();
         
         this.revalidate();

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package UI;
 
 import java.awt.BasicStroke;
@@ -17,10 +12,6 @@ import java.awt.geom.Path2D;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 
-/**
- *
- * @author The Vagrant Geek
- */
 public class Vehicule extends ElementEspaceTravail {
     
     private final int LARGEUR = 100;

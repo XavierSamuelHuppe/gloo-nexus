@@ -1,11 +1,17 @@
-package Metier;
+package Metier.Circuit;
 
+import Metier.Circuit.Circuit;
+import Metier.Carte.Segment;
 import Metier.Exceptions.*;
 import java.util.List;
 
 public class CircuitSimple extends Circuit{
     private String nom;
     private List<Segment> trajet;
+    
+    public CircuitSimple(String nom, List<Segment> trajet){
+        super(nom, trajet);
+    }
     
     @Override
     public Segment obtenirProchainSegment(Segment dernierSegment) {

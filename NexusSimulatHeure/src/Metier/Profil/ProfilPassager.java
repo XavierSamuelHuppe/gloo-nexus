@@ -1,22 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package Metier;
 
-/**
- *
- * @author Utilisateur
- */
-public class ProfilPassager {
+package Metier.Profil;
+
+import Metier.Carte.Point;
+import Metier.DistributionTriangulaire;
+import Metier.Simulation.Statistiques;
+
+public abstract class ProfilPassager {
     private Point pointDepart;
-    private int heureDepart;
-    private int frequence;
+    private double heureDepart;
+    private double frequence;
     public DistributionTriangulaire distributionAUtiliser;
     public Statistiques statistiques;
     
-    public ProfilPassager(Point point, int heureDepart, int frequence, DistributionTriangulaire distribution){
+    public ProfilPassager(Point point, double heureDepart, double frequence, DistributionTriangulaire distribution){
         this.frequence = frequence;
         this.heureDepart = heureDepart;
         this.pointDepart = point;
@@ -25,10 +21,10 @@ public class ProfilPassager {
     public Point getPointDepart(){
         return pointDepart;
     }
-    public int getHeureDepart(){
+    public double getHeureDepart(){
         return heureDepart;
     }
-    public int getFrequence(){
+    public double getFrequence(){
         return frequence;
     }
     public void setPointDepart(Point point){
@@ -44,10 +40,10 @@ public class ProfilPassager {
     
     public void pigerDonneesDepart()
     {
-        //jajajajajaja
+        //
     }
     
-    /*  décommenter quand on va travailler la dessus,  
+    /*   
     public Passager genererPassager()
     {
         Passager unPieton = new Passager();

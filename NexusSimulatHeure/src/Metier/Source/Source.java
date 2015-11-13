@@ -3,23 +3,31 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Metier;
+package Metier.Source;
+
+import Metier.Circuit.Circuit;
+import Metier.Carte.Point;
+import Metier.DistributionTriangulaire;
 
 /**
  *
  * @author Pierre
  */
-public class Source {
+public abstract class Source {
     
     
-    private int frequence;
-    private int heureDebut;
+    private double frequence;
+    private double heureDebut;
     private Point pointDepart;
     private Circuit circuit;
     
+    
+    //private int capacite;
+    
+    
     private DistributionTriangulaire distributionAUtiliser;
     //Vrm pas sure pour les distribution, on verra
-    public Source(Point pointDepart, int heureDebut, int frequence, DistributionTriangulaire distribution){
+    public Source(Point pointDepart, double heureDebut, double frequence, DistributionTriangulaire distribution){
         this.frequence = frequence;
         this.heureDebut = heureDebut;
         this.pointDepart = pointDepart;
@@ -29,28 +37,29 @@ public class Source {
     public Point getPointDepart(){
         return pointDepart;
     }
-    public int getheureDebut(){
+    public double getheureDebut(){
         return heureDebut;
     }
-    public int getFrequence(){
+    public double getFrequence(){
         return frequence;
     }
     public void setPointDepart(Point point){
         pointDepart = point;
     }
-    public void setheureDebut(int heureD){
+    public void setheureDebut(double heureD){
         heureDebut = heureD;
     }
-    public void setFrequence(int freq){
+    public void setFrequence(double freq){
         frequence = freq;
     }
     
     public void pigerDonneesDepart()
     {
-        //jajajajajaja
-    }/*  décommenter quand on va travailler la dessus, je sais pas trop quel genre de Mouseevent il veut. 
+        //
+    }/*  
     public Vehicule genererVehicule()
     {
+        // connait capacité et son circuit
         Vehicule unChar = new Vehicule();
         return unChar;
     }*/
