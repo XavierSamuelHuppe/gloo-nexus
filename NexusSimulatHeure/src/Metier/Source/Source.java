@@ -16,16 +16,14 @@ public abstract class Source {
     private double heureDebut;
     private Point pointDepart;
     private Circuit circuitSource;
-    private String typeSource;
     private int capaciteVehicule;
     private Distribution distributionAUtiliser;
 
-    public Source(Point pointDepart, double heureDebut, double frequence, Distribution distribution, String typeSource, int capaciteVehicule, Circuit circuit){
+    public Source(Point pointDepart, double heureDebut, double frequence, Distribution distribution, int capaciteVehicule, Circuit circuit){
         this.frequence = frequence;
         this.heureDebut = heureDebut;
         this.pointDepart = pointDepart;
         this.distributionAUtiliser = distribution;
-        this.typeSource = typeSource;
         this.capaciteVehicule = capaciteVehicule;
         this.circuitSource = circuit;
     }
@@ -38,9 +36,6 @@ public abstract class Source {
     }
     public double getFrequence(){
         return frequence;
-    }
-    public String getTypeSource(){
-        return typeSource;
     }
     public int getcapacite(){
         return capaciteVehicule;
@@ -56,9 +51,6 @@ public abstract class Source {
     }
     public void setFrequence(double freq){
         frequence = freq;
-    }
-    public void setTypeSource(String type){
-        typeSource = type;
     }
     public void setCapacite(int capacite){
         capaciteVehicule = capacite;
