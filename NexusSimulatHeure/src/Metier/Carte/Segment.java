@@ -1,11 +1,14 @@
 package Metier.Carte;
 
 import Metier.Distribution;
+import java.util.Observable;
 
-public class Segment {
+public class Segment extends Observable{
     private final Point pointDepart;
     private final Point pointArrivee;
     private Distribution distribution;
+    
+    private double tempsTransit;
     
     public Segment(Point pointDepart, Point pointArrivee, Distribution distribution) {
         this.pointDepart = pointDepart;
@@ -21,8 +24,21 @@ public class Segment {
         return pointArrivee;
     }
     
+    public double getTempsTransit() {
+        return tempsTransit;
+    }
+    
     public double obtenirMoyenneTempsTransit() {
         return distribution.obtenirMoyenne();
+    }
+    
+    public void recevoirNouveauTempsTransit() {
+        tempsTransit = distribution.obtenirProchaineValeurAleatoire();
+        notifyObservers();
+    }
+    
+    public void retirerTempsTransit() {
+        tempsTransit = 0;
     }
     
     @Override
