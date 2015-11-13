@@ -13,6 +13,12 @@ public class Carte {
         points = new ArrayList();
     }
     
+    public void initialiserDepartSimulation(){
+        for(Segment s: segments){
+            s.recevoirNouveauTempsTransit();
+        }
+    }
+    
     public void ajouterPoint(Point point){
         points.add(point);
     }
