@@ -35,19 +35,40 @@ public class Simulation{
         if(!(parametres.estEnArret()))
             throw new SimulationEnMauvaisEtatException();
         
+        //init des données de la simulatiion
+        initialiserDepartSimulation();
         parametres.mettreEnAction();
         boucle = new BoucleSimulation(this);
         boucleThread = new Thread(boucle, "boucle de la simulation");
         boucleThread.start();
     }
     
+    private void initialiserDepartSimulation(){
+        carte.initialiserDepartSimulation();
+        
+        for(Source s: sources){
+            s.pigerDonneesDepart();
+        }
+        //+ dist profils
+    }
+    
     public void arreter(){
         if(parametres.estEnArret())
             throw new SimulationEnMauvaisEtatException();
         
+        terminerSimulation();
         parametres.mettreEnArret();
         boucleThread.interrupt();
         //ré-init les données de la simulation
+    }
+    
+    private void terminerSimulation(){
+        carte.terminerSimulation();
+        
+        for(Source s: sources){
+            s.retirerDonneesDepart();
+        }
+        //+ dist profils
     }
     
     public void pauser(){
