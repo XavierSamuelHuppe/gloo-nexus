@@ -1,17 +1,18 @@
 package Metier.Source;
 
 import Metier.Carte.Point;
+import Metier.Circuit.Circuit;
 import Metier.DistributionTriangulaire;
 
 public class SourceFinie extends Source {
-    private int nombreMax;
+    private double nombreMax;
     
-    public SourceFinie(int nombreMax, Point point, double heureDepart, double frequence, DistributionTriangulaire distribution){
-        super(point, heureDepart, frequence, distribution);
+    public SourceFinie(double nombreMax, Point pointDepart, double heureDebut, double frequence, DistributionTriangulaire distribution, String typeSource, int capaciteVehicule, Circuit circuit){
+        super(pointDepart, heureDebut, frequence, distribution, typeSource, capaciteVehicule, circuit);
         this.nombreMax = nombreMax;
     }
     
-    public int getNombreMax(){
+    public double getNombreMax(){
         return nombreMax;
     }
     public void setNombreMax(int max){
