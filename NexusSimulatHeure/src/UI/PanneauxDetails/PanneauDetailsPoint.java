@@ -42,7 +42,7 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
         this.add(GenerateurChamps.genererLibelle("Latitude"));
         
         this.ChampTexteLatitude = GenerateurChamps.genererChampTexte();
-        this.ChampTexteLatitude.setText(String.format("%1$f", pointLie.getCoordonee().getY()));
+        this.ChampTexteLatitude.setText(String.format("%1$f", pointLie.getPosition().getY()));
         this.add(ChampTexteLatitude);
         
         this.add(Box.createRigidArea(new Dimension(500,10)));
@@ -50,7 +50,7 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
         this.add(GenerateurChamps.genererLibelle("Longitude"));
         
         this.ChampTexteLongitude = GenerateurChamps.genererChampTexte();
-        this.ChampTexteLongitude.setText(String.format("%1$f", pointLie.getCoordonee().getX()));
+        this.ChampTexteLongitude.setText(String.format("%1$f", pointLie.getPosition().getX()));
         this.add(ChampTexteLongitude);
 
         //Ajouter "Sauvegarder", "Annuler".

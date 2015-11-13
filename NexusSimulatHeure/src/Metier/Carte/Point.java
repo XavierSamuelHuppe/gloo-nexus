@@ -15,6 +15,8 @@ public class Point {
     public Point(String nom, ConteneurPassagers passagers) {
         this.nom = nom;
         this.passagers = passagers;
+        profilsPassagers = new ArrayList();
+        sources = new ArrayList();
     }
 
     public String getNom() {
@@ -25,7 +27,7 @@ public class Point {
         this.nom = nom;
     }
 
-    public Position getCoordonee() {
+    public Position getPosition() {
         return position;
     }
     
@@ -55,6 +57,6 @@ public class Point {
         if (o == this) return true;
         if (!(o instanceof Point))return false;
         Point autrePoint = (Point)o;
-        return position.equals(autrePoint.getCoordonee());
+        return position.equals(autrePoint.getPosition());
     }
 }
