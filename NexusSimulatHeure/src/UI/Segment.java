@@ -20,7 +20,7 @@ public class Segment implements IDetailsAffichables {
     private Point pointDepart;
     private Point pointArrivee;
     
-    private Metier.Segment segmentMetier;
+    private Metier.Carte.Segment segmentMetier;
     private Mode modeActuel = Mode.NORMAL;
     
     public Segment(Point pD, Point pA)
@@ -168,7 +168,7 @@ public class Segment implements IDetailsAffichables {
         }
     }
     
-    public Metier.Segment getSegmentMetier()
+    public Metier.Carte.Segment getSegmentMetier()
     {
         return this.segmentMetier;
     }

@@ -1,5 +1,9 @@
 
-package Metier;
+package Metier.Circuit;
+
+import Metier.Circuit.Circuit;
+import Metier.Carte.Position;
+import Metier.Carte.Segment;
 
 public class Vehicule {
    

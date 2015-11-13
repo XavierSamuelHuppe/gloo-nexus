@@ -1,6 +1,6 @@
 package Metier;
 
-public class DistributionTriangulaire implements IDistribution{
+public class DistributionTriangulaire implements Distribution{
     
     private final double a;
     private final double b;
@@ -27,5 +27,9 @@ public class DistributionTriangulaire implements IDistribution{
         }
         return retour;
         //Credit: https://en.wikipedia.org/wiki/Triangular_distribution
+    }
+    
+    public double obtenirMoyenne(){
+        return c;
     }
 }

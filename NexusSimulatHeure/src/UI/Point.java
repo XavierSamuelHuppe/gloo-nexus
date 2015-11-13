@@ -24,7 +24,7 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
     private java.awt.Point pointPoigneeDrag;
     private Mode modeActuel = Mode.NORMAL;
     
-    private Metier.Point pointMetier;
+    private Metier.Carte.Point pointMetier;
     
     public static final int DIAMETRE = 32;
     private static final int POSITION_CERCLE_INTERNE = (int)Math.ceil(DIAMETRE/4.0);
@@ -33,7 +33,7 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
     private static final int AJUSTEMENT_POSITION_NOM_X = DIAMETRE + 10;
     private static final int AJUSTEMENT_POSITION_NOM_Y = (int)(UI.Constantes.Rendu.HAUTEUR_TEXTE / 2);
     
-    public Point(int x, int y, double zoom, Metier.Point p)
+    public Point(int x, int y, double zoom, Metier.Carte.Point p)
     {
         System.out.println("new Point");
         this.pointMetier = p;
@@ -44,7 +44,7 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         this.setOpaque(false);
     }
 
-    public Metier.Point getPointMetier()
+    public Metier.Carte.Point getPointMetier()
     {
         return this.pointMetier;
     }

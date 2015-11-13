@@ -1,4 +1,6 @@
-package Metier;
+package Metier.Carte;
+
+import Metier.Circuit.Circuit;
 
 public class ElementTrajet {
     private final Circuit circuit;
