@@ -19,6 +19,12 @@ public class Carte {
         }
     }
     
+    public void terminerSimulation(){
+        for(Segment s: segments){
+            s.retirerTempsTransit();
+        }
+    }
+    
     public void ajouterPoint(Point point){
         points.add(point);
     }

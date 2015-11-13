@@ -58,6 +58,10 @@ public abstract class Source {
     {
         tempsEntreGeneration = distributionAUtiliser.obtenirProchaineValeurAleatoire();
     }
+    
+    public void retirerDonneesDepart(){
+        tempsEntreGeneration = 0;
+    }
     /*  
     public Vehicule genererVehicule()
     {

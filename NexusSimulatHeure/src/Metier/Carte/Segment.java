@@ -37,6 +37,10 @@ public class Segment extends Observable{
         notifyObservers();
     }
     
+    public void retirerTempsTransit() {
+        tempsTransit = 0;
+    }
+    
     @Override
     public boolean equals(Object o){
         if (o == null) return false;
