@@ -11,12 +11,13 @@ public class Vehicule {
     private Circuit circuitActuel;
     public double progres;
     public Segment segmentActuel;
+    private int capacite;
     
-    public Vehicule(Circuit circuit, Segment segment){
+    public Vehicule(Circuit circuit, Segment segment, int capacite){
         this.circuitActuel = circuit;
         this.segmentActuel = segment;
         this.progres = 0;
-        // passager?????????????????????????????????????????????
+        this.capacite = capacite;
     }
     public Circuit getCircuit(){
         return circuitActuel;
@@ -29,20 +30,19 @@ public class Vehicule {
         return segmentActuel;
     }
     
-    //Passager????
     
     
-    // A faire
     public Position obtenirPosition()
     {
+        //Position xy = this.calculerPosition(segmentActuel.getPointDepart(), segmentActuel.getPointDepart()); a voir plus tard
         Position xy = new Position(0,0);
         return xy;
     }
     
-    //i guess que progres va jouer la dedans
+    
     private Position calculerPosition(Position posDepart, Position posArrivee)
     {
-        double x,y,arrX,arrY,depX,depY;
+        double x,y,arrX,arrY,depX,depY, a,b,c;
         Position nouvellePosition = new Position(0,0);
         depX = posDepart.getX();
         depY = posDepart.getY();
@@ -50,9 +50,11 @@ public class Vehicule {
         arrY = posArrivee.getY();
         x = arrX - depX;
         y = arrY - depY;
+        
+        a = y / x;//...
+        
         nouvellePosition.setX(x);
         nouvellePosition.setY(y);
         return nouvellePosition;
-        //nouvellePosition.setX();
     }
 }

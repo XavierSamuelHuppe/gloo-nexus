@@ -1,6 +1,7 @@
 package Metier.Circuit;
 
 import Metier.Circuit.Circuit;
+import Metier.Carte.Point;
 import Metier.Carte.Segment;
 import Metier.Exceptions.*;
 import java.util.List;
@@ -31,4 +32,19 @@ public class CircuitBoucle extends Circuit {
             return trajet.get(index+1);
         }
     }
+    @Override
+    public Segment obtenirProchainSegment(Point pointDepart){
+        
+        for(int i = trajet.size(); i >= 0; i--){
+            if (trajet.get(i).getPointDepart() == pointDepart){
+                return trajet.get(i);
+            }
+        }
+        
+        throw new SegmentNonTrouveException();
+
+        
+    }
+    
+    
 }
