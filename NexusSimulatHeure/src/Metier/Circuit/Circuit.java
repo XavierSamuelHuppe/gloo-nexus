@@ -2,6 +2,7 @@ package Metier.Circuit;
 
 import Metier.Carte.Segment;
 import java.util.*;
+import Metier.Carte.Point;
 
 public abstract class Circuit {
     private String nom;
@@ -45,6 +46,8 @@ public abstract class Circuit {
     }
     
     public abstract Segment obtenirProchainSegment(Segment dernierSegment);
+    
+    public abstract Segment obtenirProchainSegment(Point pointDepart);
     
     @Override
     public boolean equals(Object o){
