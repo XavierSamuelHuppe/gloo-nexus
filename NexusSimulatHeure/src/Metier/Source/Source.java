@@ -1,37 +1,32 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Metier.Source;
 
 import Metier.Circuit.Circuit;
 import Metier.Carte.Point;
-import Metier.DistributionTriangulaire;
+import Metier.Distribution;
+import Metier.Circuit.Vehicule;
+import Metier.Carte.Segment;
+import Metier.Circuit.ConteneurPassagers;
+import Metier.Exceptions.CreationInvalideException;
+import java.util.*;
 
-/**
- *
- * @author Pierre
- */
+
 public abstract class Source {
-    
     
     private double frequence;
     private double heureDebut;
     private Point pointDepart;
-    private Circuit circuit;
-    
-    
-    //private int capacite;
-    
-    
-    private DistributionTriangulaire distributionAUtiliser;
-    //Vrm pas sure pour les distribution, on verra
-    public Source(Point pointDepart, double heureDebut, double frequence, DistributionTriangulaire distribution){
+    private Circuit circuitSource;
+    private ConteneurPassagers passagers;
+    private Distribution distributionAUtiliser;
+
+    public Source(Point pointDepart, double heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
         this.frequence = frequence;
         this.heureDebut = heureDebut;
         this.pointDepart = pointDepart;
         this.distributionAUtiliser = distribution;
+        this.passagers = passagers;
+        this.circuitSource = circuit;
     }
     
     public Point getPointDepart(){
@@ -43,6 +38,12 @@ public abstract class Source {
     public double getFrequence(){
         return frequence;
     }
+    public ConteneurPassagers getcapacite(){
+        return passagers;
+    }
+    public Circuit getCircuit(){
+        return circuitSource;
+    }
     public void setPointDepart(Point point){
         pointDepart = point;
     }
@@ -52,15 +53,25 @@ public abstract class Source {
     public void setFrequence(double freq){
         frequence = freq;
     }
+    public void setCapacite(ConteneurPassagers conteneurPassagers){
+        passagers = conteneurPassagers;
+    }
+    public void setCircuit(Circuit circuit){
+        circuitSource = circuit;
+    }
     
     public void pigerDonneesDepart()
     {
-        //
-    }/*  
+        frequence = distributionAUtiliser.obtenirProchaineValeurAleatoire();
+    }
+    
+    public void retirerDonneesDepart(){
+        frequence = 0;
+    }
     public Vehicule genererVehicule()
     {
-        // connait capacité et son circuit
-        Vehicule unChar = new Vehicule();
-        return unChar;
-    }*/
+        Segment segment = circuitSource.obtenirProchainSegment(pointDepart);
+        Vehicule vehicule = new Vehicule(circuitSource, segment, passagers);
+        return vehicule;
+    }
 }

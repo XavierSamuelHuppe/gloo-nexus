@@ -13,18 +13,20 @@ public class Carte {
         points = new ArrayList();
     }
     
-    public Point ajouterPoint(Position position, String nom, ConteneurPassagers passagers){
-        Point nouveauPoint = new Point(nom, passagers);
-        nouveauPoint.setPosition(position);
-        points.add(nouveauPoint);
-        return nouveauPoint;
+    public void initialiserDepartSimulation(){
+        for(Segment s: segments){
+            s.recevoirNouveauTempsTransit();
+        }
     }
     
-    public void modifierPoint(Point pointCible, String nom, Position position){
-        int index = points.indexOf(pointCible);
-        Point pointAChanger = points.get(index);
-        pointAChanger.setNom(nom);
-        pointAChanger.setPosition(position);
+    public void terminerSimulation(){
+        for(Segment s: segments){
+            s.retirerTempsTransit();
+        }
+    }
+    
+    public void ajouterPoint(Point point){
+        points.add(point);
     }
     
     public void retirerPoint(Point point){
@@ -113,7 +115,9 @@ public class Carte {
             }
         }
         
-        if(meilleurDernierPoint.get(arrive) == null){
+        try{
+            meilleurDernierPoint.get(arrive);
+        }catch(Exception e){
             throw new AucunCheminPossibleException();
         }
         
