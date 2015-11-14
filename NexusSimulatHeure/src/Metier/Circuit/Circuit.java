@@ -31,6 +31,19 @@ public abstract class Circuit {
         return trajet;
     }
     
+    public void setTrajet(List<Segment> trajet){
+        this.trajet = trajet;
+    }
+    
+    public boolean utilise(Segment s){
+        return trajet.contains(s);
+    }
+    
+    // TODO rencontre: Explain witchcraft to team
+    public boolean utilise(Metier.Carte.Point p){
+        return trajet.stream().anyMatch((s) -> (s.getPointArrivee() == p || s.getPointDepart() == p));
+    }
+    
     public abstract Segment obtenirProchainSegment(Segment dernierSegment);
     
     @Override
