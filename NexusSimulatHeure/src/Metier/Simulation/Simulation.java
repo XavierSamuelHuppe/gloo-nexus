@@ -23,9 +23,9 @@ public class Simulation extends Observable{
     private List<Source> sources;
     private List<ProfilPassager> profils;
     
-    public Simulation(){
-        //TODO: devrait éventuelement être injecté quand on se sera penché sur la question
+    public Simulation(Carte carte){
         parametres = new ParametreSimulation();
+        this.carte = carte;
     }
     
     public ParametreSimulation getParametres(){
@@ -36,7 +36,6 @@ public class Simulation extends Observable{
         if(!(parametres.estEnArret()))
             throw new SimulationEnMauvaisEtatException();
         
-        //init des données de la simulatiion
         initialiserDepartSimulation();
         parametres.mettreEnAction();
         boucle = new BoucleSimulation(this);
@@ -44,7 +43,45 @@ public class Simulation extends Observable{
         boucleThread.start();
         notifyObservers();
     }
-    
+    public void arreter(){
+        if(parametres.estEnArret())
+            throw new SimulationEnMauvaisEtatException();
+        
+        terminerSimulation();
+        parametres.mettreEnArret();
+        boucleThread.interrupt();
+        
+        notifyObservers();
+    }
+    public void pauser(){
+        if(!(parametres.estEnAction()))
+            throw new SimulationEnMauvaisEtatException();
+        
+        parametres.mettreEnPause();
+        
+        notifyObservers();
+    }
+    public void redemarrer(){
+        if(!(parametres.estEnPause()))
+            throw new SimulationEnMauvaisEtatException();
+        
+        parametres.mettreEnAction();
+        
+        notifyObservers();
+    }
+            
+    private void terminerSimulation(){
+        carte.terminerSimulation();
+        
+        for(Source s: sources){
+            s.retirerDonneesDepart();
+        }
+        //+ dist profils
+        
+        //Fermer les statistiques
+        
+        notifyObservers();
+    }
     private void initialiserDepartSimulation(){
         JourneeCourante = 1;
         initialiserDepartNouvelleJournee();
@@ -58,55 +95,14 @@ public class Simulation extends Observable{
         //+ dist profils
     }
     
-    public void arreter(){
-        if(parametres.estEnArret())
-            throw new SimulationEnMauvaisEtatException();
-        
-        terminerSimulation();
-        parametres.mettreEnArret();
-        boucleThread.interrupt();
-        //ré-init les données de la simulation
-        //Fermer les statistiques
-        
-        notifyObservers();
-    }
     
-    private void terminerSimulation(){
-        carte.terminerSimulation();
-        
-        for(Source s: sources){
-            s.retirerDonneesDepart();
-        }
-        //+ dist profils
-        
-        notifyObservers();
-    }
-    
-    public void pauser(){
+    public void faireAvancerSimulation(long tempsEcouleParRatioEnNanos, double tempsEcouleParRatioEnSeconde){
         if(!(parametres.estEnAction()))
             throw new SimulationEnMauvaisEtatException();
         
-        parametres.mettreEnPause();
+        heureCourante = heureCourante.plusNanos(tempsEcouleParRatioEnNanos);
         
-        notifyObservers();
-    }
-    
-    public void redemarrer(){
-        if(!(parametres.estEnPause()))
-            throw new SimulationEnMauvaisEtatException();
-        
-        parametres.mettreEnAction();
-        
-        notifyObservers();
-    }
-            
-    public void faireAvancerSimulation(long TempsEcouleParRatioEnNanos){
-        if(!(parametres.estEnAction()))
-            throw new SimulationEnMauvaisEtatException();
-        
-        heureCourante = heureCourante.plusNanos(TempsEcouleParRatioEnNanos);
-        
-        //faire avancer les vehicules
+        faireAvancerToutLesVehicules(tempsEcouleParRatioEnSeconde);
         //faire spawner les vehicules
         //faire spawner les gens
         
@@ -119,6 +115,18 @@ public class Simulation extends Observable{
                 
         notifyObservers();
     }
+    private void faireAvancerToutLesVehicules(double tempsEcouleParRatioEnSeconde){
+        List<Vehicule> vehiculesAEnlever = new ArrayList();
+        for(Vehicule v: vehicules){
+            try{
+                v.avancer(tempsEcouleParRatioEnSeconde);
+            }catch(FinDeCircuitException e){
+                vehiculesAEnlever.add(v);
+            }
+        }
+        vehicules.removeAll(vehiculesAEnlever);
+    }
+    
     
     public void ajouterCircuit(Circuit circuit){
         circuits.add(circuit);
@@ -135,15 +143,4 @@ public class Simulation extends Observable{
     public void retirerSource(Source source){
         sources.remove(source);
     }
-    
-    public void modifierProfilPassager(ProfilPassager profilPassager){
-        profils.remove(profilPassager);
-    }
-    
-    
-    
-    
-    
-    
-    
 }

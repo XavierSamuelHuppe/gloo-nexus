@@ -1,33 +1,58 @@
-
 package Metier.Circuit;
 
-import Metier.Circuit.Circuit;
-import Metier.Carte.Position;
-import Metier.Carte.Segment;
+import Metier.Carte.*;
+import Metier.Exceptions.FinDeCircuitException;
+import Metier.Passager;
+import java.util.*;
 
-public class Vehicule {
+public class Vehicule extends Observable{
    
     private ConteneurPassagers passagers;
     private Circuit circuitActuel;
-    public double progres;
-    public Segment segmentActuel;
-    private int capacite;
+    private Segment segmentActuel;
+    private double secondesSurSegment;
     
-    public Vehicule(Circuit circuit, Segment segment, int capacite){
+    public Vehicule(Circuit circuit, Segment segment, ConteneurPassagers passagers){
         this.circuitActuel = circuit;
         this.segmentActuel = segment;
-        this.progres = 0;
-        this.capacite = capacite;
+        this.passagers = passagers;
     }
     public Circuit getCircuit(){
         return circuitActuel;
     }
     
-    public double getProgres(){
+    public double obtenirProgresSurSegmentEnPourcentage(){
+        double progres = secondesSurSegment * 100 / segmentActuel.getTempsTransit();
         return progres;
     }
     public Segment getSegment(){
         return segmentActuel;
+    }
+    
+    public void avancer(double tempsEcouleParRatioEnSeconde){
+        double tempsTotal = secondesSurSegment+tempsEcouleParRatioEnSeconde;
+        if(tempsTotal > segmentActuel.getTempsTransit()){
+            //faire embarquer le monde
+            Point pointTraverse = segmentActuel.getPointArrivee();
+            List<Passager> passagersVoulantDescendre = passagers.debarquer(pointTraverse);
+            pointTraverse.faireDescendreAuPoint(passagersVoulantDescendre);
+            
+            try{
+                Segment prochainSegment = circuitActuel.obtenirProchainSegment(segmentActuel);
+
+                List<Passager> passagersVoulantMonter = pointTraverse.faireMonterEnVehicule(circuitActuel);
+                passagers.octroyer(passagersVoulantMonter);
+                
+                double tempsAAjouter = tempsTotal - segmentActuel.getTempsTransit();
+                secondesSurSegment = tempsAAjouter;
+                segmentActuel = prochainSegment;
+            }catch(FinDeCircuitException e){
+                throw e;
+            }
+        }else{
+            secondesSurSegment = tempsTotal;
+        }
+        notifyObservers();
     }
     
     

@@ -55,7 +55,7 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
     {
         super.zoom(facteurZoom, positionCurseur);
         this.setSize((int)(DIAMETRE * zoom), (int)(DIAMETRE * zoom));
-        this.setLocation(this.obtenirEspaceTravail().transformerPositionEspaceTravailEnPositionViewport(this.obtenirEspaceTravail().transformerPostionGeorgraphiqueEnPositionEspaceTravail(this.pointMetier.getCoordonee())));
+        this.setLocation(this.obtenirEspaceTravail().transformerPositionEspaceTravailEnPositionViewport(this.obtenirEspaceTravail().transformerPostionGeorgraphiqueEnPositionEspaceTravail(this.pointMetier.getPosition())));
     }
         
     @Override

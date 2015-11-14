@@ -99,6 +99,18 @@ public class ParametreSimulation {
         double vitesseEnDouble = (new Integer(vitesse)).doubleValue();
         return vitesseEnDouble / 100;
     }
+
+    public Distribution getDistributionTempsTransitSegmentDefaut() {
+        return distributionTempsTransitSegment.obtenirCopie();
+    }
+
+    public Distribution getDistributionTempsGenerationVehiculeDefaut() {
+        return distributionTempsGenerationVehicule.obtenirCopie();
+    }
+
+    public Distribution getDistributionTempsGenerationPassagerDefaut() {
+        return distributionTempsGenerationPassager.obtenirCopie();
+    }
     
     public void setDistributionTempsTransitSegment(Distribution distributionTempsTransitSegment) {
         if(etat == Etats.ACTION)
