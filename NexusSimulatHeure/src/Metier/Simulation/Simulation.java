@@ -36,7 +36,6 @@ public class Simulation extends Observable{
         if(!(parametres.estEnArret()))
             throw new SimulationEnMauvaisEtatException();
         
-        //init des données de la simulatiion
         initialiserDepartSimulation();
         parametres.mettreEnAction();
         boucle = new BoucleSimulation(this);
@@ -51,8 +50,6 @@ public class Simulation extends Observable{
         terminerSimulation();
         parametres.mettreEnArret();
         boucleThread.interrupt();
-        //ré-init les données de la simulation
-        //Fermer les statistiques
         
         notifyObservers();
     }
@@ -80,6 +77,8 @@ public class Simulation extends Observable{
             s.retirerDonneesDepart();
         }
         //+ dist profils
+        
+        //Fermer les statistiques
         
         notifyObservers();
     }
