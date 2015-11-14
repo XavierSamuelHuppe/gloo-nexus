@@ -1,5 +1,6 @@
 package Metier.Circuit;
 
+import Metier.Carte.Point;
 import Metier.Passager;
 import java.util.*;
 
@@ -17,13 +18,34 @@ public class ConteneurPassagersIllimite implements ConteneurPassagers{
     }
 
     @Override
-    public void ajouterPassager(Passager passager) {
-        passagers.add(passager);
+    public List<Passager> debarquer(Point point) {
+        List<Passager> retour = new ArrayList();
+        for(Passager p: passagers){
+            if(p.veut(point)){
+                retour.add(p);
+            }
+        }
+        passagers.removeAll(retour);
+        return retour;
     }
 
     @Override
-    public void retirerPassager(Passager passager) {
-        passagers.remove(passager);
+    public List<Passager> embarquer(Circuit circuit) {
+        List<Passager> retour = new ArrayList();
+        for(Passager p: passagers){
+            if(p.veut(circuit)){
+                retour.add(p);
+            }
+        }
+        passagers.removeAll(retour);
+        return retour;
+    }
+
+    @Override
+    public void octroyer(List<Passager> passagers) {
+        for(Passager p: passagers){
+            this.passagers.add(p);
+        }
     }
     
 }

@@ -96,13 +96,13 @@ public class Simulation extends Observable{
     }
     
     
-    public void faireAvancerSimulation(long TempsEcouleParRatioEnNanos){
+    public void faireAvancerSimulation(long tempsEcouleParRatioEnNanos, double tempsEcouleParRatioEnSeconde){
         if(!(parametres.estEnAction()))
             throw new SimulationEnMauvaisEtatException();
         
-        heureCourante = heureCourante.plusNanos(TempsEcouleParRatioEnNanos);
+        heureCourante = heureCourante.plusNanos(tempsEcouleParRatioEnNanos);
         
-        //faire avancer les vehicules
+        faireAvancerToutLesVehicules(tempsEcouleParRatioEnSeconde);
         //faire spawner les vehicules
         //faire spawner les gens
         
@@ -115,6 +115,18 @@ public class Simulation extends Observable{
                 
         notifyObservers();
     }
+    private void faireAvancerToutLesVehicules(double tempsEcouleParRatioEnSeconde){
+        List<Vehicule> vehiculesAEnlever = new ArrayList();
+        for(Vehicule v: vehicules){
+            try{
+                v.avancer(tempsEcouleParRatioEnSeconde);
+            }catch(FinDeCircuitException e){
+                vehiculesAEnlever.add(v);
+            }
+        }
+        vehicules.removeAll(vehiculesAEnlever);
+    }
+    
     
     public void ajouterCircuit(Circuit circuit){
         circuits.add(circuit);

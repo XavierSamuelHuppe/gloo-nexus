@@ -1,6 +1,7 @@
 package Metier.Carte;
 
-import Metier.Circuit.ConteneurPassagers;
+import Metier.Circuit.*;
+import Metier.Passager;
 import Metier.Profil.ProfilPassager;
 import Metier.Source.Source;
 import java.util.*;
@@ -50,6 +51,14 @@ public class Point extends Observable{
     
     public void retirerProfilPassager(Source source) {
         this.sources.remove(source);
+    }
+    
+    public void faireDescendreAuPoint(List<Passager> passagers){
+        this.passagers.octroyer(passagers);
+    }
+    
+    public List<Passager> faireMonterEnVehicule(Circuit circuit){
+        return passagers.embarquer(circuit);
     }
     
     @Override

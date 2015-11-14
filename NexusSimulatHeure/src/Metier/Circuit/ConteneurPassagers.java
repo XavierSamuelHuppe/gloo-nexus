@@ -1,9 +1,12 @@
 package Metier.Circuit;
 
+import Metier.Carte.Point;
 import Metier.Passager;
+import java.util.List;
 
 public interface ConteneurPassagers {
     public int obtenirNombrePassagers();
-    public void ajouterPassager(Passager passager);
-    public void retirerPassager(Passager passager);
+    public List<Passager> debarquer(Point point);
+    public List<Passager> embarquer(Circuit circuit);
+    public void octroyer(List<Passager> passagers);
 }
