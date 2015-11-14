@@ -12,8 +12,7 @@ public class Point {
     private List<Source> sources;
     private ConteneurPassagers passagers;
     
-    public Point(String nom, ConteneurPassagers passagers) {
-        this.nom = nom;
+    public Point(ConteneurPassagers passagers){
         this.passagers = passagers;
         profilsPassagers = new ArrayList();
         sources = new ArrayList();

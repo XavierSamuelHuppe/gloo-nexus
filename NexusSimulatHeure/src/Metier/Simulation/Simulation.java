@@ -140,6 +140,10 @@ public class Simulation extends Observable{
         profils.remove(profilPassager);
     }
     
+    public void ajouterPoint(Point nouveauPoint){
+        carte.ajouterPoint(nouveauPoint);
+    }
+    
     
     
     
