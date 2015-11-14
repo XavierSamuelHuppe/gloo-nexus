@@ -11,13 +11,12 @@ public class Vehicule {
     private Circuit circuitActuel;
     public double progres;
     public Segment segmentActuel;
-    private int capacite;
     
-    public Vehicule(Circuit circuit, Segment segment, int capacite){
+    public Vehicule(Circuit circuit, Segment segment, ConteneurPassagers passagers){
         this.circuitActuel = circuit;
         this.segmentActuel = segment;
         this.progres = 0;
-        this.capacite = capacite;
+        this.passagers = passagers;
     }
     public Circuit getCircuit(){
         return circuitActuel;
