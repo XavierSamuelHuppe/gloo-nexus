@@ -23,9 +23,10 @@ public class Simulation extends Observable{
     private List<Source> sources;
     private List<ProfilPassager> profils;
     
-    public Simulation(){
+    public Simulation(Carte carte){
         //TODO: devrait éventuelement être injecté quand on se sera penché sur la question
         parametres = new ParametreSimulation();
+        this.carte = carte;
     }
     
     public ParametreSimulation getParametres(){
@@ -139,15 +140,4 @@ public class Simulation extends Observable{
     public void modifierProfilPassager(ProfilPassager profilPassager){
         profils.remove(profilPassager);
     }
-    
-    public void ajouterPoint(Point nouveauPoint){
-        carte.ajouterPoint(nouveauPoint);
-    }
-    
-    
-    
-    
-    
-    
-    
 }

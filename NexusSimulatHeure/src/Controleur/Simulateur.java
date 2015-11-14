@@ -11,9 +11,11 @@ import java.util.*;
 public class Simulateur {
     
     private Simulation simulation;
+    private Carte carte;
     
     public Simulateur(){
-        simulation = new Simulation();
+        carte = new Carte();
+        simulation = new Simulation(carte);
     }
  
     public void arreter(){
@@ -32,25 +34,27 @@ public class Simulateur {
     public Point ajouterPoint(Position pos){
         PointFactory factory = new PointFactory();
         Point nouveauPoint = factory.nouveauPoint().enPosition(pos).construire();
-        simulation.ajouterPoint(nouveauPoint);
+        carte.ajouterPoint(nouveauPoint);
         return nouveauPoint;
     }
     public Point ajouterPoint(Position pos, String nom){
         PointFactory factory = new PointFactory();
         Point nouveauPoint = factory.nouveauPoint().avecUnNom(nom).enPosition(pos).construire();
-        simulation.ajouterPoint(nouveauPoint);
+        carte.ajouterPoint(nouveauPoint);
         return nouveauPoint;
     }
     public Point ajouterPoint(Position pos, String nom, ConteneurPassagers passagers){
         PointFactory factory = new PointFactory();
         Point nouveauPoint = factory.nouveauPointAvecCapacite(passagers).avecUnNom(nom).enPosition(pos).construire();
-        simulation.ajouterPoint(nouveauPoint);
+        carte.ajouterPoint(nouveauPoint);
         return nouveauPoint;
     }
-    
-    public void modifierPoint(Metier.Carte.Point pointCible, Metier.Carte.Position pos, String nom){
-        pointCible.setPosition(pos);
-        pointCible.setNom(nom);
+    public void retirerPoint(Point point){
+        carte.retirerPoint(point);
+    }
+    public void modifierPoint(Point pointCible, Position pos, String nom){
+        retirerPoint(pointCible);
+        ajouterPoint(pos,nom);
     }
     
     public void ajouterSource(int nombreMax, Point pointDepart, double heureDebut, double frequence, Distribution distribution, int capaciteVehicule, Circuit circuit){
@@ -67,11 +71,11 @@ public class Simulateur {
         simulation.retirerSource(source);
     }
     public void modifierSource(Source source, double heureFin, Point pointDepart, double heureDebut, double frequence, Distribution distribution, int capaciteVehicule, Circuit circuit){
-        simulation.retirerSource(source);
+        retirerSource(source);
         this.ajouterSource(heureFin, pointDepart, heureDebut, frequence, distribution, capaciteVehicule, circuit);
     }
     public void modifierSource(Source source, int nombreMax, Point pointDepart, double heureDebut, double frequence, Distribution distribution, int capaciteVehicule, Circuit circuit){
-        simulation.retirerSource(source);
+        retirerSource(source);
         this.ajouterSource(nombreMax, pointDepart, heureDebut, frequence, distribution, capaciteVehicule, circuit);
     }
 
