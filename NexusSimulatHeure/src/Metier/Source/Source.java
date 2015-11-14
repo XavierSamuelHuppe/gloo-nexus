@@ -6,6 +6,7 @@ import Metier.Carte.Point;
 import Metier.Distribution;
 import Metier.Circuit.Vehicule;
 import Metier.Carte.Segment;
+import Metier.Circuit.ConteneurPassagers;
 import Metier.Exceptions.CreationInvalideException;
 import java.util.*;
 
@@ -16,15 +17,15 @@ public abstract class Source {
     private double heureDebut;
     private Point pointDepart;
     private Circuit circuitSource;
-    private int capaciteVehicule;
+    private ConteneurPassagers passagers;
     private Distribution distributionAUtiliser;
 
-    public Source(Point pointDepart, double heureDebut, double frequence, Distribution distribution, int capaciteVehicule, Circuit circuit){
+    public Source(Point pointDepart, double heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
         this.frequence = frequence;
         this.heureDebut = heureDebut;
         this.pointDepart = pointDepart;
         this.distributionAUtiliser = distribution;
-        this.capaciteVehicule = capaciteVehicule;
+        this.passagers = passagers;
         this.circuitSource = circuit;
     }
     
@@ -37,8 +38,8 @@ public abstract class Source {
     public double getFrequence(){
         return frequence;
     }
-    public int getcapacite(){
-        return capaciteVehicule;
+    public ConteneurPassagers getcapacite(){
+        return passagers;
     }
     public Circuit getCircuit(){
         return circuitSource;
@@ -52,8 +53,8 @@ public abstract class Source {
     public void setFrequence(double freq){
         frequence = freq;
     }
-    public void setCapacite(int capacite){
-        capaciteVehicule = capacite;
+    public void setCapacite(ConteneurPassagers conteneurPassagers){
+        passagers = conteneurPassagers;
     }
     public void setCircuit(Circuit circuit){
         circuitSource = circuit;
@@ -70,7 +71,7 @@ public abstract class Source {
     public Vehicule genererVehicule()
     {
         Segment segment = circuitSource.obtenirProchainSegment(pointDepart);
-        Vehicule vehicule = new Vehicule(circuitSource, segment, capaciteVehicule);
+        Vehicule vehicule = new Vehicule(circuitSource, segment, passagers);
         return vehicule;
     }
 }
