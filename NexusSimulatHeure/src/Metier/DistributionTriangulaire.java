@@ -12,6 +12,8 @@ public class DistributionTriangulaire implements Distribution{
         this.c = mode;
     }
     
+    
+    
     @Override
     public double obtenirProchaineValeurAleatoire(){
         double retour;
@@ -31,5 +33,10 @@ public class DistributionTriangulaire implements Distribution{
     
     public double obtenirMoyenne(){
         return c;
+    }
+
+    @Override
+    public Distribution obtenirCopie() {
+        return new DistributionTriangulaire(a, c, b);
     }
 }

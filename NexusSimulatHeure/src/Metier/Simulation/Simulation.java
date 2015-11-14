@@ -24,7 +24,6 @@ public class Simulation extends Observable{
     private List<ProfilPassager> profils;
     
     public Simulation(Carte carte){
-        //TODO: devrait éventuelement être injecté quand on se sera penché sur la question
         parametres = new ParametreSimulation();
         this.carte = carte;
     }
@@ -45,7 +44,45 @@ public class Simulation extends Observable{
         boucleThread.start();
         notifyObservers();
     }
-    
+    public void arreter(){
+        if(parametres.estEnArret())
+            throw new SimulationEnMauvaisEtatException();
+        
+        terminerSimulation();
+        parametres.mettreEnArret();
+        boucleThread.interrupt();
+        //ré-init les données de la simulation
+        //Fermer les statistiques
+        
+        notifyObservers();
+    }
+    public void pauser(){
+        if(!(parametres.estEnAction()))
+            throw new SimulationEnMauvaisEtatException();
+        
+        parametres.mettreEnPause();
+        
+        notifyObservers();
+    }
+    public void redemarrer(){
+        if(!(parametres.estEnPause()))
+            throw new SimulationEnMauvaisEtatException();
+        
+        parametres.mettreEnAction();
+        
+        notifyObservers();
+    }
+            
+    private void terminerSimulation(){
+        carte.terminerSimulation();
+        
+        for(Source s: sources){
+            s.retirerDonneesDepart();
+        }
+        //+ dist profils
+        
+        notifyObservers();
+    }
     private void initialiserDepartSimulation(){
         JourneeCourante = 1;
         initialiserDepartNouvelleJournee();
@@ -59,48 +96,7 @@ public class Simulation extends Observable{
         //+ dist profils
     }
     
-    public void arreter(){
-        if(parametres.estEnArret())
-            throw new SimulationEnMauvaisEtatException();
-        
-        terminerSimulation();
-        parametres.mettreEnArret();
-        boucleThread.interrupt();
-        //ré-init les données de la simulation
-        //Fermer les statistiques
-        
-        notifyObservers();
-    }
     
-    private void terminerSimulation(){
-        carte.terminerSimulation();
-        
-        for(Source s: sources){
-            s.retirerDonneesDepart();
-        }
-        //+ dist profils
-        
-        notifyObservers();
-    }
-    
-    public void pauser(){
-        if(!(parametres.estEnAction()))
-            throw new SimulationEnMauvaisEtatException();
-        
-        parametres.mettreEnPause();
-        
-        notifyObservers();
-    }
-    
-    public void redemarrer(){
-        if(!(parametres.estEnPause()))
-            throw new SimulationEnMauvaisEtatException();
-        
-        parametres.mettreEnAction();
-        
-        notifyObservers();
-    }
-            
     public void faireAvancerSimulation(long TempsEcouleParRatioEnNanos){
         if(!(parametres.estEnAction()))
             throw new SimulationEnMauvaisEtatException();
@@ -135,9 +131,5 @@ public class Simulation extends Observable{
     
     public void retirerSource(Source source){
         sources.remove(source);
-    }
-    
-    public void modifierProfilPassager(ProfilPassager profilPassager){
-        profils.remove(profilPassager);
     }
 }

@@ -57,6 +57,20 @@ public class Simulateur {
         ajouterPoint(pos,nom);
     }
     
+    public Segment ajouterSegment(Point depart, Point arrivee){
+        Segment segment = new Segment(depart, arrivee, simulation.getParametres().getDistributionTempsTransitSegmentDefaut());
+        carte.ajouterSegment(segment);
+        return segment;
+    }
+    public Segment ajouterSegment(Point depart, Point arrivee, Distribution tempsTransit){
+        Segment segment = new Segment(depart, arrivee, tempsTransit);
+        carte.ajouterSegment(segment);
+        return segment;
+    }
+    public void retirerSegment(Segment segment){
+        carte.retirerSegment(segment);
+    }
+    
     public void ajouterSource(int nombreMax, Point pointDepart, double heureDebut, double frequence, Distribution distribution, int capaciteVehicule, Circuit circuit){
         SourceBuilder builder = new SourceBuilder();
         Source nouvelleSource = builder.ConstruireSource(nombreMax, pointDepart, heureDebut, frequence, distribution, capaciteVehicule, circuit);

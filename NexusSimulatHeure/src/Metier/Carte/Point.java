@@ -5,7 +5,7 @@ import Metier.Profil.ProfilPassager;
 import Metier.Source.Source;
 import java.util.*;
 
-public class Point {
+public class Point extends Observable{
     private String nom;
     private Position position;
     private List<ProfilPassager> profilsPassagers;
@@ -24,6 +24,7 @@ public class Point {
 
     public void setNom(String nom) {
         this.nom = nom;
+        notifyObservers();
     }
 
     public Position getPosition() {
@@ -32,6 +33,7 @@ public class Point {
     
     public void setPosition(Position position) {
         this.position = position;
+        notifyObservers();
     }
     
     public void ajouterProfilPassaser(ProfilPassager profil) {
