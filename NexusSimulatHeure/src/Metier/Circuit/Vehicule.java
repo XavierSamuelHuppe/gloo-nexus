@@ -2,7 +2,7 @@ package Metier.Circuit;
 
 import Metier.Carte.*;
 import Metier.Exceptions.FinDeCircuitException;
-import Metier.Passager;
+import Metier.Profil.Passager;
 import java.util.*;
 
 public class Vehicule extends Observable{

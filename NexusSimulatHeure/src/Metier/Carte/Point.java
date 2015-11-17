@@ -1,7 +1,7 @@
 package Metier.Carte;
 
 import Metier.Circuit.*;
-import Metier.Passager;
+import Metier.Profil.Passager;
 import Metier.Profil.ProfilPassager;
 import Metier.Source.Source;
 import java.util.*;

@@ -1,7 +1,7 @@
 package Metier.Circuit;
 
 import Metier.Carte.Point;
-import Metier.Passager;
+import Metier.Profil.Passager;
 import java.util.List;
 
 public interface ConteneurPassagers {
