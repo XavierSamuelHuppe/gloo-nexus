@@ -31,6 +31,10 @@ public class DessinateurSegmentDroit extends DessinateurSegment {
         {
             dessinerFlecheUnTon(g2, Couleurs.CIRCUIT);
         }
+        else if(segment.getMode() == Segment.Mode.CIRCUIT_SELECTIONNE)
+        {
+            dessinerFlecheDeuxTons(g2, Couleurs.CIRCUIT_SELECTIONNE_EXTERIEUR, Couleurs.CIRCUIT_SELECTIONNE_INTERIEUR);
+        }
 
         //Temps segment.
         java.awt.Point centreSegment = calculerCentreSegment();

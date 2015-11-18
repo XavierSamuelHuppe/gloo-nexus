@@ -57,6 +57,13 @@ public class Carte {
         return retour;
     }
     
+    public boolean estSegmentSortantDePoint(Point point, Segment segment)
+    {
+        List<Segment> l = obtenirSegmentsSortant(point);
+        boolean r = l.stream().anyMatch((s) -> s.equals(segment));
+        return r;
+    }
+    
     public void ajouterSegment(Segment segment){
         segments.add(segment);
     }

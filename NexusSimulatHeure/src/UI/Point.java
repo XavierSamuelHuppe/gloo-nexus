@@ -19,7 +19,7 @@ import javax.swing.BorderFactory;
 
 public class Point extends ElementEspaceTravail implements MouseListener, MouseMotionListener, IDetailsAffichables {
 
-    enum Mode {NORMAL, SELECTIONNE};
+    enum Mode {NORMAL, SELECTIONNE, CIRCUIT};
         
     private java.awt.Point pointPoigneeDrag;
     private Mode modeActuel = Mode.NORMAL;
@@ -35,7 +35,6 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
     
     public Point(int x, int y, double zoom, Metier.Carte.Point p)
     {
-        System.out.println("new Point");
         this.pointMetier = p;
         this.zoom = zoom;
         this.setLayout(new FlowLayout());
@@ -84,6 +83,10 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         {
             g2.setColor(Couleurs.POINT_SELECTIONNE);    
         }
+        else if(modeActuel == Mode.CIRCUIT)
+        {
+            g2.setColor(Couleurs.POINT_CIRCUIT);
+        }
         g2.fillOval(0, 0, calculerZoom(DIAMETRE), calculerZoom(DIAMETRE));
     }
     
@@ -96,6 +99,10 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         else if(modeActuel == Mode.SELECTIONNE)
         {
             g2.setColor(Couleurs.POINT_FOND_SELECTIONNE);    
+        }
+        else if(modeActuel == Mode.CIRCUIT)
+        {
+            g2.setColor(Couleurs.POINT_FOND_CIRCUIT);    
         }
         g2.fillOval(calculerZoom(POSITION_CERCLE_INTERNE), calculerZoom(POSITION_CERCLE_INTERNE), calculerZoom(LARGEUR_CERCLE_INTERNE), calculerZoom(LARGEUR_CERCLE_INTERNE));
     }

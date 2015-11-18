@@ -73,6 +73,9 @@ public class Simulateur {
     public boolean verifierExistenceSegment(Point depart, Point arrivee) {
         return carte.verifierExistenceSegment(depart, arrivee);
     }
+    public boolean estSegmentSortantDePoint(Point point, Segment segment){
+        return this.carte.estSegmentSortantDePoint(point, segment);
+    }
     
     public void ajouterSource(int nombreMax, Point pointDepart, double heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
         SourceBuilder builder = new SourceBuilder();

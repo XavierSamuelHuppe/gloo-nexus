@@ -33,10 +33,11 @@ public class Segment implements IDetailsAffichables {
     public enum Orientation {NO, NE, SE, SO};
    
     
-    public Segment(Point pD, Point pA)
+    public Segment(Point pD, Point pA, Metier.Carte.Segment segmentMetier)
     {
         this.pointDepart = pD;
         this.pointArrivee = pA;
+        this.segmentMetier = segmentMetier;
         passerModeDroit();
     }
     
