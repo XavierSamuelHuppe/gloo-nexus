@@ -77,12 +77,12 @@ public class Simulateur {
         return this.carte.estSegmentSortantDePoint(point, segment);
     }
     
-    public void ajouterSource(int nombreMax, Point pointDepart, double heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
+    public void ajouterSource(int nombreMax, Point pointDepart, LocalTime heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
         SourceBuilder builder = new SourceBuilder();
         Source nouvelleSource = builder.ConstruireSource(nombreMax, pointDepart, heureDebut, frequence, distribution, passagers, circuit);
         simulation.ajouterSource(nouvelleSource);
     }
-    public void ajouterSource(double heureFin, Point pointDepart, double heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
+    public void ajouterSource(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
         SourceBuilder builder = new SourceBuilder();
         Source nouvelleSource = builder.ConstruireSource(heureFin, pointDepart, heureDebut, frequence, distribution, passagers, circuit);
         simulation.ajouterSource(nouvelleSource);
@@ -90,11 +90,11 @@ public class Simulateur {
     public void retirerSource(Source source){
         simulation.retirerSource(source);
     }
-    public void modifierSource(Source source, double heureFin, Point pointDepart, double heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
+    public void modifierSource(Source source, LocalTime heureFin, Point pointDepart, LocalTime heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
         retirerSource(source);
         this.ajouterSource(heureFin, pointDepart, heureDebut, frequence, distribution, passagers, circuit);
     }
-    public void modifierSource(Source source, int nombreMax, Point pointDepart, double heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
+    public void modifierSource(Source source, int nombreMax, Point pointDepart, LocalTime heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
         retirerSource(source);
         this.ajouterSource(nombreMax, pointDepart, heureDebut, frequence, distribution, passagers, circuit);
     }

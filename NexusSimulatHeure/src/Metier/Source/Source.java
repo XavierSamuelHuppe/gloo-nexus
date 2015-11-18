@@ -8,19 +8,20 @@ import Metier.Circuit.Vehicule;
 import Metier.Carte.Segment;
 import Metier.Circuit.ConteneurPassagers;
 import Metier.Exceptions.CreationInvalideException;
+import java.time.LocalTime;
 import java.util.*;
 
 
 public abstract class Source {
     
     private double frequence;
-    private double heureDebut;
+    protected LocalTime heureDebut;
     private Point pointDepart;
     private Circuit circuitSource;
     private ConteneurPassagers passagers;
     private Distribution distributionAUtiliser;
 
-    public Source(Point pointDepart, double heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
+    public Source(Point pointDepart, LocalTime heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
         this.frequence = frequence;
         this.heureDebut = heureDebut;
         this.pointDepart = pointDepart;
@@ -32,7 +33,7 @@ public abstract class Source {
     public Point getPointDepart(){
         return pointDepart;
     }
-    public double getheureDebut(){
+    public LocalTime getheureDebut(){
         return heureDebut;
     }
     public double getFrequence(){
@@ -47,7 +48,7 @@ public abstract class Source {
     public void setPointDepart(Point point){
         pointDepart = point;
     }
-    public void setheureDebut(double heureD){
+    public void setheureDebut(LocalTime heureD){
         heureDebut = heureD;
     }
     public void setFrequence(double freq){
@@ -74,4 +75,7 @@ public abstract class Source {
         Vehicule vehicule = new Vehicule(circuitSource, segment, passagers);
         return vehicule;
     }
+    
+    public abstract void avancerCreation(LocalTime heureCourante, double tempsEcouleParRatioEnSeconde);
+    public abstract void reInitialiserValeursDepartSimulation();
 }

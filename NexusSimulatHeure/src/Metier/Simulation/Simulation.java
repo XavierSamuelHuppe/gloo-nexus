@@ -106,7 +106,7 @@ public class Simulation extends Observable{
         heureCourante = heureCourante.plusNanos(tempsEcouleParRatioEnNanos);
         
         faireAvancerToutLesVehicules(tempsEcouleParRatioEnSeconde);
-        //faire spawner les vehicules
+        faireAvancerCreationVehicule(heureCourante, tempsEcouleParRatioEnSeconde);
         //faire spawner les gens
         
         if(heureCourante.isAfter(parametres.getHeureFin()) && !(JourneeCourante == parametres.getNombreJourSimulation())){
@@ -128,6 +128,12 @@ public class Simulation extends Observable{
             }
         }
         vehicules.removeAll(vehiculesAEnlever);
+    }
+    
+    private void faireAvancerCreationVehicule(LocalTime heureCourante, double tempsEcouleParRatioEnSeconde){
+        for(Source s: sources){
+            s.avancerCreation(heureCourante, tempsEcouleParRatioEnSeconde);
+        }
     }
     
     
