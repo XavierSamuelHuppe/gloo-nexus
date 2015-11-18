@@ -1,6 +1,7 @@
 package UI;
 
 import UI.Constantes.Couleurs;
+import UI.Exceptions.SegmentNonTrouveException;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
@@ -10,6 +11,7 @@ import java.awt.event.MouseWheelListener;
 
 import java.util.List;
 import java.util.LinkedList;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 public class EspaceTravail extends javax.swing.JPanel implements MouseListener, MouseMotionListener, MouseWheelListener
@@ -120,7 +122,6 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     
     private void ajouterPoint(MouseEvent me)
     {
-        //Metier.Point mp = this.simulateur.ajouterPoint(transformerPositionEspaceTravailEnPostionGeorgraphique(me.getPoint()), "A");
         Metier.Carte.Point mp = this.simulateur.ajouterPoint(transformerPositionEspaceTravailEnPostionGeorgraphique(transformerPositionViewportEnPositionEspaceTravail(me.getPoint())), "A");
         
         Point p = new Point(me.getX(),me.getY(), this.zoom, mp);
@@ -133,33 +134,39 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         this.add(p);
         p.repaint();
     }
-    
-    private void ajouterVehicule(MouseEvent me)
-    {
-        Vehicule v = new Vehicule(me);
-        
-        vehicules.add(v);
-        
-        this.add(v);
-        v.repaint();
-    }
-    
-//    private void ajouterPassager(MouseEvent me)
-//    {
-//        Passager p = new Passager(me);
-//        
-//        passagers.add(p);
-//        
-//        this.add(p);
-//        p.repaint();
-//    }
-    
+
     private void ajouterSegment(Point pDepart, Point pArrivee)
     {
-        Segment s = new Segment(pDepart, pArrivee);
-        segments.add(s);
-        
-        this.repaint();
+        if(!this.simulateur.verifierExistenceSegment(pDepart.getPointMetier(), pArrivee.getPointMetier()))
+        {
+            Metier.Carte.Segment sp = this.simulateur.ajouterSegment(pDepart.getPointMetier(), pArrivee.getPointMetier());
+            Segment s = new Segment(pDepart, pArrivee, sp);
+            
+            if(this.simulateur.verifierExistenceSegment(pArrivee.getPointMetier(), pDepart.getPointMetier()))
+            {
+                s.passerModeDecale();
+                try
+                {
+                    Segment sInverse = obtenirSegmentParPoints(pArrivee, pDepart);
+                    sInverse.passerModeDecale();
+                }
+                catch(SegmentNonTrouveException sntEx)
+                {
+                    System.out.println("UI : Segment inverse introuvable.");
+                }
+            }
+            else
+            {
+                s.passerModeDroit();
+            }
+
+            segments.add(s);        
+            this.repaint();
+        }
+        else
+        {
+            System.out.println("ajouterSegment doublon détecté.");
+        }
     }
     
     
@@ -216,24 +223,32 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
 
     @Override
     public void mouseMoved(MouseEvent me) {
-        //afficherPosReference();
-        //afficherPoint("vp", me.getPoint());
         java.awt.Point pET = transformerPositionViewportEnPositionEspaceTravail(me.getPoint());
-        //afficherPoint("et", pET);
         Metier.Carte.Position p = transformerPositionEspaceTravailEnPostionGeorgraphique(pET);
-        //afficherPosition("geo", p);
         obtenirApplication().mettreAJourCoordonnesGeographiques(p.getY(), p.getX());
     }
 
-    private void afficherPoint(String s, java.awt.Point p)
+    public Segment obtenirSegmentParPoints(Point pD, Point pA)
     {
-        System.out.println(s + " : " + p.x + " " + p.y);
+        for(Segment s : segments)
+        {
+            if(s.getDepart() == pD && s.getArrivee() == pA)
+            {
+                return s;
+            }
+        }
+        throw new SegmentNonTrouveException();
     }
     
-    private void afficherPosition(String s, Metier.Carte.Position p)
-    {
-        System.out.println(s + " : " + p.getX() + " " + p.getY());
-    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     //Implémentations MouseWheelListener.
     @Override
@@ -312,6 +327,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     
     
     
+    
     public void pointClique(Point p)
     {
         if(mode == Mode.SEGMENT)
@@ -333,7 +349,19 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
             afficherDetails(p);
             this.repaint();
         }
+        else if (mode == Mode.CIRCUIT)
+        {
+            if(circuitCourant == null)
+            {
+                circuitCourant = new Circuit(p);
+                afficherDetails(circuitCourant);
+                p.setModeActuel(Point.Mode.CIRCUIT);
+                this.repaint();
+            }
+        }
     }
+    
+    private UI.Circuit circuitCourant;
         
     public void segmentClique(Segment s)
     {
@@ -346,11 +374,32 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         }
         else if(mode == Mode.CIRCUIT)
         {
-            deselectionnerTout();
-            s.setMode(Segment.Mode.CIRCUIT);
-            this.repaint();
+            if(circuitCourant != null)
+            {
+                if(validerSegmentAjouteAuCircuitCourant(circuitCourant, s))
+                {
+                    s.setMode(Segment.Mode.CIRCUIT);
+                    s.getArrivee().setModeActuel(Point.Mode.CIRCUIT);
+                    circuitCourant.ajouterSegment(s);
+                    this.repaint();
+                }
+            }
         }
     }
+    
+    private boolean validerSegmentAjouteAuCircuitCourant(Circuit c, Segment s)
+    {
+        Metier.Carte.Point pD = c.contientSegments() ? c.obtenirDernierSegment().getArrivee().getPointMetier() : c.getDepart().getPointMetier();
+        
+        if(!this.simulateur.estSegmentSortantDePoint(pD, s.getSegmentMetier()))
+        {
+            JOptionPane.showMessageDialog(this.obtenirApplication(), "Le segment à ajouter doit suivre le dernier segment du circuit.", "Erreur - Ajout d'un segment au circuit", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+    
+    
     
     
     private void afficherDetails(IDetailsAffichables elementCible)

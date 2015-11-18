@@ -26,6 +26,8 @@ public class Simulation extends Observable{
     public Simulation(Carte carte){
         parametres = new ParametreSimulation();
         this.carte = carte;
+        
+        this.circuits = new LinkedList<Circuit>();
     }
     
     public ParametreSimulation getParametres(){
@@ -43,6 +45,7 @@ public class Simulation extends Observable{
         boucleThread.start();
         notifyObservers();
     }
+    
     public void arreter(){
         if(parametres.estEnArret())
             throw new SimulationEnMauvaisEtatException();

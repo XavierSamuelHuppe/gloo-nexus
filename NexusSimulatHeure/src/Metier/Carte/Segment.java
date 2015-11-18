@@ -45,7 +45,7 @@ public class Segment extends Observable{
     public boolean equals(Object o){
         if (o == null) return false;
         if (o == this) return true;
-        if (!(o instanceof Point))return false;
+        if (!(o instanceof Segment))return false;
         Segment autreSegment = (Segment)o;
         return (pointDepart.equals(autreSegment.getPointDepart()) &&
                 pointArrivee.equals(autreSegment.getPointArrivee()));

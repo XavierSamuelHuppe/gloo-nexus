@@ -1,50 +1,39 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package UI.PanneauxDetails;
 
 import Controleur.Simulateur;
 import java.util.Observable;
 
-/**
- *
- * @author The Vagrant Geek
- */
-public class PanneauDetailsPoint extends PanneauDetails implements java.util.Observer {
 
-    private Metier.Carte.Point pointMetierLie;
-    private UI.Point pointUILie;
+public class PanneauDetailsCircuit extends PanneauDetails implements java.util.Observer {
+
+    private Metier.Circuit.Circuit circuitMetierLie;
+    private UI.Circuit circuitUILie;
     private Controleur.Simulateur simulateur;
     
     /**
      * Creates new form PanneauDetailsPoint2
      */
-    public PanneauDetailsPoint() {
+    public PanneauDetailsCircuit() {
         initComponents();
     }
     
-    public PanneauDetailsPoint(Metier.Carte.Point p, UI.Point pUI)
+    public PanneauDetailsCircuit(Metier.Circuit.Circuit cMetier, UI.Circuit cUI)
     {
         super();
         initComponents();
         
         this.simulateur = simulateur;
 
-        this.pointMetierLie = p;
-        this.pointMetierLie.addObserver(this);
+        this.circuitMetierLie = cMetier;
         
-        this.pointUILie = pUI;
+        this.circuitUILie = cUI;
         
         rafraichir();
     }
     
     @Override
     public void rafraichir() {
-        this.ChampLatitude.setText(String.format("%1$f", pointMetierLie.getPosition().getY()));
-        this.ChampLongitude.setText(String.format("%1$f", pointMetierLie.getPosition().getX()));
-        this.ChampNom.setText(pointMetierLie.getNom());
+        this.ChampNom.setText(circuitMetierLie != null ? circuitMetierLie.getNom() : "");
     }
 
     @Override
@@ -61,12 +50,6 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        ChampLatitude = new javax.swing.JTextField();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        ChampLongitude = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         ChampNom = new javax.swing.JTextField();
@@ -74,30 +57,6 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
         BoutonSauvegarder = new javax.swing.JButton();
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
-
-        jPanel2.setMaximumSize(new java.awt.Dimension(2147483647, 50));
-        jPanel2.setPreferredSize(new java.awt.Dimension(100, 50));
-        jPanel2.setLayout(new java.awt.BorderLayout());
-
-        jLabel2.setText("Latitude");
-        jPanel2.add(jLabel2, java.awt.BorderLayout.NORTH);
-
-        ChampLatitude.setText("ChampLatitude");
-        jPanel2.add(ChampLatitude, java.awt.BorderLayout.CENTER);
-
-        add(jPanel2);
-
-        jPanel3.setMaximumSize(new java.awt.Dimension(2147483647, 50));
-        jPanel3.setPreferredSize(new java.awt.Dimension(100, 50));
-        jPanel3.setLayout(new java.awt.BorderLayout());
-
-        jLabel3.setText("Longitude");
-        jPanel3.add(jLabel3, java.awt.BorderLayout.NORTH);
-
-        ChampLongitude.setText("ChampLongitude");
-        jPanel3.add(ChampLongitude, java.awt.BorderLayout.CENTER);
-
-        add(jPanel3);
 
         jPanel4.setMaximumSize(new java.awt.Dimension(2147483647, 50));
         jPanel4.setPreferredSize(new java.awt.Dimension(100, 50));
@@ -122,24 +81,24 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
     }// </editor-fold>//GEN-END:initComponents
 
     private void BoutonSauvegarderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSauvegarderActionPerformed
-        
-        this.obtenirApplication().getSimulateur().modifierPoint(this.pointMetierLie, new Metier.Carte.Position(Double.parseDouble(this.ChampLongitude.getText()), Double.parseDouble(this.ChampLatitude.getText())), this.ChampNom.getText());
-        this.pointUILie.rafraichirApresModificationPointMetier();
-        this.obtenirApplication().revalidate();
+        if(circuitMetierLie == null)
+        {
+            this.obtenirApplication().getSimulateur().ajouterCircuit(this.ChampNom.getText(), this.circuitUILie.obtenirListeSegmentsMetier());    
+            this.circuitUILie.deselectionner();
+            this.obtenirApplication().revalidate();
+        }
+        else
+        {
+//            this.obtenirApplication().getSimulateur().modifierCircuit(this.circuitMetierLie, this.ChampNom.getText(), this.circuitUILie.obtenirListeSegmentsMetier());    
+        }
     }//GEN-LAST:event_BoutonSauvegarderActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BoutonSauvegarder;
-    private javax.swing.JTextField ChampLatitude;
-    private javax.swing.JTextField ChampLongitude;
     private javax.swing.JTextField ChampNom;
     private javax.swing.Box.Filler filler1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     // End of variables declaration//GEN-END:variables
 }

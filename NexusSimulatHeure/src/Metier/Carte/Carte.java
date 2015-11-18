@@ -33,6 +33,12 @@ public class Carte {
         points.remove(point);
     }
     
+    public void modifierPoint(Point pointCible, Position pos, String nom)
+    {
+        pointCible.setNom(nom);
+        pointCible.setPosition(pos);
+    }
+    
     public List<Point> obtenirPointsAdjacents(Point point){
         List<Point> retour = new ArrayList();
         for(Segment s : obtenirSegmentsSortant(point)){
@@ -49,6 +55,13 @@ public class Carte {
             }
         }
         return retour;
+    }
+    
+    public boolean estSegmentSortantDePoint(Point point, Segment segment)
+    {
+        List<Segment> l = obtenirSegmentsSortant(point);
+        boolean r = l.stream().anyMatch((s) -> s.equals(segment));
+        return r;
     }
     
     public void ajouterSegment(Segment segment){
