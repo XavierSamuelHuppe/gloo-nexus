@@ -1,6 +1,7 @@
 package UI;
 
 import UI.Constantes.Couleurs;
+import UI.Exceptions.SegmentNonTrouveException;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
@@ -120,7 +121,6 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     
     private void ajouterPoint(MouseEvent me)
     {
-        //Metier.Point mp = this.simulateur.ajouterPoint(transformerPositionEspaceTravailEnPostionGeorgraphique(me.getPoint()), "A");
         Metier.Carte.Point mp = this.simulateur.ajouterPoint(transformerPositionEspaceTravailEnPostionGeorgraphique(transformerPositionViewportEnPositionEspaceTravail(me.getPoint())), "A");
         
         Point p = new Point(me.getX(),me.getY(), this.zoom, mp);
@@ -133,33 +133,39 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         this.add(p);
         p.repaint();
     }
-    
-    private void ajouterVehicule(MouseEvent me)
-    {
-        Vehicule v = new Vehicule(me);
-        
-        vehicules.add(v);
-        
-        this.add(v);
-        v.repaint();
-    }
-    
-//    private void ajouterPassager(MouseEvent me)
-//    {
-//        Passager p = new Passager(me);
-//        
-//        passagers.add(p);
-//        
-//        this.add(p);
-//        p.repaint();
-//    }
-    
+
     private void ajouterSegment(Point pDepart, Point pArrivee)
     {
-        Segment s = new Segment(pDepart, pArrivee);
-        segments.add(s);
-        
-        this.repaint();
+        if(!this.simulateur.verifierExistenceSegment(pDepart.getPointMetier(), pArrivee.getPointMetier()))
+        {
+            Metier.Carte.Segment sp = this.simulateur.ajouterSegment(pDepart.getPointMetier(), pArrivee.getPointMetier());
+            Segment s = new Segment(pDepart, pArrivee);
+            
+            if(this.simulateur.verifierExistenceSegment(pArrivee.getPointMetier(), pDepart.getPointMetier()))
+            {
+                s.passerModeDecale();
+                try
+                {
+                    Segment sInverse = obtenirSegmentParPoints(pArrivee, pDepart);
+                    sInverse.passerModeDecale();
+                }
+                catch(SegmentNonTrouveException sntEx)
+                {
+                    System.out.println("UI : Segment inverse introuvable.");
+                }
+            }
+            else
+            {
+                s.passerModeDroit();
+            }
+
+            segments.add(s);        
+            this.repaint();
+        }
+        else
+        {
+            System.out.println("ajouterSegment doublon détecté.");
+        }
     }
     
     
@@ -234,6 +240,30 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     {
         System.out.println(s + " : " + p.getX() + " " + p.getY());
     }
+    
+    
+    
+    public Segment obtenirSegmentParPoints(Point pD, Point pA)
+    {
+        for(Segment s : segments)
+        {
+            if(s.getDepart() == pD && s.getArrivee() == pA)
+            {
+                return s;
+            }
+        }
+        throw new SegmentNonTrouveException();
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     //Implémentations MouseWheelListener.
     @Override

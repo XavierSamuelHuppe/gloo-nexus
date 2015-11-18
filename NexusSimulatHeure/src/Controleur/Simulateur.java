@@ -52,9 +52,9 @@ public class Simulateur {
     public void retirerPoint(Point point){
         carte.retirerPoint(point);
     }
+    
     public void modifierPoint(Point pointCible, Position pos, String nom){
-        retirerPoint(pointCible);
-        ajouterPoint(pos,nom);
+        carte.modifierPoint(pointCible, pos, nom);
     }
     
     public Segment ajouterSegment(Point depart, Point arrivee){
@@ -69,6 +69,9 @@ public class Simulateur {
     }
     public void retirerSegment(Segment segment){
         carte.retirerSegment(segment);
+    }
+    public boolean verifierExistenceSegment(Point depart, Point arrivee) {
+        return carte.verifierExistenceSegment(depart, arrivee);
     }
     
     public void ajouterSource(int nombreMax, Point pointDepart, double heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){

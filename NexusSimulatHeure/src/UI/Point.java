@@ -49,15 +49,19 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         return this.pointMetier;
     }
     
+    public void rafraichirApresModificationPointMetier()
+    {
+        this.setSize((int)(DIAMETRE * zoom), (int)(DIAMETRE * zoom));
+        this.setLocation(this.obtenirEspaceTravail().transformerPositionEspaceTravailEnPositionViewport(this.obtenirEspaceTravail().transformerPostionGeorgraphiqueEnPositionEspaceTravail(this.pointMetier.getPosition())));
+    }
     
     @Override
     public void zoom(double facteurZoom, java.awt.Point positionCurseur)
     {
         super.zoom(facteurZoom, positionCurseur);
-        this.setSize((int)(DIAMETRE * zoom), (int)(DIAMETRE * zoom));
-        this.setLocation(this.obtenirEspaceTravail().transformerPositionEspaceTravailEnPositionViewport(this.obtenirEspaceTravail().transformerPostionGeorgraphiqueEnPositionEspaceTravail(this.pointMetier.getPosition())));
+        rafraichirApresModificationPointMetier();
     }
-        
+    
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -186,6 +190,6 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
 
     @Override
     public PanneauDetails obtenirPanneauDetails() {
-        return new PanneauDetailsPoint(this.getPointMetier());
+        return new PanneauDetailsPoint(this.getPointMetier(), this);
     }
 }

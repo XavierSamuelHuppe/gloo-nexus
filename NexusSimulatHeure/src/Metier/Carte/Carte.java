@@ -33,6 +33,12 @@ public class Carte {
         points.remove(point);
     }
     
+    public void modifierPoint(Point pointCible, Position pos, String nom)
+    {
+        pointCible.setNom(nom);
+        pointCible.setPosition(pos);
+    }
+    
     public List<Point> obtenirPointsAdjacents(Point point){
         List<Point> retour = new ArrayList();
         for(Segment s : obtenirSegmentsSortant(point)){

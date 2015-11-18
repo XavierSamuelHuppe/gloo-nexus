@@ -25,6 +25,7 @@ public class Point extends Observable{
 
     public void setNom(String nom) {
         this.nom = nom;
+        this.setChanged();
         notifyObservers();
     }
 
@@ -34,6 +35,7 @@ public class Point extends Observable{
     
     public void setPosition(Position position) {
         this.position = position;
+        this.setChanged();
         notifyObservers();
     }
     

@@ -119,6 +119,8 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         }
     }
 
+    private Controleur.Simulateur simulateur;
+    
     /**
      * Creates new form MainFrame
      */
@@ -128,10 +130,9 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
 
         this.BoutonNouveau.addKeyListener(this);
         
-        this.ZoneEspaceTravail.setSimulateur(new Controleur.Simulateur());
+        this.simulateur = new Controleur.Simulateur();
         
-        
-        
+        this.ZoneEspaceTravail.setSimulateur(simulateur);
         
         initialiserBoutonsModes();
     }
@@ -173,6 +174,24 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         
         this.revalidate();
     }
+    
+    public EspaceTravail getEspaceTravail()
+    {
+        return this.ZoneEspaceTravail;
+    }
+    
+    
+    public void repeindreEspaceTravail()
+    {
+        this.ZoneEspaceTravail.revalidate();
+        this.ZoneEspaceTravail.repaint();
+    }
+    
+    public Controleur.Simulateur getSimulateur()
+    {
+        return this.simulateur;
+    }
+    
     
     
     
