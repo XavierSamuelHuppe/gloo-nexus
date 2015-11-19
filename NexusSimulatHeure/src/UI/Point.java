@@ -129,11 +129,6 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         return this.getY() + (calculerZoom(DIAMETRE) / 2);
     }
     
-    private EspaceTravail.Mode obtenirModeZone()
-    {
-        return obtenirZone().getMode();
-    }
-    
     private EspaceTravail obtenirZone()
     {
         return (EspaceTravail)this.getParent();

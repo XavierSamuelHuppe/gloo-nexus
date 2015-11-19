@@ -59,35 +59,35 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     public void passerEnModePoint()
     {
         reinitialiserCouleurBoutonsModes();
-        ZoneEspaceTravail.setMode(EspaceTravail.Mode.POINT);
+        simulateur.passerEnModePoint();
         BoutonModePoint.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
     }
     
     public void passerEnModeSegment()
     {
         reinitialiserCouleurBoutonsModes();
-        ZoneEspaceTravail.setMode(EspaceTravail.Mode.SEGMENT);
+        simulateur.passerEnModeSegment();
         BoutonModeSegment.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
     }
     
     public void passerEnModeCircuit()
     {
         reinitialiserCouleurBoutonsModes();
-        ZoneEspaceTravail.setMode(EspaceTravail.Mode.CIRCUIT);
+        simulateur.passerEnModeCircuit();
         BoutonModeCircuit.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
     }
     
     public void passerEnModeSource()
     {
         reinitialiserCouleurBoutonsModes();
-        ZoneEspaceTravail.setMode(EspaceTravail.Mode.SOURCE);
+        simulateur.passerEnModeSource();
         BoutonModeSource.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
     }
     
     public void passerEnModeProfilPassager()
     {
         reinitialiserCouleurBoutonsModes();
-        ZoneEspaceTravail.setMode(EspaceTravail.Mode.PROFIL_PASSAGER);
+        simulateur.passerEnModePassager();
         BoutonModeProfilPassager.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
     }
     

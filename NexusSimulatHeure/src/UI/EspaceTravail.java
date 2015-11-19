@@ -18,10 +18,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
 {
     
     private Controleur.Simulateur simulateur;
-    
-    public enum Mode {POINT, SEGMENT, CIRCUIT, SOURCE, PROFIL_PASSAGER};
 
-    private Mode mode = Mode.POINT;
     private List<Point> points = new LinkedList<Point>();
     private List<Segment> segments = new LinkedList<Segment>();
     private List<Vehicule> vehicules = new LinkedList<Vehicule>();
@@ -99,20 +96,6 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     private void afficherPosReference()
     {
         System.out.println("ref : " + posReferenceX + " " + posReferenceY);
-    }
-    
-    public void setMode(Mode m)
-    {
-        System.out.println("Mode : " + m.toString());
-        this.mode = m;
-        
-        //Nettoyage.
-        tempSegmentPointDepart = null;
-    }
-    
-    public Mode getMode()
-    {
-        return this.mode;
     }
     
     public double getZoom()
@@ -266,12 +249,10 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     //Implémentations MouseListener.
     @Override
     public void mouseClicked(MouseEvent me) {
-        if(mode == Mode.POINT)
-        {
+        if(simulateur.estEnModePoint()){
             ajouterPoint(me);
         }
-        else if(mode == Mode.SEGMENT || mode == Mode.CIRCUIT)
-        {
+        else if(simulateur.estEnModeSegment() || simulateur.estEnModeCircuit()){
             for(Segment s : segments)
             {
                 if(s.estSegmentClique(me.getPoint()))
@@ -330,7 +311,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     
     public void pointClique(Point p)
     {
-        if(mode == Mode.SEGMENT)
+        if(simulateur.estEnModeSegment())
         {
             if(tempSegmentPointDepart == null)
             {
@@ -342,14 +323,14 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
                 tempSegmentPointDepart = fanionClavier1 ? p : null;
             }
         }
-        else if (mode == Mode.POINT)
+        else if (simulateur.estEnModePoint())
         {
             deselectionnerTout();
             p.setModeActuel(Point.Mode.SELECTIONNE);
             afficherDetails(p);
             this.repaint();
         }
-        else if (mode == Mode.CIRCUIT)
+        else if (simulateur.estEnModeCircuit())
         {
             if(circuitCourant == null)
             {
@@ -365,14 +346,14 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         
     public void segmentClique(Segment s)
     {
-        if(mode == Mode.SEGMENT)
+        if(simulateur.estEnModeSegment())
         {
             deselectionnerTout();
             s.setMode(Segment.Mode.SELECTIONNE);
             afficherDetails(s);
             this.repaint();
         }
-        else if(mode == Mode.CIRCUIT)
+        else if(simulateur.estEnModeCircuit())
         {
             if(circuitCourant != null)
             {
