@@ -3,7 +3,7 @@ package Metier;
 import Metier.Carte.*;
 import Metier.Circuit.*;
 import Metier.Exceptions.*;
-import java.util.List;
+import java.util.*;
 
 public class ContexteEdition {
 
@@ -29,6 +29,7 @@ public class ContexteEdition {
     public ContexteEdition(Carte carte){
         mode = ModeEdition.POINT;
         this.carte = carte;
+        circuitEnCreation = new ArrayList();
     }
     
     public boolean estEnModePoint(){
@@ -77,6 +78,11 @@ public class ContexteEdition {
     
     public void setPointCreateur(Point p){
         pointCreateur = p;
+    }
+    public Point getPointCreateur(){
+        if(pointCreateur == null)
+            throw new AucunPointCreateurException();
+        return pointCreateur;
     }
     public void viderPointCreateur(){
         pointCreateur = null;
@@ -133,13 +139,13 @@ public class ContexteEdition {
         
         try
         {
-            Point monPointActif = getPointActif();
-            setPointActif(p);
-            Segment segmentAAjouter = carte.obtenirSegment(monPointActif, p);
+            Point monPointCreateur = getPointCreateur();
+            setPointCreateur(p);
+            Segment segmentAAjouter = carte.obtenirSegment(monPointCreateur, p);
             circuitEnCreation.add(segmentAAjouter);
             
         }catch(AucunPointActifException e){
-            setPointActif(p);
+            setPointCreateur(p);
         }
     }
     public Circuit obtenirNouveauCircuit(String nom){
@@ -149,6 +155,7 @@ public class ContexteEdition {
         CircuitBuilder builder = new CircuitBuilder();
         Circuit nouveauCircuit = builder.ConstruireCircuit(nom, circuitEnCreation);
         circuitEnCreation.clear();
+        viderPointCreateur();
         return nouveauCircuit;
     }
     public void viderCircuitEnCreation(){

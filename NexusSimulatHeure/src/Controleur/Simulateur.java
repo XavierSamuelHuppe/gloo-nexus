@@ -252,7 +252,7 @@ public class Simulateur {
     
     public boolean estDansCircuitActif(Point point){
         try{
-            return contexte.estDansCircuitActif(point);
+            return contexte.estDansCircuitActif(point) || contexte.getPointCreateur().equals(point);
         }catch(AucunCircuitActifException e){
             return false;
         }
