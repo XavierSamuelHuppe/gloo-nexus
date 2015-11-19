@@ -127,6 +127,11 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         this.add(p);
         this.repaint();
     }
+    public void retirerPoint(Point p){
+        points.remove(p);
+        this.remove(p);
+        this.repaint();
+    }
 
     private void ajouterSegment(Point pDepart, Point pArrivee)
     {
@@ -142,7 +147,6 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     
     public void paintComponent(Graphics g)
     {
-        System.out.println("EspaceTravail paintComponent");
         super.paintComponent(g);
         
         Graphics2D g2 = (Graphics2D)g;
