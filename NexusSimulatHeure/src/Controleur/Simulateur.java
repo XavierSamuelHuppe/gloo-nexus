@@ -17,7 +17,7 @@ public class Simulateur {
     public Simulateur(){
         carte = new Carte();
         simulation = new Simulation(carte);
-        contexte = new ContexteEdition();
+        contexte = new ContexteEdition(simulation, carte);
     }
  
     public boolean estEnModePoint(){
@@ -167,5 +167,13 @@ public class Simulateur {
         CircuitBuilder builder = new CircuitBuilder();
         Circuit nouveauCircuit = builder.ConstruireCircuit(nom, segments);
         simulation.ajouterCircuit(nouveauCircuit);
+    }
+    
+    public boolean estPointActif(Point p){
+        return contexte.getPointActif().equals(p);
+    }
+    
+    public void commencerContinuerCurcuitEnCourt(Point p){
+        contexte.commencerContinuerCreationCircuit(p);
     }
 }
