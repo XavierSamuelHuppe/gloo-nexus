@@ -115,7 +115,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     private void ajouterPoint(MouseEvent me)
     {
         PaireDoubles pd = transformerPositionEspaceTravailEnPostionGeorgraphique(transformerPositionViewportEnPositionEspaceTravail(me.getPoint()));
-        Metier.Carte.Point mp = this.simulateur.ajouterPoint(pd.getPremier(), pd.getSecond(), "A");
+        Metier.Carte.Point mp = this.simulateur.ajouterPoint(pd.getPremier(), pd.getSecond(), "");
         
         Point p = new Point(me.getX(),me.getY(), this.zoom, mp);
         
@@ -130,36 +130,13 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
 
     private void ajouterSegment(Point pDepart, Point pArrivee)
     {
-        if(!this.simulateur.verifierExistenceSegment(pDepart.getPointMetier(), pArrivee.getPointMetier()))
-        {
+//        try
+//        {
             Metier.Carte.Segment sp = this.simulateur.ajouterSegment(pDepart.getPointMetier(), pArrivee.getPointMetier());
-            Segment s = new Segment(pDepart, pArrivee, sp);
-            
-            if(this.simulateur.verifierExistenceSegment(pArrivee.getPointMetier(), pDepart.getPointMetier()))
-            {
-                s.passerModeDecale();
-                try
-                {
-                    Segment sInverse = obtenirSegmentParPoints(pArrivee, pDepart);
-                    sInverse.passerModeDecale();
-                }
-                catch(SegmentNonTrouveException sntEx)
-                {
-                    System.out.println("UI : Segment inverse introuvable.");
-                }
-            }
-            else
-            {
-                s.passerModeDroit();
-            }
-
+            Segment s = new Segment(pDepart, pArrivee, this, sp);
             segments.add(s);        
             this.repaint();
-        }
-        else
-        {
-            System.out.println("ajouterSegment doublon détecté.");
-        }
+//        }
     }
     
     
@@ -353,88 +330,26 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         }
         else if (simulateur.estEnModeCircuit())
         {
-            if(circuitCourant == null)
-            {
-                circuitCourant = new Circuit(p);
-                afficherDetails(circuitCourant);
-//                p.setModeActuel(Point.Mode.CIRCUIT);
-                this.repaint();
-            }
+            this.simulateur.commencerContinuerCreationCircuit(p.getPointMetier());
         }
     }
     
-    private UI.Circuit circuitCourant;
-        
     public void segmentClique(Segment s)
     {
         if(simulateur.estEnModeSegment())
         {
-            deselectionnerTout();
-            s.setMode(Segment.Mode.SELECTIONNE);
+            simulateur.selectionnerSegment(s.getSegmentMetier());
             afficherDetails(s);
             this.repaint();
         }
         else if(simulateur.estEnModeCircuit())
         {
-            if(circuitCourant != null)
-            {
-                if(validerSegmentAjouteAuCircuitCourant(circuitCourant, s))
-                {
-                    s.setMode(Segment.Mode.CIRCUIT);
-//                    s.getArrivee().setModeActuel(Point.Mode.CIRCUIT);
-                    circuitCourant.ajouterSegment(s);
-                    this.repaint();
-                }
-            }
+            simulateur.commencerContinuerCreationCircuit(s.getArrivee().getPointMetier());
         }
     }
-    
-    private boolean validerSegmentAjouteAuCircuitCourant(Circuit c, Segment s)
-    {
-        Metier.Carte.Point pD = c.contientSegments() ? c.obtenirDernierSegment().getArrivee().getPointMetier() : c.getDepart().getPointMetier();
-        
-        if(!this.simulateur.estSegmentSortantDePoint(pD, s.getSegmentMetier()))
-        {
-            JOptionPane.showMessageDialog(this.obtenirApplication(), "Le segment à ajouter doit suivre le dernier segment du circuit.", "Erreur - Ajout d'un segment au circuit", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-        return true;
-    }
-    
-    
-    
     
     private void afficherDetails(IDetailsAffichables elementCible)
     {
         this.obtenirApplication().afficherPanneauDetails(elementCible);
-    }
-    
-    private void deselectionnerTout()
-    {
-        deselectionnerTousPoints();
-        deselectionnerTousSegments();
-    }
-       
-    private void deselectionnerTousPoints()
-    {
-//        for(UI.Point p : points)
-//        {
-//            if(p.getModeActuel() == Point.Mode.SELECTIONNE)
-//            {
-//                p.setModeActuel(Point.Mode.NORMAL);    
-//                p.repaint();
-//            }
-//        }
-    }
-    
-    private void deselectionnerTousSegments()
-    {
-        for(UI.Segment s : segments)
-        {
-            if(s.getMode() == Segment.Mode.SELECTIONNE)
-            {
-                s.setMode(Segment.Mode.NORMAL);    
-            }
-        }
     }
 }
