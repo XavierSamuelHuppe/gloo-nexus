@@ -14,6 +14,8 @@ public class Couleurs {
     public static final java.awt.Color POINT_CIRCUIT = Color.decode("#FFC46B");
     public static final java.awt.Color POINT_FOND_CIRCUIT = Color.decode("#FFE4BA");
     
+    public static final java.awt.Color POINT_SOURCE_DETAILS = Color.decode("#FF0000");
+    
     public static final java.awt.Color POINT_NOM = Color.decode("#000000");
     
     public static final java.awt.Color SEGMENT = Color.decode("#5B8CC3");

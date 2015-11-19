@@ -15,9 +15,24 @@ import java.awt.event.MouseEvent;
 import javax.swing.JComponent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.LinkedList;
+import java.util.Observable;
 import javax.swing.BorderFactory;
+import java.util.Observer;
 
-public class Point extends ElementEspaceTravail implements MouseListener, MouseMotionListener, IDetailsAffichables {
+public class Point extends ElementEspaceTravail implements MouseListener, MouseMotionListener, IDetailsAffichables, Observer {
+
+    @Override
+    public void update(Observable o, Object o1) {
+        rafraichir();
+    }
+    
+    public void rafraichir()
+    {
+        this.determinerMode();
+        this.setSize((int)(DIAMETRE * zoom), (int)(DIAMETRE * zoom));
+        this.setLocation(this.obtenirEspaceTravail().transformerPositionEspaceTravailEnPositionViewport(this.obtenirEspaceTravail().transformerPostionGeorgraphiqueEnPositionEspaceTravail(this.pointMetier.getPosition())));        
+    }
 
     enum Mode {NORMAL, SELECTIONNE, CIRCUIT};
         
@@ -41,36 +56,39 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         this.setSize(calculerZoom(DIAMETRE),calculerZoom(DIAMETRE));
         this.setLocation(x,y);
         this.setOpaque(false);
+        
+        this.pointMetier.addObserver(this);
     }
 
     public Metier.Carte.Point getPointMetier()
     {
         return this.pointMetier;
     }
-    
-    public void rafraichirApresModificationPointMetier()
-    {
-        this.setSize((int)(DIAMETRE * zoom), (int)(DIAMETRE * zoom));
-        this.setLocation(this.obtenirEspaceTravail().transformerPositionEspaceTravailEnPositionViewport(this.obtenirEspaceTravail().transformerPostionGeorgraphiqueEnPositionEspaceTravail(this.pointMetier.getPosition())));
-    }
-    
+        
     @Override
     public void zoom(double facteurZoom, java.awt.Point positionCurseur)
     {
         super.zoom(facteurZoom, positionCurseur);
-        rafraichirApresModificationPointMetier();
+        rafraichir();
+        this.obtenirEspaceTravail().repaint();
     }
     
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
         dessinerFond(g2);
         dessinerCentre(g2);
+    }
+    
+    public void dessiner(Graphics2D g2)
+    {
+        determinerMode();
+        this.repaint();
         dessinerNomSiRequis(g2);
+        dessinerDetailsSourcesSiRequis(g2);
     }
     
     private void dessinerFond(Graphics2D g2)
@@ -114,7 +132,30 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         {
             g2.setColor(Couleurs.POINT_NOM);
             g2.setFont(new Font(null, Font.PLAIN, (int)(UI.Constantes.Rendu.TAILLE_POLICE_POINTS * this.zoom)));
-            g2.drawString(this.getPointMetier().getNom(), 0, 0);
+            g2.drawString(this.getPointMetier().getNom(), this.getX() + (int)(this.zoom * 42), this.getY() + (int)(this.zoom * 16));
+            
+            //(int)(this.zoom * (this.getX())) + (int)this.zoom * 50, (int)(this.zoom * (this.getY())) + (int)this.zoom * 50
+        }
+    }
+    
+    private void dessinerDetailsSourcesSiRequis(Graphics2D g2)
+    {
+        if(!this.pointMetier.getSources().isEmpty())
+        {
+            LinkedList<DetailsSource> liste = new LinkedList<DetailsSource>();
+            for(Metier.Source.Source s : this.pointMetier.getSources())
+            {
+                liste.add(new DetailsSource(s));
+            }
+
+            g2.setColor(Couleurs.POINT_SOURCE_DETAILS);
+            g2.setFont(new Font(null, Font.PLAIN, (int)(UI.Constantes.Rendu.TAILLE_POLICE_POINTS * this.zoom)));
+            int offsetY = 0;
+            for(DetailsSource ds : liste)
+            {
+                g2.drawString(this.getPointMetier().getNom(), (int)(this.zoom * 50), offsetY);
+                offsetY += (int)(UI.Constantes.Rendu.TAILLE_POLICE_POINTS * this.zoom);
+            }
         }
     }
     
@@ -134,15 +175,22 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         return (EspaceTravail)this.getParent();
     }
     
-    public Mode getModeActuel()
+    public void determinerMode()
     {
-        return this.modeActuel;
-    }
-    public void setModeActuel(Mode m)
-    {
-        this.modeActuel = m;
-    }
-        
+        Controleur.Simulateur sim = this.obtenirEspaceTravail().getSimulateur();
+        if(sim.estEnModePoint() && sim.estPointActif(this.pointMetier))
+        {
+            this.modeActuel = Mode.SELECTIONNE;
+        }
+        else if (sim.estEnModeCircuit() && true)
+        {
+            this.modeActuel = Mode.CIRCUIT;
+        }
+        else
+        {
+            this.modeActuel = Mode.NORMAL;
+        }        
+    }        
 
     boolean dragged = false;
     
@@ -168,8 +216,6 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
     @Override
     public void mouseClicked(MouseEvent me) {
         obtenirEspaceTravail().pointClique(this);
-//        this.modeActuel = Mode.SELECTIONNE;
-//        this.repaint();
     }
     
     @Override

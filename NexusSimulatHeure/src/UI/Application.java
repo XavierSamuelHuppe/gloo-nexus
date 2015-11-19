@@ -54,6 +54,10 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         {
             passerEnModeProfilPassager();
         }
+        else if (ke.getKeyChar()==KeyEvent.VK_DELETE)
+        {
+            System.out.println("delete");
+        }
     }
     
     public void passerEnModePoint()

@@ -1,7 +1,9 @@
 package UI;
 
+import Controleur.Simulateur;
 import UI.Constantes.Couleurs;
 import UI.Exceptions.SegmentNonTrouveException;
+import UI.Utils.PaireDoubles;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
@@ -48,6 +50,11 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         this.simulateur = s;
     }
     
+    public Simulateur getSimulateur()
+    {
+        return this.simulateur;
+    }
+    
     private Application obtenirApplication()
     {
         return (Application)SwingUtilities.getWindowAncestor(this);
@@ -55,7 +62,8 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     
     public void deplacerPoint(UI.Point p)
     {
-        this.simulateur.modifierPoint(p.getPointMetier(), transformerPositionEspaceTravailEnPostionGeorgraphique(transformerPositionViewportEnPositionEspaceTravail(p.getLocation())), p.getPointMetier().getNom());
+        PaireDoubles coords = transformerPositionEspaceTravailEnPostionGeorgraphique(transformerPositionViewportEnPositionEspaceTravail(p.getLocation()));
+        this.simulateur.modifierPoint(p.getPointMetier(), coords.getPremier(), coords.getSecond(), p.getPointMetier().getNom());
     }
     
     private final double ZOOM_BORNE_INFERIEURE = 0.1;
@@ -77,6 +85,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     //        }
 
             obtenirApplication().mettreAJourZoom(this.zoom);
+            this.repaint();
         }
 
     }
@@ -105,7 +114,8 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     
     private void ajouterPoint(MouseEvent me)
     {
-        Metier.Carte.Point mp = this.simulateur.ajouterPoint(transformerPositionEspaceTravailEnPostionGeorgraphique(transformerPositionViewportEnPositionEspaceTravail(me.getPoint())), "A");
+        PaireDoubles pd = transformerPositionEspaceTravailEnPostionGeorgraphique(transformerPositionViewportEnPositionEspaceTravail(me.getPoint()));
+        Metier.Carte.Point mp = this.simulateur.ajouterPoint(pd.getPremier(), pd.getSecond(), "A");
         
         Point p = new Point(me.getX(),me.getY(), this.zoom, mp);
         
@@ -115,7 +125,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         p.addMouseMotionListener(p);
         
         this.add(p);
-        p.repaint();
+        this.repaint();
     }
 
     private void ajouterSegment(Point pDepart, Point pArrivee)
@@ -155,17 +165,22 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     
     public void paintComponent(Graphics g)
     {
-        //System.out.println("EspaceTravail paintComponent");
+        System.out.println("EspaceTravail paintComponent");
         super.paintComponent(g);
         
         Graphics2D g2 = (Graphics2D)g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
-        //Les point se dessinent par eux-mêmes.
-        
-        //Comme les segments ne sont pas des contrôles, on doit les dessiner
-        //manuellement.
+        dessinerPoints(g2);
         dessinerSegments(g2);
+    }
+    
+    private void dessinerPoints(Graphics2D g2)
+    {
+        for(Point p : points)
+        {
+            p.dessiner(g2);
+        }
     }
     
     private void dessinerSegments(Graphics2D g2)
@@ -200,6 +215,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
             }
             
             mettreAJourPositionReferenceApresDrag(delta);
+            this.repaint();
         }
         pointDrag = me.getPoint();
     }
@@ -207,8 +223,8 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     @Override
     public void mouseMoved(MouseEvent me) {
         java.awt.Point pET = transformerPositionViewportEnPositionEspaceTravail(me.getPoint());
-        Metier.Carte.Position p = transformerPositionEspaceTravailEnPostionGeorgraphique(pET);
-        obtenirApplication().mettreAJourCoordonnesGeographiques(p.getY(), p.getX());
+        PaireDoubles pd = transformerPositionEspaceTravailEnPostionGeorgraphique(pET);
+        obtenirApplication().mettreAJourCoordonnesGeographiques(pd.getSecond(), pd.getPremier());
     }
 
     public Segment obtenirSegmentParPoints(Point pD, Point pA)
@@ -289,11 +305,17 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         return new java.awt.Point((int)(posGeo.getX() / ratioPixelDegreLontitude), 
                                   (int)(posGeo.getY() / -ratioPixelDegreLatitude));
     }
-    
-        public Metier.Carte.Position transformerPositionEspaceTravailEnPostionGeorgraphique(java.awt.Point posET)
+        
+    public java.awt.Point transformerPostionGeorgraphiqueEnPositionEspaceTravail(PaireDoubles posGeo)
     {
-        return new Metier.Carte.Position(posET.x * ratioPixelDegreLontitude, 
-                                   posET.y * -ratioPixelDegreLatitude);
+        return new java.awt.Point((int)(posGeo.getPremier()/ ratioPixelDegreLontitude), 
+                                  (int)(posGeo.getSecond() / -ratioPixelDegreLatitude));
+    }
+    
+        public PaireDoubles transformerPositionEspaceTravailEnPostionGeorgraphique(java.awt.Point posET)
+    {
+        return new PaireDoubles(posET.x * ratioPixelDegreLontitude, 
+                                posET.y * -ratioPixelDegreLatitude);
     }
     
     public java.awt.Point transformerPositionEspaceTravailEnPositionViewport(java.awt.Point posET)
@@ -325,9 +347,8 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         }
         else if (simulateur.estEnModePoint())
         {
-            deselectionnerTout();
-            p.setModeActuel(Point.Mode.SELECTIONNE);
-            afficherDetails(p);
+            this.simulateur.selectionnerPoint(p.getPointMetier());
+            this.obtenirApplication().afficherPanneauDetails(p);
             this.repaint();
         }
         else if (simulateur.estEnModeCircuit())
@@ -336,7 +357,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
             {
                 circuitCourant = new Circuit(p);
                 afficherDetails(circuitCourant);
-                p.setModeActuel(Point.Mode.CIRCUIT);
+//                p.setModeActuel(Point.Mode.CIRCUIT);
                 this.repaint();
             }
         }
@@ -360,7 +381,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
                 if(validerSegmentAjouteAuCircuitCourant(circuitCourant, s))
                 {
                     s.setMode(Segment.Mode.CIRCUIT);
-                    s.getArrivee().setModeActuel(Point.Mode.CIRCUIT);
+//                    s.getArrivee().setModeActuel(Point.Mode.CIRCUIT);
                     circuitCourant.ajouterSegment(s);
                     this.repaint();
                 }
@@ -396,14 +417,14 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
        
     private void deselectionnerTousPoints()
     {
-        for(UI.Point p : points)
-        {
-            if(p.getModeActuel() == Point.Mode.SELECTIONNE)
-            {
-                p.setModeActuel(Point.Mode.NORMAL);    
-                p.repaint();
-            }
-        }
+//        for(UI.Point p : points)
+//        {
+//            if(p.getModeActuel() == Point.Mode.SELECTIONNE)
+//            {
+//                p.setModeActuel(Point.Mode.NORMAL);    
+//                p.repaint();
+//            }
+//        }
     }
     
     private void deselectionnerTousSegments()

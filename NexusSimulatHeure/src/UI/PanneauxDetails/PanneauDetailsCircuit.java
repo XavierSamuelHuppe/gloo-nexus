@@ -83,7 +83,7 @@ public class PanneauDetailsCircuit extends PanneauDetails implements java.util.O
     private void BoutonSauvegarderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSauvegarderActionPerformed
         if(circuitMetierLie == null)
         {
-            this.obtenirApplication().getSimulateur().ajouterCircuit(this.ChampNom.getText(), this.circuitUILie.obtenirListeSegmentsMetier());    
+            //this.obtenirApplication().getSimulateur().ajouterCircuit(this.ChampNom.getText(), this.circuitUILie.obtenirListeSegmentsMetier());    
             this.circuitUILie.deselectionner();
             this.obtenirApplication().revalidate();
         }

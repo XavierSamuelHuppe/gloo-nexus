@@ -11,39 +11,37 @@ import java.util.Observable;
  *
  * @author The Vagrant Geek
  */
-public class PanneauDetailsPoint extends PanneauDetails implements java.util.Observer {
+public class PanneauDetailsSegment1 extends PanneauDetails implements java.util.Observer {
 
-    private Metier.Carte.Point pointMetierLie;
-    private UI.Point pointUILie;
+    private Metier.Carte.Segment segmentMetierLie;
+    private UI.Segment segmentUILie;
     private Controleur.Simulateur simulateur;
     
     /**
      * Creates new form PanneauDetailsPoint2
      */
-    public PanneauDetailsPoint() {
+    public PanneauDetailsSegment1() {
         initComponents();
     }
     
-    public PanneauDetailsPoint(Metier.Carte.Point p, UI.Point pUI)
+    public PanneauDetailsSegment1(Metier.Carte.Segment s, UI.Segment sUI)
     {
         super();
         initComponents();
-        
-        this.simulateur = simulateur;
 
-        this.pointMetierLie = p;
-        this.pointMetierLie.addObserver(this);
+        this.segmentMetierLie = s;
+        this.segmentMetierLie.addObserver(this);
         
-        this.pointUILie = pUI;
+        this.segmentUILie = sUI;
         
         rafraichir();
     }
     
     @Override
     public void rafraichir() {
-        this.ChampLatitude.setText(String.format("%1$f", pointMetierLie.getPosition().getY()));
-        this.ChampLongitude.setText(String.format("%1$f", pointMetierLie.getPosition().getX()));
-        this.ChampNom.setText(pointMetierLie.getNom());
+//        this.ChampLatitude.setText(String.format("%1$f", pointMetierLie.getPosition().getY()));
+//        this.ChampLongitude.setText(String.format("%1$f", pointMetierLie.getPosition().getX()));
+//        this.ChampNom.setText(pointMetierLie.getNom());
     }
 
     @Override
@@ -71,10 +69,6 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
         ChampNom = new javax.swing.JTextField();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5));
         BoutonSauvegarder = new javax.swing.JButton();
-        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5));
-        jPanel5 = new javax.swing.JPanel();
-        LibelleSources = new javax.swing.JLabel();
-        ListeSources = new javax.swing.JComboBox();
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
@@ -122,25 +116,13 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
             }
         });
         add(BoutonSauvegarder);
-        add(filler2);
-
-        jPanel5.setMaximumSize(new java.awt.Dimension(2147483647, 50));
-        jPanel5.setPreferredSize(new java.awt.Dimension(100, 50));
-        jPanel5.setLayout(new java.awt.BorderLayout());
-
-        LibelleSources.setText("Sources");
-        jPanel5.add(LibelleSources, java.awt.BorderLayout.NORTH);
-
-        ListeSources.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel5.add(ListeSources, java.awt.BorderLayout.CENTER);
-
-        add(jPanel5);
     }// </editor-fold>//GEN-END:initComponents
 
     private void BoutonSauvegarderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSauvegarderActionPerformed
         
-        this.obtenirApplication().getSimulateur().modifierPoint(this.pointMetierLie, Double.parseDouble(this.ChampLongitude.getText()), Double.parseDouble(this.ChampLatitude.getText()), this.ChampNom.getText());
-        this.obtenirApplication().repaint();
+//        this.obtenirApplication().getSimulateur().modifierPoint(this.pointMetierLie, new Metier.Carte.Position(Double.parseDouble(this.ChampLongitude.getText()), Double.parseDouble(this.ChampLatitude.getText())), this.ChampNom.getText());
+//        this.pointUILie.rafraichirApresModificationPointMetier();
+//        this.obtenirApplication().revalidate();
     }//GEN-LAST:event_BoutonSauvegarderActionPerformed
 
 
@@ -149,16 +131,12 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
     private javax.swing.JTextField ChampLatitude;
     private javax.swing.JTextField ChampLongitude;
     private javax.swing.JTextField ChampNom;
-    private javax.swing.JLabel LibelleSources;
-    private javax.swing.JComboBox ListeSources;
     private javax.swing.Box.Filler filler1;
-    private javax.swing.Box.Filler filler2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     // End of variables declaration//GEN-END:variables
 }
