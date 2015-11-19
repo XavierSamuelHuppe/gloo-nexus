@@ -27,7 +27,10 @@ public class Simulation extends Observable{
         parametres = new ParametreSimulation();
         this.carte = carte;
         
-        this.circuits = new LinkedList<Circuit>();
+        this.circuits = new ArrayList<Circuit>();
+        this.vehicules = new ArrayList<Vehicule>();
+        this.sources = new ArrayList<Source>();
+        this.profils = new ArrayList<ProfilPassager>();
     }
     
     public ParametreSimulation getParametres(){

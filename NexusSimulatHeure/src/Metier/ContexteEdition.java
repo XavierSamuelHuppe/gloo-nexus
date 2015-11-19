@@ -86,6 +86,35 @@ public class ContexteEdition {
         circuitActif = null;
     }
     
+    public void creerSegmentAvecContinuation(Point p){
+        if(!estEnModeSegment())
+            throw new EditionEnMauvaisModeException();
+        
+        try
+        {
+            Point monPointActif = getPointActif();
+            Segment segmentAAjouter = carte.obtenirSegment(monPointActif, p);
+            setPointActif(p);
+            
+        }catch(AucunPointActifException e){
+            setPointActif(p);
+        }
+    }
+    public void creerSegmentSansContinuation(Point p){
+        if(!estEnModeSegment())
+            throw new EditionEnMauvaisModeException();
+        
+        try
+        {
+            Point monPointActif = getPointActif();
+            Segment segmentAAjouter = carte.obtenirSegment(monPointActif, p);
+            viderPointActif();
+            
+        }catch(AucunPointActifException e){
+            setPointActif(p);
+        }
+    }
+    
     public void setSegmentActif(Segment segment){
         segmentActif = segment;
     }
