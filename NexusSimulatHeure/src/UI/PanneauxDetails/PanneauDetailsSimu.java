@@ -1,6 +1,7 @@
 
 package UI.PanneauxDetails;
 
+import Metier.Distribution;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Observable;
@@ -10,17 +11,20 @@ public class PanneauDetailsSimu extends PanneauDetails implements Observer{
 
     //private Controleur.Simulateur simulateur;
     private Metier.Simulation.ParametreSimulation paramSimulation;
+    private Controleur.Simulateur simulateur;
     
     public PanneauDetailsSimu()
     {
         initComponents();
     }
     
-    public PanneauDetailsSimu(Metier.Simulation.ParametreSimulation param) {
+    public PanneauDetailsSimu(Controleur.Simulateur s, Metier.Simulation.ParametreSimulation param) {
         super();
         initComponents();
         
+        this.simulateur = s;
         this.paramSimulation = param;
+        
         this.rafraichir();
     }
     
@@ -236,11 +240,22 @@ public class PanneauDetailsSimu extends PanneauDetails implements Observer{
     }// </editor-fold>//GEN-END:initComponents
 
     private void BoutonSauvegarderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSauvegarderActionPerformed
-        this.obtenirApplication().getSimulateur().modifierNombreJourSimulation((int)this.ChampNbJours.getValue());
-        this.obtenirApplication().getSimulateur().modifierHeureDebut(LocalTime.parse(this.ChampHeureDebut.getText(), DateTimeFormatter.ISO_LOCAL_TIME));
-        this.obtenirApplication().getSimulateur().modifierHeureFin(LocalTime.parse(this.ChampHeureFin.getText(), DateTimeFormatter.ISO_LOCAL_TIME));
+        simulateur.modifierNombreJourSimulation((int)this.ChampNbJours.getValue());
+        simulateur.modifierHeureDebut(LocalTime.parse(this.ChampHeureDebut.getText(), DateTimeFormatter.ISO_LOCAL_TIME));
+        simulateur.modifierHeureFin(LocalTime.parse(this.ChampHeureFin.getText(), DateTimeFormatter.ISO_LOCAL_TIME));
         
-        
+        simulateur.modifierDistributionTempsTransitSegment(
+                new Metier.Distribution(Double.parseDouble(this.ChampDistSegmentMin.getText()),
+                                        Double.parseDouble(this.ChampDistSegmentMode.getText()),
+                                        Double.parseDouble(this.ChampDistSegmentMax.getText())));
+        simulateur.modifierDistributionTempsGenerationVehicule(
+                new Metier.Distribution(Double.parseDouble(this.ChampDistVehiculeMin.getText()),
+                                        Double.parseDouble(this.ChampDistVehiculeMode.getText()),
+                                        Double.parseDouble(this.ChampDistVehiculeMax.getText())));
+        simulateur.modifierDistributionTempsGenerationPassager(
+                new Metier.Distribution(Double.parseDouble(this.ChampDistPassagerMin.getText()),
+                                        Double.parseDouble(this.ChampDistPassagerMode.getText()),
+                                        Double.parseDouble(this.ChampDistPassagerMax.getText())));
     }//GEN-LAST:event_BoutonSauvegarderActionPerformed
 
 
