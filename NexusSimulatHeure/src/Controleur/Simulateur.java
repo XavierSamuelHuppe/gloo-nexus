@@ -146,6 +146,14 @@ public class Simulateur {
         retirerSource(source);
         this.ajouterSource(nombreMax, pointDepart, heureDebut, frequence, distribution, passagers, circuit);
     }
+    public void modifierSource(Source source, LocalTime heureFin, Point pointDepart, LocalTime heureDebut, double frequence, ConteneurPassagers passagers, Circuit circuit){
+        retirerSource(source);
+        this.ajouterSource(heureFin, pointDepart, heureDebut, frequence, passagers, circuit);
+    }
+    public void modifierSource(Source source, int nombreMax, Point pointDepart, LocalTime heureDebut, double frequence, ConteneurPassagers passagers, Circuit circuit){
+        retirerSource(source);
+        this.ajouterSource(nombreMax, pointDepart, heureDebut, frequence, passagers, circuit);
+    }
 
     public void modfierVitesse(int pourcentage){
         simulation.getParametres().setVitesse(pourcentage);
