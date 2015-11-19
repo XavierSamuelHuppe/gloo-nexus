@@ -30,6 +30,7 @@ public class Carte {
     }
     
     public void retirerPoint(Point point){
+        point.tuer();
         points.remove(point);
     }
     

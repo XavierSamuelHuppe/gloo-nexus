@@ -165,7 +165,9 @@ public class Simulation extends Observable{
         }
         return retour;
     }
-    public List<Circuit> circuitsPassantPar(Point point){
+
+    
+        public List<Circuit> circuitsPassantPar(Point point){
         List<Circuit> retour = new ArrayList();
         for(Circuit c: circuits){
             if(c.utilise(point)){

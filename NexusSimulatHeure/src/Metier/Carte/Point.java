@@ -12,11 +12,13 @@ public class Point extends Observable{
     private List<ProfilPassager> profilsPassagers;
     private List<Source> sources;
     private ConteneurPassagers passagers;
+    private boolean existe;
     
     public Point(ConteneurPassagers passagers){
         this.passagers = passagers;
         profilsPassagers = new ArrayList();
         sources = new ArrayList();
+        existe = true;
     }
 
     public String getNom() {
@@ -37,6 +39,15 @@ public class Point extends Observable{
         this.position = position;
         this.setChanged();
         notifyObservers();
+    }
+    
+    public void tuer(){
+        existe = false;
+        this.setChanged();
+        notifyObservers();
+    }
+    public boolean mort(){
+        return !existe;
     }
     
     public void ajouterProfilPassaser(ProfilPassager profil) {
