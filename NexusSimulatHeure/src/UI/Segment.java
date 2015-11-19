@@ -45,6 +45,16 @@ public class Segment implements IDetailsAffichables {
         public void determinerMode()
         {
             Controleur.Simulateur sim = this.espaceTravail.getSimulateur();
+            
+            if(sim.verifierExistenceSegementEnSensInverse(this.segmentMetier))
+            {
+                passerModeDecale();
+            }
+            else
+            {
+                passerModeDroit();
+            }
+            
             if(sim.estEnModeSegment()&& sim.estSegmentActif(this.segmentMetier))
             {
                 this.modeActuel = Segment.Mode.SELECTIONNE;
