@@ -4,6 +4,7 @@ import Metier.Circuit.*;
 import Metier.Carte.*;
 import Metier.Simulation.Simulation;
 import Metier.*;
+import Metier.Exceptions.AucunPointActifException;
 import Metier.Source.*;
 import java.time.LocalTime;
 import java.util.*;
@@ -88,7 +89,7 @@ public class Simulateur {
         return nouveauPoint;
     }
     public void retirerPoint(Point point){
-        carte.retirerPoint(point);
+        simulation.retirerPointAvecReferences(point);
     }
     
     public void modifierPoint(Point pointCible, Position pos, String nom){
@@ -164,13 +165,17 @@ public class Simulateur {
     }
     
     public boolean estPointActif(Point p){
+        try{
         return contexte.getPointActif().equals(p);
+        }catch(AucunPointActifException e){
+            return false;
+        }
     }
     public void viderPointActif(){
         contexte.viderPointActif();
     }
     
-    public void commencerContinuerCurcuitEnCourt(Point p){
+    public void commencerContinuerCreationCircuit(Point p){
         contexte.commencerContinuerCreationCircuit(p);
     }
     public void sauvergarderNouveauCircuit(String nom){

@@ -56,6 +56,25 @@ public class Carte {
         }
         return retour;
     }
+    public List<Segment> obtenirSegmentsEntrant(Point point){
+        List<Segment> retour = new ArrayList();
+        for(Segment s : segments){
+            if(s.getPointArrivee().equals(point)){
+                retour.add(s);
+            }
+        }
+        return retour;
+    }
+    public List<Segment> obtenirSegmentsEntrantEtSortant(Point point){
+        List<Segment> retour = new ArrayList();
+        for(Segment s : obtenirSegmentsEntrant(point)){
+            retour.add(s);
+        }
+        for(Segment s : obtenirSegmentsSortant(point)){
+            retour.add(s);
+        }
+        return retour;
+    }
     
     public boolean estSegmentSortantDePoint(Point point, Segment segment)
     {
@@ -70,6 +89,9 @@ public class Carte {
     
     public void retirerSegment(Segment segment){
         segments.remove(segment);
+    }
+    public void retirerSegments(List<Segment> segments){
+        segments.removeAll(segments);
     }
     
     public Segment obtenirSegment(Point depart, Point arrivee){

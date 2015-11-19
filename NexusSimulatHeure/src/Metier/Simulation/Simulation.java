@@ -77,7 +77,7 @@ public class Simulation extends Observable{
         carte.terminerSimulation();
         
         for(Source s: sources){
-            s.retirerDonneesDepart();
+            s.rafraichirDonneesDepart();
         }
         //+ dist profils
         
@@ -151,5 +151,23 @@ public class Simulation extends Observable{
     
     public void retirerSource(Source source){
         sources.remove(source);
+    }
+    
+    public void retirerPointAvecReferences(Point p){
+        List<Source> sourcesAEnlever = p.getSources();
+        List<ProfilPassager> profilsAEnlever = p.getProfilsPassagers();
+        List<Segment> segmentsAEnlever = carte.obtenirSegmentsEntrantEtSortant(p);
+        
+        List<Circuit> circuitsAEnlever = new ArrayList();
+        for(Circuit c: circuits){
+            if(c.utilise(p)){
+                circuitsAEnlever.add(c);
+            }
+        }
+        
+        sources.removeAll(sourcesAEnlever);
+        profils.removeAll(profilsAEnlever);
+        carte.retirerSegments(segmentsAEnlever);
+        circuits.removeAll(circuitsAEnlever);
     }
 }

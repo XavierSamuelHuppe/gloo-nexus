@@ -67,6 +67,9 @@ public class Point extends Observable{
     {
         return this.sources;
     }
+    public List<ProfilPassager> getProfilsPassagers(){
+        return this.profilsPassagers;
+    }
     
     @Override
     public boolean equals(Object o){

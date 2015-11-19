@@ -66,8 +66,9 @@ public abstract class Source {
         frequence = distributionAUtiliser.obtenirProchaineValeurAleatoire();
     }
     
-    public void retirerDonneesDepart(){
+    public void rafraichirDonneesDepart(){
         frequence = 0;
+        reInitialiserValeursDepartSimulation();
     }
     public Vehicule genererVehicule()
     {

@@ -1,13 +1,8 @@
 package Metier;
 
-import Metier.Carte.Carte;
-import Metier.Carte.Point;
-import Metier.Carte.Segment;
-import Metier.Circuit.Circuit;
-import Metier.Circuit.CircuitBuilder;
-import Metier.Exceptions.AucunPointActifException;
-import Metier.Exceptions.EditionEnMauvaisModeException;
-import Metier.Simulation.Simulation;
+import Metier.Carte.*;
+import Metier.Circuit.*;
+import Metier.Exceptions.*;
 import java.util.List;
 
 public class ContexteEdition {
@@ -82,7 +77,7 @@ public class ContexteEdition {
     }
     public Circuit getCircuitActif(){
         if(circuitActif == null)
-            throw new AucunPointActifException();
+            throw new AucunCircuitActifException();
         return circuitActif;
     }
     public void viderCircuitActif(){
