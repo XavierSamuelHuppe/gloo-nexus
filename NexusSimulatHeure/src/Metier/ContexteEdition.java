@@ -109,8 +109,8 @@ public class ContexteEdition {
             throw new AucunPointCreateurException();
         }
         
-        setPointCreateur(p);
         Point retour = pointCreateur;
+        setPointCreateur(p);
         return retour;
     }
     public Point creerSegmentSansContinuation(Point p){
