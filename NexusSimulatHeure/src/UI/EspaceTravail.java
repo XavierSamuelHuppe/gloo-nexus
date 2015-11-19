@@ -273,8 +273,14 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
             {
                 if(s.estSegmentClique(me.getPoint()))
                 {
-                    segmentClique(s);
-                    break;
+                    if(SwingUtilities.isLeftMouseButton(me)){
+                        segmentClique(s);
+                        break;
+                    }
+                    else if(SwingUtilities.isRightMouseButton(me)){
+                        SegmentMenuContextuel m = new SegmentMenuContextuel(simulateur, s.getSegmentMetier());
+                        m.show(me.getComponent(), me.getX(), me.getY());
+                    }
                 }
             }
         }
