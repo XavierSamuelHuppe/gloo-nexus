@@ -106,6 +106,11 @@ public class Simulateur {
     public void retirerSegment(Segment segment){
         carte.retirerSegment(segment);
     }
+    public void modifierSegment(Segment segmentCible, double min, double mode, double max){
+        Distribution nouvelleDistribution = new Distribution(min, mode, max);
+        carte.modifierSegment(segmentCible, nouvelleDistribution);
+    }
+    
     public boolean verifierExistenceSegment(Point depart, Point arrivee) {
         return carte.verifierExistenceSegment(depart, arrivee);
     }
