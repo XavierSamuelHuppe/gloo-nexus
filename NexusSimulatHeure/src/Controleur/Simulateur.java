@@ -6,6 +6,7 @@ import Metier.Simulation.Simulation;
 import Metier.*;
 import Metier.Exceptions.AucunPointActifException;
 import Metier.Exceptions.AucunSegmentActifException;
+import Metier.Exceptions.AucunCircuitActifException;
 import Metier.Source.*;
 import java.time.LocalTime;
 import java.util.*;
@@ -250,9 +251,17 @@ public class Simulateur {
     }
     
     public boolean estDansCircuitActif(Point point){
-        return contexte.estDansCircuitActif(point);
+        try{
+            return contexte.estDansCircuitActif(point);
+        }catch(AucunCircuitActifException e){
+            return false;
+        }
     }
     public boolean estDansCircuitActif(Segment segment){
-        return contexte.estDansCircuitActif(segment);
+        try{
+            return contexte.estDansCircuitActif(segment);
+        }catch(AucunCircuitActifException e){
+            return false;
+        }
     }
 }
