@@ -78,11 +78,6 @@ public class ContexteEdition {
     public void setPointCreateur(Point p){
         pointCreateur = p;
     }
-    public Point getPointCreateur(){
-        if(pointCreateur == null)
-            throw new AucunPointCreateurException();
-        return pointCreateur;
-    }
     public void viderPointCreateur(){
         pointCreateur = null;
     }
@@ -102,7 +97,9 @@ public class ContexteEdition {
     public Point creerSegmentAvecContinuation(Point p){
         if(!estEnModeSegment())
             throw new EditionEnMauvaisModeException();
-
+        if(pointCreateur == null)
+            throw new AucunPointCreateurException();
+        
         Point retour = pointCreateur;
         setPointCreateur(p);
         return retour;
@@ -110,6 +107,8 @@ public class ContexteEdition {
     public Point creerSegmentSansContinuation(Point p){
         if(!estEnModeSegment())
             throw new EditionEnMauvaisModeException();
+        if(pointCreateur == null)
+            throw new AucunPointCreateurException();
         
         Point retour = pointCreateur;
         viderPointCreateur();
