@@ -108,6 +108,9 @@ public class Simulateur {
     public boolean verifierExistenceSegment(Point depart, Point arrivee) {
         return carte.verifierExistenceSegment(depart, arrivee);
     }
+    public boolean verifierExistenceSegementEnSensInverse(Segment segment){
+        return carte.segmentExisteEnSensInverse(segment);
+    }
     public boolean estSegmentSortantDePoint(Point point, Segment segment){
         return this.carte.estSegmentSortantDePoint(point, segment);
     }
