@@ -112,6 +112,9 @@ public class Carte {
             return false;
         }
     }
+    public boolean segmentExisteEnSensInverse(Segment segment){
+        return verifierExistenceSegment(segment.getPointArrivee(), segment.getPointDepart());
+    }
     
     public List<Segment> plusCourtCheminEnTempsMoyen(Point depart, Point arrive){
         Map<Point, Integer> temps = new HashMap<Point, Integer>();
