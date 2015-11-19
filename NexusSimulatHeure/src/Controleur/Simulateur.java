@@ -51,12 +51,7 @@ public class Simulateur {
     public void passerEnModePassager(){
         contexte.passerEnModePassager();
     }
-    
-    public void selectionnerPoint(Point p){
-        contexte.setPointActif(p);
-    }
-    
-    
+
     public void arreter(){
         simulation.arreter();
     }
@@ -91,9 +86,9 @@ public class Simulateur {
     public void retirerPoint(Point point){
         simulation.retirerPointAvecReferences(point);
     }
-    
-    public void modifierPoint(Point pointCible, Position pos, String nom){
-        carte.modifierPoint(pointCible, pos, nom);
+    public void modifierPoint(Point pointCible, double x, double y, String nouveauNom){
+        Position nouvellePosition = new Position(x, y);
+        carte.modifierPoint(pointCible, nouvellePosition, nouveauNom);
     }
     
     public Segment ajouterSegment(Point depart, Point arrivee){
@@ -163,7 +158,10 @@ public class Simulateur {
     public void modifierHeureFin(LocalTime heure){
         simulation.getParametres().setHeureFin(heure);
     }
-    
+        
+    public void selectionnerPoint(Point p){
+        contexte.setPointActif(p);
+    }
     public boolean estPointActif(Point p){
         try{
         return contexte.getPointActif().equals(p);
@@ -173,6 +171,19 @@ public class Simulateur {
     }
     public void viderPointActif(){
         contexte.viderPointActif();
+    }
+    
+    public List<Circuit> circuitsPassantPar(Segment segment){
+        return simulation.circuitsPassantPar(segment);
+    }
+    public void ActiverCircuit(Circuit circuit){
+        contexte.setCircuitActif(circuit);
+    }
+    public boolean estCircuitActif(Circuit circuit){
+        return contexte.getCircuitActif().equals(circuit);
+    }
+    public void viderCircuitActif(){
+        contexte.viderCircuitActif();
     }
     
     public void commencerContinuerCreationCircuit(Point p){

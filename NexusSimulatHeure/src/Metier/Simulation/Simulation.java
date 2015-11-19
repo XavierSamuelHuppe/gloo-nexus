@@ -153,6 +153,16 @@ public class Simulation extends Observable{
         sources.remove(source);
     }
     
+    public List<Circuit> circuitsPassantPar(Segment segment){
+        List<Circuit> retour = new ArrayList();
+        for(Circuit c: circuits){
+            if(c.utilise(segment)){
+                retour.add(c);
+            }
+        }
+        return retour;
+    }
+    
     public void retirerPointAvecReferences(Point p){
         List<Source> sourcesAEnlever = p.getSources();
         List<ProfilPassager> profilsAEnlever = p.getProfilsPassagers();
