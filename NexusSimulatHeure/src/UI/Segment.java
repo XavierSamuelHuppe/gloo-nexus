@@ -27,27 +27,55 @@ public class Segment implements IDetailsAffichables {
     private Metier.Carte.Segment segmentMetier;
     private Mode modeActuel = Mode.NORMAL;
     
+    private UI.EspaceTravail espaceTravail;
+    
     private UI.Dessinateurs.DessinateurSegment dessinateur;
     private UI.IO.SegmentDetectionClic detectionClic;
         
     public enum Orientation {NO, NE, SE, SO};
    
-    
-    public Segment(Point pD, Point pA, Metier.Carte.Segment segmentMetier)
+    public Segment(Point pD, Point pA, EspaceTravail et, Metier.Carte.Segment segmentMetier)
     {
         this.pointDepart = pD;
         this.pointArrivee = pA;
         this.segmentMetier = segmentMetier;
-        passerModeDroit();
+        this.espaceTravail = et;
     }
     
-    public void passerModeDroit()
+        public void determinerMode()
+        {
+            Controleur.Simulateur sim = this.espaceTravail.getSimulateur();
+            
+            if(sim.verifierExistenceSegementEnSensInverse(this.segmentMetier))
+            {
+                passerModeDecale();
+            }
+            else
+            {
+                passerModeDroit();
+            }
+            
+            if(sim.estEnModeSegment()&& sim.estSegmentActif(this.segmentMetier))
+            {
+                this.modeActuel = Segment.Mode.SELECTIONNE;
+            }
+            else if (sim.estEnModeCircuit() && true)
+            {
+                this.modeActuel = Segment.Mode.CIRCUIT;
+            }
+            else
+            {
+                this.modeActuel = Segment.Mode.NORMAL;
+            }        
+        }  
+        
+    private void passerModeDroit()
     {
         dessinateur = new DessinateurSegmentDroit(this);
         detectionClic = new SegmentDroitDetectionClic(this);
     }
     
-    public void passerModeDecale()
+    private void passerModeDecale()
     {
         dessinateur = new DessinateurSegmentDecale(this);
         detectionClic = new SegmentDecaleDetectionClic(this);
@@ -66,12 +94,7 @@ public class Segment implements IDetailsAffichables {
     public Mode getMode()
     {
         return this.modeActuel;
-    }
-    
-    public void setMode(Mode m)
-    {
-        this.modeActuel = m;
-    }
+    }   
     
     public boolean estSegmentClique(java.awt.Point p)
     {
@@ -80,6 +103,7 @@ public class Segment implements IDetailsAffichables {
 
     public void dessiner(Graphics2D g2)
     {
+        determinerMode();
         dessinateur.dessiner(g2);
     }
     
@@ -90,7 +114,7 @@ public class Segment implements IDetailsAffichables {
         
     @Override
     public PanneauDetails obtenirPanneauDetails() {
-        return new PanneauDetailsSegment(this.getSegmentMetier());
+        return new PanneauDetailsSegment(this.getSegmentMetier(), this);
     }
     
     public Orientation obtenirOrientation()

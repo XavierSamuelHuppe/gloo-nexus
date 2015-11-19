@@ -6,6 +6,7 @@ import Metier.Simulation.Simulation;
 import Metier.*;
 import Metier.Exceptions.AucunPointActifException;
 import Metier.Exceptions.AucunSegmentActifException;
+import Metier.Exceptions.AucunCircuitActifException;
 import Metier.Source.*;
 import java.time.LocalTime;
 import java.util.*;
@@ -108,6 +109,9 @@ public class Simulateur {
     public boolean verifierExistenceSegment(Point depart, Point arrivee) {
         return carte.verifierExistenceSegment(depart, arrivee);
     }
+    public boolean verifierExistenceSegementEnSensInverse(Segment segment){
+        return carte.segmentExisteEnSensInverse(segment);
+    }
     public boolean estSegmentSortantDePoint(Point point, Segment segment){
         return this.carte.estSegmentSortantDePoint(point, segment);
     }
@@ -145,6 +149,14 @@ public class Simulateur {
     public void modifierSource(Source source, int nombreMax, Point pointDepart, LocalTime heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
         retirerSource(source);
         this.ajouterSource(nombreMax, pointDepart, heureDebut, frequence, distribution, passagers, circuit);
+    }
+    public void modifierSource(Source source, LocalTime heureFin, Point pointDepart, LocalTime heureDebut, double frequence, ConteneurPassagers passagers, Circuit circuit){
+        retirerSource(source);
+        this.ajouterSource(heureFin, pointDepart, heureDebut, frequence, passagers, circuit);
+    }
+    public void modifierSource(Source source, int nombreMax, Point pointDepart, LocalTime heureDebut, double frequence, ConteneurPassagers passagers, Circuit circuit){
+        retirerSource(source);
+        this.ajouterSource(nombreMax, pointDepart, heureDebut, frequence, passagers, circuit);
     }
 
     public void modfierVitesse(int pourcentage){
@@ -201,6 +213,13 @@ public class Simulateur {
         contexte.viderSegmentActif();
     }
     
+    public void creerSegmentAvecContinuation(Point p){
+        
+    }
+    public void creerSegmentSansContinuation(Point p){
+        
+    }
+    
     public List<Circuit> circuitsPassantPar(Segment segment){
         return simulation.circuitsPassantPar(segment);
     }
@@ -226,9 +245,17 @@ public class Simulateur {
     }
     
     public boolean estDansCircuitActif(Point point){
-        return contexte.estDansCircuitActif(point);
+        try{
+            return contexte.estDansCircuitActif(point);
+        }catch(AucunCircuitActifException e){
+            return false;
+        }
     }
     public boolean estDansCircuitActif(Segment segment){
-        return contexte.estDansCircuitActif(segment);
+        try{
+            return contexte.estDansCircuitActif(segment);
+        }catch(AucunCircuitActifException e){
+            return false;
+        }
     }
 }
