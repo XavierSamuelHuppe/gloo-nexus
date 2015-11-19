@@ -1,5 +1,8 @@
 package Metier;
 
+import Metier.Carte.Point;
+import Metier.Exceptions.AucunPointActifException;
+
 public class ContexteEdition {
 
     public static enum ModeEdition {
@@ -11,6 +14,7 @@ public class ContexteEdition {
     }
     
     private ModeEdition mode;
+    private Point pointActif;
     
     public ContexteEdition(){
         mode = ModeEdition.POINT;
@@ -47,6 +51,17 @@ public class ContexteEdition {
     public void passerEnModePassager(){
         mode = ModeEdition.PASSAGER;
     }
+    
+    public void setPointActif(Point p){
+        pointActif = p;
+    }
+    public Point getPointActif(){
+        if(pointActif == null)
+            throw new AucunPointActifException();
+        return pointActif;
+    }
+    
+    
     
     
 }

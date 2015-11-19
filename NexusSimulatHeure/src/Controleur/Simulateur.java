@@ -51,7 +51,7 @@ public class Simulateur {
     }
     
     public void selectionnerPoint(Point p){
-        
+        contexte.setPointActif(p);
     }
     
     
