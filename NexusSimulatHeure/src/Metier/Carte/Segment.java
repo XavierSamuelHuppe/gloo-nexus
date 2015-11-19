@@ -21,6 +21,11 @@ public class Segment extends Observable{
 
     public void tuer(){
         existe = false;
+        this.setChanged();
+        notifyObservers();
+    }
+    public boolean mort(){
+        return !existe;
     }
     
     public Point getPointDepart() {

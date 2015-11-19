@@ -143,6 +143,10 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
             this.repaint();
 //        }
     }
+    public void retirerSegment(Segment s){
+        segments.remove(s);
+        this.repaint();
+    }
     
     
     public void paintComponent(Graphics g)

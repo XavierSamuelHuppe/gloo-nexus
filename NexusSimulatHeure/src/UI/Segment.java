@@ -15,9 +15,18 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
+import java.util.Observable;
+import java.util.Observer;
 import sun.awt.geom.Curve;
 
-public class Segment implements IDetailsAffichables {
+public class Segment implements IDetailsAffichables, Observer {
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if(segmentMetier.mort()){
+            this.espaceTravail.retirerSegment(this);
+        }
+    }
     
     public enum Mode {NORMAL, SELECTIONNE, CIRCUIT, CIRCUIT_SELECTIONNE};
                
@@ -40,6 +49,7 @@ public class Segment implements IDetailsAffichables {
         this.pointArrivee = pA;
         this.segmentMetier = segmentMetier;
         this.espaceTravail = et;
+        segmentMetier.addObserver(this);
     }
     
         public void determinerMode()

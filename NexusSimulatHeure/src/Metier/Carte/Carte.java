@@ -92,10 +92,13 @@ public class Carte {
     }
     
     public void retirerSegment(Segment segment){
+        segment.tuer();
         segments.remove(segment);
     }
     public void retirerSegments(List<Segment> segments){
-        segments.removeAll(segments);
+        for(Segment s: segments){
+            retirerSegment(s);
+        }
     }
     
     public Segment obtenirSegment(Point depart, Point arrivee){
