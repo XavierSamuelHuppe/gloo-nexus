@@ -23,8 +23,9 @@ public class PointFactory {
         return this;
     }
     
-    public PointFactory enPosition(Position position){
-        pointEnCreation.setPosition(position);
+    public PointFactory enPosition(double x, double y){
+        Position nouvellePosition = new Position(x, y);
+        pointEnCreation.setPosition(nouvellePosition);
         return this;
     }
     

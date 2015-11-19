@@ -70,21 +70,21 @@ public class Simulateur {
         simulation.pauser();
     }
     
-    public Point ajouterPoint(Position pos){
+    public Point ajouterPoint(double x, double y){
         PointFactory factory = new PointFactory();
-        Point nouveauPoint = factory.nouveauPoint().enPosition(pos).construire();
+        Point nouveauPoint = factory.nouveauPoint().enPosition(x,y).construire();
         carte.ajouterPoint(nouveauPoint);
         return nouveauPoint;
     }
-    public Point ajouterPoint(Position pos, String nom){
+    public Point ajouterPoint(double x, double y, String nom){
         PointFactory factory = new PointFactory();
-        Point nouveauPoint = factory.nouveauPoint().avecUnNom(nom).enPosition(pos).construire();
+        Point nouveauPoint = factory.nouveauPoint().avecUnNom(nom).enPosition(x,y).construire();
         carte.ajouterPoint(nouveauPoint);
         return nouveauPoint;
     }
-    public Point ajouterPoint(Position pos, String nom, ConteneurPassagers passagers){
+    public Point ajouterPoint(double x, double y, String nom, ConteneurPassagers passagers){
         PointFactory factory = new PointFactory();
-        Point nouveauPoint = factory.nouveauPointAvecCapacite(passagers).avecUnNom(nom).enPosition(pos).construire();
+        Point nouveauPoint = factory.nouveauPointAvecCapacite(passagers).avecUnNom(nom).enPosition(x,y).construire();
         carte.ajouterPoint(nouveauPoint);
         return nouveauPoint;
     }
