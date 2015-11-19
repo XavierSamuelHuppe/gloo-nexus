@@ -6,6 +6,7 @@
 package UI.PanneauxDetails;
 
 import java.util.Observable;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -70,7 +71,9 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
         jLabel4 = new javax.swing.JLabel();
         ChampNom = new javax.swing.JTextField();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5));
+        jPanel1 = new javax.swing.JPanel();
         BoutonSauvegarder = new javax.swing.JButton();
+        BoutonSupprimer = new javax.swing.JButton();
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5));
         jPanel5 = new javax.swing.JPanel();
         LibelleSources = new javax.swing.JLabel();
@@ -115,13 +118,25 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
         add(jPanel4);
         add(filler1);
 
+        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
+
         BoutonSauvegarder.setText("Sauvegarder");
         BoutonSauvegarder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BoutonSauvegarderActionPerformed(evt);
             }
         });
-        add(BoutonSauvegarder);
+        jPanel1.add(BoutonSauvegarder);
+
+        BoutonSupprimer.setText("Supprimer");
+        BoutonSupprimer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BoutonSupprimerActionPerformed(evt);
+            }
+        });
+        jPanel1.add(BoutonSupprimer);
+
+        add(jPanel1);
         add(filler2);
 
         jPanel5.setMaximumSize(new java.awt.Dimension(2147483647, 50));
@@ -143,9 +158,18 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
         this.obtenirApplication().repaint();
     }//GEN-LAST:event_BoutonSauvegarderActionPerformed
 
+    private void BoutonSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSupprimerActionPerformed
+        if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this.obtenirApplication(), "Désirez-vous vraiment retirer ce point?", "Retirer ce point?", JOptionPane.YES_NO_OPTION))
+        {
+            this.obtenirApplication().getSimulateur().retirerPoint(this.pointMetierLie);
+            this.obtenirApplication().repaint();
+        }         
+    }//GEN-LAST:event_BoutonSupprimerActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BoutonSauvegarder;
+    private javax.swing.JButton BoutonSupprimer;
     private javax.swing.JTextField ChampLatitude;
     private javax.swing.JTextField ChampLongitude;
     private javax.swing.JTextField ChampNom;
@@ -156,6 +180,7 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;

@@ -7,7 +7,6 @@ import java.util.Observable;
 public class PanneauDetailsCircuit extends PanneauDetails implements java.util.Observer {
 
     private Metier.Circuit.Circuit circuitMetierLie;
-    private UI.Circuit circuitUILie;
     private Controleur.Simulateur simulateur;
     
     /**
@@ -17,7 +16,7 @@ public class PanneauDetailsCircuit extends PanneauDetails implements java.util.O
         initComponents();
     }
     
-    public PanneauDetailsCircuit(Metier.Circuit.Circuit cMetier, UI.Circuit cUI)
+    public PanneauDetailsCircuit(Metier.Circuit.Circuit cMetier)
     {
         super();
         initComponents();
@@ -25,8 +24,6 @@ public class PanneauDetailsCircuit extends PanneauDetails implements java.util.O
         this.simulateur = simulateur;
 
         this.circuitMetierLie = cMetier;
-        
-        this.circuitUILie = cUI;
         
         rafraichir();
     }
@@ -84,7 +81,7 @@ public class PanneauDetailsCircuit extends PanneauDetails implements java.util.O
         if(circuitMetierLie == null)
         {
             //this.obtenirApplication().getSimulateur().ajouterCircuit(this.ChampNom.getText(), this.circuitUILie.obtenirListeSegmentsMetier());    
-            this.circuitUILie.deselectionner();
+//            this.circuitUILie.deselectionner();
             this.obtenirApplication().revalidate();
         }
         else

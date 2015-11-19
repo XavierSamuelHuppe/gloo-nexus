@@ -4,11 +4,6 @@ import java.util.Observable;
 
 public class PanneauDistribution extends PanneauDetails {
 
-    @Override
-    public void rafraichir() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     private Metier.Distribution distributionCourante;
     
     /**
@@ -22,14 +17,23 @@ public class PanneauDistribution extends PanneauDetails {
     {
         super();
         initComponents();
-
         this.distributionCourante = dt;
-       
-        this.ChampMaximum.setText(((Double)dt.getMax()).toString());
-        this.ChampMinimum.setText(((Double)dt.getMin()).toString());
-        this.ChampMode.setText(((Double)dt.getMode()).toString());
     }
 
+    public void setDistribution(Metier.Distribution dt)
+    {
+        this.distributionCourante  = dt;
+        rafraichir();
+    }
+    
+    @Override
+    public void rafraichir()
+    {
+        this.ChampMaximum.setText(((Double)distributionCourante.getMax()).toString());
+        this.ChampMinimum.setText(((Double)distributionCourante.getMin()).toString());
+        this.ChampMode.setText(((Double)distributionCourante.getMode()).toString());
+        this.revalidate();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
