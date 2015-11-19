@@ -63,6 +63,11 @@ public class Point extends Observable{
         return passagers.embarquer(circuit);
     }
     
+    public List<Source> getSources()
+    {
+        return this.sources;
+    }
+    
     @Override
     public boolean equals(Object o){
         if (o == null) return false;
