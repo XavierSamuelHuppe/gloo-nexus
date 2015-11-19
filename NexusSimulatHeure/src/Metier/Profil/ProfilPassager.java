@@ -2,17 +2,17 @@
 package Metier.Profil;
 
 import Metier.Carte.Point;
-import Metier.DistributionTriangulaire;
+import Metier.Distribution;
 import Metier.Simulation.Statistiques;
 
 public abstract class ProfilPassager {
     private Point pointDepart;
     private double heureDepart;
     private double frequence;
-    public DistributionTriangulaire distributionAUtiliser;
+    public Distribution distributionAUtiliser;
     public Statistiques statistiques;
     
-    public ProfilPassager(Point point, double heureDepart, double frequence, DistributionTriangulaire distribution){
+    public ProfilPassager(Point point, double heureDepart, double frequence, Distribution distribution){
         this.frequence = frequence;
         this.heureDepart = heureDepart;
         this.pointDepart = point;

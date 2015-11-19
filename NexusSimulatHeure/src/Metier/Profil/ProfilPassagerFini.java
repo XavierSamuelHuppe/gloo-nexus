@@ -6,7 +6,7 @@
 package Metier.Profil;
 
 import Metier.Carte.Point;
-import Metier.DistributionTriangulaire;
+import Metier.Distribution;
 
 /**
  *
@@ -16,7 +16,7 @@ public class ProfilPassagerFini extends ProfilPassager{
     
     private int nombreMax;
     
-    public ProfilPassagerFini(int nombreMax, Point point, double heureDepart, double frequence, DistributionTriangulaire distribution){
+    public ProfilPassagerFini(int nombreMax, Point point, double heureDepart, double frequence, Distribution distribution){
         super(point, heureDepart, frequence, distribution);
         this.nombreMax = nombreMax;
     }
