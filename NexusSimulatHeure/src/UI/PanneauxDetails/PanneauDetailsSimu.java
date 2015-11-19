@@ -1,39 +1,51 @@
 
 package UI.PanneauxDetails;
 
-import Controleur.Simulateur;
-import Metier.Simulation.Simulation;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Observable;
+import java.util.Observer;
 
-public class PanneauDetailsSimu extends PanneauDetails implements java.util.Observer {
+public class PanneauDetailsSimu extends PanneauDetails implements Observer{
 
-    private Metier.Simulation.Simulation simuMetierLie;
-    private Controleur.Simulateur simulateur;
+    //private Controleur.Simulateur simulateur;
+    private Metier.Simulation.ParametreSimulation paramSimulation;
     
-    public PanneauDetailsSimu() {
+    public PanneauDetailsSimu()
+    {
         initComponents();
     }
     
-    public PanneauDetailsSimu(Metier.Simulation.Simulation s)
-    {
+    public PanneauDetailsSimu(Metier.Simulation.ParametreSimulation param) {
         super();
         initComponents();
         
-        this.simulateur = simulateur;
-
-        this.simuMetierLie = s;
-        this.simuMetierLie.addObserver(this);
-        
-        rafraichir();
+        this.paramSimulation = param;
+        this.rafraichir();
     }
     
     @Override
     public void rafraichir() {
-       
+        this.ChampNbJours.setValue(paramSimulation.getNombreJourSimulation());
+        this.ChampHeureDebut.setText(paramSimulation.getHeureDebut().toString());
+        this.ChampHeureFin.setText(paramSimulation.getHeureFin().toString());
+        
+        this.ChampDistSegmentMin.setText(((Double)paramSimulation.getDistributionTempsTransitSegmentDefaut().getMin()).toString());
+        this.ChampDistSegmentMax.setText(((Double)paramSimulation.getDistributionTempsTransitSegmentDefaut().getMax()).toString());
+        this.ChampDistSegmentMode.setText(((Double)paramSimulation.getDistributionTempsTransitSegmentDefaut().getMode()).toString());
+        
+        this.ChampDistVehiculeMin.setText(((Double)paramSimulation.getDistributionTempsGenerationVehiculeDefaut().getMin()).toString());
+        this.ChampDistVehiculeMax.setText(((Double)paramSimulation.getDistributionTempsGenerationVehiculeDefaut().getMax()).toString());
+        this.ChampDistVehiculeMode.setText(((Double)paramSimulation.getDistributionTempsGenerationVehiculeDefaut().getMode()).toString());
+        
+        this.ChampDistPassagerMin.setText(((Double)paramSimulation.getDistributionTempsGenerationPassagerDefaut().getMin()).toString());
+        this.ChampDistPassagerMax.setText(((Double)paramSimulation.getDistributionTempsGenerationPassagerDefaut().getMax()).toString());
+        this.ChampDistPassagerMode.setText(((Double)paramSimulation.getDistributionTempsGenerationPassagerDefaut().getMode()).toString());
     }
-
+    
     @Override
-    public void update(Observable o, Object o1) {
+    public void update(Observable o, Object arg) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         this.rafraichir();
     }
     
@@ -48,25 +60,30 @@ public class PanneauDetailsSimu extends PanneauDetails implements java.util.Obse
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
+        ChampNbJours = new javax.swing.JSpinner();
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5));
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        ChampHeureDebut = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        ChampHeureFin = new javax.swing.JTextField();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5));
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         ChampDistSegmentMin = new javax.swing.JTextField();
-        ChampDistSegMax = new javax.swing.JTextField();
+        ChampDistSegmentMax = new javax.swing.JTextField();
         ChampDistSegmentMode = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        ChampDistVehiculetMin = new javax.swing.JTextField();
+        ChampDistVehiculeMin = new javax.swing.JTextField();
         ChampDistVehiculeMax = new javax.swing.JTextField();
         ChampDistVehiculeMode = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
@@ -77,9 +94,9 @@ public class PanneauDetailsSimu extends PanneauDetails implements java.util.Obse
         filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 15), new java.awt.Dimension(0, 15), new java.awt.Dimension(32767, 15));
         BoutonSauvegarder = new javax.swing.JButton();
 
-        setMinimumSize(new java.awt.Dimension(365, 180));
+        setMinimumSize(new java.awt.Dimension(350, 180));
         setName(""); // NOI18N
-        setPreferredSize(new java.awt.Dimension(365, 190));
+        setPreferredSize(new java.awt.Dimension(350, 190));
         setRequestFocusEnabled(false);
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
@@ -88,8 +105,8 @@ public class PanneauDetailsSimu extends PanneauDetails implements java.util.Obse
         jLabel1.setText("Nb Jours");
         jPanel1.add(jLabel1);
 
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
-        jPanel1.add(jSpinner1);
+        ChampNbJours.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
+        jPanel1.add(ChampNbJours);
 
         add(jPanel1);
         add(filler2);
@@ -99,8 +116,8 @@ public class PanneauDetailsSimu extends PanneauDetails implements java.util.Obse
         jLabel3.setText("Heure Début");
         jPanel3.add(jLabel3);
 
-        jTextField1.setText("ChampHeureDebut");
-        jPanel3.add(jTextField1);
+        ChampHeureDebut.setText("ChampHeureDebut");
+        jPanel3.add(ChampHeureDebut);
 
         add(jPanel3);
 
@@ -110,8 +127,8 @@ public class PanneauDetailsSimu extends PanneauDetails implements java.util.Obse
         jLabel4.setText("Heure Fin");
         jPanel4.add(jLabel4);
 
-        jTextField2.setText("ChampHeureFin");
-        jPanel4.add(jTextField2);
+        ChampHeureFin.setText("ChampHeureFin");
+        jPanel4.add(ChampHeureFin);
 
         add(jPanel4);
         add(filler1);
@@ -125,19 +142,42 @@ public class PanneauDetailsSimu extends PanneauDetails implements java.util.Obse
 
         add(jPanel2);
 
+        jPanel9.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
+
+        jLabel8.setText(" ");
+        jLabel8.setToolTipText("");
+        jPanel9.add(jLabel8);
+
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("Min");
+        jPanel9.add(jLabel9);
+
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setText("Max");
+        jPanel9.add(jLabel10);
+
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setText("Mode");
+        jPanel9.add(jLabel11);
+
+        add(jPanel9);
+
         jPanel6.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
 
         jLabel2.setText("Transit Segment");
         jLabel2.setToolTipText("");
         jPanel6.add(jLabel2);
 
+        ChampDistSegmentMin.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         ChampDistSegmentMin.setText("5");
         ChampDistSegmentMin.setVerifyInputWhenFocusTarget(false);
         jPanel6.add(ChampDistSegmentMin);
 
-        ChampDistSegMax.setText("5");
-        jPanel6.add(ChampDistSegMax);
+        ChampDistSegmentMax.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        ChampDistSegmentMax.setText("5");
+        jPanel6.add(ChampDistSegmentMax);
 
+        ChampDistSegmentMode.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         ChampDistSegmentMode.setText("5");
         jPanel6.add(ChampDistSegmentMode);
 
@@ -149,13 +189,16 @@ public class PanneauDetailsSimu extends PanneauDetails implements java.util.Obse
         jLabel6.setToolTipText("");
         jPanel7.add(jLabel6);
 
-        ChampDistVehiculetMin.setText("5");
-        ChampDistVehiculetMin.setVerifyInputWhenFocusTarget(false);
-        jPanel7.add(ChampDistVehiculetMin);
+        ChampDistVehiculeMin.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        ChampDistVehiculeMin.setText("5");
+        ChampDistVehiculeMin.setVerifyInputWhenFocusTarget(false);
+        jPanel7.add(ChampDistVehiculeMin);
 
+        ChampDistVehiculeMax.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         ChampDistVehiculeMax.setText("5");
         jPanel7.add(ChampDistVehiculeMax);
 
+        ChampDistVehiculeMode.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         ChampDistVehiculeMode.setText("5");
         jPanel7.add(ChampDistVehiculeMode);
 
@@ -167,13 +210,16 @@ public class PanneauDetailsSimu extends PanneauDetails implements java.util.Obse
         jLabel7.setToolTipText("");
         jPanel8.add(jLabel7);
 
+        ChampDistPassagerMin.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         ChampDistPassagerMin.setText("5");
         ChampDistPassagerMin.setVerifyInputWhenFocusTarget(false);
         jPanel8.add(ChampDistPassagerMin);
 
+        ChampDistPassagerMax.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         ChampDistPassagerMax.setText("5");
         jPanel8.add(ChampDistPassagerMax);
 
+        ChampDistPassagerMode.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         ChampDistPassagerMode.setText("5");
         jPanel8.add(ChampDistPassagerMode);
 
@@ -190,7 +236,11 @@ public class PanneauDetailsSimu extends PanneauDetails implements java.util.Obse
     }// </editor-fold>//GEN-END:initComponents
 
     private void BoutonSauvegarderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSauvegarderActionPerformed
-
+        this.obtenirApplication().getSimulateur().modifierNombreJourSimulation((int)this.ChampNbJours.getValue());
+        this.obtenirApplication().getSimulateur().modifierHeureDebut(LocalTime.parse(this.ChampHeureDebut.getText(), DateTimeFormatter.ISO_LOCAL_TIME));
+        this.obtenirApplication().getSimulateur().modifierHeureFin(LocalTime.parse(this.ChampHeureFin.getText(), DateTimeFormatter.ISO_LOCAL_TIME));
+        
+        
     }//GEN-LAST:event_BoutonSauvegarderActionPerformed
 
 
@@ -199,22 +249,29 @@ public class PanneauDetailsSimu extends PanneauDetails implements java.util.Obse
     private javax.swing.JTextField ChampDistPassagerMax;
     private javax.swing.JTextField ChampDistPassagerMin;
     private javax.swing.JTextField ChampDistPassagerMode;
-    private javax.swing.JTextField ChampDistSegMax;
+    private javax.swing.JTextField ChampDistSegmentMax;
     private javax.swing.JTextField ChampDistSegmentMin;
     private javax.swing.JTextField ChampDistSegmentMode;
     private javax.swing.JTextField ChampDistVehiculeMax;
+    private javax.swing.JTextField ChampDistVehiculeMin;
     private javax.swing.JTextField ChampDistVehiculeMode;
-    private javax.swing.JTextField ChampDistVehiculetMin;
+    private javax.swing.JTextField ChampHeureDebut;
+    private javax.swing.JTextField ChampHeureFin;
+    private javax.swing.JSpinner ChampNbJours;
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
     private javax.swing.Box.Filler filler3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -222,8 +279,7 @@ public class PanneauDetailsSimu extends PanneauDetails implements java.util.Obse
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JPanel jPanel9;
     // End of variables declaration//GEN-END:variables
+
 }
