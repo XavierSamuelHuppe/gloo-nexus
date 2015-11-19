@@ -303,14 +303,14 @@ public class Simulateur {
     
     public boolean estDansCircuitActif(Point point){
         try{
-            return contexte.estDansCircuitActif(point) || contexte.getPointCreateur().equals(point);
+            return contexte.estDansCircuitActif(point) || contexte.estDansCircuitEnCreation(point) || contexte.getPointCreateur().equals(point);
         }catch(AucunCircuitActifException e){
             return false;
         }
     }
     public boolean estDansCircuitActif(Segment segment){
         try{
-            return contexte.estDansCircuitActif(segment);
+            return contexte.estDansCircuitActif(segment) || contexte.estDansCircuitEnCreation(segment);
         }catch(AucunCircuitActifException e){
             return false;
         }
