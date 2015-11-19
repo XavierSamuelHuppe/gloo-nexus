@@ -21,6 +21,8 @@ public class ContexteEdition {
     
     private Circuit circuitActif;
     
+    private Segment segmentActif;
+    
     private Carte carte;
     
     public ContexteEdition(Carte carte){
@@ -82,6 +84,18 @@ public class ContexteEdition {
     }
     public void viderCircuitActif(){
         circuitActif = null;
+    }
+    
+    public void setSegmentActif(Segment segment){
+        segmentActif = segment;
+    }
+    public Segment getSegmentActif(){
+        if(segmentActif == null)
+            throw new AucunSegmentActifException();
+        return segmentActif;
+    }
+    public void viderSegmentActif(){
+        segmentActif = null;
     }
     
     public void commencerContinuerCreationCircuit(Point p){

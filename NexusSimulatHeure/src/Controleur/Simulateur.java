@@ -5,6 +5,7 @@ import Metier.Carte.*;
 import Metier.Simulation.Simulation;
 import Metier.*;
 import Metier.Exceptions.AucunPointActifException;
+import Metier.Exceptions.AucunSegmentActifException;
 import Metier.Source.*;
 import java.time.LocalTime;
 import java.util.*;
@@ -171,6 +172,20 @@ public class Simulateur {
     }
     public void viderPointActif(){
         contexte.viderPointActif();
+    }
+    
+    public void selectionnerSegment(Segment segment){
+        contexte.setSegmentActif(segment);
+    }
+    public boolean estSegmentActif(Segment segment){
+        try{
+        return contexte.getSegmentActif().equals(segment);
+        }catch(AucunSegmentActifException e){
+            return false;
+        }
+    }
+    public void viderSegmentActif(){
+        contexte.viderSegmentActif();
     }
     
     public List<Circuit> circuitsPassantPar(Segment segment){
