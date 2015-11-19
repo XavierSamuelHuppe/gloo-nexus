@@ -1,8 +1,7 @@
 package Metier.Circuit;
 
-import Metier.Carte.Segment;
+import Metier.Carte.*;
 import java.util.*;
-import Metier.Carte.Point;
 
 public abstract class Circuit {
     private String nom;
@@ -13,10 +12,17 @@ public abstract class Circuit {
     
     public Circuit(String nom, List<Segment> segments){
         this.nom = nom;
-        this.trajet = segments;
+        appliquerCircuit(segments);
     }
     
-    public void SetNom(String nom){
+    private void appliquerCircuit(List<Segment> segments){
+        trajet = new ArrayList();
+        for(Segment s : segments){
+            trajet.add(s);
+        }
+    }
+    
+    public void setNom(String nom){
         this.nom = nom;
     }
     
@@ -41,7 +47,7 @@ public abstract class Circuit {
     }
     
     // TODO rencontre: Explain witchcraft to team
-    public boolean utilise(Metier.Carte.Point p){
+    public boolean utilise(Point p){
         return trajet.stream().anyMatch((s) -> (s.getPointArrivee() == p || s.getPointDepart() == p));
     }
     

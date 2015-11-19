@@ -177,6 +177,9 @@ public class Simulateur {
         Circuit nouveauCircuit = contexte.obtenirNouveauCircuit(nom);
         simulation.ajouterCircuit(nouveauCircuit);
     }
+    public void annulerCreationCircuit(){
+        contexte.viderCircuitEnCreation();
+    }
     
     public boolean estDansCircuitActif(Point point){
         return contexte.estDansCircuitActif(point);

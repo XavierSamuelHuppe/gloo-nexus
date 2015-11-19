@@ -3,6 +3,8 @@ package Metier;
 import Metier.Carte.Carte;
 import Metier.Carte.Point;
 import Metier.Carte.Segment;
+import Metier.Circuit.Circuit;
+import Metier.Circuit.CircuitBuilder;
 import Metier.Exceptions.AucunPointActifException;
 import Metier.Exceptions.EditionEnMauvaisModeException;
 import Metier.Simulation.Simulation;
@@ -20,15 +22,15 @@ public class ContexteEdition {
     
     private ModeEdition mode;
     private Point pointActif;
-    private List<Segment> circuitEnCours;
+    private List<Segment> circuitEnCreation;
     
-    private Simulation simulation;
+    private Circuit circuitActif;
+    
     private Carte carte;
     
-    public ContexteEdition(Simulation simulation, Carte carte){
+    public ContexteEdition(Carte carte){
         mode = ModeEdition.POINT;
         this.carte = carte;
-        this.simulation = simulation;
     }
     
     public boolean estEnModePoint(){
@@ -71,14 +73,55 @@ public class ContexteEdition {
             throw new AucunPointActifException();
         return pointActif;
     }
+    public void viderPointActif(){
+        pointActif = null;
+    }
+    
+    public void setCircuitActif(Circuit p){
+        circuitActif = p;
+    }
+    public Circuit getCircuitActif(){
+        if(circuitActif == null)
+            throw new AucunPointActifException();
+        return circuitActif;
+    }
+    public void viderCircuitActif(){
+        circuitActif = null;
+    }
     
     public void commencerContinuerCreationCircuit(Point p){
         if(!estEnModeCircuit())
             throw new EditionEnMauvaisModeException();
         
-        setPointActif(p);
-        Segment segmentAAjouter = carte.obtenirSegment(pointActif, p);
-        circuitEnCours.add(segmentAAjouter);
+        try
+        {
+            Point monPointActif = getPointActif();
+            setPointActif(p);
+            Segment segmentAAjouter = carte.obtenirSegment(monPointActif, p);
+            circuitEnCreation.add(segmentAAjouter);
+            
+        }catch(AucunPointActifException e){
+            setPointActif(p);
+        }
+    }
+    public Circuit obtenirNouveauCircuit(String nom){
+        if(!estEnModeCircuit())
+            throw new EditionEnMauvaisModeException();
+        
+        CircuitBuilder builder = new CircuitBuilder();
+        Circuit nouveauCircuit = builder.ConstruireCircuit(nom, circuitEnCreation);
+        circuitEnCreation.clear();
+        return nouveauCircuit;
+    }
+    public void viderCircuitEnCreation(){
+        circuitEnCreation.clear();
+    }
+    
+    public boolean estDansCircuitActif(Point point){
+        return getCircuitActif().utilise(point);
+    }
+    public boolean estDansCircuitActif(Segment segment){
+        return getCircuitActif().utilise(segment);
     }
     
     
