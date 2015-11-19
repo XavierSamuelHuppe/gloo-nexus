@@ -212,11 +212,17 @@ public class Simulateur {
         contexte.viderSegmentActif();
     }
     
-    public void creerSegmentAvecContinuation(Point p){
-        
+    public Segment creerSegmentAvecContinuation(Point p){
+        Point pointCreateur = contexte.creerSegmentAvecContinuation(p);
+        return ajouterSegment(pointCreateur, p);
     }
-    public void creerSegmentSansContinuation(Point p){
-        
+    public Segment creerSegmentSansContinuation(Point p){
+        Point pointCreateur = contexte.creerSegmentSansContinuation(p);
+        return ajouterSegment(pointCreateur, p);
+    }
+    
+    public void viderPointCreateur(){
+        contexte.viderPointCreateur();
     }
     
     public List<Circuit> circuitsPassantPar(Segment segment){
