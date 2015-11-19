@@ -277,6 +277,9 @@ public class Simulateur {
     public List<Circuit> circuitsPassantPar(Segment segment){
         return simulation.circuitsPassantPar(segment);
     }
+    public List<Circuit> circuitsPassantPar(Point point){
+        return simulation.circuitsPassantPar(point);
+    }
     public void ActiverCircuit(Circuit circuit){
         contexte.setCircuitActif(circuit);
     }
