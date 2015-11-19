@@ -17,7 +17,7 @@ public class Simulateur {
     public Simulateur(){
         carte = new Carte();
         simulation = new Simulation(carte);
-        contexte = new ContexteEdition(simulation, carte);
+        contexte = new ContexteEdition(carte);
     }
  
     public boolean estEnModePoint(){
@@ -163,17 +163,25 @@ public class Simulateur {
         simulation.getParametres().setHeureFin(heure);
     }
     
-    public void ajouterCircuit(String nom, List<Segment> segments){
-        CircuitBuilder builder = new CircuitBuilder();
-        Circuit nouveauCircuit = builder.ConstruireCircuit(nom, segments);
-        simulation.ajouterCircuit(nouveauCircuit);
-    }
-    
     public boolean estPointActif(Point p){
         return contexte.getPointActif().equals(p);
+    }
+    public void viderPointActif(){
+        contexte.viderPointActif();
     }
     
     public void commencerContinuerCurcuitEnCourt(Point p){
         contexte.commencerContinuerCreationCircuit(p);
+    }
+    public void sauvergarderNouveauCircuit(String nom){
+        Circuit nouveauCircuit = contexte.obtenirNouveauCircuit(nom);
+        simulation.ajouterCircuit(nouveauCircuit);
+    }
+    
+    public boolean estDansCircuitActif(Point point){
+        return contexte.estDansCircuitActif(point);
+    }
+    public boolean estDansCircuitActif(Segment segment){
+        return contexte.estDansCircuitActif(segment);
     }
 }
