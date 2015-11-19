@@ -212,6 +212,13 @@ public class Simulateur {
         contexte.viderSegmentActif();
     }
     
+    public void creerSegmentAvecContinuation(Point p){
+        
+    }
+    public void creerSegmentSansContinuation(Point p){
+        
+    }
+    
     public List<Circuit> circuitsPassantPar(Segment segment){
         return simulation.circuitsPassantPar(segment);
     }
