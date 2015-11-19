@@ -109,6 +109,7 @@ public class ContexteEdition {
             throw new AucunPointCreateurException();
         }
         
+        setPointCreateur(p);
         Point retour = pointCreateur;
         return retour;
     }
