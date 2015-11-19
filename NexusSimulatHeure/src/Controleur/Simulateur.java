@@ -12,12 +12,30 @@ public class Simulateur {
     
     private Simulation simulation;
     private Carte carte;
+    private ContexteEdition contexte;
     
     public Simulateur(){
         carte = new Carte();
         simulation = new Simulation(carte);
     }
  
+    public boolean estEnModePoint(){
+        return contexte.estEnModePoint();
+    }
+    public boolean estEnModeSegment(){
+        return contexte.estEnModeSegment();
+    }
+    public boolean estEnModeCircuit(){
+        return contexte.estEnModeCircuit();
+    }
+    public boolean estEnModeSource(){
+        return contexte.estEnModeSource();
+    }
+    public boolean estEnModePassager(){
+        return contexte.estEnModePassager();
+    }
+    
+    
     public void arreter(){
         simulation.arreter();
     }
