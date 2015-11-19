@@ -32,4 +32,21 @@ public class ContexteEdition {
         return mode == ModeEdition.PASSAGER;
     }
     
+    public void passerEnModePoint(){
+        mode = ModeEdition.POINT;
+    }
+    public void passerEnModeSegment(){
+        mode = ModeEdition.SEGMENT;
+    }
+    public void passerEnModeCircuit(){
+        mode = ModeEdition.CIRCUIT;
+    }
+    public void passerEnModeSource(){
+        mode = ModeEdition.SOURCE;
+    }
+    public void passerEnModePassager(){
+        mode = ModeEdition.PASSAGER;
+    }
+    
+    
 }

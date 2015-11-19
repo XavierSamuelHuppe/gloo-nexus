@@ -34,6 +34,25 @@ public class Simulateur {
     public boolean estEnModePassager(){
         return contexte.estEnModePassager();
     }
+    public void passerEnModePoint(){
+        contexte.passerEnModePoint();
+    }
+    public void passerEnModeSegment(){
+        contexte.passerEnModeSegment();
+    }
+    public void passerEnModeCircuit(){
+        contexte.passerEnModeCircuit();
+    }
+    public void passerEnModeSource(){
+        contexte.passerEnModeSource();
+    }
+    public void passerEnModePassager(){
+        contexte.passerEnModePassager();
+    }
+    
+    public void selectionnerPoint(Point p){
+        
+    }
     
     
     public void arreter(){
