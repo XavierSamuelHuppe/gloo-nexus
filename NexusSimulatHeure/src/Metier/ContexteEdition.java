@@ -17,11 +17,12 @@ public class ContexteEdition {
     
     private ModeEdition mode;
     private Point pointActif;
-    private List<Segment> circuitEnCreation;
-    
     private Circuit circuitActif;
-    
     private Segment segmentActif;
+    
+    private List<Segment> circuitEnCreation;
+    private Point pointCreateur;
+    
     
     private Carte carte;
     
@@ -74,6 +75,18 @@ public class ContexteEdition {
         pointActif = null;
     }
     
+    public void setPointCreateur(Point p){
+        pointCreateur = p;
+    }
+    public Point getPointCreateur(){
+        if(pointCreateur == null)
+            throw new AucunPointCreateurException();
+        return pointCreateur;
+    }
+    public void viderPointCreateur(){
+        pointCreateur = null;
+    }
+    
     public void setCircuitActif(Circuit p){
         circuitActif = p;
     }
@@ -86,33 +99,21 @@ public class ContexteEdition {
         circuitActif = null;
     }
     
-    public void creerSegmentAvecContinuation(Point p){
+    public Point creerSegmentAvecContinuation(Point p){
         if(!estEnModeSegment())
             throw new EditionEnMauvaisModeException();
-        
-        try
-        {
-            Point monPointActif = getPointActif();
-            Segment segmentAAjouter = carte.obtenirSegment(monPointActif, p);
-            setPointActif(p);
-            
-        }catch(AucunPointActifException e){
-            setPointActif(p);
-        }
+
+        Point retour = pointCreateur;
+        setPointCreateur(p);
+        return retour;
     }
-    public void creerSegmentSansContinuation(Point p){
+    public Point creerSegmentSansContinuation(Point p){
         if(!estEnModeSegment())
             throw new EditionEnMauvaisModeException();
         
-        try
-        {
-            Point monPointActif = getPointActif();
-            Segment segmentAAjouter = carte.obtenirSegment(monPointActif, p);
-            viderPointActif();
-            
-        }catch(AucunPointActifException e){
-            setPointActif(p);
-        }
+        Point retour = pointCreateur;
+        viderPointCreateur();
+        return retour;
     }
     
     public void setSegmentActif(Segment segment){
