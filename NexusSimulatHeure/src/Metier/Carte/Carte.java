@@ -1,5 +1,5 @@
 package Metier.Carte;
-import Metier.Circuit.ConteneurPassagers;
+import Metier.Distribution;
 import Metier.Exceptions.*;
 
 import java.util.*;
@@ -37,6 +37,9 @@ public class Carte {
     {
         pointCible.setNom(nom);
         pointCible.setPosition(pos);
+    }
+    public void modifierSegment(Segment segmentCible, Distribution distribution){
+        segmentCible.setDistribution(distribution);
     }
     
     public List<Point> obtenirPointsAdjacents(Point point){
