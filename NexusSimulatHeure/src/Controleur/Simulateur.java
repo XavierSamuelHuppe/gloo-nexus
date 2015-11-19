@@ -17,6 +17,7 @@ public class Simulateur {
     public Simulateur(){
         carte = new Carte();
         simulation = new Simulation(carte);
+        contexte = new ContexteEdition();
     }
  
     public boolean estEnModePoint(){
