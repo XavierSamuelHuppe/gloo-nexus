@@ -3,6 +3,7 @@ package Metier.Simulation;
 import Metier.Distribution;
 import Metier.Exceptions.SimulationEnMauvaisEtatException;
 import java.time.LocalTime;
+import Metier.Circuit.ConteneurPassagersIllimite;
 
 public class ParametreSimulation {
     public static enum Etats {
@@ -20,6 +21,9 @@ public class ParametreSimulation {
     private LocalTime heureFin;
     private int vitesse;
     private int framerate;
+    private ConteneurPassagersIllimite conteneurPassagersIllimiteSource;
+    private ConteneurPassagersIllimite conteneurPassagersIllimiteArret;
+    
     
     private static Distribution DISTRIBUTION_TEMPS_TRANSIT_SEGMENT_DEFAUT = new Distribution(300, 300, 300);
     private static Distribution DISTRIBUTION_TEMPS_GENERATION_VEHICULE_DEFAUT = new Distribution(900, 900, 900);
@@ -29,6 +33,8 @@ public class ParametreSimulation {
     private static LocalTime HEURE_FIN_DEFAUT = LocalTime.of(17,0);
     private static int VITESSE_DEFAUT = 100;
     private static int FRAMERATE_DEFAUT = 30;
+    private static ConteneurPassagersIllimite CONTENEUR_PASSAGERS_ILLIMITE_SOURCE_DEFAUT = new ConteneurPassagersIllimite();
+    private static ConteneurPassagersIllimite CONTENEUR_PASSAGERS_ILLIMITE_ARRET_DEFAUT = new ConteneurPassagersIllimite();
     
     public ParametreSimulation(){
         initialiserValeursParDefaut();
@@ -44,6 +50,8 @@ public class ParametreSimulation {
         heureFin = HEURE_FIN_DEFAUT;
         vitesse = VITESSE_DEFAUT;
         framerate = FRAMERATE_DEFAUT;
+        conteneurPassagersIllimiteSource = CONTENEUR_PASSAGERS_ILLIMITE_SOURCE_DEFAUT;
+        conteneurPassagersIllimiteArret = CONTENEUR_PASSAGERS_ILLIMITE_ARRET_DEFAUT;
     }
     
     public Etats getEtat() {
@@ -92,6 +100,13 @@ public class ParametreSimulation {
     
     public int getFramerate(){
         return framerate;
+    }
+    
+    public ConteneurPassagersIllimite getConteneurPassagersIllimiteSource(){
+        return conteneurPassagersIllimiteSource;
+    }
+    public ConteneurPassagersIllimite getConteneurPassagersIllimiteArret(){
+        return conteneurPassagersIllimiteArret;
     }
     
     public double obtenirRatioVitesse() {
@@ -152,5 +167,13 @@ public class ParametreSimulation {
     }
     public void setFramerate(int framerate){
         this.framerate = framerate;
+    }
+    
+    public void setConteneurPassagersIllimiteSource(ConteneurPassagersIllimite conteneurPassagersIllimiteSource) {
+        this.conteneurPassagersIllimiteSource = conteneurPassagersIllimiteSource;
+    }
+    
+    public void setConteneurPassagersIllimiteArret(ConteneurPassagersIllimite conteneurPassagersIllimiteArret) {
+        this.conteneurPassagersIllimiteArret = conteneurPassagersIllimiteArret;
     }
 }
