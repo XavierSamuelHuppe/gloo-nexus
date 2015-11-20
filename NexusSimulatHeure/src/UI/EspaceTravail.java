@@ -1,6 +1,7 @@
 package UI;
 
 import Controleur.Simulateur;
+import Metier.Exceptions.AucunPointCreateurException;
 import UI.Constantes.Couleurs;
 import UI.Exceptions.SegmentNonTrouveException;
 import UI.Utils.PaireDoubles;
@@ -127,6 +128,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         this.add(p);
         this.repaint();
     }
+
     public void retirerPoint(Point p){
         points.remove(p);
         this.remove(p);
@@ -149,6 +151,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     }
     
     
+
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
@@ -224,7 +227,10 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         throw new SegmentNonTrouveException();
     }
     
-    
+    public UI.Point obtenirPointUIParPointMetier(Metier.Carte.Point point)
+    {
+        return points.stream().filter((p) -> p.getPointMetier().equals(point)).findFirst().get();
+    }
     
     
     
@@ -326,26 +332,48 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     {
         if(simulateur.estEnModeSegment())
         {
-            if(tempSegmentPointDepart == null)
+            try
             {
-                tempSegmentPointDepart = p;
+                Metier.Carte.Segment sp = null;
+//                System.err.println(fanionClavier1);
+                if(fanionClavier1)
+                {
+                    System.out.println("creerSegmentAvecContinuation");
+                    sp = this.simulateur.creerSegmentAvecContinuation(p.getPointMetier());
+                }
+                else
+                {
+                    System.out.println("creerSegmentSansContinuation");
+                    sp = this.simulateur.creerSegmentSansContinuation(p.getPointMetier());
+                }
+
+                Segment s = new Segment(obtenirPointUIParPointMetier(sp.getPointDepart()), obtenirPointUIParPointMetier(sp.getPointArrivee()), this, sp);
+                segments.add(s);        
+                this.repaint();
             }
-            else
+            catch(Metier.Exceptions.AucunPointCreateurException ex)
             {
-                ajouterSegment(tempSegmentPointDepart, p);
-                tempSegmentPointDepart = fanionClavier1 ? p : null;
+                System.out.println("AucunPointCreateurException");
             }
+            
         }
         else if (simulateur.estEnModePoint())
         {
             this.simulateur.selectionnerPoint(p.getPointMetier());
             this.obtenirApplication().afficherPanneauDetails(p);
-            this.repaint();
         }
         else if (simulateur.estEnModeCircuit())
         {
-            this.simulateur.commencerContinuerCreationCircuit(p.getPointMetier());
+            try
+            {
+                this.simulateur.commencerContinuerCreationCircuit(p.getPointMetier());
+            }
+            catch(AucunPointCreateurException ex)
+            {
+                System.err.println("AucunPointCreateurException");
+            }
         }
+        this.repaint();
     }
     
     public void segmentClique(Segment s)

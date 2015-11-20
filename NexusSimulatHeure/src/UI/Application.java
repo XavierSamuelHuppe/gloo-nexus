@@ -109,6 +109,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     public void keyPressed(KeyEvent ke) {
         if(ke.getKeyCode() == KeyEvent.VK_CONTROL)
         {
+//            System.err.println("fanion true");
             fanionClavier1 = true;
             this.ZoneEspaceTravail.setFanionClavier1(this.fanionClavier1);
         }
@@ -118,6 +119,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     public void keyReleased(KeyEvent ke) {
         if(ke.getKeyCode() == KeyEvent.VK_CONTROL)
         {
+//            System.err.println("fanion false");
             fanionClavier1 = false;
             this.ZoneEspaceTravail.setFanionClavier1(this.fanionClavier1);
         }
@@ -133,6 +135,11 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         this.addKeyListener(this);
 
         this.BoutonNouveau.addKeyListener(this);
+        this.BoutonModeCircuit.addKeyListener(this);
+        this.BoutonModePoint.addKeyListener(this);
+        this.BoutonModeProfilPassager.addKeyListener(this);
+        this.BoutonModeSegment.addKeyListener(this);
+        this.BoutonModeSource.addKeyListener(this);
         
         this.simulateur = new Controleur.Simulateur();
         

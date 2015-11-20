@@ -69,7 +69,7 @@ public class Segment implements IDetailsAffichables, Observer {
             {
                 this.modeActuel = Segment.Mode.SELECTIONNE;
             }
-            else if (sim.estEnModeCircuit() && true)
+            else if (sim.estEnModeCircuit() && sim.estDansCircuitActif(this.segmentMetier))
             {
                 this.modeActuel = Segment.Mode.CIRCUIT;
             }
@@ -134,22 +134,22 @@ public class Segment implements IDetailsAffichables, Observer {
         
         if(dX >= 0 && dY >= 0)
         {
-            System.out.println("SE");
+//            System.out.println("SE");
             return Orientation.SE;
         }
         else if(dX >= 0 && dY < 0)
         {
-            System.out.println("NE");
+//            System.out.println("NE");
             return Orientation.NE;
         }
         else if(dX < 0 && dY >= 0)
         {
-            System.out.println("SO");
+//            System.out.println("SO");
             return Orientation.SO;
         }
         else
         {
-            System.out.println("NO");
+//            System.out.println("NO");
             return Orientation.NO;
         }
     }
