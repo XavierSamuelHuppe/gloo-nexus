@@ -1,13 +1,12 @@
 
 package UI.PanneauxDetails;
 
-import Metier.Distribution;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Observable;
 import java.util.Observer;
 
-public class PanneauDetailsSimu extends PanneauDetails implements Observer{
+public class PanneauDetailsSimu extends PanneauDetails{
 
     //private Controleur.Simulateur simulateur;
     private Metier.Simulation.ParametreSimulation paramSimulation;
@@ -18,17 +17,16 @@ public class PanneauDetailsSimu extends PanneauDetails implements Observer{
         initComponents();
     }
     
-    public PanneauDetailsSimu(Controleur.Simulateur s, Metier.Simulation.ParametreSimulation param) {
+    public PanneauDetailsSimu(Controleur.Simulateur s) {
         super();
         initComponents();
         
         this.simulateur = s;
-        this.paramSimulation = param;
+        this.paramSimulation = s.getParametresSimulation();
         
         this.rafraichir();
     }
     
-    @Override
     public void rafraichir() {
         this.ChampNbJours.setValue(paramSimulation.getNombreJourSimulation());
         this.ChampHeureDebut.setText(paramSimulation.getHeureDebut().toString());
@@ -47,12 +45,6 @@ public class PanneauDetailsSimu extends PanneauDetails implements Observer{
         this.ChampDistPassagerMode.setText(((Double)paramSimulation.getDistributionTempsGenerationPassagerDefaut().getMode()).toString());
     }
     
-    @Override
-    public void update(Observable o, Object arg) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        this.rafraichir();
-    }
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -65,13 +57,19 @@ public class PanneauDetailsSimu extends PanneauDetails implements Observer{
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         ChampNbJours = new javax.swing.JSpinner();
+        filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
+        filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5));
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         ChampHeureDebut = new javax.swing.JTextField();
+        filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
+        filler8 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         ChampHeureFin = new javax.swing.JTextField();
+        filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
+        filler9 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5));
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -98,9 +96,9 @@ public class PanneauDetailsSimu extends PanneauDetails implements Observer{
         filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 15), new java.awt.Dimension(0, 15), new java.awt.Dimension(32767, 15));
         BoutonSauvegarder = new javax.swing.JButton();
 
-        setMinimumSize(new java.awt.Dimension(350, 180));
+        setMinimumSize(new java.awt.Dimension(360, 200));
         setName(""); // NOI18N
-        setPreferredSize(new java.awt.Dimension(350, 190));
+        setPreferredSize(new java.awt.Dimension(360, 200));
         setRequestFocusEnabled(false);
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
@@ -111,6 +109,8 @@ public class PanneauDetailsSimu extends PanneauDetails implements Observer{
 
         ChampNbJours.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
         jPanel1.add(ChampNbJours);
+        jPanel1.add(filler4);
+        jPanel1.add(filler7);
 
         add(jPanel1);
         add(filler2);
@@ -122,6 +122,8 @@ public class PanneauDetailsSimu extends PanneauDetails implements Observer{
 
         ChampHeureDebut.setText("ChampHeureDebut");
         jPanel3.add(ChampHeureDebut);
+        jPanel3.add(filler5);
+        jPanel3.add(filler8);
 
         add(jPanel3);
 
@@ -133,6 +135,8 @@ public class PanneauDetailsSimu extends PanneauDetails implements Observer{
 
         ChampHeureFin.setText("ChampHeureFin");
         jPanel4.add(ChampHeureFin);
+        jPanel4.add(filler6);
+        jPanel4.add(filler9);
 
         add(jPanel4);
         add(filler1);
@@ -276,6 +280,12 @@ public class PanneauDetailsSimu extends PanneauDetails implements Observer{
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
     private javax.swing.Box.Filler filler3;
+    private javax.swing.Box.Filler filler4;
+    private javax.swing.Box.Filler filler5;
+    private javax.swing.Box.Filler filler6;
+    private javax.swing.Box.Filler filler7;
+    private javax.swing.Box.Filler filler8;
+    private javax.swing.Box.Filler filler9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
