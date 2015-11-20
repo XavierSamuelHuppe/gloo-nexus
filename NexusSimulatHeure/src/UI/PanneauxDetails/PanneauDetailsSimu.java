@@ -3,28 +3,28 @@ package UI.PanneauxDetails;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Observable;
-import java.util.Observer;
 
-public class PanneauDetailsSimu extends PanneauDetails implements Observer{
+public class PanneauDetailsSimu extends PanneauDetails{
 
     //private Controleur.Simulateur simulateur;
     private Metier.Simulation.ParametreSimulation paramSimulation;
+    private Controleur.Simulateur simulateur;
     
     public PanneauDetailsSimu()
     {
         initComponents();
     }
     
-    public PanneauDetailsSimu(Metier.Simulation.ParametreSimulation param) {
+    public PanneauDetailsSimu(Controleur.Simulateur s) {
         super();
         initComponents();
         
-        this.paramSimulation = param;
+        this.simulateur = s;
+        this.paramSimulation = s.getParametresSimulation();
+        
         this.rafraichir();
     }
     
-    @Override
     public void rafraichir() {
         this.ChampNbJours.setValue(paramSimulation.getNombreJourSimulation());
         this.ChampHeureDebut.setText(paramSimulation.getHeureDebut().toString());
@@ -43,12 +43,6 @@ public class PanneauDetailsSimu extends PanneauDetails implements Observer{
         this.ChampDistPassagerMode.setText(((Double)paramSimulation.getDistributionTempsGenerationPassagerDefaut().getMode()).toString());
     }
     
-    @Override
-    public void update(Observable o, Object arg) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        this.rafraichir();
-    }
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -61,13 +55,19 @@ public class PanneauDetailsSimu extends PanneauDetails implements Observer{
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         ChampNbJours = new javax.swing.JSpinner();
+        filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
+        filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5));
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         ChampHeureDebut = new javax.swing.JTextField();
+        filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
+        filler8 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         ChampHeureFin = new javax.swing.JTextField();
+        filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
+        filler9 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5));
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -91,12 +91,15 @@ public class PanneauDetailsSimu extends PanneauDetails implements Observer{
         ChampDistPassagerMin = new javax.swing.JTextField();
         ChampDistPassagerMax = new javax.swing.JTextField();
         ChampDistPassagerMode = new javax.swing.JTextField();
-        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 15), new java.awt.Dimension(0, 15), new java.awt.Dimension(32767, 15));
+        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(32767, 15));
+        jPanel5 = new javax.swing.JPanel();
         BoutonSauvegarder = new javax.swing.JButton();
+        BoutonRetour = new javax.swing.JButton();
+        filler10 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
 
-        setMinimumSize(new java.awt.Dimension(350, 180));
+        setMinimumSize(new java.awt.Dimension(410, 200));
         setName(""); // NOI18N
-        setPreferredSize(new java.awt.Dimension(350, 190));
+        setPreferredSize(new java.awt.Dimension(410, 200));
         setRequestFocusEnabled(false);
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
@@ -107,6 +110,8 @@ public class PanneauDetailsSimu extends PanneauDetails implements Observer{
 
         ChampNbJours.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
         jPanel1.add(ChampNbJours);
+        jPanel1.add(filler4);
+        jPanel1.add(filler7);
 
         add(jPanel1);
         add(filler2);
@@ -118,6 +123,8 @@ public class PanneauDetailsSimu extends PanneauDetails implements Observer{
 
         ChampHeureDebut.setText("ChampHeureDebut");
         jPanel3.add(ChampHeureDebut);
+        jPanel3.add(filler5);
+        jPanel3.add(filler8);
 
         add(jPanel3);
 
@@ -129,6 +136,8 @@ public class PanneauDetailsSimu extends PanneauDetails implements Observer{
 
         ChampHeureFin.setText("ChampHeureFin");
         jPanel4.add(ChampHeureFin);
+        jPanel4.add(filler6);
+        jPanel4.add(filler9);
 
         add(jPanel4);
         add(filler1);
@@ -226,25 +235,54 @@ public class PanneauDetailsSimu extends PanneauDetails implements Observer{
         add(jPanel8);
         add(filler3);
 
+        jPanel5.setLayout(new javax.swing.BoxLayout(jPanel5, javax.swing.BoxLayout.LINE_AXIS));
+
         BoutonSauvegarder.setText("Sauvegarder");
         BoutonSauvegarder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BoutonSauvegarderActionPerformed(evt);
             }
         });
-        add(BoutonSauvegarder);
+        jPanel5.add(BoutonSauvegarder);
+
+        BoutonRetour.setText("Retour");
+        BoutonRetour.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BoutonRetourActionPerformed(evt);
+            }
+        });
+        jPanel5.add(BoutonRetour);
+
+        add(jPanel5);
+        add(filler10);
     }// </editor-fold>//GEN-END:initComponents
 
     private void BoutonSauvegarderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSauvegarderActionPerformed
-        this.obtenirApplication().getSimulateur().modifierNombreJourSimulation((int)this.ChampNbJours.getValue());
-        this.obtenirApplication().getSimulateur().modifierHeureDebut(LocalTime.parse(this.ChampHeureDebut.getText(), DateTimeFormatter.ISO_LOCAL_TIME));
-        this.obtenirApplication().getSimulateur().modifierHeureFin(LocalTime.parse(this.ChampHeureFin.getText(), DateTimeFormatter.ISO_LOCAL_TIME));
+        simulateur.modifierNombreJourSimulation((int)this.ChampNbJours.getValue());
+        simulateur.modifierHeureDebut(LocalTime.parse(this.ChampHeureDebut.getText(), DateTimeFormatter.ISO_LOCAL_TIME));
+        simulateur.modifierHeureFin(LocalTime.parse(this.ChampHeureFin.getText(), DateTimeFormatter.ISO_LOCAL_TIME));
         
-        
+        simulateur.modifierDistributionTempsTransitSegment(
+                new Metier.Distribution(Double.parseDouble(this.ChampDistSegmentMin.getText()),
+                                        Double.parseDouble(this.ChampDistSegmentMode.getText()),
+                                        Double.parseDouble(this.ChampDistSegmentMax.getText())));
+        simulateur.modifierDistributionTempsGenerationVehicule(
+                new Metier.Distribution(Double.parseDouble(this.ChampDistVehiculeMin.getText()),
+                                        Double.parseDouble(this.ChampDistVehiculeMode.getText()),
+                                        Double.parseDouble(this.ChampDistVehiculeMax.getText())));
+        simulateur.modifierDistributionTempsGenerationPassager(
+                new Metier.Distribution(Double.parseDouble(this.ChampDistPassagerMin.getText()),
+                                        Double.parseDouble(this.ChampDistPassagerMode.getText()),
+                                        Double.parseDouble(this.ChampDistPassagerMax.getText())));
     }//GEN-LAST:event_BoutonSauvegarderActionPerformed
+
+    private void BoutonRetourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonRetourActionPerformed
+        //((javax.swing.JDialog)this.getParent()).setVisible(false);
+    }//GEN-LAST:event_BoutonRetourActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BoutonRetour;
     private javax.swing.JButton BoutonSauvegarder;
     private javax.swing.JTextField ChampDistPassagerMax;
     private javax.swing.JTextField ChampDistPassagerMin;
@@ -259,8 +297,15 @@ public class PanneauDetailsSimu extends PanneauDetails implements Observer{
     private javax.swing.JTextField ChampHeureFin;
     private javax.swing.JSpinner ChampNbJours;
     private javax.swing.Box.Filler filler1;
+    private javax.swing.Box.Filler filler10;
     private javax.swing.Box.Filler filler2;
     private javax.swing.Box.Filler filler3;
+    private javax.swing.Box.Filler filler4;
+    private javax.swing.Box.Filler filler5;
+    private javax.swing.Box.Filler filler6;
+    private javax.swing.Box.Filler filler7;
+    private javax.swing.Box.Filler filler8;
+    private javax.swing.Box.Filler filler9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -276,6 +321,7 @@ public class PanneauDetailsSimu extends PanneauDetails implements Observer{
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;

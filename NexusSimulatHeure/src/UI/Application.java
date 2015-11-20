@@ -32,6 +32,9 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
             case UI.Constantes.Commandes.MODE_PROFIL_PASSAGER:
                 passerEnModeProfilPassager();
                 break;
+            case UI.Constantes.Commandes.PARAMETRES_SIMULATION:
+                afficherParametreSimulation();
+                break;
         }
     }
 
@@ -58,6 +61,18 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         {
             System.out.println("delete");
         }
+    }
+    
+    public void afficherParametreSimulation()
+    {
+        UI.PanneauxDetails.PanneauDetailsSimu testPanel;
+        testPanel = new UI.PanneauxDetails.PanneauDetailsSimu(this.simulateur);
+        final javax.swing.JDialog frame = new javax.swing.JDialog(this, "Paramètres Simulation", true);
+        frame.getContentPane().add(testPanel);
+        frame.setResizable(false);
+        frame.pack();
+        frame.setLocationRelativeTo(this);
+        frame.setVisible(true);
     }
     
     public void passerEnModePoint()
@@ -145,7 +160,11 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         
         this.ZoneEspaceTravail.setSimulateur(simulateur);
         
+        this.BoutonParametres.setActionCommand(UI.Constantes.Commandes.PARAMETRES_SIMULATION);
+        this.BoutonParametres.addActionListener(this);
+        
         initialiserBoutonsModes();
+        BoutonModePoint.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
     }
     
     private void initialiserBoutonsModes()
@@ -177,7 +196,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     }
 
     
-    public void afficherPanneauDetails(IDetailsAffichables element)
+   private void afficherPanneauDetails(IDetailsAffichables element)
     {
         this.PanneauDetails.removeAll();
         this.PanneauDetails.add(element.obtenirPanneauDetails(), BorderLayout.CENTER);

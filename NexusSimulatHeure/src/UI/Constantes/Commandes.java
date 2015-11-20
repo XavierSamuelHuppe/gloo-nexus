@@ -12,6 +12,7 @@ package UI.Constantes;
 public class Commandes {
     public static final String NOUVEAU = "Nouveau";
     
+    public static final String PARAMETRES_SIMULATION = "ParamSimu";
     
     //Boutons "Modes".
     public static final String MODE_POINT = "ModePoint";

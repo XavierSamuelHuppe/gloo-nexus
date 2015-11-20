@@ -214,6 +214,10 @@ public class Simulateur {
         simulation.getParametres().setFramerate(pourcentage);
     }
     
+    public Metier.Simulation.ParametreSimulation getParametresSimulation(){
+        return this.simulation.getParametres();
+    }
+    
     public void modifierDistributionTempsTransitSegment(Distribution dist){
         simulation.getParametres().setDistributionTempsTransitSegment(dist);
     }
