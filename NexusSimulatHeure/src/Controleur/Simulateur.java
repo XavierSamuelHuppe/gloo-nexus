@@ -93,12 +93,12 @@ public class Simulateur {
         carte.modifierPoint(pointCible, nouvellePosition, nouveauNom);
     }
     
-    public Segment ajouterSegment(Point depart, Point arrivee){
+    private Segment ajouterSegment(Point depart, Point arrivee){
         Segment segment = new Segment(depart, arrivee, simulation.getParametres().getDistributionTempsTransitSegmentDefaut());
         carte.ajouterSegment(segment);
         return segment;
     }
-    public Segment ajouterSegment(Point depart, Point arrivee, Distribution tempsTransit){
+    private Segment ajouterSegment(Point depart, Point arrivee, Distribution tempsTransit){
         Segment segment = new Segment(depart, arrivee, tempsTransit);
         carte.ajouterSegment(segment);
         return segment;
