@@ -57,10 +57,6 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         {
             passerEnModeProfilPassager();
         }
-        else if (ke.getKeyChar()==KeyEvent.VK_DELETE)
-        {
-            System.out.println("delete");
-        }
     }
     
     public void afficherParametreSimulation()
@@ -104,6 +100,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     {
         reinitialiserCouleurBoutonsModes();
         simulateur.passerEnModeSource();
+        afficherPanneauDetailsSourceNouvelleSource();
         viderPanneauDetails();
         BoutonModeSource.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
     }
@@ -143,6 +140,18 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
 //            System.err.println("fanion false");
             fanionClavier1 = false;
             this.ZoneEspaceTravail.setFanionClavier1(this.fanionClavier1);
+            
+            if(this.simulateur.estEnModeSegment())
+            {
+                this.simulateur.annulerCreationSegment();
+            }
+        }
+        else if (ke.getKeyCode() == KeyEvent.VK_ESCAPE)
+        {
+            if(this.simulateur.estEnModeSegment())
+            {
+                this.simulateur.annulerCreationSegment();
+            }
         }
     }
 
@@ -223,6 +232,15 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     {
         this.PanneauDetails.removeAll();
         this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsCircuit(this.simulateur));
+        this.PanneauDetails.repaint();
+        
+        this.revalidate();
+    }
+    
+    public void afficherPanneauDetailsSourceNouvelleSource()
+    {
+        this.PanneauDetails.removeAll();
+        this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsSource(this.simulateur));
         this.PanneauDetails.repaint();
         
         this.revalidate();

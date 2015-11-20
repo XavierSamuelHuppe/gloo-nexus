@@ -130,16 +130,18 @@ public class Carte {
     public List<Segment> plusCourtCheminEnTempsMoyen(Point depart, Point arrive){
         Map<Point, Integer> temps = new HashMap<Point, Integer>();
         Map<Point, Point> meilleurDernierPoint = new HashMap<Point, Point>();
+        List<Point> PointNonVisites = new ArrayList();
         
         //On initialise les poids
         for(Point p : points){
             temps.put(p,0);
             meilleurDernierPoint.put(p,null);
+            PointNonVisites.add(p);
         }
         temps.put(depart,1);
-        
-        while(temps.size() != 0){
-            
+        System.out.println("1");
+        while(!PointNonVisites.isEmpty()){
+            System.out.println("2");
             //On pogne le plus petit poid
             Integer lowestTime = 0;
             Point lowestPoint = null;
@@ -150,13 +152,15 @@ public class Carte {
                     lowestPoint = pair.getKey();
                 }
             }
-            temps.remove(lowestPoint);
+            PointNonVisites.remove(lowestPoint);
             
             //On trouve ses adjacents
             //si n'as pas de poid encore ou
             //si nouveau poid plus petit qu'ancien, on modifie
             for(Point p : obtenirPointsAdjacents(lowestPoint)){
-                Integer PoidAlternatif = temps.get(lowestPoint) + ((Double)(obtenirSegment(lowestPoint, p).obtenirMoyenneTempsTransit())).intValue();
+                System.out.println("3");
+                int tempsSegment = ((Double)(obtenirSegment(lowestPoint, p).obtenirMoyenneTempsTransit())).intValue();
+                Integer PoidAlternatif = temps.get(lowestPoint) + tempsSegment;
                 if(temps.get(p) == 0 || (PoidAlternatif < temps.get(p) )){
                     meilleurDernierPoint.put(p,lowestPoint);
                     temps.put(p, PoidAlternatif);

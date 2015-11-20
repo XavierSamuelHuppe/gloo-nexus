@@ -5,7 +5,6 @@ import UI.PanneauxDetails.PanneauDetails;
 import UI.PanneauxDetails.PanneauDetailsPoint;
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -37,7 +36,7 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         }
     }
 
-    enum Mode {NORMAL, SELECTIONNE, CIRCUIT};
+    enum Mode {NORMAL, SELECTIONNE, CIRCUIT, CREATION_SEGMENT};
         
     private java.awt.Point pointPoigneeDrag;
     private Mode modeActuel = Mode.NORMAL;
@@ -108,6 +107,10 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         {
             g2.setColor(Couleurs.POINT_CIRCUIT);
         }
+        else if(modeActuel == Mode.CREATION_SEGMENT)
+        {
+            g2.setColor(Couleurs.POINT_CREATION_SEGMENT);
+        }
         g2.fillOval(0, 0, calculerZoom(DIAMETRE), calculerZoom(DIAMETRE));
     }
     
@@ -124,6 +127,10 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         else if(modeActuel == Mode.CIRCUIT)
         {
             g2.setColor(Couleurs.POINT_FOND_CIRCUIT);    
+        }
+        else if(modeActuel == Mode.CREATION_SEGMENT)
+        {
+            g2.setColor(Couleurs.POINT_FOND_CREATION_SEGMENT);
         }
         g2.fillOval(calculerZoom(POSITION_CERCLE_INTERNE), calculerZoom(POSITION_CERCLE_INTERNE), calculerZoom(LARGEUR_CERCLE_INTERNE), calculerZoom(LARGEUR_CERCLE_INTERNE));
     }
@@ -189,10 +196,15 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         {
             this.modeActuel = Mode.CIRCUIT;
         }
+        else if (sim.estEnModeSegment() && (sim.estPointCreateur(pointMetier)))
+        {
+            this.modeActuel = Mode.CREATION_SEGMENT;
+        }       
         else
         {
             this.modeActuel = Mode.NORMAL;
-        }        
+        }
+        
     }        
 
     boolean dragged = false;

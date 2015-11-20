@@ -49,19 +49,30 @@ public class ContexteEdition {
     }
     
     public void passerEnModePoint(){
+        appliquerChangementMode();
         mode = ModeEdition.POINT;
     }
     public void passerEnModeSegment(){
+        appliquerChangementMode();
         mode = ModeEdition.SEGMENT;
     }
     public void passerEnModeCircuit(){
+        appliquerChangementMode();
         mode = ModeEdition.CIRCUIT;
     }
     public void passerEnModeSource(){
+        appliquerChangementMode();
         mode = ModeEdition.SOURCE;
     }
     public void passerEnModePassager(){
+        appliquerChangementMode();
         mode = ModeEdition.PASSAGER;
+    }
+    private void appliquerChangementMode(){
+        viderPointActif();
+        viderCircuitActif();
+        viderSegmentActif();
+        viderPointCreateur();
     }
     
     public void setPointActif(Point p){
@@ -148,11 +159,18 @@ public class ContexteEdition {
         {
             Point monPointCreateur = getPointCreateur();
             setPointCreateur(p);
-            Segment segmentAAjouter = carte.obtenirSegment(monPointCreateur, p);
-            circuitEnCreation.add(segmentAAjouter);
+            if(carte.verifierExistenceSegment(monPointCreateur, p)){
+                Segment segmentAAjouter = carte.obtenirSegment(monPointCreateur, p);
+                circuitEnCreation.add(segmentAAjouter);
+            }else{
+                List<Segment> segmentsAAjouter = carte.plusCourtCheminEnTempsMoyen(p, p);
+                circuitEnCreation.addAll(segmentsAAjouter);
+            }
             
         }catch(AucunPointCreateurException e){
             setPointCreateur(p);
+        }catch(AucunCheminPossibleException e){
+            System.out.println("PAS DE CHEMIN TROUVÉ");
         }
         
     }
