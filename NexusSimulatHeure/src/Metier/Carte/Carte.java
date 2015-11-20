@@ -88,7 +88,11 @@ public class Carte {
     }
     
     public void ajouterSegment(Segment segment){
-        segments.add(segment);
+        if(segments.contains(segment) ||
+           segment.getPointDepart().equals(segment.getPointArrivee()))
+            throw new CreationInvalideException();
+        else
+            segments.add(segment);
     }
     
     public void retirerSegment(Segment segment){
