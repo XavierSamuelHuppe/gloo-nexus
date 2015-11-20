@@ -167,6 +167,7 @@ public class ContexteEdition {
         return nouveauCircuit;
     }
     public void viderCircuitEnCreation(){
+        pointCreateur = null;
         circuitEnCreation.clear();
     }
     

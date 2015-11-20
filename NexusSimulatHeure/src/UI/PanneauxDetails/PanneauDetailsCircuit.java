@@ -12,17 +12,16 @@ public class PanneauDetailsCircuit extends PanneauDetails implements java.util.O
     /**
      * Creates new form PanneauDetailsPoint2
      */
-    public PanneauDetailsCircuit() {
-        initComponents();
-    }
-    
-    public PanneauDetailsCircuit(Metier.Circuit.Circuit cMetier)
-    {
+    public PanneauDetailsCircuit(Simulateur sim) {
         super();
         initComponents();
+        this.simulateur = sim;
+    }
+    
+    public PanneauDetailsCircuit(Metier.Circuit.Circuit cMetier, Simulateur sim)
+    {
+        this(sim);
         
-        this.simulateur = simulateur;
-
         this.circuitMetierLie = cMetier;
         
         rafraichir();
@@ -78,16 +77,9 @@ public class PanneauDetailsCircuit extends PanneauDetails implements java.util.O
     }// </editor-fold>//GEN-END:initComponents
 
     private void BoutonSauvegarderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSauvegarderActionPerformed
-        if(circuitMetierLie == null)
-        {
-            //this.obtenirApplication().getSimulateur().ajouterCircuit(this.ChampNom.getText(), this.circuitUILie.obtenirListeSegmentsMetier());    
-//            this.circuitUILie.deselectionner();
-            this.obtenirApplication().revalidate();
-        }
-        else
-        {
-//            this.obtenirApplication().getSimulateur().modifierCircuit(this.circuitMetierLie, this.ChampNom.getText(), this.circuitUILie.obtenirListeSegmentsMetier());    
-        }
+        this.simulateur.sauvergarderNouveauCircuit(this.ChampNom.getText());
+        this.obtenirApplication().revalidate();
+        this.obtenirApplication().repaint();
     }//GEN-LAST:event_BoutonSauvegarderActionPerformed
 
 

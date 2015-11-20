@@ -4,9 +4,7 @@ import Metier.Circuit.*;
 import Metier.Carte.*;
 import Metier.Simulation.Simulation;
 import Metier.*;
-import Metier.Exceptions.AucunPointActifException;
-import Metier.Exceptions.AucunSegmentActifException;
-import Metier.Exceptions.AucunCircuitActifException;
+import Metier.Exceptions.*;
 import Metier.Source.*;
 import java.time.LocalTime;
 import java.util.*;
@@ -320,7 +318,7 @@ public class Simulateur {
     {
         try{
             return contexte.estDansCircuitEnCreation(point) || contexte.getPointCreateur().equals(point);
-        }catch(AucunCircuitActifException e){
+        }catch(AucunPointCreateurException e){
             return false;
         }
     }
@@ -332,5 +330,15 @@ public class Simulateur {
         }catch(AucunCircuitActifException e){
             return false;
         }
+    }
+    
+    public boolean estDansAuMoinsUnCircuit(Point point)
+    {
+        return simulation.circuitsPassantPar(point).size() > 0;
+    }
+    
+    public boolean estDansAuMoinsUnCircuit(Segment segment)
+    {
+        return simulation.circuitsPassantPar(segment).size() > 0;
     }
 }

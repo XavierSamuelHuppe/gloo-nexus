@@ -64,6 +64,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     {
         reinitialiserCouleurBoutonsModes();
         simulateur.passerEnModePoint();
+        viderPanneauDetails();
         BoutonModePoint.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
     }
     
@@ -71,6 +72,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     {
         reinitialiserCouleurBoutonsModes();
         simulateur.passerEnModeSegment();
+        viderPanneauDetails();
         BoutonModeSegment.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
     }
     
@@ -78,13 +80,16 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     {
         reinitialiserCouleurBoutonsModes();
         simulateur.passerEnModeCircuit();
+        afficherPanneauDetailsCircuitNouveauCircuit();
         BoutonModeCircuit.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
+        this.repaint();
     }
     
     public void passerEnModeSource()
     {
         reinitialiserCouleurBoutonsModes();
         simulateur.passerEnModeSource();
+        viderPanneauDetails();
         BoutonModeSource.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
     }
     
@@ -92,6 +97,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     {
         reinitialiserCouleurBoutonsModes();
         simulateur.passerEnModePassager();
+        viderPanneauDetails();
         BoutonModeProfilPassager.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
     }
     
@@ -177,10 +183,27 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     }
 
     
+    public void viderPanneauDetails()
+    {
+        this.simulateur.annulerCreationCircuit();
+        this.PanneauDetails.removeAll();
+        this.repaint();
+        this.revalidate();
+    }
+    
     public void afficherPanneauDetails(IDetailsAffichables element)
     {
         this.PanneauDetails.removeAll();
         this.PanneauDetails.add(element.obtenirPanneauDetails(), BorderLayout.CENTER);
+        this.PanneauDetails.repaint();
+        
+        this.revalidate();
+    }
+    
+    public void afficherPanneauDetailsCircuitNouveauCircuit()
+    {
+        this.PanneauDetails.removeAll();
+        this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsCircuit(this.simulateur));
         this.PanneauDetails.repaint();
         
         this.revalidate();

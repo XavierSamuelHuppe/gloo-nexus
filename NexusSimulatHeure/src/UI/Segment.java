@@ -69,9 +69,16 @@ public class Segment implements IDetailsAffichables, Observer {
             {
                 this.modeActuel = Segment.Mode.SELECTIONNE;
             }
-            else if (sim.estEnModeCircuit() && (sim.estDansCircuitActif(this.segmentMetier) || sim.estDansCircuitEnCreation(this.segmentMetier)))
+            else if (sim.estEnModeCircuit())
             {
-                this.modeActuel = Segment.Mode.CIRCUIT;
+                if((sim.estDansCircuitActif(this.segmentMetier) || sim.estDansCircuitEnCreation(this.segmentMetier)))
+                {
+                    this.modeActuel = Segment.Mode.CIRCUIT_SELECTIONNE;
+                }
+                else if (sim.estDansAuMoinsUnCircuit(this.segmentMetier))
+                {
+                    this.modeActuel = Segment.Mode.CIRCUIT;
+                }
             }
             else
             {
