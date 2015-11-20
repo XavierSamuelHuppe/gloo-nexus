@@ -113,15 +113,37 @@ public class Simulation extends Observable{
         faireAvancerCreationVehicule(heureCourante, tempsEcouleParRatioEnSeconde);
         //faire spawner les gens
         
-        if(heureCourante.isAfter(parametres.getHeureFin()) && !(JourneeCourante == parametres.getNombreJourSimulation())){
-            JourneeCourante += 1;
-            initialiserDepartNouvelleJournee();
-        }else{
-            arreter();
+        if(!doitContinuerJournee()){
+            if(derniereJournee())
+                arreter();
+            else{
+                JourneeCourante += 1;
+                initialiserDepartNouvelleJournee();
+            }
         }
         setChanged();
         notifyObservers();
     }
+    private boolean doitContinuerJournee(){
+        LocalTime heureFin = parametres.getHeureFin();
+        LocalTime heureDebutNouvelleJournee = ParametreSimulation.HEURE_DEBUT_NOUVELLE_JOURNEE;
+        LocalTime minuit = LocalTime.MIDNIGHT;
+        LocalTime justeAvantMinuit = LocalTime.MAX;
+        if(heureFin.isBefore(justeAvantMinuit) && heureFin.isAfter(heureDebutNouvelleJournee)){
+            return heureCourante.isBefore(heureFin);
+        }else if(heureFin.isAfter(minuit) && heureFin.isBefore(heureDebutNouvelleJournee)){
+            if(heureCourante.isBefore(justeAvantMinuit) && heureCourante.isAfter(heureDebutNouvelleJournee))
+                return true;
+            else
+                return heureCourante.isBefore(heureFin);
+        }
+        throw new DateTimeException("Les paramètres de la simulation ne sont pas bien réglés.");
+    }
+    
+    private boolean derniereJournee(){
+        return JourneeCourante == parametres.getNombreJourSimulation();
+    }
+    
     private void faireAvancerToutLesVehicules(double tempsEcouleParRatioEnSeconde){
         List<Vehicule> vehiculesAEnlever = new ArrayList();
         for(Vehicule v: vehicules){

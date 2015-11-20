@@ -29,8 +29,9 @@ public class ParametreSimulation {
     private static Distribution DISTRIBUTION_TEMPS_GENERATION_VEHICULE_DEFAUT = new Distribution(900, 900, 900);
     private static Distribution DISTRIBUTION_TEMPS_GENERATION_PASSAGER_DEFAUT = new Distribution(1, 1, 1);
     private static int NOMBRE_JOUR_SIMULATION_DEFAUT = 1;
-    private static LocalTime HEURE_DEBUT_DEFAUT = LocalTime.of(8,0);
-    private static LocalTime HEURE_FIN_DEFAUT = LocalTime.of(17,0);
+    private static LocalTime HEURE_DEBUT_DEFAUT = LocalTime.of(5,0);
+    private static LocalTime HEURE_FIN_DEFAUT = LocalTime.of(1,0);
+    public static LocalTime HEURE_DEBUT_NOUVELLE_JOURNEE = LocalTime.of(3,0);
     private static int VITESSE_DEFAUT = 100;
     private static int FRAMERATE_DEFAUT = 30;
     private static ConteneurPassagersIllimite CONTENEUR_PASSAGERS_ILLIMITE_SOURCE_DEFAUT = new ConteneurPassagersIllimite();
