@@ -93,12 +93,12 @@ public class Simulateur {
         carte.modifierPoint(pointCible, nouvellePosition, nouveauNom);
     }
     
-    public Segment ajouterSegment(Point depart, Point arrivee){
+    private Segment ajouterSegment(Point depart, Point arrivee){
         Segment segment = new Segment(depart, arrivee, simulation.getParametres().getDistributionTempsTransitSegmentDefaut());
         carte.ajouterSegment(segment);
         return segment;
     }
-    public Segment ajouterSegment(Point depart, Point arrivee, Distribution tempsTransit){
+    private Segment ajouterSegment(Point depart, Point arrivee, Distribution tempsTransit){
         Segment segment = new Segment(depart, arrivee, tempsTransit);
         carte.ajouterSegment(segment);
         return segment;
@@ -281,6 +281,9 @@ public class Simulateur {
     public List<Circuit> circuitsPassantPar(Segment segment){
         return simulation.circuitsPassantPar(segment);
     }
+    public List<Circuit> circuitsPassantPar(Point point){
+        return simulation.circuitsPassantPar(point);
+    }
     public void ActiverCircuit(Circuit circuit){
         contexte.setCircuitActif(circuit);
     }
@@ -304,14 +307,32 @@ public class Simulateur {
     
     public boolean estDansCircuitActif(Point point){
         try{
-            return contexte.estDansCircuitActif(point) || contexte.getPointCreateur().equals(point);
+            return contexte.estDansCircuitActif(point);
         }catch(AucunCircuitActifException e){
             return false;
         }
     }
     public boolean estDansCircuitActif(Segment segment){
         try{
-            return contexte.estDansCircuitActif(segment);
+            return contexte.estDansCircuitActif(segment) || contexte.estDansCircuitEnCreation(segment);
+        }catch(AucunCircuitActifException e){
+            return false;
+        }
+    }
+    
+    public boolean estDansCircuitEnCreation(Point point)
+    {
+        try{
+            return contexte.estDansCircuitEnCreation(point) || contexte.getPointCreateur().equals(point);
+        }catch(AucunCircuitActifException e){
+            return false;
+        }
+    }
+        
+    public boolean estDansCircuitEnCreation(Segment segment)
+    {
+        try{
+            return contexte.estDansCircuitEnCreation(segment);
         }catch(AucunCircuitActifException e){
             return false;
         }

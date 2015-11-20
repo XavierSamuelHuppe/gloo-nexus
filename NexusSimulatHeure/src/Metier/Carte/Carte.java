@@ -30,6 +30,7 @@ public class Carte {
     }
     
     public void retirerPoint(Point point){
+        point.tuer();
         points.remove(point);
     }
     
@@ -87,14 +88,21 @@ public class Carte {
     }
     
     public void ajouterSegment(Segment segment){
-        segments.add(segment);
+        if(segments.contains(segment) ||
+           segment.getPointDepart().equals(segment.getPointArrivee()))
+            throw new CreationInvalideException();
+        else
+            segments.add(segment);
     }
     
     public void retirerSegment(Segment segment){
+        segment.tuer();
         segments.remove(segment);
     }
     public void retirerSegments(List<Segment> segments){
-        segments.removeAll(segments);
+        for(Segment s: segments){
+            retirerSegment(s);
+        }
     }
     
     public Segment obtenirSegment(Point depart, Point arrivee){

@@ -28,8 +28,7 @@ public abstract class DessinateurSegment {
     {
         if(tempsAffiche == null)
         {
-            //@todo Obtenir et formater le temps à partir de l'objet Métier.
-            tempsAffiche = "temps"; 
+            tempsAffiche = ((Double)this.segment.getSegmentMetier().getTempsTransit()).toString();
         }
         return tempsAffiche;
     }

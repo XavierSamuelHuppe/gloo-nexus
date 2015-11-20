@@ -165,6 +165,17 @@ public class Simulation extends Observable{
         }
         return retour;
     }
+
+    
+        public List<Circuit> circuitsPassantPar(Point point){
+        List<Circuit> retour = new ArrayList();
+        for(Circuit c: circuits){
+            if(c.utilise(point)){
+                retour.add(c);
+            }
+        }
+        return retour;
+    }
     
     public void retirerPointAvecReferences(Point p){
         List<Source> sourcesAEnlever = p.getSources();
@@ -177,10 +188,26 @@ public class Simulation extends Observable{
                 circuitsAEnlever.add(c);
             }
         }
-        
         sources.removeAll(sourcesAEnlever);
         profils.removeAll(profilsAEnlever);
         carte.retirerSegments(segmentsAEnlever);
         circuits.removeAll(circuitsAEnlever);
+        
+        carte.retirerPoint(p);
+    }
+    
+    public void retirerSegmentAvecReferences(Segment s){
+        List<Source> sourcesAEnlever = new ArrayList();
+        
+        List<Circuit> circuitsAEnlever = new ArrayList();
+        for(Circuit c: circuits){
+            if(c.utilise(s)){
+                circuitsAEnlever.add(c);
+            }
+        }
+        sources.removeAll(sourcesAEnlever);
+        circuits.removeAll(circuitsAEnlever);
+        
+        carte.retirerSegment(s);
     }
 }

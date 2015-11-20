@@ -32,6 +32,9 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         this.determinerMode();
         this.setSize((int)(DIAMETRE * zoom), (int)(DIAMETRE * zoom));
         this.setLocation(this.obtenirEspaceTravail().transformerPositionEspaceTravailEnPositionViewport(this.obtenirEspaceTravail().transformerPostionGeorgraphiqueEnPositionEspaceTravail(this.pointMetier.getPosition())));        
+        if(pointMetier.mort()){
+            this.obtenirEspaceTravail().retirerPoint(this);
+        }
     }
 
     enum Mode {NORMAL, SELECTIONNE, CIRCUIT};
@@ -182,7 +185,7 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         {
             this.modeActuel = Mode.SELECTIONNE;
         }
-        else if (sim.estEnModeCircuit() && true)
+        else if (sim.estEnModeCircuit() && (sim.estDansCircuitActif(pointMetier) || sim.estDansCircuitEnCreation(pointMetier)))
         {
             this.modeActuel = Mode.CIRCUIT;
         }
@@ -201,7 +204,6 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         dragged = true;
         this.setLocation(this.getX() + me.getX() - (int)this.pointPoigneeDrag.getX(), this.getY() + me.getY() - (int)this.pointPoigneeDrag.getY());
         obtenirZone().repaint();
-        System.out.println("Point mouseDragged");
     }
  
     @Override

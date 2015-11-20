@@ -103,8 +103,12 @@ public class ContexteEdition {
     public Point creerSegmentAvecContinuation(Point p){
         if(!estEnModeSegment())
             throw new EditionEnMauvaisModeException();
+        
         if(pointCreateur == null)
+        {
+            setPointCreateur(p);
             throw new AucunPointCreateurException();
+        }
         
         Point retour = pointCreateur;
         setPointCreateur(p);
@@ -114,7 +118,10 @@ public class ContexteEdition {
         if(!estEnModeSegment())
             throw new EditionEnMauvaisModeException();
         if(pointCreateur == null)
+        {
+            setPointCreateur(p);
             throw new AucunPointCreateurException();
+        }
         
         Point retour = pointCreateur;
         viderPointCreateur();
@@ -144,9 +151,10 @@ public class ContexteEdition {
             Segment segmentAAjouter = carte.obtenirSegment(monPointCreateur, p);
             circuitEnCreation.add(segmentAAjouter);
             
-        }catch(AucunPointActifException e){
+        }catch(AucunPointCreateurException e){
             setPointCreateur(p);
         }
+        
     }
     public Circuit obtenirNouveauCircuit(String nom){
         if(!estEnModeCircuit())
@@ -169,5 +177,11 @@ public class ContexteEdition {
         return getCircuitActif().utilise(segment);
     }
     
+    public boolean estDansCircuitEnCreation(Point point){
+        return circuitEnCreation.stream().anyMatch((s) -> s.getPointDepart().equals(point) || s.getPointArrivee().equals(point));
+    }
+    public boolean estDansCircuitEnCreation(Segment segment){
+        return circuitEnCreation.stream().anyMatch((s) -> s.equals(segment));
+    }
     
 }

@@ -15,9 +15,18 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
+import java.util.Observable;
+import java.util.Observer;
 import sun.awt.geom.Curve;
 
-public class Segment implements IDetailsAffichables {
+public class Segment implements IDetailsAffichables, Observer {
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if(segmentMetier.mort()){
+            this.espaceTravail.retirerSegment(this);
+        }
+    }
     
     public enum Mode {NORMAL, SELECTIONNE, CIRCUIT, CIRCUIT_SELECTIONNE};
                
@@ -40,6 +49,7 @@ public class Segment implements IDetailsAffichables {
         this.pointArrivee = pA;
         this.segmentMetier = segmentMetier;
         this.espaceTravail = et;
+        segmentMetier.addObserver(this);
     }
     
         public void determinerMode()
@@ -59,7 +69,7 @@ public class Segment implements IDetailsAffichables {
             {
                 this.modeActuel = Segment.Mode.SELECTIONNE;
             }
-            else if (sim.estEnModeCircuit() && true)
+            else if (sim.estEnModeCircuit() && (sim.estDansCircuitActif(this.segmentMetier) || sim.estDansCircuitEnCreation(this.segmentMetier)))
             {
                 this.modeActuel = Segment.Mode.CIRCUIT;
             }
@@ -124,22 +134,22 @@ public class Segment implements IDetailsAffichables {
         
         if(dX >= 0 && dY >= 0)
         {
-            System.out.println("SE");
+//            System.out.println("SE");
             return Orientation.SE;
         }
         else if(dX >= 0 && dY < 0)
         {
-            System.out.println("NE");
+//            System.out.println("NE");
             return Orientation.NE;
         }
         else if(dX < 0 && dY >= 0)
         {
-            System.out.println("SO");
+//            System.out.println("SO");
             return Orientation.SO;
         }
         else
         {
-            System.out.println("NO");
+//            System.out.println("NO");
             return Orientation.NO;
         }
     }

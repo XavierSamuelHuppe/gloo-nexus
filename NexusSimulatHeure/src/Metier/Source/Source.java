@@ -70,6 +70,14 @@ public abstract class Source {
         frequence = 0;
         reInitialiserValeursDepartSimulation();
     }
+    public boolean estSurCircuit(Circuit circuit){
+        if(circuit.equals(this.circuitSource)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
     public Vehicule genererVehicule()
     {
         Segment segment = circuitSource.obtenirProchainSegment(pointDepart);

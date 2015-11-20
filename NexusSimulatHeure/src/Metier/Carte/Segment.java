@@ -10,12 +10,24 @@ public class Segment extends Observable{
     
     private double tempsTransit;
     
+    private boolean existe;
+    
     public Segment(Point pointDepart, Point pointArrivee, Distribution distribution) {
         this.pointDepart = pointDepart;
         this.pointArrivee = pointArrivee;
         this.distribution = distribution;
+        existe = true;
     }
 
+    public void tuer(){
+        existe = false;
+        this.setChanged();
+        notifyObservers();
+    }
+    public boolean mort(){
+        return !existe;
+    }
+    
     public Point getPointDepart() {
         return pointDepart;
     }
