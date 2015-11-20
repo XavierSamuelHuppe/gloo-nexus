@@ -3,6 +3,8 @@ package UI.PanneauxDetails;
 
 import java.util.*;
 import Metier.Circuit.Circuit;
+import Metier.Source.SourceFinie;
+import Metier.Source.SourceHeureFin;
 import java.util.Observable;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
@@ -38,6 +40,15 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
         this.ChampFrequence.setText(String.valueOf(sourceMetierLie.getFrequence()));
         this.ChampHeureDepart.setText(sourceMetierLie.getheureDebut().toString());
         this.ChampPoint.setText(sourceMetierLie.getPointDepart().getNom());
+        if(this.sourceMetierLie.getClass() == SourceFinie.class){
+            SourceFinie SourceCaster = (SourceFinie) sourceMetierLie;
+            this.ChampNombreMax.setText(String.valueOf(SourceCaster.getNombreMax()));
+            this.controlEnabler(false);
+        }else if (this.sourceMetierLie.getClass() == SourceHeureFin.class){
+            SourceHeureFin SourceCaster = (SourceHeureFin) sourceMetierLie;
+            this.ChampHeureFin.setText(SourceCaster.getheureFin().toString());
+            this.controlEnabler(true);
+        }
         
     }
     @Override
