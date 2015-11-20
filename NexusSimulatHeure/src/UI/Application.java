@@ -164,6 +164,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         this.BoutonParametres.addActionListener(this);
         
         initialiserBoutonsModes();
+        BoutonModePoint.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
     }
     
     private void initialiserBoutonsModes()
@@ -195,7 +196,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     }
 
     
-    public void afficherPanneauDetails(IDetailsAffichables element)
+   private void afficherPanneauDetails(IDetailsAffichables element)
     {
         this.PanneauDetails.removeAll();
         this.PanneauDetails.add(element.obtenirPanneauDetails(), BorderLayout.CENTER);

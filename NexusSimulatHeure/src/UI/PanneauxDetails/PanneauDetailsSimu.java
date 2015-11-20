@@ -3,8 +3,6 @@ package UI.PanneauxDetails;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Observable;
-import java.util.Observer;
 
 public class PanneauDetailsSimu extends PanneauDetails{
 
@@ -93,12 +91,15 @@ public class PanneauDetailsSimu extends PanneauDetails{
         ChampDistPassagerMin = new javax.swing.JTextField();
         ChampDistPassagerMax = new javax.swing.JTextField();
         ChampDistPassagerMode = new javax.swing.JTextField();
-        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 15), new java.awt.Dimension(0, 15), new java.awt.Dimension(32767, 15));
+        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(32767, 15));
+        jPanel5 = new javax.swing.JPanel();
         BoutonSauvegarder = new javax.swing.JButton();
+        BoutonRetour = new javax.swing.JButton();
+        filler10 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
 
-        setMinimumSize(new java.awt.Dimension(360, 200));
+        setMinimumSize(new java.awt.Dimension(410, 200));
         setName(""); // NOI18N
-        setPreferredSize(new java.awt.Dimension(360, 200));
+        setPreferredSize(new java.awt.Dimension(410, 200));
         setRequestFocusEnabled(false);
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
@@ -234,13 +235,26 @@ public class PanneauDetailsSimu extends PanneauDetails{
         add(jPanel8);
         add(filler3);
 
+        jPanel5.setLayout(new javax.swing.BoxLayout(jPanel5, javax.swing.BoxLayout.LINE_AXIS));
+
         BoutonSauvegarder.setText("Sauvegarder");
         BoutonSauvegarder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BoutonSauvegarderActionPerformed(evt);
             }
         });
-        add(BoutonSauvegarder);
+        jPanel5.add(BoutonSauvegarder);
+
+        BoutonRetour.setText("Retour");
+        BoutonRetour.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BoutonRetourActionPerformed(evt);
+            }
+        });
+        jPanel5.add(BoutonRetour);
+
+        add(jPanel5);
+        add(filler10);
     }// </editor-fold>//GEN-END:initComponents
 
     private void BoutonSauvegarderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSauvegarderActionPerformed
@@ -262,8 +276,13 @@ public class PanneauDetailsSimu extends PanneauDetails{
                                         Double.parseDouble(this.ChampDistPassagerMax.getText())));
     }//GEN-LAST:event_BoutonSauvegarderActionPerformed
 
+    private void BoutonRetourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonRetourActionPerformed
+        //((javax.swing.JDialog)this.getParent()).setVisible(false);
+    }//GEN-LAST:event_BoutonRetourActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BoutonRetour;
     private javax.swing.JButton BoutonSauvegarder;
     private javax.swing.JTextField ChampDistPassagerMax;
     private javax.swing.JTextField ChampDistPassagerMin;
@@ -278,6 +297,7 @@ public class PanneauDetailsSimu extends PanneauDetails{
     private javax.swing.JTextField ChampHeureFin;
     private javax.swing.JSpinner ChampNbJours;
     private javax.swing.Box.Filler filler1;
+    private javax.swing.Box.Filler filler10;
     private javax.swing.Box.Filler filler2;
     private javax.swing.Box.Filler filler3;
     private javax.swing.Box.Filler filler4;
@@ -301,6 +321,7 @@ public class PanneauDetailsSimu extends PanneauDetails{
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
