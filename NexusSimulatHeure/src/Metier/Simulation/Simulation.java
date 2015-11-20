@@ -46,6 +46,7 @@ public class Simulation extends Observable{
         boucle = new BoucleSimulation(this);
         boucleThread = new Thread(boucle, "boucle de la simulation");
         boucleThread.start();
+        setChanged();
         notifyObservers();
     }
     
@@ -56,7 +57,7 @@ public class Simulation extends Observable{
         terminerSimulation();
         parametres.mettreEnArret();
         boucleThread.interrupt();
-        
+        setChanged();
         notifyObservers();
     }
     public void pauser(){
@@ -64,7 +65,7 @@ public class Simulation extends Observable{
             throw new SimulationEnMauvaisEtatException();
         
         parametres.mettreEnPause();
-        
+        setChanged();
         notifyObservers();
     }
     public void redemarrer(){
@@ -72,7 +73,7 @@ public class Simulation extends Observable{
             throw new SimulationEnMauvaisEtatException();
         
         parametres.mettreEnAction();
-        
+        setChanged();
         notifyObservers();
     }
             
@@ -85,7 +86,7 @@ public class Simulation extends Observable{
         //+ dist profils
         
         //Fermer les statistiques
-        
+        setChanged();
         notifyObservers();
     }
     private void initialiserDepartSimulation(){
@@ -118,7 +119,7 @@ public class Simulation extends Observable{
         }else{
             arreter();
         }
-                
+        setChanged();
         notifyObservers();
     }
     private void faireAvancerToutLesVehicules(double tempsEcouleParRatioEnSeconde){
