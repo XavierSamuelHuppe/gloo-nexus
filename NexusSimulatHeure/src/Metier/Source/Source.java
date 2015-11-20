@@ -71,7 +71,7 @@ public abstract class Source {
         reInitialiserValeursDepartSimulation();
     }
     public boolean estSurCircuit(Circuit circuit){
-        if(circuit == this.circuitSource){
+        if(circuit.equals(this.circuitSource)){
             return true;
         }else{
             return false;
