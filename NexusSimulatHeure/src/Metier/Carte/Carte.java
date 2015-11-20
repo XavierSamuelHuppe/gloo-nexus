@@ -162,6 +162,7 @@ public class Carte {
             //On trouve ses adjacents
             //si n'as pas de poid encore ou
             //si nouveau poid plus petit qu'ancien, on modifie
+            boolean shortcut = false;
             for(Point p : obtenirPointsAdjacents(lowestPoint)){
                 int tempsSegment = ((Double)(obtenirSegment(lowestPoint, p).obtenirMoyenneTempsTransit())).intValue();
                 Integer PoidAlternatif = temps.get(lowestPoint) + tempsSegment;
@@ -169,6 +170,12 @@ public class Carte {
                     meilleurDernierPoint.put(p,lowestPoint);
                     temps.put(p, PoidAlternatif);
                 }
+                if(p.equals(arrive)){
+                    shortcut = true;
+                }
+            }
+            if(shortcut){
+                break;
             }
         }
         
