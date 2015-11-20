@@ -17,14 +17,14 @@ public class Vehicule extends ElementEspaceTravail {
     private final int LARGEUR = 100;
     private final int HAUTEUR = 37;
 
-    public Vehicule(MouseEvent me)
+    public Vehicule(int x, int y)
     {
         if(!init)
             initialiserFormes();
         
         this.setLayout(new FlowLayout());
         this.setSize(calculerZoom(LARGEUR), calculerZoom(HAUTEUR));
-        this.setLocation(me.getX(), me.getY());
+        this.setLocation(x, y);
         this.setOpaque(false);
     }
     
@@ -35,11 +35,7 @@ public class Vehicule extends ElementEspaceTravail {
         this.setSize(calculerZoom(LARGEUR), calculerZoom(HAUTEUR));
     }
     
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        
-        Graphics2D g2 = (Graphics2D) g;
+    public void dessiner(Graphics2D g2) {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
         dessinerBase(g2);
@@ -163,20 +159,5 @@ public class Vehicule extends ElementEspaceTravail {
         g2.setColor(Color.decode("#bbe1ee"));
         g2.fill(p);
     }
-    /*
-    À changer quand Position va exister
-    public Position obtenirPosition()
-    {
-        Position xy = new Position();
-        
-        
-        return xy
-    }*/
     
-    /*
-    À changer quand Position va exister
-    private void calculerPosition(Position posDepart, Position posArrivee)
-    {
-        //xyz
-    }*/
 }
