@@ -31,7 +31,7 @@ public class DessinateurSegmentDecale extends DessinateurSegment {
         {
             dessinerFlecheUnTon(g2, Couleurs.CIRCUIT);
         }
-         else if(segment.getMode() == Segment.Mode.CIRCUIT)
+         else if(segment.getMode() == Segment.Mode.CIRCUIT_SELECTIONNE)
         {
             dessinerFlecheDeuxTons(g2, Couleurs.CIRCUIT_SELECTIONNE_EXTERIEUR, Couleurs.CIRCUIT_SELECTIONNE_INTERIEUR);
         }
