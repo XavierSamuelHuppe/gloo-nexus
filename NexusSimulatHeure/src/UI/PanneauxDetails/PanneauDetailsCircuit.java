@@ -47,6 +47,9 @@ public class PanneauDetailsCircuit extends PanneauDetails implements java.util.O
     private void initComponents() {
 
         jPanel4 = new javax.swing.JPanel();
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
+        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(5, 32767));
+        jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         ChampNom = new javax.swing.JTextField();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5));
@@ -57,12 +60,18 @@ public class PanneauDetailsCircuit extends PanneauDetails implements java.util.O
         jPanel4.setMaximumSize(new java.awt.Dimension(2147483647, 50));
         jPanel4.setPreferredSize(new java.awt.Dimension(100, 50));
         jPanel4.setLayout(new java.awt.BorderLayout());
+        jPanel4.add(filler2, java.awt.BorderLayout.WEST);
+        jPanel4.add(filler3, java.awt.BorderLayout.EAST);
+
+        jPanel1.setLayout(new java.awt.GridLayout(2, 0));
 
         jLabel4.setText("Nom");
-        jPanel4.add(jLabel4, java.awt.BorderLayout.NORTH);
+        jPanel1.add(jLabel4);
 
         ChampNom.setText("ChampNom");
-        jPanel4.add(ChampNom, java.awt.BorderLayout.CENTER);
+        jPanel1.add(ChampNom);
+
+        jPanel4.add(jPanel1, java.awt.BorderLayout.CENTER);
 
         add(jPanel4);
         add(filler1);
@@ -87,7 +96,10 @@ public class PanneauDetailsCircuit extends PanneauDetails implements java.util.O
     private javax.swing.JButton BoutonSauvegarder;
     private javax.swing.JTextField ChampNom;
     private javax.swing.Box.Filler filler1;
+    private javax.swing.Box.Filler filler2;
+    private javax.swing.Box.Filler filler3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     // End of variables declaration//GEN-END:variables
 }
