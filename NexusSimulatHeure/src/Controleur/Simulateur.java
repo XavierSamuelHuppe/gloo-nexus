@@ -303,7 +303,7 @@ public class Simulateur {
     
     public boolean estDansCircuitActif(Point point){
         try{
-            return contexte.estDansCircuitActif(point) || contexte.estDansCircuitEnCreation(point) || contexte.getPointCreateur().equals(point);
+            return contexte.estDansCircuitActif(point);
         }catch(AucunCircuitActifException e){
             return false;
         }
@@ -311,6 +311,24 @@ public class Simulateur {
     public boolean estDansCircuitActif(Segment segment){
         try{
             return contexte.estDansCircuitActif(segment) || contexte.estDansCircuitEnCreation(segment);
+        }catch(AucunCircuitActifException e){
+            return false;
+        }
+    }
+    
+    public boolean estDansCircuitEnCreation(Point point)
+    {
+        try{
+            return contexte.estDansCircuitEnCreation(point) || contexte.getPointCreateur().equals(point);
+        }catch(AucunCircuitActifException e){
+            return false;
+        }
+    }
+        
+    public boolean estDansCircuitEnCreation(Segment segment)
+    {
+        try{
+            return contexte.estDansCircuitEnCreation(segment);
         }catch(AucunCircuitActifException e){
             return false;
         }

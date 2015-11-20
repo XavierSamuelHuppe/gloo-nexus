@@ -185,7 +185,7 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         {
             this.modeActuel = Mode.SELECTIONNE;
         }
-        else if (sim.estEnModeCircuit() && sim.estDansCircuitActif(this.pointMetier) && sim.estDansCircuitActif(pointMetier))
+        else if (sim.estEnModeCircuit() && (sim.estDansCircuitActif(pointMetier) || sim.estDansCircuitEnCreation(pointMetier)))
         {
             this.modeActuel = Mode.CIRCUIT;
         }

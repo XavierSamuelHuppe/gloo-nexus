@@ -135,22 +135,10 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         this.repaint();
     }
 
-    private void ajouterSegment(Point pDepart, Point pArrivee)
-    {
-//        try
-//        {
-            Metier.Carte.Segment sp = this.simulateur.ajouterSegment(pDepart.getPointMetier(), pArrivee.getPointMetier());
-            Segment s = new Segment(pDepart, pArrivee, this, sp);
-            segments.add(s);        
-            this.repaint();
-//        }
-    }
     public void retirerSegment(Segment s){
         segments.remove(s);
         this.repaint();
     }
-    
-    
 
     public void paintComponent(Graphics g)
     {
