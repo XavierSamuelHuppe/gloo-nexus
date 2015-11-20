@@ -108,7 +108,10 @@ public class Simulateur {
         Distribution nouvelleDistribution = new Distribution(min, mode, max);
         carte.modifierSegment(segmentCible, nouvelleDistribution);
     }
-    
+    public void annulerCreationSegment(){
+        contexte.viderPointCreateur();
+    }
+        
     public boolean verifierExistenceSegment(Point depart, Point arrivee) {
         return carte.verifierExistenceSegment(depart, arrivee);
     }
@@ -336,5 +339,15 @@ public class Simulateur {
     }
     public boolean estDansAuMoinsUnCircuit(Segment segment){
         return simulation.circuitsPassantPar(segment).size() > 0;
+    }
+    
+    public boolean estPointCreateur(Point point)
+    {
+        try{
+            return this.contexte.getPointCreateur().equals(point);
+        }
+        catch (AucunPointCreateurException ex){
+            return false;
+        }
     }
 }

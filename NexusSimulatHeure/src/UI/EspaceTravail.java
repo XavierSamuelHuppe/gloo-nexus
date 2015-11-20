@@ -361,6 +361,17 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
                 System.err.println("AucunPointCreateurException");
             }
         }
+        else if (simulateur.estEnModeSource())
+        {
+            try
+            {
+                this.obtenirApplication().afficherPanneauDetailsSourceNouvelleSource();
+            }
+            catch(AucunPointCreateurException ex)
+            {
+                System.err.println("AucunPointCreateurException");
+            }
+        }
         this.repaint();
     }
     

@@ -13,6 +13,8 @@ public class Couleurs {
     public static final java.awt.Color POINT_FOND_SELECTIONNE = Color.decode("#FFFFFF");
     public static final java.awt.Color POINT_CIRCUIT = Color.decode("#FFC46B");
     public static final java.awt.Color POINT_FOND_CIRCUIT = Color.decode("#FFE4BA");
+    public static final java.awt.Color POINT_CREATION_SEGMENT = Color.decode("#5B8CC3");
+    public static final java.awt.Color POINT_FOND_CREATION_SEGMENT = Color.decode("#B3D0EF");
     
     public static final java.awt.Color POINT_SOURCE_DETAILS = Color.decode("#FF0000");
     
