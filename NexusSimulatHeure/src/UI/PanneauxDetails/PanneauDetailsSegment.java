@@ -77,7 +77,7 @@ public class PanneauDetailsSegment extends PanneauDetails implements java.util.O
         });
         jPanel1.add(BoutonSauvegarder);
 
-        BoutonSupprimer.setText("jButton1");
+        BoutonSupprimer.setText("Supprimer");
         BoutonSupprimer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BoutonSupprimerActionPerformed(evt);
@@ -96,6 +96,7 @@ public class PanneauDetailsSegment extends PanneauDetails implements java.util.O
         if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this.obtenirApplication(), "Désirez-vous vraiment retirer ce segment?", "Retirer ce segment?", JOptionPane.YES_NO_OPTION))
         {
             this.obtenirApplication().getSimulateur().retirerSegment(this.segmentMetierLie);
+            this.obtenirApplication().viderPanneauDetails();
             this.obtenirApplication().repaint();
         }   
     }//GEN-LAST:event_BoutonSupprimerActionPerformed

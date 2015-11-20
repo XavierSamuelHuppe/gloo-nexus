@@ -208,6 +208,10 @@ public class Simulateur {
         this.ajouterSource(heureFin, pointDepart, heureDebut, frequence, circuit);
     }
 
+    public List<Position> obtenirPositionVehicules(){
+        return this.simulation.obtenirPositionsVehicules();
+    }
+    
     public void modfierVitesse(int pourcentage){
         simulation.getParametres().setVitesse(pourcentage);
     }

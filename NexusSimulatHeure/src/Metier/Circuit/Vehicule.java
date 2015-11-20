@@ -55,31 +55,29 @@ public class Vehicule extends Observable{
         notifyObservers();
     }
     
-    
-    
     public Position obtenirPosition()
     {
-        //Position xy = this.calculerPosition(segmentActuel.getPointDepart(), segmentActuel.getPointDepart()); a voir plus tard
-        Position xy = new Position(0,0);
-        return xy;
+        return calculerPosition(this.segmentActuel.getPointDepart().getPosition(), this.segmentActuel.getPointArrivee().getPosition());
     }
-    
-    
+
     private Position calculerPosition(Position posDepart, Position posArrivee)
     {
-        double x,y,arrX,arrY,depX,depY, a,b,c;
-        Position nouvellePosition = new Position(0,0);
-        depX = posDepart.getX();
-        depY = posDepart.getY();
-        arrX = posArrivee.getX();
-        arrY = posArrivee.getY();
-        x = arrX - depX;
-        y = arrY - depY;
+        double dx = calculerDeltaX(posDepart, posArrivee);
+        double dy = calculerDeltaY(posDepart, posArrivee);
         
-        a = y / x;//...
+        dx = dx * obtenirProgresSurSegmentEnPourcentage();
+        dy = dy * obtenirProgresSurSegmentEnPourcentage();
         
-        nouvellePosition.setX(x);
-        nouvellePosition.setY(y);
-        return nouvellePosition;
+        return new Position(dx, dy);
+    }
+    
+    private double calculerDeltaX(Position posDepart, Position posArrivee)
+    {
+        return posArrivee.getX() - posDepart.getX();
+    }
+    
+    private double calculerDeltaY(Position posDepart, Position posArrivee)
+    {
+        return posArrivee.getY() - posDepart.getY();
     }
 }

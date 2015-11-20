@@ -222,6 +222,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     {
         this.PanneauDetails.removeAll();
         this.PanneauDetails.add(element.obtenirPanneauDetails(), BorderLayout.CENTER);
+
         this.PanneauDetails.repaint();
         
         this.revalidate();

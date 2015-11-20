@@ -167,8 +167,7 @@ public class Simulation extends Observable{
         return retour;
     }
 
-    
-        public List<Circuit> circuitsPassantPar(Point point){
+    public List<Circuit> circuitsPassantPar(Point point){
         List<Circuit> retour = new ArrayList();
         for(Circuit c: circuits){
             if(c.utilise(point)){
@@ -210,5 +209,15 @@ public class Simulation extends Observable{
         circuits.removeAll(circuitsAEnlever);
         
         carte.retirerSegment(s);
+    }
+    
+    public List<Position> obtenirPositionsVehicules()
+    {
+        ArrayList<Position> positions = new ArrayList<Position>();
+        for(Vehicule v : vehicules)
+        {
+            positions.add(v.obtenirPosition());
+        }
+        return positions;
     }
 }

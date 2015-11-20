@@ -62,61 +62,97 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
+        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
+        filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
+        jPanel8 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         ChampLatitude = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
+        filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
+        filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
+        jPanel9 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         ChampLongitude = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
+        filler8 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
+        filler9 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
+        jPanel10 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         ChampNom = new javax.swing.JTextField();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5));
+        filler12 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(32767, 5));
         jPanel1 = new javax.swing.JPanel();
         BoutonSauvegarder = new javax.swing.JButton();
         BoutonSupprimer = new javax.swing.JButton();
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5));
         jPanel5 = new javax.swing.JPanel();
+        filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
+        filler10 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
+        jPanel6 = new javax.swing.JPanel();
         LibelleSources = new javax.swing.JLabel();
         ListeSources = new javax.swing.JComboBox();
+        filler11 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
 
+        setMaximumSize(new java.awt.Dimension(250, 32822));
+        setMinimumSize(new java.awt.Dimension(250, 200));
+        setPreferredSize(new java.awt.Dimension(250, 200));
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
         jPanel2.setMaximumSize(new java.awt.Dimension(2147483647, 50));
         jPanel2.setPreferredSize(new java.awt.Dimension(100, 50));
         jPanel2.setLayout(new java.awt.BorderLayout());
+        jPanel2.add(filler3, java.awt.BorderLayout.WEST);
+        jPanel2.add(filler4, java.awt.BorderLayout.EAST);
+
+        jPanel8.setLayout(new java.awt.GridLayout(2, 0));
 
         jLabel2.setText("Latitude");
-        jPanel2.add(jLabel2, java.awt.BorderLayout.NORTH);
+        jPanel8.add(jLabel2);
 
         ChampLatitude.setText("ChampLatitude");
-        jPanel2.add(ChampLatitude, java.awt.BorderLayout.CENTER);
+        jPanel8.add(ChampLatitude);
+
+        jPanel2.add(jPanel8, java.awt.BorderLayout.CENTER);
 
         add(jPanel2);
 
         jPanel3.setMaximumSize(new java.awt.Dimension(2147483647, 50));
         jPanel3.setPreferredSize(new java.awt.Dimension(100, 50));
         jPanel3.setLayout(new java.awt.BorderLayout());
+        jPanel3.add(filler6, java.awt.BorderLayout.WEST);
+        jPanel3.add(filler7, java.awt.BorderLayout.EAST);
+
+        jPanel9.setLayout(new java.awt.GridLayout(2, 0));
 
         jLabel3.setText("Longitude");
-        jPanel3.add(jLabel3, java.awt.BorderLayout.NORTH);
+        jPanel9.add(jLabel3);
 
         ChampLongitude.setText("ChampLongitude");
-        jPanel3.add(ChampLongitude, java.awt.BorderLayout.CENTER);
+        jPanel9.add(ChampLongitude);
+
+        jPanel3.add(jPanel9, java.awt.BorderLayout.CENTER);
 
         add(jPanel3);
 
         jPanel4.setMaximumSize(new java.awt.Dimension(2147483647, 50));
         jPanel4.setPreferredSize(new java.awt.Dimension(100, 50));
         jPanel4.setLayout(new java.awt.BorderLayout());
+        jPanel4.add(filler8, java.awt.BorderLayout.WEST);
+        jPanel4.add(filler9, java.awt.BorderLayout.EAST);
+
+        jPanel10.setLayout(new java.awt.GridLayout(2, 0));
 
         jLabel4.setText("Nom");
-        jPanel4.add(jLabel4, java.awt.BorderLayout.NORTH);
+        jPanel10.add(jLabel4);
 
         ChampNom.setText("ChampNom");
-        jPanel4.add(ChampNom, java.awt.BorderLayout.CENTER);
+        jPanel10.add(ChampNom);
+
+        jPanel4.add(jPanel10, java.awt.BorderLayout.CENTER);
 
         add(jPanel4);
         add(filler1);
+        add(filler12);
 
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
 
@@ -142,14 +178,23 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
         jPanel5.setMaximumSize(new java.awt.Dimension(2147483647, 50));
         jPanel5.setPreferredSize(new java.awt.Dimension(100, 50));
         jPanel5.setLayout(new java.awt.BorderLayout());
+        jPanel5.add(filler5, java.awt.BorderLayout.WEST);
+        jPanel5.add(filler10, java.awt.BorderLayout.EAST);
+
+        jPanel6.setLayout(new java.awt.GridLayout(2, 0));
 
         LibelleSources.setText("Sources");
-        jPanel5.add(LibelleSources, java.awt.BorderLayout.NORTH);
+        jPanel6.add(LibelleSources);
 
         ListeSources.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel5.add(ListeSources, java.awt.BorderLayout.CENTER);
+        jPanel6.add(ListeSources);
+
+        jPanel5.add(jPanel6, java.awt.BorderLayout.CENTER);
 
         add(jPanel5);
+        add(filler11);
+
+        getAccessibleContext().setAccessibleDescription("");
     }// </editor-fold>//GEN-END:initComponents
 
     private void BoutonSauvegarderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSauvegarderActionPerformed
@@ -162,6 +207,7 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
         if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this.obtenirApplication(), "Désirez-vous vraiment retirer ce point?", "Retirer ce point?", JOptionPane.YES_NO_OPTION))
         {
             this.obtenirApplication().getSimulateur().retirerPoint(this.pointMetierLie);
+            this.obtenirApplication().viderPanneauDetails();
             this.obtenirApplication().repaint();
         }         
     }//GEN-LAST:event_BoutonSupprimerActionPerformed
@@ -176,14 +222,28 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
     private javax.swing.JLabel LibelleSources;
     private javax.swing.JComboBox ListeSources;
     private javax.swing.Box.Filler filler1;
+    private javax.swing.Box.Filler filler10;
+    private javax.swing.Box.Filler filler11;
+    private javax.swing.Box.Filler filler12;
     private javax.swing.Box.Filler filler2;
+    private javax.swing.Box.Filler filler3;
+    private javax.swing.Box.Filler filler4;
+    private javax.swing.Box.Filler filler5;
+    private javax.swing.Box.Filler filler6;
+    private javax.swing.Box.Filler filler7;
+    private javax.swing.Box.Filler filler8;
+    private javax.swing.Box.Filler filler9;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     // End of variables declaration//GEN-END:variables
 }

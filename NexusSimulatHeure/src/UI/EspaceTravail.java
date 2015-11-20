@@ -3,8 +3,10 @@ package UI;
 import Controleur.Simulateur;
 import Metier.Exceptions.AucunPointCreateurException;
 import UI.Constantes.Couleurs;
+import UI.Dessinateurs.DessinateurVehicule;
 import UI.Exceptions.SegmentNonTrouveException;
 import UI.Utils.PaireDoubles;
+import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
@@ -19,7 +21,6 @@ import javax.swing.SwingUtilities;
 
 public class EspaceTravail extends javax.swing.JPanel implements MouseListener, MouseMotionListener, MouseWheelListener
 {
-    
     private Controleur.Simulateur simulateur;
 
     private List<Point> points = new LinkedList<Point>();
@@ -149,6 +150,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         
         dessinerPoints(g2);
         dessinerSegments(g2);
+        dessinerVehicules(g2);
     }
     
     private void dessinerPoints(Graphics2D g2)
@@ -164,6 +166,17 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         for(Segment s : segments)
         {
             s.dessiner(g2);
+        }
+    }
+    
+    private void dessinerVehicules(Graphics2D g2)
+    {
+        UI.Dessinateurs.DessinateurVehicule dv = new DessinateurVehicule();
+        for(Metier.Carte.Position p : this.simulateur.obtenirPositionVehicules())
+        {
+            PaireDoubles pd = new PaireDoubles(p.getX(), p.getY());
+            java.awt.Point point = transformerPositionEspaceTravailEnPositionViewport(transformerPostionGeorgraphiqueEnPositionEspaceTravail(pd));
+            dv.dessiner(g2, point.x, point.y, this.zoom);
         }
     }
     
@@ -312,10 +325,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     {
         return new java.awt.Point((int)((posVP.x + posReferenceX) / zoom), (int)((posVP.y + posReferenceY) / zoom));
     }
-    
-    
-    
-    
+
     public void pointClique(Point p)
     {
         if(simulateur.estEnModeSegment())
