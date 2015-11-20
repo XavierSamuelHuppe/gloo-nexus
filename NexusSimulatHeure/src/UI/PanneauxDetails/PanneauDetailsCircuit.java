@@ -60,8 +60,6 @@ public class PanneauDetailsCircuit extends PanneauDetails implements java.util.O
 
         jLabel4.setText("Nom");
         jPanel4.add(jLabel4, java.awt.BorderLayout.NORTH);
-
-        ChampNom.setText("ChampNom");
         jPanel4.add(ChampNom, java.awt.BorderLayout.CENTER);
 
         add(jPanel4);
