@@ -163,7 +163,7 @@ public class ContexteEdition {
                 Segment segmentAAjouter = carte.obtenirSegment(monPointCreateur, p);
                 circuitEnCreation.add(segmentAAjouter);
             }else{
-                List<Segment> segmentsAAjouter = carte.plusCourtCheminEnTempsMoyen(p, p);
+                List<Segment> segmentsAAjouter = carte.plusCourtCheminEnTempsMoyen(monPointCreateur, p);
                 circuitEnCreation.addAll(segmentsAAjouter);
             }
             

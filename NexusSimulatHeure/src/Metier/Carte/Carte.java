@@ -139,17 +139,22 @@ public class Carte {
             PointNonVisites.add(p);
         }
         temps.put(depart,1);
-        System.out.println("1");
         while(!PointNonVisites.isEmpty()){
-            System.out.println("2");
             //On pogne le plus petit poid
             Integer lowestTime = 0;
             Point lowestPoint = null;
             
-            for(Map.Entry<Point, Integer> pair: temps.entrySet()){
+            /*for(Map.Entry<Point, Integer> pair: temps.entrySet()){
+                System.out.println("3");
                 if(lowestTime == 0 || (pair.getValue() < lowestTime)){
                     lowestTime = pair.getValue();
                     lowestPoint = pair.getKey();
+                }
+            }*/
+            for(Point p : PointNonVisites){
+                if(lowestTime == 0 || (temps.get(p) != 0 && (temps.get(p) < lowestTime))){
+                    lowestTime = temps.get(p);
+                    lowestPoint = p;
                 }
             }
             PointNonVisites.remove(lowestPoint);
@@ -158,10 +163,9 @@ public class Carte {
             //si n'as pas de poid encore ou
             //si nouveau poid plus petit qu'ancien, on modifie
             for(Point p : obtenirPointsAdjacents(lowestPoint)){
-                System.out.println("3");
                 int tempsSegment = ((Double)(obtenirSegment(lowestPoint, p).obtenirMoyenneTempsTransit())).intValue();
                 Integer PoidAlternatif = temps.get(lowestPoint) + tempsSegment;
-                if(temps.get(p) == 0 || (PoidAlternatif < temps.get(p) )){
+                if(temps.get(p) == 0 || (PoidAlternatif <= temps.get(p) )){
                     meilleurDernierPoint.put(p,lowestPoint);
                     temps.put(p, PoidAlternatif);
                 }
@@ -179,11 +183,15 @@ public class Carte {
         Point fin = arrive;
         while(pasDebut){
             Point avantFin = meilleurDernierPoint.get(fin);
+            if(avantFin == null){
+                throw new AucunCheminPossibleException();
+            }
             Segment SegmentAAjouter = obtenirSegment(avantFin, fin);
             retour.add(SegmentAAjouter);
             if(avantFin.equals(depart)){
                 pasDebut = false;
             }
+            fin = avantFin;
         }
         Collections.reverse(retour);
         return retour;
