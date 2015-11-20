@@ -1,6 +1,7 @@
 
 package UI.PanneauxDetails;
 
+import Controleur.Simulateur;
 import java.util.*;
 import Metier.Circuit.Circuit;
 import Metier.Source.SourceFinie;
@@ -20,6 +21,12 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
     
     public PanneauDetailsSource() {
         initComponents();
+    }
+    
+    public PanneauDetailsSource(Simulateur sim) {
+        super();
+        initComponents();
+        this.simulateur = sim;
     }
     public PanneauDetailsSource(Metier.Source.Source s)
     {
