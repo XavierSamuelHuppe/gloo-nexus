@@ -102,7 +102,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     {
         reinitialiserCouleurBoutonsModes();
         simulateur.passerEnModeSource();
-        afficherPanneauDetailsSourceNouvelleSource();
+        //afficherPanneauDetailsSourceNouvelleSource();
         viderPanneauDetails();
         BoutonModeSource.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
     }
@@ -246,10 +246,10 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         this.revalidate();
     }
     
-    public void afficherPanneauDetailsSourceNouvelleSource()
+    public void afficherPanneauDetailsSourceNouvelleSource(Metier.Carte.Point point)
     {
         this.PanneauDetails.removeAll();
-        this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsSource(this.simulateur));
+        this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsSource(this.simulateur, point));
         this.PanneauDetails.repaint();
         
         this.revalidate();
