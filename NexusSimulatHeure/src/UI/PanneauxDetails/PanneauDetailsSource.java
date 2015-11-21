@@ -34,10 +34,8 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
         initComponents();
         this.simulateur = sim;
         this.pointMetierLie = point;
-        this.modeCreation();
         this.modeCreationBool = true;
-        
-        //passer son point en param et trouver le circuit qui lui est associé
+        this.modeCreation();
     }
     public PanneauDetailsSource(Metier.Source.Source s)
     {
@@ -53,7 +51,7 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
     }
              
     
-    public void modeCreation(){
+    private void modeCreation(){
         try
         {
             this.ChampCircuit.removeAllItems();
@@ -66,7 +64,7 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
                JOptionPane.showMessageDialog(this.obtenirApplication(),ex.toString());
         } 
         
-        
+        this.ChampPoint.setText(this.pointMetierLie.getNom());
         this.ChampCircuit.setEnabled(true);
         this.ChampFrequence.setText("0");
         this.ChampHeureDepart.setText("00:00:00");
@@ -74,21 +72,20 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
         this.ChampNombreMax.setText("0");
         this.BoutonSupprimer.setEnabled(false);
         
-        
-        
-        
     }
     
     @Override
     public void rafraichir() {
-        List<Circuit> circuits = this.obtenirApplication().getSimulateur().circuitsPassantPar(this.sourceMetierLie.getPointDepart());
-        this.ChampCircuit.setModel(new DefaultComboBoxModel(circuits.toArray()));
         
-        
-        this.ChampCircuit.setSelectedItem(this.sourceMetierLie.getCircuit());
+        this.ChampCircuit.removeAllItems();
+        List<Circuit> circuits = this.simulateur.circuitsPassantPar(pointMetierLie);
+        for (Circuit circuit: circuits){
+            this.ChampCircuit.addItem(circuit);
+        }
+        this.ChampCircuit.setSelectedItem(this.circuitActuel);
         this.ChampFrequence.setText(String.valueOf(sourceMetierLie.getFrequence()));
         this.ChampHeureDepart.setText(sourceMetierLie.getheureDebut().toString());
-        this.ChampPoint.setText(sourceMetierLie.getPointDepart().getNom());
+        this.ChampPoint.setText(this.pointMetierLie.getNom());
         if(this.sourceMetierLie.getClass() == SourceFinie.class){
             SourceFinie SourceCaster = (SourceFinie) sourceMetierLie;
             this.ChampNombreMax.setText(String.valueOf(SourceCaster.getNombreMax()));
@@ -110,8 +107,8 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
         this.circuitActuel =(Circuit) this.ChampCircuit.getSelectedItem();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-        LocalTime heureDebut = LocalTime.parse(this.ChampHeureFin.getText(),formatter);
-        
+        LocalTime heureDebut = LocalTime.parse(this.ChampHeureDepart.getText(),formatter);
+
         if(this.RadioHeureFin.isSelected()){
             LocalTime heureFin = LocalTime.parse(this.ChampHeureFin.getText(),formatter);
             this.obtenirApplication().getSimulateur().ajouterSource(heureFin , this.pointMetierLie, heureDebut, Double.parseDouble(this.ChampFrequence.getText()), this.circuitActuel);
@@ -120,9 +117,26 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
             this.obtenirApplication().getSimulateur().ajouterSource(Integer.parseInt(this.ChampNombreMax.getText()) , this.pointMetierLie, heureDebut, Double.parseDouble(this.ChampFrequence.getText()), this.circuitActuel);
             
         }
-        
         this.obtenirApplication().repaint();
+        this.obtenirApplication().viderPanneauDetails();
 }
+    public void sauvegarderSourceModifier(){
+        this.circuitActuel =(Circuit) this.ChampCircuit.getSelectedItem();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        LocalTime heureDebut = LocalTime.parse(this.ChampHeureDepart.getText(),formatter);
+        
+        if(this.RadioHeureFin.isSelected()){
+            LocalTime heureFin = LocalTime.parse(this.ChampHeureFin.getText(),formatter);
+            this.obtenirApplication().getSimulateur().modifierSource(sourceMetierLie, heureFin , this.pointMetierLie, heureDebut, Double.parseDouble(this.ChampFrequence.getText()), this.circuitActuel);
+        }
+        if(this.RadioNombreMax.isSelected()){
+            this.obtenirApplication().getSimulateur().modifierSource(sourceMetierLie, Integer.parseInt(this.ChampNombreMax.getText()) , this.pointMetierLie, heureDebut, Double.parseDouble(this.ChampFrequence.getText()), this.circuitActuel);
+            
+        }
+        this.obtenirApplication().repaint();
+        this.obtenirApplication().viderPanneauDetails();
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -273,38 +287,10 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
         
         if(modeCreationBool == true){
             sauvegarderNouvelleSource();
+        }else if(modeCreationBool == false)
+        {
+            sauvegarderSourceModifier();
         }
-        /*
-        
-        DateFormat formatter = new SimpleDateFormat("HH:mm");
-            try {
-            java.time.LocalTime heureDebut = new java.Time(formatter.parse(this.ChampHeureDepart.getText()).getTime());
-            } catch (ParseException ex) {
-                ex.printStackTrace();
-            } 
-        
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-        LocalTime heureDebut = LocalTime.parse(this.ChampHeureFin.getText(),formatter);
-        //LocalTime heureDebut = LocalTime.parse(this.ChampHeureDepart.getText());
-        if(this.RadioHeureFin.isSelected()){
-            try {
-            DateFormat formatter1 = new SimpleDateFormat("HH:mm");
-            java.sql.Time heureFin = new java.sql.Time(formatter1.parse(this.ChampHeureFin.getText()).getTime());
-            } catch (ParseException ex) {
-                ex.printStackTrace();
-            }
-            //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:MM:SS");
-            
-            LocalTime heureFin = LocalTime.parse(this.ChampHeureFin.getText(),formatter);
-            this.obtenirApplication().getSimulateur().modifierSource(this.sourceMetierLie, heureFin , this.sourceMetierLie.getPointDepart(), heureDebut, Double.parseDouble(this.ChampFrequence.getText()), this.circuitActuel);
-        }
-        if(this.RadioNombreMax.isSelected()){
-            this.obtenirApplication().getSimulateur().modifierSource(this.sourceMetierLie, Integer.parseInt(this.ChampNombreMax.getText()) , this.sourceMetierLie.getPointDepart(), heureDebut, Double.parseDouble(this.ChampFrequence.getText()), this.circuitActuel);
-            
-        }
-        
-        this.obtenirApplication().repaint();*/
-        
     }//GEN-LAST:event_BoutonSauvegarderActionPerformed
 
     private void controlEnabler(Boolean bool){
