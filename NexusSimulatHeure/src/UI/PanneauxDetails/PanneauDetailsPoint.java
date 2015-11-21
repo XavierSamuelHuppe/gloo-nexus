@@ -15,8 +15,6 @@ import javax.swing.JOptionPane;
 public class PanneauDetailsPoint extends PanneauDetails implements java.util.Observer {
 
     private Metier.Carte.Point pointMetierLie;
-    private UI.Point pointUILie;
-    private Controleur.Simulateur simulateur;
     
     /**
      * Creates new form PanneauDetailsPoint2
@@ -30,12 +28,8 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
         super();
         initComponents();
         
-        this.simulateur = simulateur;
-
         this.pointMetierLie = p;
         this.pointMetierLie.addObserver(this);
-        
-        this.pointUILie = pUI;
         
         rafraichir();
     }
@@ -198,7 +192,6 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
     }// </editor-fold>//GEN-END:initComponents
 
     private void BoutonSauvegarderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSauvegarderActionPerformed
-        
         this.obtenirApplication().getSimulateur().modifierPoint(this.pointMetierLie, Double.parseDouble(this.ChampLongitude.getText()), Double.parseDouble(this.ChampLatitude.getText()), this.ChampNom.getText());
         this.obtenirApplication().repaint();
     }//GEN-LAST:event_BoutonSauvegarderActionPerformed

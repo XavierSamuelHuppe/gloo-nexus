@@ -21,8 +21,6 @@ public abstract class DessinateurSegment {
                                   segment.getDepart().calculerCentreY() + (int)((segment.getArrivee().calculerCentreY() - segment.getDepart().calculerCentreY()) / 2));
     }
     
-
-    
     private String tempsAffiche = null;
     protected String obtenirTempsSegmentAffiche()
     {

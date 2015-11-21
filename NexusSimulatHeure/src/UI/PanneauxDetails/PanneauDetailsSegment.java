@@ -15,8 +15,6 @@ import javax.swing.JOptionPane;
 public class PanneauDetailsSegment extends PanneauDetails implements java.util.Observer {
 
     private Metier.Carte.Segment segmentMetierLie;
-    private UI.Segment segmentUILie;
-    private Controleur.Simulateur simulateur;
     
     /**
      * Creates new form PanneauDetailsPoint2
@@ -33,16 +31,12 @@ public class PanneauDetailsSegment extends PanneauDetails implements java.util.O
         this.segmentMetierLie = s;
         this.segmentMetierLie.addObserver(this);
         
-        this.segmentUILie = sUI;
-        
         rafraichir();
     }
     
     @Override
     public void rafraichir() {
-//        this.ChampLatitude.setText(String.format("%1$f", pointMetierLie.getPosition().getY()));
-//        this.ChampLongitude.setText(String.format("%1$f", pointMetierLie.getPosition().getX()));
-//        this.ChampNom.setText(pointMetierLie.getNom());
+        this.PanneauDistribution.setDistribution(this.segmentMetierLie.getDistribution());
     }
 
     @Override
@@ -65,8 +59,12 @@ public class PanneauDetailsSegment extends PanneauDetails implements java.util.O
         BoutonSupprimer = new javax.swing.JButton();
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
+
+        PanneauDistribution.setAlignmentX(1.0F);
+        PanneauDistribution.setMinimumSize(new java.awt.Dimension(400, 153));
         add(PanneauDistribution);
 
+        jPanel1.setMaximumSize(new java.awt.Dimension(2000000, 23));
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
 
         BoutonSauvegarder.setText("Sauvegarder");
@@ -89,7 +87,15 @@ public class PanneauDetailsSegment extends PanneauDetails implements java.util.O
     }// </editor-fold>//GEN-END:initComponents
 
     private void BoutonSauvegarderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSauvegarderActionPerformed
-        
+        String validationDistribution = PanneauDistribution.validerValeurs();
+        if(validationDistribution.isEmpty())
+        {
+            this.obtenirApplication().getSimulateur().modifierSegment(segmentMetierLie, PanneauDistribution.obtenirMin() , PanneauDistribution.obtenirMode(), PanneauDistribution.obtenirMax());    
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this.obtenirApplication(), "Les erreurs suivantes ont été détectées dans les paramètres de la distribution : \r\n" + validationDistribution, "Erreur dans les paramètres de la distribution", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_BoutonSauvegarderActionPerformed
 
     private void BoutonSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSupprimerActionPerformed
@@ -97,7 +103,6 @@ public class PanneauDetailsSegment extends PanneauDetails implements java.util.O
         {
             this.obtenirApplication().getSimulateur().retirerSegment(this.segmentMetierLie);
             this.obtenirApplication().viderPanneauDetails();
-            this.obtenirApplication().repaint();
         }   
     }//GEN-LAST:event_BoutonSupprimerActionPerformed
 

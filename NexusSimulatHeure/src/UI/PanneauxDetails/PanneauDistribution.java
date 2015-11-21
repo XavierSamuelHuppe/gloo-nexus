@@ -17,7 +17,7 @@ public class PanneauDistribution extends PanneauDetails {
     {
         super();
         initComponents();
-        this.distributionCourante = dt;
+        setDistribution(dt);
     }
 
     public void setDistribution(Metier.Distribution dt)
@@ -34,6 +34,72 @@ public class PanneauDistribution extends PanneauDetails {
         this.ChampMode.setText(((Double)distributionCourante.getMode()).toString());
         this.revalidate();
     }
+    
+    public double obtenirMin(){
+        return Double.parseDouble(this.ChampMinimum.getText());
+    }
+    
+    public double obtenirMax(){
+        return Double.parseDouble(this.ChampMaximum.getText());
+    }
+    
+    public double obtenirMode(){
+        return Double.parseDouble(this.ChampMode.getText());
+    }
+    
+    public String validerValeurs()
+    {
+        
+        
+        
+        String retour = "";
+        double min = 0;
+        double max = 0;
+        double mode = 0;
+        boolean nombresValides = true;
+        try{
+            min = Double.parseDouble(this.ChampMinimum.getText());   
+        }
+        catch(NumberFormatException ex){
+            nombresValides = false;
+            retour += "La valeur minimale est obligatoire et doit être un nombre.\r\n";
+        }
+        
+        try{
+            max = Double.parseDouble(this.ChampMaximum.getText());   
+        }
+        catch(NumberFormatException ex){
+            nombresValides = false;
+            retour += "La valeur maximale est obligatoire et doit être un nombre.\r\n";
+        }
+        
+        try{
+            mode = Double.parseDouble(this.ChampMode.getText());   
+        }
+        catch(NumberFormatException ex){
+            nombresValides = false;
+            retour += "Le mode est obligatoire et doit être un nombre.\r\n";
+        }
+        
+        if(nombresValides)
+        {
+            if(min > mode || min > max)
+            {
+                retour += "La valeur minimale doit être plus petite que le mode et la valeur maximale.\r\n";
+            }
+            if(mode < min  || max < mode)
+            {
+                retour += "Le mode doit être en la valeur minimale et la valeur maximale.\r\n";
+            }
+            if(max < mode || max < min)
+            {
+                retour += "La valeur maximale doit être plus grande que la valeur minimale et le mode.\r\n";
+            }
+        }
+        
+        return retour;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,12 +115,12 @@ public class PanneauDistribution extends PanneauDetails {
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         ChampMinimum = new javax.swing.JTextField();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        ChampMaximum = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         ChampMode = new javax.swing.JTextField();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        ChampMaximum = new javax.swing.JTextField();
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
         add(filler1);
@@ -76,17 +142,6 @@ public class PanneauDistribution extends PanneauDetails {
 
         add(jPanel2);
 
-        jPanel3.setMaximumSize(new java.awt.Dimension(2147483647, 50));
-        jPanel3.setPreferredSize(new java.awt.Dimension(100, 50));
-        jPanel3.setLayout(new java.awt.BorderLayout());
-
-        jLabel3.setText("Maximum");
-        jLabel3.setToolTipText("");
-        jPanel3.add(jLabel3, java.awt.BorderLayout.NORTH);
-        jPanel3.add(ChampMaximum, java.awt.BorderLayout.CENTER);
-
-        add(jPanel3);
-
         jPanel4.setMaximumSize(new java.awt.Dimension(2147483647, 50));
         jPanel4.setPreferredSize(new java.awt.Dimension(100, 50));
         jPanel4.setLayout(new java.awt.BorderLayout());
@@ -97,6 +152,17 @@ public class PanneauDistribution extends PanneauDetails {
         jPanel4.add(ChampMode, java.awt.BorderLayout.CENTER);
 
         add(jPanel4);
+
+        jPanel3.setMaximumSize(new java.awt.Dimension(2147483647, 50));
+        jPanel3.setPreferredSize(new java.awt.Dimension(100, 50));
+        jPanel3.setLayout(new java.awt.BorderLayout());
+
+        jLabel3.setText("Maximum");
+        jLabel3.setToolTipText("");
+        jPanel3.add(jLabel3, java.awt.BorderLayout.NORTH);
+        jPanel3.add(ChampMaximum, java.awt.BorderLayout.CENTER);
+
+        add(jPanel3);
     }// </editor-fold>//GEN-END:initComponents
 
 

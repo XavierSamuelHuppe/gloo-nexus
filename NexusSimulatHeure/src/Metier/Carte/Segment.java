@@ -48,6 +48,10 @@ public class Segment extends Observable{
         this.distribution = distribution;
     }
     
+    public Distribution getDistribution(){
+        return this.distribution;
+    }
+    
     public void recevoirNouveauTempsTransit() {
         tempsTransit = distribution.obtenirProchaineValeurAleatoire();
         notifyObservers();
