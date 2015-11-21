@@ -339,7 +339,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         PanneauBarreOutils.setLayout(new javax.swing.BoxLayout(PanneauBarreOutils, javax.swing.BoxLayout.LINE_AXIS));
 
         BoutonNouveau.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/file-2x.png"))); // NOI18N
-        BoutonNouveau.setToolTipText("");
+        BoutonNouveau.setToolTipText("Nouveau");
         BoutonNouveau.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonNouveau.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         BoutonNouveau.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -354,7 +354,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         PanneauBarreOutils.add(BoutonNouveau);
 
         BoutonSauvegarder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/data-transfer-download-2x.png"))); // NOI18N
-        BoutonSauvegarder.setToolTipText("");
+        BoutonSauvegarder.setToolTipText("Sauvegarder");
         BoutonSauvegarder.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonSauvegarder.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         BoutonSauvegarder.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -364,7 +364,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         PanneauBarreOutils.add(BoutonSauvegarder);
 
         BoutonCharger.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/data-transfer-upload-2x.png"))); // NOI18N
-        BoutonCharger.setToolTipText("");
+        BoutonCharger.setToolTipText("Charger");
         BoutonCharger.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonCharger.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         BoutonCharger.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -374,7 +374,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         PanneauBarreOutils.add(BoutonCharger);
 
         BoutonAnnuler.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/action-undo-2x.png"))); // NOI18N
-        BoutonAnnuler.setToolTipText("");
+        BoutonAnnuler.setToolTipText("Undo");
         BoutonAnnuler.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonAnnuler.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         BoutonAnnuler.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -384,7 +384,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         PanneauBarreOutils.add(BoutonAnnuler);
 
         BoutonRepeter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/action-redo-2x.png"))); // NOI18N
-        BoutonRepeter.setToolTipText("");
+        BoutonRepeter.setToolTipText("Redo");
         BoutonRepeter.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonRepeter.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         BoutonRepeter.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -394,7 +394,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         PanneauBarreOutils.add(BoutonRepeter);
 
         BoutonParametres.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/wrench-2x.png"))); // NOI18N
-        BoutonParametres.setToolTipText("");
+        BoutonParametres.setToolTipText("Paramètres de la Simulation");
         BoutonParametres.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonParametres.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         BoutonParametres.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -409,7 +409,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         PanneauBarreOutils.add(jSeparator1);
 
         BoutonModePoint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/target-2x.png"))); // NOI18N
-        BoutonModePoint.setToolTipText("");
+        BoutonModePoint.setToolTipText("Édition de points");
         BoutonModePoint.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonModePoint.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         BoutonModePoint.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -419,7 +419,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         PanneauBarreOutils.add(BoutonModePoint);
 
         BoutonModeSegment.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/transfer-2x.png"))); // NOI18N
-        BoutonModeSegment.setToolTipText("");
+        BoutonModeSegment.setToolTipText("Édition de segments");
         BoutonModeSegment.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonModeSegment.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         BoutonModeSegment.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -429,7 +429,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         PanneauBarreOutils.add(BoutonModeSegment);
 
         BoutonModeCircuit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/fork-2x.png"))); // NOI18N
-        BoutonModeCircuit.setToolTipText("");
+        BoutonModeCircuit.setToolTipText("Édition de circuits");
         BoutonModeCircuit.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonModeCircuit.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         BoutonModeCircuit.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -439,7 +439,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         PanneauBarreOutils.add(BoutonModeCircuit);
 
         BoutonModeSource.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/dashboard-2x.png"))); // NOI18N
-        BoutonModeSource.setToolTipText("");
+        BoutonModeSource.setToolTipText("Édition de sources");
         BoutonModeSource.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonModeSource.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         BoutonModeSource.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -449,7 +449,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         PanneauBarreOutils.add(BoutonModeSource);
 
         BoutonModeProfilPassager.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/people-2x.png"))); // NOI18N
-        BoutonModeProfilPassager.setToolTipText("");
+        BoutonModeProfilPassager.setToolTipText("Édition de profils passagers");
         BoutonModeProfilPassager.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonModeProfilPassager.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         BoutonModeProfilPassager.setMargin(new java.awt.Insets(2, 2, 2, 2));
