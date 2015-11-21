@@ -4,8 +4,8 @@ import Metier.Carte.*;
 import java.util.*;
 
 public abstract class Circuit {
-    private String nom;
-    private List<Segment> trajet;
+    protected String nom;
+    protected List<Segment> trajet;
     
     public Circuit(){
     }

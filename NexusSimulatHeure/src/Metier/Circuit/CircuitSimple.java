@@ -7,9 +7,6 @@ import Metier.Exceptions.*;
 import java.util.List;
 
 public class CircuitSimple extends Circuit{
-    private String nom;
-    private List<Segment> trajet;
-    
     public CircuitSimple(String nom, List<Segment> trajet){
         super(nom, trajet);
     }
@@ -29,7 +26,7 @@ public class CircuitSimple extends Circuit{
     @Override
     public Segment obtenirProchainSegment(Point pointDepart){
         
-        for(int i = trajet.size(); i >= 0; i--){
+        for(int i = trajet.size() - 1; i >= 0; i--){
             if (trajet.get(i).getPointDepart() == pointDepart){
                 return trajet.get(i);
             }
