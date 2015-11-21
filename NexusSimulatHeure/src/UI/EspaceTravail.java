@@ -401,7 +401,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         {
             try
             {
-                this.obtenirApplication().afficherPanneauDetailsSourceNouvelleSource();
+                this.obtenirApplication().afficherPanneauDetailsSourceNouvelleSource(p.getPointMetier());
             }
             catch(AucunPointCreateurException ex)
             {
