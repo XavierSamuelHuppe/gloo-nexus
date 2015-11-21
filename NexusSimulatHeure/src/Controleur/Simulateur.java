@@ -289,8 +289,11 @@ public class Simulateur {
     public List<Circuit> circuitsPassantPar(Point point){
         return simulation.circuitsPassantPar(point);
     }
-    public void ActiverCircuit(Circuit circuit){
+    public void activerCircuit(Circuit circuit){
         contexte.setCircuitActif(circuit);
+    }
+    public Circuit getCircuitActif(){
+        return contexte.getCircuitActif();
     }
     public boolean estCircuitActif(Circuit circuit){
         return contexte.getCircuitActif().equals(circuit);
@@ -302,9 +305,16 @@ public class Simulateur {
     public void commencerContinuerCreationCircuit(Point p){
         contexte.commencerContinuerCreationCircuit(p);
     }
-    public void sauvergarderNouveauCircuit(String nom){
-        Circuit nouveauCircuit = contexte.obtenirNouveauCircuit(nom);
-        simulation.ajouterCircuit(nouveauCircuit);
+    public void sauvergarderCircuit(String nom){
+        if(contexte.circuitEstEnCoursDeCreation()){
+            Circuit nouveauCircuit = contexte.obtenirNouveauCircuit(nom);
+            simulation.ajouterCircuit(nouveauCircuit);
+        }
+        else{
+            simulation.modifierCircuit(contexte.getCircuitActif(), nom);
+            contexte.viderCircuitActif();
+        }
+        
     }
     public void annulerCreationCircuit(){
         contexte.viderCircuitEnCreation();

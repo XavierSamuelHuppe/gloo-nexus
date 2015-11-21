@@ -1,7 +1,9 @@
 package UI;
 
 import Controleur.Simulateur;
+import Metier.Exceptions.AucunCheminPossibleException;
 import Metier.Exceptions.AucunPointCreateurException;
+import Metier.Exceptions.CreationInvalideException;
 import UI.Constantes.Couleurs;
 import UI.Dessinateurs.DessinateurVehicule;
 import UI.Exceptions.SegmentNonTrouveException;
@@ -21,12 +23,14 @@ import javax.swing.SwingUtilities;
 
 public class EspaceTravail extends javax.swing.JPanel implements MouseListener, MouseMotionListener, MouseWheelListener
 {
+    private static final double ZOOM_DEFAULT = 1;
+    
     private Controleur.Simulateur simulateur;
 
-    private List<Point> points = new LinkedList<Point>();
-    private List<Segment> segments = new LinkedList<Segment>();
-    private List<Vehicule> vehicules = new LinkedList<Vehicule>();
-    private double zoom = 1;
+    private List<Point> points = new LinkedList<>();
+    private List<Segment> segments = new LinkedList<>();
+    private List<Vehicule> vehicules = new LinkedList<>();
+    private double zoom = ZOOM_DEFAULT;
     private boolean fanionClavier1 = false;
     private java.awt.Point pointDrag = null;
     private Point tempSegmentPointDepart = null;
@@ -45,6 +49,18 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         this.addMouseWheelListener(this);
         
         this.addKeyListener(new UI.IO.ZoneKeyListener());
+    }
+    
+    public void reinitialiser()
+    {
+        this.removeAll();
+        points = new LinkedList<>();
+        segments = new LinkedList<>();
+        vehicules = new LinkedList<>();
+        zoom = ZOOM_DEFAULT;
+        fanionClavier1 = false;
+        pointDrag = null;
+        tempSegmentPointDepart = null;
     }
     
     public void setSimulateur(Controleur.Simulateur s)
@@ -172,11 +188,14 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     private void dessinerVehicules(Graphics2D g2)
     {
         UI.Dessinateurs.DessinateurVehicule dv = new DessinateurVehicule();
-        for(Metier.Carte.Position p : this.simulateur.obtenirPositionVehicules())
+        if(this.simulateur!=null)
         {
-            PaireDoubles pd = new PaireDoubles(p.getX(), p.getY());
-            java.awt.Point point = transformerPositionEspaceTravailEnPositionViewport(transformerPostionGeorgraphiqueEnPositionEspaceTravail(pd));
-            dv.dessiner(g2, point.x, point.y, this.zoom);
+            for(Metier.Carte.Position p : this.simulateur.obtenirPositionVehicules())
+            {
+                PaireDoubles pd = new PaireDoubles(p.getX(), p.getY());
+                java.awt.Point point = transformerPositionEspaceTravailEnPositionViewport(transformerPostionGeorgraphiqueEnPositionEspaceTravail(pd));
+                dv.dessiner(g2, point.x, point.y, this.zoom);
+            }
         }
     }
     
@@ -270,8 +289,8 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
                         break;
                     }
                     else if(SwingUtilities.isRightMouseButton(me)){
-                        SegmentMenuContextuel m = new SegmentMenuContextuel(simulateur, s.getSegmentMetier());
-                        m.show(me.getComponent(), me.getX(), me.getY());
+                        SegmentMenuContextuel m = new SegmentMenuContextuel(simulateur, this.obtenirApplication(), s.getSegmentMetier());
+                        m.show(this, me.getX(), me.getY());
                     }
                 }
             }
@@ -353,7 +372,10 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
             {
                 System.out.println("AucunPointCreateurException");
             }
-            
+            catch(Metier.Exceptions.CreationInvalideException ex)
+            {
+                JOptionPane.showMessageDialog(this.obtenirApplication(), "Un tel segment ne peut-être créé : " + ex.getMessage(), "Création invalide d'un segment.", JOptionPane.ERROR_MESSAGE);
+            }
         }
         else if (simulateur.estEnModePoint())
         {
@@ -369,6 +391,10 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
             catch(AucunPointCreateurException ex)
             {
                 System.err.println("AucunPointCreateurException");
+            }
+            catch(AucunCheminPossibleException ex)
+            {
+                JOptionPane.showMessageDialog(this.obtenirApplication(), "Il n'existe pas de segments permettant de relier les deux points sélectionnés." + ex.getMessage(), "Création invalide d'un circuit.", JOptionPane.ERROR_MESSAGE);
             }
         }
         else if (simulateur.estEnModeSource())

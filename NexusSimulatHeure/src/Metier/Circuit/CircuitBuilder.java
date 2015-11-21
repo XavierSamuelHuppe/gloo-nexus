@@ -8,7 +8,10 @@ import java.util.*;
 public class CircuitBuilder {
     public Circuit ConstruireCircuit(String nom, List<Segment> segments){
         if(segments.isEmpty())
-            throw new CreationInvalideException("Le circuit doit avoir au moins un segment");
+            throw new CreationInvalideException("Le circuit doit avoir au moins un segment.");
+        
+        if(nom.isEmpty())
+            throw new CreationInvalideException("Le nom du circuit est obligatoire.");
         
         Circuit nouveauCircuit;
         

@@ -10,9 +10,11 @@ import java.awt.event.ActionListener;
 
 public class SegmentMenuContextuel extends JPopupMenu implements ActionListener {
     private Simulateur simulateur;
+    private Application application;
     
-    public SegmentMenuContextuel(Simulateur simulateur, Metier.Carte.Segment segment){
+    public SegmentMenuContextuel(Simulateur simulateur, Application app, Metier.Carte.Segment segment){
         this.simulateur = simulateur;
+        this.application = app;
         List<Circuit> circuitsAAfficher = simulateur.circuitsPassantPar(segment);
         for(Circuit c: circuitsAAfficher){
             CircuitMenuItem item = new CircuitMenuItem(c, c.getNom());
@@ -25,7 +27,8 @@ public class SegmentMenuContextuel extends JPopupMenu implements ActionListener 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() instanceof CircuitMenuItem){
             CircuitMenuItem item = (CircuitMenuItem)(e.getSource());
-            simulateur.ActiverCircuit(item.getCircuit());
+            simulateur.activerCircuit(item.getCircuit());
+            application.afficherPanneauDetailsCircuitExistant(simulateur.getCircuitActif());
         }
     }
 }

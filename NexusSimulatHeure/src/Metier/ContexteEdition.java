@@ -154,10 +154,10 @@ public class ContexteEdition {
     public void commencerContinuerCreationCircuit(Point p){
         if(!estEnModeCircuit())
             throw new EditionEnMauvaisModeException();
-        
+        Point monPointCreateur = null;
         try
         {
-            Point monPointCreateur = getPointCreateur();
+            monPointCreateur = getPointCreateur();
             setPointCreateur(p);
             if(carte.verifierExistenceSegment(monPointCreateur, p)){
                 Segment segmentAAjouter = carte.obtenirSegment(monPointCreateur, p);
@@ -170,9 +170,9 @@ public class ContexteEdition {
         }catch(AucunPointCreateurException e){
             setPointCreateur(p);
         }catch(AucunCheminPossibleException e){
-            System.out.println("PAS DE CHEMIN TROUVÉ");
+            setPointCreateur(monPointCreateur);
+            throw e;
         }
-        
     }
     public Circuit obtenirNouveauCircuit(String nom){
         if(!estEnModeCircuit())
@@ -187,6 +187,10 @@ public class ContexteEdition {
     public void viderCircuitEnCreation(){
         pointCreateur = null;
         circuitEnCreation.clear();
+    }
+    
+    public boolean circuitEstEnCoursDeCreation(){
+        return circuitActif == null;
     }
     
     public boolean estDansCircuitActif(Point point){

@@ -26,11 +26,17 @@ public abstract class DessinateurSegment {
     private String tempsAffiche = null;
     protected String obtenirTempsSegmentAffiche()
     {
-        if(tempsAffiche == null)
+//        if(tempsAffiche == null)
+//        {
+//            tempsAffiche = ((Double)this.segment.getSegmentMetier().getTempsTransit()).toString();
+//        }
+//        return tempsAffiche;
+        if(this.segment.getSegmentMetier().getTempsTransit() > 0.0)
         {
-            tempsAffiche = ((Double)this.segment.getSegmentMetier().getTempsTransit()).toString();
+            return ((Double)this.segment.getSegmentMetier().getTempsTransit()).toString();
         }
-        return tempsAffiche;
+        return "";
+        
     }
     
 

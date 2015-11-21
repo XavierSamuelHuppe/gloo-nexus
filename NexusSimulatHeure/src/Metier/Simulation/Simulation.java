@@ -167,6 +167,11 @@ public class Simulation extends Observable{
         circuits.add(circuit);
     }
     
+    public void modifierCircuit(Circuit circuit, String nom)
+    {
+        circuit.setNom(nom);
+    }
+    
     public void retirerCircuit(Circuit circuit){
         circuits.remove(circuit);
     }

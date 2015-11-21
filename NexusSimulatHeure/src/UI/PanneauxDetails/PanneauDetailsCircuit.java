@@ -2,7 +2,8 @@ package UI.PanneauxDetails;
 
 import Controleur.Simulateur;
 import java.util.Observable;
-
+import javax.swing.JOptionPane;
+import Metier.Exceptions.CreationInvalideException;
 
 public class PanneauDetailsCircuit extends PanneauDetails implements java.util.Observer {
 
@@ -16,14 +17,14 @@ public class PanneauDetailsCircuit extends PanneauDetails implements java.util.O
         super();
         initComponents();
         this.simulateur = sim;
+        this.LibelleEntete.setText("Création d'un nouveau circuit");
     }
     
     public PanneauDetailsCircuit(Metier.Circuit.Circuit cMetier, Simulateur sim)
     {
         this(sim);
-        
         this.circuitMetierLie = cMetier;
-        
+        this.LibelleEntete.setText("Détails : Circuit \"" + this.circuitMetierLie.getNom() + "\"");
         rafraichir();
     }
     
@@ -46,6 +47,8 @@ public class PanneauDetailsCircuit extends PanneauDetails implements java.util.O
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel5 = new javax.swing.JPanel();
+        LibelleEntete = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         ChampNom = new javax.swing.JTextField();
@@ -53,6 +56,16 @@ public class PanneauDetailsCircuit extends PanneauDetails implements java.util.O
         BoutonSauvegarder = new javax.swing.JButton();
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
+
+        jPanel5.setMaximumSize(new java.awt.Dimension(2147483647, 20));
+        jPanel5.setPreferredSize(new java.awt.Dimension(100, 15));
+        jPanel5.setLayout(new java.awt.BorderLayout());
+
+        LibelleEntete.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        LibelleEntete.setText("Nom");
+        jPanel5.add(LibelleEntete, java.awt.BorderLayout.NORTH);
+
+        add(jPanel5);
 
         jPanel4.setMaximumSize(new java.awt.Dimension(2147483647, 50));
         jPanel4.setPreferredSize(new java.awt.Dimension(100, 50));
@@ -75,17 +88,25 @@ public class PanneauDetailsCircuit extends PanneauDetails implements java.util.O
     }// </editor-fold>//GEN-END:initComponents
 
     private void BoutonSauvegarderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSauvegarderActionPerformed
-        this.simulateur.sauvergarderNouveauCircuit(this.ChampNom.getText());
-        this.obtenirApplication().revalidate();
-        this.obtenirApplication().repaint();
+        try
+        {
+            this.simulateur.sauvergarderCircuit(this.ChampNom.getText());
+            this.obtenirApplication().viderPanneauDetails();
+        }
+        catch(CreationInvalideException ex)
+        {
+            JOptionPane.showMessageDialog(this.obtenirApplication(), "Le circuit ne peut pas être sauvegardé : " + ex.getMessage(), "Création invalide d'un circuit.", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_BoutonSauvegarderActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BoutonSauvegarder;
     private javax.swing.JTextField ChampNom;
+    private javax.swing.JLabel LibelleEntete;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     // End of variables declaration//GEN-END:variables
 }

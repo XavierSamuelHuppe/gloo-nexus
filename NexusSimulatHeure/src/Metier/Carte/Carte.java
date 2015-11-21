@@ -88,9 +88,10 @@ public class Carte {
     }
     
     public void ajouterSegment(Segment segment){
-        if(segments.contains(segment) ||
-           segment.getPointDepart().equals(segment.getPointArrivee()))
-            throw new CreationInvalideException();
+        if(segments.contains(segment))
+            throw new CreationInvalideException("Ce segment existe déjà.");
+        else if (segment.getPointDepart().equals(segment.getPointArrivee()))
+            throw new CreationInvalideException("Un segment ne peut pas avoir le même point comme départ et comme arrivée.");
         else
             segments.add(segment);
     }

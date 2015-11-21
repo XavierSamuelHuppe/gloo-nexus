@@ -1,5 +1,6 @@
 package UI;
 
+import Controleur.Simulateur;
 import UI.Constantes.Couleurs;
 import UI.PanneauxDetails.PanneauDetailsPoint;
 import java.awt.BorderLayout;
@@ -9,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.ActionListener;
 import javafx.scene.input.KeyCode;
+import javax.swing.JOptionPane;
 
 
 public class Application extends javax.swing.JFrame implements KeyListener, ActionListener {
@@ -233,7 +235,14 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         this.PanneauDetails.removeAll();
         this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsCircuit(this.simulateur));
         this.PanneauDetails.repaint();
-        
+        this.revalidate();
+    }
+    
+    public void afficherPanneauDetailsCircuitExistant(Metier.Circuit.Circuit c)
+    {
+        this.PanneauDetails.removeAll();
+        this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsCircuit(c, this.simulateur));
+        this.PanneauDetails.repaint();
         this.revalidate();
     }
     
@@ -337,6 +346,11 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         BoutonNouveau.setMaximumSize(new java.awt.Dimension(24, 24));
         BoutonNouveau.setMinimumSize(new java.awt.Dimension(24, 24));
         BoutonNouveau.setPreferredSize(new java.awt.Dimension(24, 24));
+        BoutonNouveau.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BoutonNouveauActionPerformed(evt);
+            }
+        });
         PanneauBarreOutils.add(BoutonNouveau);
 
         BoutonSauvegarder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/data-transfer-download-2x.png"))); // NOI18N
@@ -557,6 +571,19 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BoutonNouveauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonNouveauActionPerformed
+        if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Désirez-vous vraiment créer une nouvelle simulation? Toutes les modifications non-enregistrées seront perdues.", "Créer une nouvelle simulation?", JOptionPane.YES_NO_OPTION))
+        {
+            this.viderPanneauDetails();
+            this.simulateur = new Simulateur();
+            this.getEspaceTravail().reinitialiser();
+            this.getEspaceTravail().setSimulateur(this.simulateur);
+            this.passerEnModePoint();
+            this.repaint();
+            this.revalidate();
+        }
+    }//GEN-LAST:event_BoutonNouveauActionPerformed
 
     /**
      * @param args the command line arguments
