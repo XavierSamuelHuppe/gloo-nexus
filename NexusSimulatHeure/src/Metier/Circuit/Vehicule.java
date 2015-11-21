@@ -22,7 +22,7 @@ public class Vehicule extends Observable{
     }
     
     public double obtenirProgresSurSegmentEnPourcentage(){
-        double progres = secondesSurSegment * 100 / segmentActuel.getTempsTransit();
+        double progres = secondesSurSegment / segmentActuel.getTempsTransit();
         return progres;
     }
     public Segment getSegment(){
@@ -30,6 +30,7 @@ public class Vehicule extends Observable{
     }
     
     public void avancer(double tempsEcouleParRatioEnSeconde){
+        System.out.println("Vehicule.avancer");
         double tempsTotal = secondesSurSegment+tempsEcouleParRatioEnSeconde;
         if(tempsTotal > segmentActuel.getTempsTransit()){
             //faire embarquer le monde
@@ -65,8 +66,8 @@ public class Vehicule extends Observable{
         double dx = calculerDeltaX(posDepart, posArrivee);
         double dy = calculerDeltaY(posDepart, posArrivee);
         
-        dx = dx * obtenirProgresSurSegmentEnPourcentage();
-        dy = dy * obtenirProgresSurSegmentEnPourcentage();
+        dx = dx * obtenirProgresSurSegmentEnPourcentage() + posDepart.getX();
+        dy = dy * obtenirProgresSurSegmentEnPourcentage() + posDepart.getY();
         
         return new Position(dx, dy);
     }

@@ -262,4 +262,10 @@ public class Simulation extends Observable{
     {
         return parametres.getNombreJourSimulation();
     }
+    
+    public void ajouterVehicule(Vehicule v)
+    {
+        vehicules.add(v);
+    }
+    
 }

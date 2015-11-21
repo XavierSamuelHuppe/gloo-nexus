@@ -49,7 +49,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
 
     private void afficherVitesseExecution()
     {
-        LibelleVitesse.setText("Vitesse d'exécution " + SliderVitesse.getValue() + "%");
+        LibelleVitesse.setText("Vitesse d'exécution " + SliderVitesse.getValue() + "x");
     }
     
     @Override
@@ -571,13 +571,13 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         LibelleVitesse.getAccessibleContext().setAccessibleName("");
 
         SliderVitesse.setFont(new java.awt.Font("Tahoma", 0, 5)); // NOI18N
-        SliderVitesse.setMajorTickSpacing(100);
-        SliderVitesse.setMaximum(700);
-        SliderVitesse.setMinorTickSpacing(25);
+        SliderVitesse.setMajorTickSpacing(10);
+        SliderVitesse.setMinimum(1);
+        SliderVitesse.setMinorTickSpacing(5);
         SliderVitesse.setPaintTicks(true);
         SliderVitesse.setSnapToTicks(true);
         SliderVitesse.setToolTipText("Changer la vitesse d'exécution de la simulation.");
-        SliderVitesse.setValue(100);
+        SliderVitesse.setValue(1);
         SliderVitesse.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 SliderVitesseStateChanged(evt);
@@ -664,7 +664,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     }//GEN-LAST:event_BoutonRedemarrerActionPerformed
 
     private void SliderVitesseStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_SliderVitesseStateChanged
-        this.simulateur.modfierVitesse(SliderVitesse.getValue());
+        this.simulateur.modfierVitesse(100 * SliderVitesse.getValue());
         afficherVitesseExecution();
         this.revalidate();
     }//GEN-LAST:event_SliderVitesseStateChanged

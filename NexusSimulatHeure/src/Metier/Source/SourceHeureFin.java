@@ -5,13 +5,14 @@ import Metier.Carte.Point;
 import Metier.Circuit.Circuit;
 import Metier.Distribution;
 import Metier.Circuit.ConteneurPassagers;
+import Metier.Simulation.Simulation;
 import java.time.LocalTime;
 
 public class SourceHeureFin extends Source {
     private LocalTime heureFin;
     
-    public SourceHeureFin(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
-        super(pointDepart, heureDebut, frequence, distribution, passagers, circuit);
+    public SourceHeureFin(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit, Simulation sim){
+        super(pointDepart, heureDebut, frequence, distribution, passagers, circuit, sim);
         this.heureFin = heureFin;
     }
     

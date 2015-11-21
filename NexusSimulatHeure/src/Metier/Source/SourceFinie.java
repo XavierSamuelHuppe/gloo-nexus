@@ -4,14 +4,15 @@ import Metier.Carte.Point;
 import Metier.Circuit.Circuit;
 import Metier.Distribution;
 import Metier.Circuit.ConteneurPassagers;
+import Metier.Simulation.Simulation;
 import java.time.LocalTime;
 
 public class SourceFinie extends Source {
     private int nombreMax;
     private int nombreCree;
     
-    public SourceFinie(int nombreMax, Point pointDepart, LocalTime heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
-        super(pointDepart, heureDebut, frequence, distribution, passagers, circuit);
+    public SourceFinie(int nombreMax, Point pointDepart, LocalTime heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit, Simulation sim){
+        super(pointDepart, heureDebut, frequence, distribution, passagers, circuit, sim);
         this.nombreMax = nombreMax;
         this.nombreCree = 0;
     }

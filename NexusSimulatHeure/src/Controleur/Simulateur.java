@@ -137,24 +137,24 @@ public class Simulateur {
     
     public void ajouterSource(int nombreMax, Point pointDepart, LocalTime heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
         SourceBuilder builder = new SourceBuilder();
-        Source nouvelleSource = builder.ConstruireSource(nombreMax, pointDepart, heureDebut, frequence, distribution, passagers, circuit);
+        Source nouvelleSource = builder.ConstruireSource(nombreMax, pointDepart, heureDebut, frequence, distribution, passagers, circuit, this.simulation);
         simulation.ajouterSource(nouvelleSource);
     }
     public void ajouterSource(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
         SourceBuilder builder = new SourceBuilder();
-        Source nouvelleSource = builder.ConstruireSource(heureFin, pointDepart, heureDebut, frequence, distribution, passagers, circuit);
+        Source nouvelleSource = builder.ConstruireSource(heureFin, pointDepart, heureDebut, frequence, distribution, passagers, circuit, this.simulation);
         simulation.ajouterSource(nouvelleSource);
     }
     public void ajouterSource(int nombreMax, Point pointDepart, LocalTime heureDebut, double frequence, ConteneurPassagers passagers, Circuit circuit){
         SourceBuilder builder = new SourceBuilder();
         Distribution distributionParDefaut = simulation.getParametres().getDistributionTempsGenerationVehiculeDefaut();
-        Source nouvelleSource = builder.ConstruireSource(nombreMax, pointDepart, heureDebut, frequence, distributionParDefaut, passagers, circuit);
+        Source nouvelleSource = builder.ConstruireSource(nombreMax, pointDepart, heureDebut, frequence, distributionParDefaut, passagers, circuit, this.simulation);
         simulation.ajouterSource(nouvelleSource);
     }
     public void ajouterSource(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, double frequence, ConteneurPassagers passagers, Circuit circuit){
         SourceBuilder builder = new SourceBuilder();
         Distribution distributionParDefaut = simulation.getParametres().getDistributionTempsGenerationVehiculeDefaut();
-        Source nouvelleSource = builder.ConstruireSource(heureFin, pointDepart, heureDebut, frequence, distributionParDefaut, passagers, circuit);
+        Source nouvelleSource = builder.ConstruireSource(heureFin, pointDepart, heureDebut, frequence, distributionParDefaut, passagers, circuit, this.simulation);
         simulation.ajouterSource(nouvelleSource);
     }
     public void ajouterSource(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, double frequence, Circuit circuit){
@@ -162,26 +162,26 @@ public class Simulateur {
         ConteneurPassagersIllimite conteneurPassagersIllimiteParDefaut = simulation.getParametres().getConteneurPassagersIllimiteSource();
         Distribution distributionParDefaut = simulation.getParametres().getDistributionTempsGenerationVehiculeDefaut();
         
-        Source nouvelleSource = builder.ConstruireSource(heureFin, pointDepart, heureDebut, frequence, distributionParDefaut, conteneurPassagersIllimiteParDefaut, circuit);
+        Source nouvelleSource = builder.ConstruireSource(heureFin, pointDepart, heureDebut, frequence, distributionParDefaut, conteneurPassagersIllimiteParDefaut, circuit, this.simulation);
         simulation.ajouterSource(nouvelleSource);
     }
     public void ajouterSource(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, double frequence, Distribution distribution, Circuit circuit){
         SourceBuilder builder = new SourceBuilder();
         ConteneurPassagersIllimite conteneurPassagersIllimiteParDefaut = simulation.getParametres().getConteneurPassagersIllimiteSource();
-        Source nouvelleSource = builder.ConstruireSource(heureFin, pointDepart, heureDebut, frequence, distribution, conteneurPassagersIllimiteParDefaut, circuit);
+        Source nouvelleSource = builder.ConstruireSource(heureFin, pointDepart, heureDebut, frequence, distribution, conteneurPassagersIllimiteParDefaut, circuit, this.simulation);
         simulation.ajouterSource(nouvelleSource);
     }
     public void ajouterSource(int nombreMax, Point pointDepart, LocalTime heureDebut, double frequence, Circuit circuit){
         SourceBuilder builder = new SourceBuilder();
         Distribution distributionParDefaut = simulation.getParametres().getDistributionTempsGenerationVehiculeDefaut();
         ConteneurPassagersIllimite conteneurPassagersIllimiteParDefaut = simulation.getParametres().getConteneurPassagersIllimiteSource();
-        Source nouvelleSource = builder.ConstruireSource(nombreMax, pointDepart, heureDebut, frequence, distributionParDefaut, conteneurPassagersIllimiteParDefaut, circuit);
+        Source nouvelleSource = builder.ConstruireSource(nombreMax, pointDepart, heureDebut, frequence, distributionParDefaut, conteneurPassagersIllimiteParDefaut, circuit, this.simulation);
         simulation.ajouterSource(nouvelleSource);
     }   
     public void ajouterSource(int nombreMax, Point pointDepart, LocalTime heureDebut, double frequence, Distribution distribution, Circuit circuit){
         SourceBuilder builder = new SourceBuilder();
         ConteneurPassagersIllimite conteneurPassagersIllimiteParDefaut = simulation.getParametres().getConteneurPassagersIllimiteSource();
-        Source nouvelleSource = builder.ConstruireSource(nombreMax, pointDepart, heureDebut, frequence, distribution, conteneurPassagersIllimiteParDefaut, circuit);
+        Source nouvelleSource = builder.ConstruireSource(nombreMax, pointDepart, heureDebut, frequence, distribution, conteneurPassagersIllimiteParDefaut, circuit, this.simulation);
         simulation.ajouterSource(nouvelleSource);
     }  
     

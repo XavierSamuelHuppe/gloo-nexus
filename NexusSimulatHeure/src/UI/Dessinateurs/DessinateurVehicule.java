@@ -44,7 +44,7 @@ public class DessinateurVehicule {
         this.y = y;
         this.zoom = zoom;
         
-        System.out.println(((Integer)x).toString() + ", " + ((Integer)y).toString());
+        //System.out.println(((Integer)x).toString() + ", " + ((Integer)y).toString());
         
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
