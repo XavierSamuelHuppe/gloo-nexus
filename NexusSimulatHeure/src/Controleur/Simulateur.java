@@ -103,6 +103,7 @@ public class Simulateur {
     }
     public void retirerSegment(Segment segment){
         carte.retirerSegment(segment);
+        contexte.viderSegmentActif();
     }
     public void modifierSegment(Segment segmentCible, double min, double mode, double max){
         Distribution nouvelleDistribution = new Distribution(min, mode, max);
