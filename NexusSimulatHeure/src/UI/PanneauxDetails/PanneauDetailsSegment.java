@@ -53,19 +53,25 @@ public class PanneauDetailsSegment extends PanneauDetails implements java.util.O
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
+        jPanel2 = new javax.swing.JPanel();
         PanneauDistribution = new UI.PanneauxDetails.PanneauDistribution();
         jPanel1 = new javax.swing.JPanel();
         BoutonSauvegarder = new javax.swing.JButton();
         BoutonSupprimer = new javax.swing.JButton();
 
-        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
+        setLayout(new java.awt.BorderLayout());
+        add(filler1, java.awt.BorderLayout.WEST);
+        add(filler2, java.awt.BorderLayout.EAST);
+
+        jPanel2.setLayout(new java.awt.GridLayout(2, 0));
 
         PanneauDistribution.setAlignmentX(1.0F);
         PanneauDistribution.setMinimumSize(new java.awt.Dimension(400, 153));
-        add(PanneauDistribution);
+        jPanel2.add(PanneauDistribution);
 
         jPanel1.setMaximumSize(new java.awt.Dimension(2000000, 23));
-        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
 
         BoutonSauvegarder.setText("Sauvegarder");
         BoutonSauvegarder.addActionListener(new java.awt.event.ActionListener() {
@@ -83,7 +89,9 @@ public class PanneauDetailsSegment extends PanneauDetails implements java.util.O
         });
         jPanel1.add(BoutonSupprimer);
 
-        add(jPanel1);
+        jPanel2.add(jPanel1);
+
+        add(jPanel2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void BoutonSauvegarderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSauvegarderActionPerformed
@@ -111,6 +119,9 @@ public class PanneauDetailsSegment extends PanneauDetails implements java.util.O
     private javax.swing.JButton BoutonSauvegarder;
     private javax.swing.JButton BoutonSupprimer;
     private UI.PanneauxDetails.PanneauDistribution PanneauDistribution;
+    private javax.swing.Box.Filler filler1;
+    private javax.swing.Box.Filler filler2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }
