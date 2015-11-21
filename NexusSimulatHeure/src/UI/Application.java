@@ -9,12 +9,49 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.ActionListener;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Observable;
 import javafx.scene.input.KeyCode;
 import javax.swing.JOptionPane;
+import java.util.Observer;
 
 
-public class Application extends javax.swing.JFrame implements KeyListener, ActionListener {
+public class Application extends javax.swing.JFrame implements KeyListener, ActionListener, Observer {
 
+    @Override
+    public void update(Observable o, Object o1) {
+//        System.out.println("S'passe de quoi.");
+        rafraichir();
+    }
+
+    private void rafraichir()
+    {
+        this.ZoneEspaceTravail.repaint();
+        afficherHeureCourante();
+        afficherJoursSimulations();
+        afficherVitesseExecution();
+        this.revalidate();
+    }
+    
+    private final static DateTimeFormatter FORMAT_HEURE_COURANTE = DateTimeFormatter.ofPattern("HH:mm:ss");
+        
+    private void afficherHeureCourante()
+    {
+        LocalTime heureCourante = this.simulateur.obtenirHeureCourante();
+        LibelleHeureCourante.setText(String.format("Temps : " + heureCourante.format(FORMAT_HEURE_COURANTE)));
+    }
+    
+    private void afficherJoursSimulations()
+    {
+        LibelleJoursSimulation.setText(String.format("Journée : " + this.simulateur.obtenirJourneeCourante() + " de " + this.simulateur.obtenirNombreJourSimulation()));
+    }
+
+    private void afficherVitesseExecution()
+    {
+        LibelleVitesse.setText("Vitesse d'exécution " + SliderVitesse.getValue() + "%");
+    }
+    
     @Override
     public void actionPerformed(ActionEvent ae) {
         switch(ae.getActionCommand())
@@ -182,6 +219,8 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         
         initialiserBoutonsModes();
         BoutonModePoint.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
+        
+        this.simulateur.ajouterObserveurASimulation(this);
     }
     
     private void initialiserBoutonsModes()
@@ -282,6 +321,16 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     
     
     
+    private void rafraichirIconeBoutonDemarrerPause()
+    {
+        if(this.simulateur.simulationEstEnAction()){
+            BoutonDemarrerPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/media-pause-2x.png")));
+        }
+        else{
+            BoutonDemarrerPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/media-play-2x.png")));
+        }
+        BoutonDemarrerPause.revalidate();
+    }
     
     
     
@@ -318,12 +367,11 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         BoutonDemarrerPause = new javax.swing.JButton();
         BoutonArreter = new javax.swing.JButton();
         BoutonRedemarrer = new javax.swing.JButton();
-        BoutonRalentir = new javax.swing.JButton();
-        BoutonAccelerer = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        LibelleHeureCourante = new javax.swing.JLabel();
+        LibelleVitesse = new javax.swing.JLabel();
+        SliderVitesse = new javax.swing.JSlider();
         jSeparator2 = new javax.swing.JSeparator();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        LibelleJoursSimulation = new javax.swing.JLabel();
         PanneauEtatDroite = new javax.swing.JPanel();
         LibelleZoom = new javax.swing.JLabel();
         LibelleCoordonneesGeographiques = new javax.swing.JLabel();
@@ -331,7 +379,6 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         PanneauCentre = new javax.swing.JSplitPane();
         PanneauGauche = new javax.swing.JSplitPane();
         PanneauDetails = new javax.swing.JPanel();
-        LibelleEnteteDetails = new javax.swing.JLabel();
         ZoneEspaceTravail = new UI.EspaceTravail();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -474,6 +521,11 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         BoutonDemarrerPause.setMaximumSize(new java.awt.Dimension(24, 24));
         BoutonDemarrerPause.setMinimumSize(new java.awt.Dimension(24, 24));
         BoutonDemarrerPause.setPreferredSize(new java.awt.Dimension(24, 24));
+        BoutonDemarrerPause.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BoutonDemarrerPauseActionPerformed(evt);
+            }
+        });
         PanneauControleSimulation.add(BoutonDemarrerPause);
 
         BoutonArreter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/media-stop-2x.png"))); // NOI18N
@@ -484,6 +536,11 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         BoutonArreter.setMaximumSize(new java.awt.Dimension(24, 24));
         BoutonArreter.setMinimumSize(new java.awt.Dimension(24, 24));
         BoutonArreter.setPreferredSize(new java.awt.Dimension(24, 24));
+        BoutonArreter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BoutonArreterActionPerformed(evt);
+            }
+        });
         PanneauControleSimulation.add(BoutonArreter);
 
         BoutonRedemarrer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/media-step-backward-2x.png"))); // NOI18N
@@ -494,47 +551,44 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         BoutonRedemarrer.setMaximumSize(new java.awt.Dimension(24, 24));
         BoutonRedemarrer.setMinimumSize(new java.awt.Dimension(24, 24));
         BoutonRedemarrer.setPreferredSize(new java.awt.Dimension(24, 24));
-        PanneauControleSimulation.add(BoutonRedemarrer);
-
-        BoutonRalentir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/media-skip-backward-2x.png"))); // NOI18N
-        BoutonRalentir.setToolTipText("Ralentir");
-        BoutonRalentir.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        BoutonRalentir.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        BoutonRalentir.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        BoutonRalentir.setMaximumSize(new java.awt.Dimension(24, 24));
-        BoutonRalentir.setMinimumSize(new java.awt.Dimension(24, 24));
-        BoutonRalentir.setPreferredSize(new java.awt.Dimension(24, 24));
-        PanneauControleSimulation.add(BoutonRalentir);
-
-        BoutonAccelerer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/media-skip-forward-2x.png"))); // NOI18N
-        BoutonAccelerer.setToolTipText("Accelerer");
-        BoutonAccelerer.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        BoutonAccelerer.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        BoutonAccelerer.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        BoutonAccelerer.setMaximumSize(new java.awt.Dimension(24, 24));
-        BoutonAccelerer.setMinimumSize(new java.awt.Dimension(24, 24));
-        BoutonAccelerer.setPreferredSize(new java.awt.Dimension(24, 24));
-        BoutonAccelerer.addActionListener(new java.awt.event.ActionListener() {
+        BoutonRedemarrer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BoutonAccelererActionPerformed(evt);
+                BoutonRedemarrerActionPerformed(evt);
             }
         });
-        PanneauControleSimulation.add(BoutonAccelerer);
+        PanneauControleSimulation.add(BoutonRedemarrer);
 
         PanneauEtatGauche.add(PanneauControleSimulation);
 
-        jLabel3.setText("Temps : 00:00:00 ");
-        jLabel3.setPreferredSize(new java.awt.Dimension(150, 14));
-        PanneauEtatGauche.add(jLabel3);
+        LibelleHeureCourante.setText("Temps : 00:00:00 ");
+        LibelleHeureCourante.setPreferredSize(new java.awt.Dimension(150, 14));
+        PanneauEtatGauche.add(LibelleHeureCourante);
+
+        LibelleVitesse.setText("Vitesse d'exécution");
+        LibelleVitesse.setToolTipText("");
+        LibelleVitesse.setPreferredSize(new java.awt.Dimension(150, 14));
+        PanneauEtatGauche.add(LibelleVitesse);
+        LibelleVitesse.getAccessibleContext().setAccessibleName("");
+
+        SliderVitesse.setFont(new java.awt.Font("Tahoma", 0, 5)); // NOI18N
+        SliderVitesse.setMajorTickSpacing(100);
+        SliderVitesse.setMaximum(700);
+        SliderVitesse.setMinorTickSpacing(25);
+        SliderVitesse.setPaintTicks(true);
+        SliderVitesse.setSnapToTicks(true);
+        SliderVitesse.setToolTipText("Changer la vitesse d'exécution de la simulation.");
+        SliderVitesse.setValue(100);
+        SliderVitesse.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                SliderVitesseStateChanged(evt);
+            }
+        });
+        PanneauEtatGauche.add(SliderVitesse);
         PanneauEtatGauche.add(jSeparator2);
 
-        jLabel6.setText("Vitesse d'exécution : 1x");
-        jLabel6.setPreferredSize(new java.awt.Dimension(150, 14));
-        PanneauEtatGauche.add(jLabel6);
-
-        jLabel4.setText("Journée : 1 de X");
-        jLabel4.setPreferredSize(new java.awt.Dimension(150, 14));
-        PanneauEtatGauche.add(jLabel4);
+        LibelleJoursSimulation.setText("Journée : 1 de X");
+        LibelleJoursSimulation.setPreferredSize(new java.awt.Dimension(150, 14));
+        PanneauEtatGauche.add(LibelleJoursSimulation);
 
         PanneauEtat.add(PanneauEtatGauche, java.awt.BorderLayout.WEST);
 
@@ -563,10 +617,6 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         PanneauCentre.setLeftComponent(PanneauGauche);
 
         PanneauDetails.setLayout(new java.awt.BorderLayout());
-
-        LibelleEnteteDetails.setText("Details");
-        PanneauDetails.add(LibelleEnteteDetails, java.awt.BorderLayout.NORTH);
-
         PanneauCentre.setTopComponent(PanneauDetails);
         PanneauCentre.setRightComponent(ZoneEspaceTravail);
 
@@ -590,9 +640,34 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         }
     }//GEN-LAST:event_BoutonNouveauActionPerformed
 
-    private void BoutonAccelererActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonAccelererActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BoutonAccelererActionPerformed
+    private void BoutonDemarrerPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonDemarrerPauseActionPerformed
+        if(this.simulateur.simulationEstEnAction()) {
+            this.simulateur.pauser();
+        }
+        else {
+            this.simulateur.demarerRedemarer();
+        }
+        rafraichirIconeBoutonDemarrerPause();
+    }//GEN-LAST:event_BoutonDemarrerPauseActionPerformed
+
+    private void BoutonArreterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonArreterActionPerformed
+        this.simulateur.arreter();
+        rafraichirIconeBoutonDemarrerPause();
+    }//GEN-LAST:event_BoutonArreterActionPerformed
+
+    private void BoutonRedemarrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonRedemarrerActionPerformed
+        if(this.simulateur.simulationEstEnAction()) {
+            this.simulateur.arreter();
+        }
+        this.simulateur.demarerRedemarer();
+        rafraichirIconeBoutonDemarrerPause();
+    }//GEN-LAST:event_BoutonRedemarrerActionPerformed
+
+    private void SliderVitesseStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_SliderVitesseStateChanged
+        this.simulateur.modfierVitesse(SliderVitesse.getValue());
+        afficherVitesseExecution();
+        this.revalidate();
+    }//GEN-LAST:event_SliderVitesseStateChanged
 
     /**
      * @param args the command line arguments
@@ -633,7 +708,6 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BoutonAccelerer;
     private javax.swing.JButton BoutonAnnuler;
     private javax.swing.JButton BoutonArreter;
     private javax.swing.JButton BoutonCharger;
@@ -645,12 +719,13 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     private javax.swing.JButton BoutonModeSource;
     private javax.swing.JButton BoutonNouveau;
     private javax.swing.JButton BoutonParametres;
-    private javax.swing.JButton BoutonRalentir;
     private javax.swing.JButton BoutonRedemarrer;
     private javax.swing.JButton BoutonRepeter;
     private javax.swing.JButton BoutonSauvegarder;
     private javax.swing.JLabel LibelleCoordonneesGeographiques;
-    private javax.swing.JLabel LibelleEnteteDetails;
+    private javax.swing.JLabel LibelleHeureCourante;
+    private javax.swing.JLabel LibelleJoursSimulation;
+    private javax.swing.JLabel LibelleVitesse;
     private javax.swing.JLabel LibelleZoom;
     private javax.swing.JPanel PanneauBarreOutils;
     private javax.swing.JSplitPane PanneauCentre;
@@ -661,10 +736,8 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     private javax.swing.JPanel PanneauEtatGauche;
     private javax.swing.JSplitPane PanneauGauche;
     private javax.swing.JPanel PanneauPrincipal;
+    private javax.swing.JSlider SliderVitesse;
     private UI.EspaceTravail ZoneEspaceTravail;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     // End of variables declaration//GEN-END:variables

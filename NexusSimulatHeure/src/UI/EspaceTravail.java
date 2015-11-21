@@ -8,7 +8,6 @@ import UI.Constantes.Couleurs;
 import UI.Dessinateurs.DessinateurVehicule;
 import UI.Exceptions.SegmentNonTrouveException;
 import UI.Utils.PaireDoubles;
-import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;

@@ -64,6 +64,18 @@ public class Simulateur {
     public void pauser(){
         simulation.pauser();
     }
+    public LocalTime obtenirHeureCourante(){
+        return this.simulation.getHeureCourante();
+    }
+    public int obtenirJourneeCourante(){
+        return this.simulation.getJourneeCourante();
+    }
+    public int obtenirNombreJourSimulation(){
+        return this.simulation.getNombreJourSimulation();
+    }
+    public boolean simulationEstEnAction(){
+        return this.getParametresSimulation().estEnAction();
+    }
     
     public Point ajouterPoint(double x, double y){
         PointFactory factory = new PointFactory();
@@ -364,5 +376,11 @@ public class Simulateur {
         catch (AucunPointCreateurException ex){
             return false;
         }
+    }
+    
+    
+    public void ajouterObserveurASimulation(Observer observeur)
+    {
+        simulation.addObserver(observeur);
     }
 }

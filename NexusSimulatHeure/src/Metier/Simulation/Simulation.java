@@ -247,4 +247,19 @@ public class Simulation extends Observable{
         }
         return positions;
     }
+    
+    public LocalTime getHeureCourante()
+    {
+        return this.heureCourante;
+    }
+    
+    public int getJourneeCourante()
+    {
+        return this.JourneeCourante;
+    }
+    
+    public int getNombreJourSimulation()
+    {
+        return parametres.getNombreJourSimulation();
+    }
 }

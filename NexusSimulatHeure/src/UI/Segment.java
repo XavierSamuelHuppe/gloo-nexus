@@ -17,7 +17,6 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.util.Observable;
 import java.util.Observer;
-import sun.awt.geom.Curve;
 
 public class Segment implements IDetailsAffichables, Observer {
 
