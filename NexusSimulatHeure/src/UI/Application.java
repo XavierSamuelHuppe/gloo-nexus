@@ -467,7 +467,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         PanneauControleSimulation.setLayout(new javax.swing.BoxLayout(PanneauControleSimulation, javax.swing.BoxLayout.LINE_AXIS));
 
         BoutonDemarrerPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/media-play-2x.png"))); // NOI18N
-        BoutonDemarrerPause.setToolTipText("");
+        BoutonDemarrerPause.setToolTipText("Lancer simulation");
         BoutonDemarrerPause.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonDemarrerPause.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         BoutonDemarrerPause.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -477,7 +477,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         PanneauControleSimulation.add(BoutonDemarrerPause);
 
         BoutonArreter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/media-stop-2x.png"))); // NOI18N
-        BoutonArreter.setToolTipText("");
+        BoutonArreter.setToolTipText("Arrêter simulation");
         BoutonArreter.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonArreter.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         BoutonArreter.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -487,7 +487,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         PanneauControleSimulation.add(BoutonArreter);
 
         BoutonRedemarrer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/media-step-backward-2x.png"))); // NOI18N
-        BoutonRedemarrer.setToolTipText("");
+        BoutonRedemarrer.setToolTipText("Redémarrer la simulation");
         BoutonRedemarrer.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonRedemarrer.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         BoutonRedemarrer.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -497,7 +497,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         PanneauControleSimulation.add(BoutonRedemarrer);
 
         BoutonRalentir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/media-skip-backward-2x.png"))); // NOI18N
-        BoutonRalentir.setToolTipText("");
+        BoutonRalentir.setToolTipText("Ralentir");
         BoutonRalentir.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonRalentir.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         BoutonRalentir.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -507,13 +507,18 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         PanneauControleSimulation.add(BoutonRalentir);
 
         BoutonAccelerer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/media-skip-forward-2x.png"))); // NOI18N
-        BoutonAccelerer.setToolTipText("");
+        BoutonAccelerer.setToolTipText("Accelerer");
         BoutonAccelerer.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonAccelerer.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         BoutonAccelerer.setMargin(new java.awt.Insets(2, 2, 2, 2));
         BoutonAccelerer.setMaximumSize(new java.awt.Dimension(24, 24));
         BoutonAccelerer.setMinimumSize(new java.awt.Dimension(24, 24));
         BoutonAccelerer.setPreferredSize(new java.awt.Dimension(24, 24));
+        BoutonAccelerer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BoutonAccelererActionPerformed(evt);
+            }
+        });
         PanneauControleSimulation.add(BoutonAccelerer);
 
         PanneauEtatGauche.add(PanneauControleSimulation);
@@ -584,6 +589,10 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
             this.revalidate();
         }
     }//GEN-LAST:event_BoutonNouveauActionPerformed
+
+    private void BoutonAccelererActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonAccelererActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BoutonAccelererActionPerformed
 
     /**
      * @param args the command line arguments
