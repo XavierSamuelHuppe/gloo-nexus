@@ -56,6 +56,10 @@ public abstract class Circuit {
     public abstract Segment obtenirProchainSegment(Point pointDepart);
     
     @Override
+    public String toString(){
+        return this.nom;
+    }
+    @Override
     public boolean equals(Object o){
         if (o == null) return false;
         if (o == this) return true;
