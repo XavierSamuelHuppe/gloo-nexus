@@ -11,6 +11,7 @@ import java.util.Observable;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.text.DateFormat;
+import Metier.Carte.Point;
 import javax.swing.JOptionPane;
 import javax.swing.DefaultComboBoxModel;
 import java.time.format.DateTimeFormatter;
@@ -21,16 +22,20 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
     private Metier.Source.Source sourceMetierLie;
     private Metier.Carte.Point pointMetierLie;
     private Controleur.Simulateur simulateur;
+    private Metier.Circuit.Circuit circuitActuel;
+    private boolean modeCreationBool;
     
     public PanneauDetailsSource() {
         initComponents();
     }
     
-    public PanneauDetailsSource(Simulateur sim) {
+    public PanneauDetailsSource(Simulateur sim, Metier.Carte.Point point) {
         super();
         initComponents();
         this.simulateur = sim;
+        this.pointMetierLie = point;
         this.modeCreation();
+        this.modeCreationBool = true;
         
         //passer son point en param et trouver le circuit qui lui est associé
     }
@@ -39,15 +44,30 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
         super();
         initComponents();
         this.simulateur = simulateur;
-
+        this.pointMetierLie = s.getPointDepart();
+        this.circuitActuel = s.getCircuit();
         this.sourceMetierLie = s;
+        this.modeCreationBool = false;
         
         rafraichir();
     }
              
     
     public void modeCreation(){
-        this.ChampCircuit.setEnabled(false);
+        try
+        {
+            this.ChampCircuit.removeAllItems();
+            List<Circuit> circuits = this.simulateur.circuitsPassantPar(pointMetierLie);
+            for (Circuit circuit: circuits){
+                this.ChampCircuit.addItem(circuit);
+            }
+            
+        }catch (Exception ex) {
+               JOptionPane.showMessageDialog(this.obtenirApplication(),ex.toString());
+        } 
+        
+        
+        this.ChampCircuit.setEnabled(true);
         this.ChampFrequence.setText("0");
         this.ChampHeureDepart.setText("00:00:00");
         this.ChampHeureFin.setText("00:00:00");
@@ -63,6 +83,8 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
     public void rafraichir() {
         List<Circuit> circuits = this.obtenirApplication().getSimulateur().circuitsPassantPar(this.sourceMetierLie.getPointDepart());
         this.ChampCircuit.setModel(new DefaultComboBoxModel(circuits.toArray()));
+        
+        
         this.ChampCircuit.setSelectedItem(this.sourceMetierLie.getCircuit());
         this.ChampFrequence.setText(String.valueOf(sourceMetierLie.getFrequence()));
         this.ChampHeureDepart.setText(sourceMetierLie.getheureDebut().toString());
@@ -82,6 +104,25 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
     public void update(Observable o, Object o1) {
         this.rafraichir();
     }
+    
+    public void sauvegarderNouvelleSource(){
+    
+        this.circuitActuel =(Circuit) this.ChampCircuit.getSelectedItem();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        LocalTime heureDebut = LocalTime.parse(this.ChampHeureFin.getText(),formatter);
+        
+        if(this.RadioHeureFin.isSelected()){
+            LocalTime heureFin = LocalTime.parse(this.ChampHeureFin.getText(),formatter);
+            this.obtenirApplication().getSimulateur().ajouterSource(heureFin , this.pointMetierLie, heureDebut, Double.parseDouble(this.ChampFrequence.getText()), this.circuitActuel);
+        }
+        if(this.RadioNombreMax.isSelected()){
+            this.obtenirApplication().getSimulateur().ajouterSource(Integer.parseInt(this.ChampNombreMax.getText()) , this.pointMetierLie, heureDebut, Double.parseDouble(this.ChampFrequence.getText()), this.circuitActuel);
+            
+        }
+        
+        this.obtenirApplication().repaint();
+}
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -230,33 +271,40 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
 
     private void BoutonSauvegarderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSauvegarderActionPerformed
         
-        /*DateFormat formatter = new SimpleDateFormat("HH:mm");
+        if(modeCreationBool == true){
+            sauvegarderNouvelleSource();
+        }
+        /*
+        
+        DateFormat formatter = new SimpleDateFormat("HH:mm");
             try {
             java.time.LocalTime heureDebut = new java.Time(formatter.parse(this.ChampHeureDepart.getText()).getTime());
             } catch (ParseException ex) {
                 ex.printStackTrace();
-            } */
+            } 
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         LocalTime heureDebut = LocalTime.parse(this.ChampHeureFin.getText(),formatter);
         //LocalTime heureDebut = LocalTime.parse(this.ChampHeureDepart.getText());
         if(this.RadioHeureFin.isSelected()){
-            /*try {
+            try {
             DateFormat formatter1 = new SimpleDateFormat("HH:mm");
             java.sql.Time heureFin = new java.sql.Time(formatter1.parse(this.ChampHeureFin.getText()).getTime());
             } catch (ParseException ex) {
                 ex.printStackTrace();
-            }*/
+            }
             //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:MM:SS");
             
             LocalTime heureFin = LocalTime.parse(this.ChampHeureFin.getText(),formatter);
-            this.obtenirApplication().getSimulateur().modifierSource(this.sourceMetierLie, heureFin , this.sourceMetierLie.getPointDepart(), heureDebut, Double.parseDouble(this.ChampFrequence.getText()), this.sourceMetierLie.getCircuit());
+            this.obtenirApplication().getSimulateur().modifierSource(this.sourceMetierLie, heureFin , this.sourceMetierLie.getPointDepart(), heureDebut, Double.parseDouble(this.ChampFrequence.getText()), this.circuitActuel);
         }
         if(this.RadioNombreMax.isSelected()){
-            this.obtenirApplication().getSimulateur().modifierSource(this.sourceMetierLie, Integer.parseInt(this.ChampNombreMax.getText()) , this.sourceMetierLie.getPointDepart(), heureDebut, Double.parseDouble(this.ChampFrequence.getText()), this.sourceMetierLie.getCircuit());
+            this.obtenirApplication().getSimulateur().modifierSource(this.sourceMetierLie, Integer.parseInt(this.ChampNombreMax.getText()) , this.sourceMetierLie.getPointDepart(), heureDebut, Double.parseDouble(this.ChampFrequence.getText()), this.circuitActuel);
             
         }
         
-        this.obtenirApplication().repaint();
+        this.obtenirApplication().repaint();*/
+        
     }//GEN-LAST:event_BoutonSauvegarderActionPerformed
 
     private void controlEnabler(Boolean bool){
