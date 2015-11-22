@@ -106,9 +106,10 @@ public class PanneauDistribution extends PanneauDetails {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5));
+        jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5));
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5));
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         ChampMinimum = new javax.swing.JTextField();
@@ -120,12 +121,19 @@ public class PanneauDistribution extends PanneauDetails {
         ChampMaximum = new javax.swing.JTextField();
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
-        add(filler1);
 
+        jPanel5.setMaximumSize(new java.awt.Dimension(2147483647, 30));
+        jPanel5.setPreferredSize(new java.awt.Dimension(100, 15));
+        jPanel5.setLayout(new java.awt.BorderLayout());
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel1.setText("Paramètres de la distribution");
-        jLabel1.setAlignmentX(1.0F);
-        add(jLabel1);
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jPanel5.add(jLabel1, java.awt.BorderLayout.CENTER);
+
+        add(jPanel5);
         add(filler2);
+        add(filler1);
 
         jPanel2.setMaximumSize(new java.awt.Dimension(2147483647, 50));
         jPanel2.setPreferredSize(new java.awt.Dimension(100, 50));
@@ -174,5 +182,6 @@ public class PanneauDistribution extends PanneauDetails {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     // End of variables declaration//GEN-END:variables
 }
