@@ -14,7 +14,6 @@ import java.text.DateFormat;
 import Metier.Carte.Point;
 import javax.swing.JOptionPane;
 import javax.swing.DefaultComboBoxModel;
-import java.time.format.DateTimeFormatter;
 
 
 public class PanneauDetailsSource extends PanneauDetails implements java.util.Observer {
@@ -29,11 +28,13 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
         super();
         initComponents();
         this.simulateur = sim;
+        
         this.pointMetierLie = point;
         this.modeCreationBool = true;
         this.PanneauDistribution.setDistribution(this.simulateur.obtenirDistributionTempsGenerationVehiculeDefaut());
         this.modeCreation();
     }
+    
     public PanneauDetailsSource(Simulateur sim, Metier.Source.Source s)
     {
         super();
@@ -50,29 +51,27 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
              
     
     private void modeCreation(){
-        try
-        {
+        try {
             this.ChampCircuit.removeAllItems();
             List<Circuit> circuits = this.simulateur.circuitsPassantPar(pointMetierLie);
             for (Circuit circuit: circuits){
                 this.ChampCircuit.addItem(circuit);
             }
-            
-        }catch (Exception ex) {
+        }
+        catch (Exception ex) {
                JOptionPane.showMessageDialog(this.obtenirApplication(),ex.toString());
         } 
         
         this.ChampCircuit.setEnabled(true);
-        this.ChampHeureDepart.setText("00:00:00");
-        this.ChampHeureFin.setText("00:00:00");
-        this.ChampNombreMax.setText("0");
+        this.ChampHeureDepart.setText(this.simulateur.obtenirHeureDebutSimulation().format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE));
+        this.ChampHeureFin.setText(this.simulateur.obtenirHeureFinSimulation().format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE));
+        this.ChampNombreMax.setText("1");
         this.BoutonSupprimer.setEnabled(false);
-        
     }
     
     @Override
     public void rafraichir() {
-        
+        System.err.println("rafr");
         this.ChampCircuit.removeAllItems();
         List<Circuit> circuits = this.simulateur.circuitsPassantPar(pointMetierLie);
         for (Circuit circuit: circuits){
@@ -153,13 +152,13 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
             {
                 validations += "L'heure de fin de génération des véhicules doit être inscrite dans un format 00:00:00.\r\n";
             }
-            else
-            {
-                if(LocalTime.parse(this.ChampHeureDepart.getText(), UI.Constantes.Formats.FORMAT_HEURE_COURANTE).isAfter(LocalTime.parse(this.ChampHeureFin.getText(), UI.Constantes.Formats.FORMAT_HEURE_COURANTE)))
-                {
-                    validations += "L'heure de début de génération des véhicules doit précédé l'heure de fin de génération des véhicules.\r\n";
-                }
-            }
+//            else
+//            {
+//                if(LocalTime.parse(this.ChampHeureDepart.getText(), UI.Constantes.Formats.FORMAT_HEURE_COURANTE).isAfter(LocalTime.parse(this.ChampHeureFin.getText(), UI.Constantes.Formats.FORMAT_HEURE_COURANTE)))
+//                {
+//                    validations += "L'heure de début de génération des véhicules doit précédé l'heure de fin de génération des véhicules.\r\n";
+//                }
+//            }
         }
         if(this.RadioNombreMax.isSelected()){
             try{
@@ -257,29 +256,28 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
                     .addComponent(HeureDepart, javax.swing.GroupLayout.Alignment.LEADING))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(ChampCircuit, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ChampCircuit, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(RadioHeureFin, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(RadioNombreMax)
-                            .addComponent(HeureFin))
+                            .addComponent(HeureFin)
+                            .addComponent(RadioHeureFin, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(ChampHeureFin)
                             .addComponent(ChampNombreMax)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                    .addComponent(ChampHeureDepart)
+                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(BoutonSauvegarder)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BoutonSupprimer, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(ChampHeureDepart, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(BoutonSauvegarder)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(BoutonSupprimer, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 23, Short.MAX_VALUE))
+                            .addComponent(PanneauDistribution, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(PanneauDistribution, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

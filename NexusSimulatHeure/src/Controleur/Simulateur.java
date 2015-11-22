@@ -415,4 +415,12 @@ public class Simulateur {
     public Metier.Distribution obtenirDistributionTempsGenerationVehiculeDefaut(){
         return this.simulation.getParametres().getDistributionTempsGenerationVehiculeDefaut();
     }
+    
+    public LocalTime obtenirHeureDebutSimulation(){
+        return this.getParametresSimulation().getHeureDebut();
+    }
+    
+    public LocalTime obtenirHeureFinSimulation(){
+        return this.getParametresSimulation().getHeureFin();
+    }
 }
