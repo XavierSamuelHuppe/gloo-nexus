@@ -162,9 +162,9 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         
         Graphics2D g2 = (Graphics2D)g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        
-        dessinerPoints(g2);
+
         dessinerSegments(g2);
+        dessinerPoints(g2);
         dessinerVehicules(g2);
     }
     

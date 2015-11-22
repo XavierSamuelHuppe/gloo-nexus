@@ -79,14 +79,16 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
-        dessinerFond(g2);
-        dessinerCentre(g2);
+//        dessinerFond(g2);
+//        dessinerCentre(g2);
     }
     
     public void dessiner(Graphics2D g2)
     {
         determinerMode();
         this.repaint();
+        dessinerFond(g2);
+        dessinerCentre(g2);
         dessinerNomSiRequis(g2);
         dessinerDetailsSourcesSiRequis(g2);
     }
@@ -109,7 +111,7 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         {
             g2.setColor(Couleurs.POINT_CREATION_SEGMENT);
         }
-        g2.fillOval(0, 0, calculerZoom(DIAMETRE), calculerZoom(DIAMETRE));
+        g2.fillOval(this.getX(), this.getY(), calculerZoom(DIAMETRE), calculerZoom(DIAMETRE));
     }
     
     private void dessinerCentre(Graphics2D g2)
@@ -130,7 +132,7 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         {
             g2.setColor(Couleurs.POINT_FOND_CREATION_SEGMENT);
         }
-        g2.fillOval(calculerZoom(POSITION_CERCLE_INTERNE), calculerZoom(POSITION_CERCLE_INTERNE), calculerZoom(LARGEUR_CERCLE_INTERNE), calculerZoom(LARGEUR_CERCLE_INTERNE));
+        g2.fillOval(this.getX() + calculerZoom(POSITION_CERCLE_INTERNE), this.getY() + calculerZoom(POSITION_CERCLE_INTERNE), calculerZoom(LARGEUR_CERCLE_INTERNE), calculerZoom(LARGEUR_CERCLE_INTERNE));
     }
     
     private void dessinerNomSiRequis(Graphics2D g2)
