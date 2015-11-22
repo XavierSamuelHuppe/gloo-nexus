@@ -21,15 +21,15 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                  <Component id="ChampCircuit" alignment="0" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="ChampFrequence" alignment="0" max="32767" attributes="0"/>
-                  <Component id="Frequence" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="ChampPoint" alignment="0" max="32767" attributes="0"/>
-                  <Component id="PointDepart" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="ChampHeureDepart" alignment="0" max="32767" attributes="0"/>
                   <Component id="HeureDepart" alignment="0" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="ChampCircuit" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="RadioHeureFin" min="-2" pref="89" max="-2" attributes="0"/>
@@ -37,20 +37,26 @@
                           <Component id="HeureFin" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="ChampNombreMax" pref="0" max="32767" attributes="0"/>
-                          <Component id="ChampHeureFin" min="-2" pref="72" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="ChampHeureFin" max="32767" attributes="0"/>
+                          <Component id="ChampNombreMax" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="BoutonSauvegarder" max="32767" attributes="0"/>
-                          <Component id="BoutonSupprimer" max="32767" attributes="0"/>
-                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="BoutonSauvegarder" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="BoutonSupprimer" min="-2" pref="95" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
+                  <Component id="ChampHeureDepart" alignment="0" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="PanneauDistribution" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -60,15 +66,7 @@
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="ChampCircuit" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-              <Component id="Frequence" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="ChampFrequence" min="-2" pref="36" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="PointDepart" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="ChampPoint" min="-2" pref="36" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Component id="HeureDepart" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="ChampHeureDepart" min="-2" pref="36" max="-2" attributes="0"/>
@@ -88,11 +86,13 @@
                   <Component id="RadioNombreMax" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="ChampNombreMax" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="BoutonSauvegarder" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="BoutonSupprimer" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="46" max="32767" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Component id="PanneauDistribution" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="BoutonSupprimer" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="BoutonSauvegarder" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
           </Group>
       </Group>
     </DimensionLayout>
@@ -101,27 +101,6 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="text" type="java.lang.String" value="Circuit"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="ChampFrequence">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="ChampFrequence"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="Frequence">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Frequence"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="ChampPoint">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="ChampPoint"/>
-        <Property name="enabled" type="boolean" value="false"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="PointDepart">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Point de D&#xe9;part"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="ChampHeureDepart">
@@ -141,7 +120,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="HeureFin">
       <Properties>
-        <Property name="text" type="java.lang.String" value="fin de la source"/>
+        <Property name="text" type="java.lang.String" value="Fin de la source"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="BoutonSauvegarder">
@@ -158,7 +137,7 @@
           <ComponentRef name="ButtonGroupFinSource"/>
         </Property>
         <Property name="selected" type="boolean" value="true"/>
-        <Property name="text" type="java.lang.String" value="heure de fin"/>
+        <Property name="text" type="java.lang.String" value="Heure de fin"/>
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="RadioHeureFinMouseClicked"/>
@@ -201,6 +180,8 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BoutonSupprimerActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="UI.PanneauxDetails.PanneauDistribution" name="PanneauDistribution">
     </Component>
   </SubComponents>
 </Form>

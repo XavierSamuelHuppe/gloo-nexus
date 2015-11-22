@@ -33,6 +33,11 @@ public abstract class Source {
         this.simulation = simulation;
     }
     
+    public Distribution getDistribution()
+    {
+        return distributionAUtiliser;
+    }
+    
     public Point getPointDepart(){
         return pointDepart;
     }

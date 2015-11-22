@@ -24,17 +24,14 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
     private Controleur.Simulateur simulateur;
     private Metier.Circuit.Circuit circuitActuel;
     private boolean modeCreationBool;
-    
-    public PanneauDetailsSource() {
-        initComponents();
-    }
-    
+        
     public PanneauDetailsSource(Simulateur sim, Metier.Carte.Point point) {
         super();
         initComponents();
         this.simulateur = sim;
         this.pointMetierLie = point;
         this.modeCreationBool = true;
+        this.PanneauDistribution.setDistribution(this.simulateur.obtenirDistributionTempsGenerationVehiculeDefaut());
         this.modeCreation();
     }
     public PanneauDetailsSource(Metier.Source.Source s)
@@ -46,6 +43,7 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
         this.circuitActuel = s.getCircuit();
         this.sourceMetierLie = s;
         this.modeCreationBool = false;
+        this.PanneauDistribution.setDistribution(s.getDistribution());
         
         rafraichir();
     }
@@ -64,9 +62,7 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
                JOptionPane.showMessageDialog(this.obtenirApplication(),ex.toString());
         } 
         
-        this.ChampPoint.setText(this.pointMetierLie.getNom());
         this.ChampCircuit.setEnabled(true);
-        this.ChampFrequence.setText("0");
         this.ChampHeureDepart.setText("00:00:00");
         this.ChampHeureFin.setText("00:00:00");
         this.ChampNombreMax.setText("0");
@@ -83,9 +79,7 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
             this.ChampCircuit.addItem(circuit);
         }
         this.ChampCircuit.setSelectedItem(this.circuitActuel);
-        this.ChampFrequence.setText(String.valueOf(sourceMetierLie.getFrequence()));
         this.ChampHeureDepart.setText(sourceMetierLie.getheureDebut().toString());
-        this.ChampPoint.setText(this.pointMetierLie.getNom());
         if(this.sourceMetierLie.getClass() == SourceFinie.class){
             SourceFinie SourceCaster = (SourceFinie) sourceMetierLie;
             this.ChampNombreMax.setText(String.valueOf(SourceCaster.getNombreMax()));
@@ -103,7 +97,9 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
     }
     
     public void sauvegarderNouvelleSource(){
-    
+        if(!valider())
+            return;
+        
         this.circuitActuel =(Circuit) this.ChampCircuit.getSelectedItem();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -111,16 +107,19 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
 
         if(this.RadioHeureFin.isSelected()){
             LocalTime heureFin = LocalTime.parse(this.ChampHeureFin.getText(),formatter);
-            this.obtenirApplication().getSimulateur().ajouterSource(heureFin , this.pointMetierLie, heureDebut, this.circuitActuel);
+            this.obtenirApplication().getSimulateur().ajouterSource(heureFin , this.pointMetierLie, heureDebut, this.circuitActuel, PanneauDistribution.obtenirMin(), PanneauDistribution.obtenirMode(), PanneauDistribution.obtenirMax());
         }
         if(this.RadioNombreMax.isSelected()){
-            this.obtenirApplication().getSimulateur().ajouterSource(Integer.parseInt(this.ChampNombreMax.getText()), this.pointMetierLie, heureDebut, this.circuitActuel);
-            
+            this.obtenirApplication().getSimulateur().ajouterSource(Integer.parseInt(this.ChampNombreMax.getText()), this.pointMetierLie, heureDebut, this.circuitActuel, PanneauDistribution.obtenirMin(), PanneauDistribution.obtenirMode(), PanneauDistribution.obtenirMax());
         }
         this.obtenirApplication().repaint();
         this.obtenirApplication().viderPanneauDetails();
-}
+    }
+    
     public void sauvegarderSourceModifier(){
+        if(!valider())
+            return;
+        
         this.circuitActuel =(Circuit) this.ChampCircuit.getSelectedItem();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -131,10 +130,51 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
             this.obtenirApplication().getSimulateur().modifierSource(sourceMetierLie, heureFin , this.pointMetierLie, heureDebut, this.circuitActuel);
         }
         if(this.RadioNombreMax.isSelected()){
-            this.obtenirApplication().getSimulateur().modifierSource(sourceMetierLie, Integer.parseInt(this.ChampNombreMax.getText()) , this.pointMetierLie, heureDebut, this.circuitActuel);
+            this.obtenirApplication().getSimulateur().modifierSource(sourceMetierLie, Integer.parseInt(this.ChampNombreMax.getText()), this.pointMetierLie, heureDebut, this.circuitActuel);
         }
+        
         this.obtenirApplication().repaint();
         this.obtenirApplication().viderPanneauDetails();
+    }
+    
+    private boolean valider()
+    {
+        String validations = "";
+        if(ChampCircuit.getSelectedItem() == null)
+        {
+            validations += "Une source de véhicule doit absolument être lié à un circuit.\r\n";
+        }
+        
+        if(!java.util.regex.Pattern.matches("^(([0-1]?[0-9])|([2][0-3])):([0-5]?[0-9]):([0-5]?[0-9])$", ChampHeureDepart.getText()))
+        {
+            validations += "L'heure de début de génération des véhicules doit être inscrite dans un format 00:00:00.\r\n";
+        }
+        if(RadioHeureFin.isSelected())
+        {
+            if(!java.util.regex.Pattern.matches(UI.Constantes.Validations.REGEX_FORMAT_HEURE, ChampHeureFin.getText()))
+            {
+                validations += "L'heure de fin de génération des véhicules doit être inscrite dans un format 00:00:00.\r\n";
+            }
+        }
+        if(this.RadioNombreMax.isSelected()){
+            try{
+                int nMax = Integer.parseInt(this.ChampNombreMax.getText());
+                if(nMax < 0)
+                    throw new NumberFormatException();
+            }
+            catch(NumberFormatException ex){
+                validations += "Le nombre maximal de véhicules à générer doit être un nombre positif.\r\n";
+            }
+        }
+        
+        validations += PanneauDistribution.validerValeurs();
+        
+        if(!validations.equals(""))
+        {
+            JOptionPane.showMessageDialog(this.obtenirApplication(), "Les erreurs suivantes ont été détectées : \r\n" + validations, "Erreur à la sauvegarde de la source", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
     }
     
     @SuppressWarnings("unchecked")
@@ -143,10 +183,6 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
 
         ButtonGroupFinSource = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
-        ChampFrequence = new javax.swing.JTextField();
-        Frequence = new javax.swing.JLabel();
-        ChampPoint = new javax.swing.JTextField();
-        PointDepart = new javax.swing.JLabel();
         ChampHeureDepart = new javax.swing.JTextField();
         HeureDepart = new javax.swing.JLabel();
         ChampHeureFin = new javax.swing.JTextField();
@@ -157,17 +193,9 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
         ChampNombreMax = new javax.swing.JTextField();
         ChampCircuit = new javax.swing.JComboBox();
         BoutonSupprimer = new javax.swing.JButton();
+        PanneauDistribution = new UI.PanneauxDetails.PanneauDistribution();
 
         jLabel1.setText("Circuit");
-
-        ChampFrequence.setText("ChampFrequence");
-
-        Frequence.setText("Frequence");
-
-        ChampPoint.setText("ChampPoint");
-        ChampPoint.setEnabled(false);
-
-        PointDepart.setText("Point de Départ");
 
         ChampHeureDepart.setText("ChampHeureDepart");
 
@@ -175,7 +203,7 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
 
         ChampHeureFin.setText("ChampHeureFin");
 
-        HeureFin.setText("fin de la source");
+        HeureFin.setText("Fin de la source");
 
         BoutonSauvegarder.setText("Sauvegarder");
         BoutonSauvegarder.addActionListener(new java.awt.event.ActionListener() {
@@ -186,7 +214,7 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
 
         ButtonGroupFinSource.add(RadioHeureFin);
         RadioHeureFin.setSelected(true);
-        RadioHeureFin.setText("heure de fin");
+        RadioHeureFin.setText("Heure de fin");
         RadioHeureFin.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 RadioHeureFinMouseClicked(evt);
@@ -219,30 +247,34 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(ChampCircuit, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ChampFrequence, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Frequence, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ChampPoint, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(PointDepart, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ChampHeureDepart, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(HeureDepart, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(HeureDepart, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(ChampCircuit, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(RadioHeureFin, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(RadioNombreMax)
                             .addComponent(HeureFin))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(ChampNombreMax, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                            .addComponent(ChampHeureFin, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ChampHeureFin)
+                            .addComponent(ChampNombreMax)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(BoutonSauvegarder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(BoutonSupprimer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(BoutonSauvegarder)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(BoutonSupprimer, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(ChampHeureDepart, javax.swing.GroupLayout.Alignment.LEADING))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(PanneauDistribution, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,15 +282,7 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ChampCircuit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22)
-                .addComponent(Frequence)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ChampFrequence, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PointDepart)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ChampPoint, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(HeureDepart)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ChampHeureDepart, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -274,11 +298,12 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(RadioNombreMax)
                     .addComponent(ChampNombreMax, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(BoutonSauvegarder)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BoutonSupprimer)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addComponent(PanneauDistribution, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BoutonSupprimer)
+                    .addComponent(BoutonSauvegarder)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -323,15 +348,12 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
     private javax.swing.JButton BoutonSupprimer;
     private javax.swing.ButtonGroup ButtonGroupFinSource;
     private javax.swing.JComboBox ChampCircuit;
-    private javax.swing.JTextField ChampFrequence;
     private javax.swing.JTextField ChampHeureDepart;
     private javax.swing.JTextField ChampHeureFin;
     private javax.swing.JTextField ChampNombreMax;
-    private javax.swing.JTextField ChampPoint;
-    private javax.swing.JLabel Frequence;
     private javax.swing.JLabel HeureDepart;
     private javax.swing.JLabel HeureFin;
-    private javax.swing.JLabel PointDepart;
+    private UI.PanneauxDetails.PanneauDistribution PanneauDistribution;
     private javax.swing.JRadioButton RadioHeureFin;
     private javax.swing.JRadioButton RadioNombreMax;
     private javax.swing.JLabel jLabel1;

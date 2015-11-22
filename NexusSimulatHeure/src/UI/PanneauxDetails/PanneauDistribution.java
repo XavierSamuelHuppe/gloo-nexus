@@ -48,10 +48,7 @@ public class PanneauDistribution extends PanneauDetails {
     }
     
     public String validerValeurs()
-    {
-        
-        
-        
+    {       
         String retour = "";
         double min = 0;
         double max = 0;
@@ -110,8 +107,8 @@ public class PanneauDistribution extends PanneauDetails {
     private void initComponents() {
 
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5));
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        jLabel1 = new javax.swing.JLabel();
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5));
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         ChampMinimum = new javax.swing.JTextField();
@@ -125,12 +122,10 @@ public class PanneauDistribution extends PanneauDetails {
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
         add(filler1);
 
-        jRadioButton1.setText("Paramètres par défaut");
-        add(jRadioButton1);
-
-        jRadioButton2.setSelected(true);
-        jRadioButton2.setText("Paramètres spécifiques");
-        add(jRadioButton2);
+        jLabel1.setText("Paramètres de la distribution");
+        jLabel1.setAlignmentX(1.0F);
+        add(jLabel1);
+        add(filler2);
 
         jPanel2.setMaximumSize(new java.awt.Dimension(2147483647, 50));
         jPanel2.setPreferredSize(new java.awt.Dimension(100, 50));
@@ -171,13 +166,13 @@ public class PanneauDistribution extends PanneauDetails {
     private javax.swing.JTextField ChampMinimum;
     private javax.swing.JTextField ChampMode;
     private javax.swing.Box.Filler filler1;
+    private javax.swing.Box.Filler filler2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     // End of variables declaration//GEN-END:variables
 }

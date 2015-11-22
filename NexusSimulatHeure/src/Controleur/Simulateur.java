@@ -185,9 +185,26 @@ public class Simulateur {
         simulation.ajouterSource(nouvelleSource);
     }  
     
+    public void ajouterSource(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, Circuit circuit, double distributionMin, double distributionMode, double distributionMax){
+        SourceBuilder builder = new SourceBuilder();
+        ConteneurPassagersIllimite conteneurPassagersIllimiteParDefaut = simulation.getParametres().getConteneurPassagersIllimiteSource();
+        Distribution distributionAUtiliser = new Distribution(distributionMin, distributionMode, distributionMax);
+        
+        Source nouvelleSource = builder.ConstruireSource(heureFin, pointDepart, heureDebut, distributionAUtiliser, conteneurPassagersIllimiteParDefaut, circuit, this.simulation);
+        simulation.ajouterSource(nouvelleSource);
+    }
+    public void ajouterSource(int nombreMax, Point pointDepart, LocalTime heureDebut, Circuit circuit, double distributionMin, double distributionMode, double distributionMax){
+        SourceBuilder builder = new SourceBuilder();
+        Distribution distributionAUtiliser = new Distribution(distributionMin, distributionMode, distributionMax);
+        ConteneurPassagersIllimite conteneurPassagersIllimiteParDefaut = simulation.getParametres().getConteneurPassagersIllimiteSource();
+        Source nouvelleSource = builder.ConstruireSource(nombreMax, pointDepart, heureDebut, distributionAUtiliser, conteneurPassagersIllimiteParDefaut, circuit, this.simulation);
+        simulation.ajouterSource(nouvelleSource);
+    }  
+    
     public void retirerSource(Source source){
         simulation.retirerSource(source);
     }
+    
     public void modifierSource(Source source, LocalTime heureFin, Point pointDepart, LocalTime heureDebut, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
         retirerSource(source);
         this.ajouterSource(heureFin, pointDepart, heureDebut, distribution, passagers, circuit);
@@ -382,5 +399,9 @@ public class Simulateur {
     public void ajouterObserveurASimulation(Observer observeur)
     {
         simulation.addObserver(observeur);
+    }
+    
+    public Metier.Distribution obtenirDistributionTempsGenerationVehiculeDefaut(){
+        return this.simulation.getParametres().getDistributionTempsGenerationVehiculeDefaut();
     }
 }
