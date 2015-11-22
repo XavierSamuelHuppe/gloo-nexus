@@ -134,7 +134,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         PaireDoubles pd = transformerPositionEspaceTravailEnPostionGeorgraphique(transformerPositionViewportEnPositionEspaceTravail(me.getPoint()));
         Metier.Carte.Point mp = this.simulateur.ajouterPoint(pd.getPremier(), pd.getSecond(), "");
         
-        Point p = new Point(me.getX(),me.getY(), this.zoom, mp);
+        Point p = new Point(me.getX() - (Point.DIAMETRE / 2),me.getY() - (Point.DIAMETRE / 2), this.zoom, mp);
         
         points.add(p);
         
