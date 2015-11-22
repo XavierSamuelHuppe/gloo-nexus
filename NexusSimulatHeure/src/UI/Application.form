@@ -482,7 +482,7 @@
       <SubComponents>
         <Container class="javax.swing.JSplitPane" name="PanneauCentre">
           <Properties>
-            <Property name="dividerLocation" type="int" value="150"/>
+            <Property name="dividerLocation" type="int" value="250"/>
             <Property name="dividerSize" type="int" value="2"/>
           </Properties>
           <Constraints>

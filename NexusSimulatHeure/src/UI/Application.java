@@ -615,7 +615,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
 
         PanneauPrincipal.setLayout(new java.awt.BorderLayout());
 
-        PanneauCentre.setDividerLocation(150);
+        PanneauCentre.setDividerLocation(250);
         PanneauCentre.setDividerSize(2);
 
         PanneauGauche.setDividerLocation(150);
