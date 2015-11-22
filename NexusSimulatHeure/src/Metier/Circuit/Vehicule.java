@@ -30,7 +30,6 @@ public class Vehicule extends Observable{
     }
     
     public void avancer(double tempsEcouleParRatioEnSeconde){
-        System.out.println("Vehicule.avancer");
         double tempsTotal = secondesSurSegment+tempsEcouleParRatioEnSeconde;
         if(tempsTotal > segmentActuel.getTempsTransit()){
             //faire embarquer le monde

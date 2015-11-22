@@ -23,7 +23,7 @@ public abstract class Source {
     private Distribution distributionAUtiliser;
     private Simulation simulation;
 
-    public Source(Point pointDepart, LocalTime heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit, Simulation simulation){
+    public Source(Point pointDepart, LocalTime heureDebut, Distribution distribution, ConteneurPassagers passagers, Circuit circuit, Simulation simulation){
         this.frequence = frequence;
         this.heureDebut = heureDebut;
         this.pointDepart = pointDepart;
@@ -54,9 +54,7 @@ public abstract class Source {
     public void setheureDebut(LocalTime heureD){
         heureDebut = heureD;
     }
-    public void setFrequence(double freq){
-        frequence = freq;
-    }
+    
     public void setCapacite(ConteneurPassagers conteneurPassagers){
         passagers = conteneurPassagers;
     }
@@ -73,6 +71,7 @@ public abstract class Source {
         frequence = 0;
         reInitialiserValeursDepartSimulation();
     }
+    
     public boolean estSurCircuit(Circuit circuit){
         if(circuit.equals(this.circuitSource)){
             return true;

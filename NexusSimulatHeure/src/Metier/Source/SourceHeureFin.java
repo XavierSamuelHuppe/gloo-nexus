@@ -11,9 +11,13 @@ import java.time.LocalTime;
 public class SourceHeureFin extends Source {
     private LocalTime heureFin;
     
-    public SourceHeureFin(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit, Simulation sim){
-        super(pointDepart, heureDebut, frequence, distribution, passagers, circuit, sim);
+    private LocalTime prochaineGeneration;
+    
+    public SourceHeureFin(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, Distribution distribution, ConteneurPassagers passagers, Circuit circuit, Simulation sim){
+        super(pointDepart, heureDebut, distribution, passagers, circuit, sim);
         this.heureFin = heureFin;
+        
+        prochaineGeneration = heureDebut;
     }
     
     public LocalTime getheureFin(){
@@ -22,11 +26,17 @@ public class SourceHeureFin extends Source {
     public void setheureFin(LocalTime Fin){
         heureFin = Fin;
     }
+    private int nombreCree;
     
     @Override
     public void avancerCreation(LocalTime heureCourante, double tempsEcouleParRatioEnSeconde) {
-        if(heureDebut.isBefore(heureCourante) && heureCourante.isAfter(heureFin)){
+        if(prochaineGeneration.isAfter(heureFin))
+            return;
+        
+        if(prochaineGeneration.isBefore(heureCourante)){
             genererVehicule();
+            nombreCree++;
+            prochaineGeneration = heureDebut.plusSeconds((long)(getFrequence() * (double)nombreCree));
         }
     }
     

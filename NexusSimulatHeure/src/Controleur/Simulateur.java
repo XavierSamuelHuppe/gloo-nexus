@@ -58,7 +58,7 @@ public class Simulateur {
     public void demarerRedemarer(){
         if(simulation.getParametres().estEnPause())
             simulation.redemarrer();
-        else
+        else if (simulation.getParametres().estAvantDemarrage())
             simulation.demarrer();
     }
     public void pauser(){
@@ -135,90 +135,90 @@ public class Simulateur {
         return this.carte.estSegmentSortantDePoint(point, segment);
     }
     
-    public void ajouterSource(int nombreMax, Point pointDepart, LocalTime heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
+    public void ajouterSource(int nombreMax, Point pointDepart, LocalTime heureDebut, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
         SourceBuilder builder = new SourceBuilder();
-        Source nouvelleSource = builder.ConstruireSource(nombreMax, pointDepart, heureDebut, frequence, distribution, passagers, circuit, this.simulation);
+        Source nouvelleSource = builder.ConstruireSource(nombreMax, pointDepart, heureDebut, distribution, passagers, circuit, this.simulation);
         simulation.ajouterSource(nouvelleSource);
     }
-    public void ajouterSource(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
+    public void ajouterSource(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
         SourceBuilder builder = new SourceBuilder();
-        Source nouvelleSource = builder.ConstruireSource(heureFin, pointDepart, heureDebut, frequence, distribution, passagers, circuit, this.simulation);
+        Source nouvelleSource = builder.ConstruireSource(heureFin, pointDepart, heureDebut, distribution, passagers, circuit, this.simulation);
         simulation.ajouterSource(nouvelleSource);
     }
-    public void ajouterSource(int nombreMax, Point pointDepart, LocalTime heureDebut, double frequence, ConteneurPassagers passagers, Circuit circuit){
-        SourceBuilder builder = new SourceBuilder();
-        Distribution distributionParDefaut = simulation.getParametres().getDistributionTempsGenerationVehiculeDefaut();
-        Source nouvelleSource = builder.ConstruireSource(nombreMax, pointDepart, heureDebut, frequence, distributionParDefaut, passagers, circuit, this.simulation);
-        simulation.ajouterSource(nouvelleSource);
-    }
-    public void ajouterSource(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, double frequence, ConteneurPassagers passagers, Circuit circuit){
+    public void ajouterSource(int nombreMax, Point pointDepart, LocalTime heureDebut, ConteneurPassagers passagers, Circuit circuit){
         SourceBuilder builder = new SourceBuilder();
         Distribution distributionParDefaut = simulation.getParametres().getDistributionTempsGenerationVehiculeDefaut();
-        Source nouvelleSource = builder.ConstruireSource(heureFin, pointDepart, heureDebut, frequence, distributionParDefaut, passagers, circuit, this.simulation);
+        Source nouvelleSource = builder.ConstruireSource(nombreMax, pointDepart, heureDebut, distributionParDefaut, passagers, circuit, this.simulation);
         simulation.ajouterSource(nouvelleSource);
     }
-    public void ajouterSource(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, double frequence, Circuit circuit){
+    public void ajouterSource(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, ConteneurPassagers passagers, Circuit circuit){
+        SourceBuilder builder = new SourceBuilder();
+        Distribution distributionParDefaut = simulation.getParametres().getDistributionTempsGenerationVehiculeDefaut();
+        Source nouvelleSource = builder.ConstruireSource(heureFin, pointDepart, heureDebut, distributionParDefaut, passagers, circuit, this.simulation);
+        simulation.ajouterSource(nouvelleSource);
+    }
+    public void ajouterSource(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, Circuit circuit){
         SourceBuilder builder = new SourceBuilder();
         ConteneurPassagersIllimite conteneurPassagersIllimiteParDefaut = simulation.getParametres().getConteneurPassagersIllimiteSource();
         Distribution distributionParDefaut = simulation.getParametres().getDistributionTempsGenerationVehiculeDefaut();
         
-        Source nouvelleSource = builder.ConstruireSource(heureFin, pointDepart, heureDebut, frequence, distributionParDefaut, conteneurPassagersIllimiteParDefaut, circuit, this.simulation);
+        Source nouvelleSource = builder.ConstruireSource(heureFin, pointDepart, heureDebut, distributionParDefaut, conteneurPassagersIllimiteParDefaut, circuit, this.simulation);
         simulation.ajouterSource(nouvelleSource);
     }
-    public void ajouterSource(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, double frequence, Distribution distribution, Circuit circuit){
+    public void ajouterSource(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, Distribution distribution, Circuit circuit){
         SourceBuilder builder = new SourceBuilder();
         ConteneurPassagersIllimite conteneurPassagersIllimiteParDefaut = simulation.getParametres().getConteneurPassagersIllimiteSource();
-        Source nouvelleSource = builder.ConstruireSource(heureFin, pointDepart, heureDebut, frequence, distribution, conteneurPassagersIllimiteParDefaut, circuit, this.simulation);
+        Source nouvelleSource = builder.ConstruireSource(heureFin, pointDepart, heureDebut, distribution, conteneurPassagersIllimiteParDefaut, circuit, this.simulation);
         simulation.ajouterSource(nouvelleSource);
     }
-    public void ajouterSource(int nombreMax, Point pointDepart, LocalTime heureDebut, double frequence, Circuit circuit){
+    public void ajouterSource(int nombreMax, Point pointDepart, LocalTime heureDebut, Circuit circuit){
         SourceBuilder builder = new SourceBuilder();
         Distribution distributionParDefaut = simulation.getParametres().getDistributionTempsGenerationVehiculeDefaut();
         ConteneurPassagersIllimite conteneurPassagersIllimiteParDefaut = simulation.getParametres().getConteneurPassagersIllimiteSource();
-        Source nouvelleSource = builder.ConstruireSource(nombreMax, pointDepart, heureDebut, frequence, distributionParDefaut, conteneurPassagersIllimiteParDefaut, circuit, this.simulation);
+        Source nouvelleSource = builder.ConstruireSource(nombreMax, pointDepart, heureDebut, distributionParDefaut, conteneurPassagersIllimiteParDefaut, circuit, this.simulation);
         simulation.ajouterSource(nouvelleSource);
     }   
-    public void ajouterSource(int nombreMax, Point pointDepart, LocalTime heureDebut, double frequence, Distribution distribution, Circuit circuit){
+    public void ajouterSource(int nombreMax, Point pointDepart, LocalTime heureDebut, Distribution distribution, Circuit circuit){
         SourceBuilder builder = new SourceBuilder();
         ConteneurPassagersIllimite conteneurPassagersIllimiteParDefaut = simulation.getParametres().getConteneurPassagersIllimiteSource();
-        Source nouvelleSource = builder.ConstruireSource(nombreMax, pointDepart, heureDebut, frequence, distribution, conteneurPassagersIllimiteParDefaut, circuit, this.simulation);
+        Source nouvelleSource = builder.ConstruireSource(nombreMax, pointDepart, heureDebut, distribution, conteneurPassagersIllimiteParDefaut, circuit, this.simulation);
         simulation.ajouterSource(nouvelleSource);
     }  
     
     public void retirerSource(Source source){
         simulation.retirerSource(source);
     }
-    public void modifierSource(Source source, LocalTime heureFin, Point pointDepart, LocalTime heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
+    public void modifierSource(Source source, LocalTime heureFin, Point pointDepart, LocalTime heureDebut, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
         retirerSource(source);
-        this.ajouterSource(heureFin, pointDepart, heureDebut, frequence, distribution, passagers, circuit);
+        this.ajouterSource(heureFin, pointDepart, heureDebut, distribution, passagers, circuit);
     }
-    public void modifierSource(Source source, int nombreMax, Point pointDepart, LocalTime heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
+    public void modifierSource(Source source, int nombreMax, Point pointDepart, LocalTime heureDebut, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
         retirerSource(source);
-        this.ajouterSource(nombreMax, pointDepart, heureDebut, frequence, distribution, passagers, circuit);
+        this.ajouterSource(nombreMax, pointDepart, heureDebut, distribution, passagers, circuit);
     }
-    public void modifierSource(Source source, LocalTime heureFin, Point pointDepart, LocalTime heureDebut, double frequence, ConteneurPassagers passagers, Circuit circuit){
+    public void modifierSource(Source source, LocalTime heureFin, Point pointDepart, LocalTime heureDebut, ConteneurPassagers passagers, Circuit circuit){
         retirerSource(source);
-        this.ajouterSource(heureFin, pointDepart, heureDebut, frequence, passagers, circuit);
+        this.ajouterSource(heureFin, pointDepart, heureDebut, passagers, circuit);
     }
-    public void modifierSource(Source source, int nombreMax, Point pointDepart, LocalTime heureDebut, double frequence, ConteneurPassagers passagers, Circuit circuit){
+    public void modifierSource(Source source, int nombreMax, Point pointDepart, LocalTime heureDebut, ConteneurPassagers passagers, Circuit circuit){
         retirerSource(source);
-        this.ajouterSource(nombreMax, pointDepart, heureDebut, frequence, passagers, circuit);
+        this.ajouterSource(nombreMax, pointDepart, heureDebut, passagers, circuit);
     }
-    public void modifierSource(Source source, int nombreMax, Point pointDepart, LocalTime heureDebut, double frequence, Distribution distribution, Circuit circuit){
+    public void modifierSource(Source source, int nombreMax, Point pointDepart, LocalTime heureDebut, Distribution distribution, Circuit circuit){
         retirerSource(source);
-        this.ajouterSource(nombreMax, pointDepart, heureDebut, frequence, distribution, circuit);
+        this.ajouterSource(nombreMax, pointDepart, heureDebut, distribution, circuit);
     }
-    public void modifierSource(Source source, int nombreMax, Point pointDepart, LocalTime heureDebut, double frequence, Circuit circuit){
+    public void modifierSource(Source source, int nombreMax, Point pointDepart, LocalTime heureDebut, Circuit circuit){
         retirerSource(source);
-        this.ajouterSource(nombreMax, pointDepart, heureDebut, frequence, circuit);
+        this.ajouterSource(nombreMax, pointDepart, heureDebut, circuit);
     }
-    public void modifierSource(Source source, LocalTime heureFin, Point pointDepart, LocalTime heureDebut, double frequence, Distribution distribution, Circuit circuit){
+    public void modifierSource(Source source, LocalTime heureFin, Point pointDepart, LocalTime heureDebut, Distribution distribution, Circuit circuit){
         retirerSource(source);
-        this.ajouterSource(heureFin, pointDepart, heureDebut, frequence, distribution, circuit);
+        this.ajouterSource(heureFin, pointDepart, heureDebut, distribution, circuit);
     }
-    public void modifierSource(Source source, LocalTime heureFin, Point pointDepart, LocalTime heureDebut, double frequence, Circuit circuit){
+    public void modifierSource(Source source, LocalTime heureFin, Point pointDepart, LocalTime heureDebut, Circuit circuit){
         retirerSource(source);
-        this.ajouterSource(heureFin, pointDepart, heureDebut, frequence, circuit);
+        this.ajouterSource(heureFin, pointDepart, heureDebut, circuit);
     }
 
     public List<Position> obtenirPositionVehicules(){

@@ -9,13 +9,13 @@ import Metier.Simulation.Simulation;
 import java.time.LocalTime;
 
 public class SourceBuilder {
-    public Source ConstruireSource(int nombreMax, Point pointDepart, LocalTime heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit, Simulation sim){
-        Source nouvelleSource = new SourceFinie(nombreMax , pointDepart, heureDebut, frequence, distribution, passagers, circuit, sim);
+    public Source ConstruireSource(int nombreMax, Point pointDepart, LocalTime heureDebut, Distribution distribution, ConteneurPassagers passagers, Circuit circuit, Simulation sim){
+        Source nouvelleSource = new SourceFinie(nombreMax , pointDepart, heureDebut, distribution, passagers, circuit, sim);
         return nouvelleSource;
     }
     
-    public Source ConstruireSource(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit, Simulation sim){
-        Source nouvelleSource = new SourceHeureFin(heureFin , pointDepart, heureDebut, frequence, distribution, passagers, circuit, sim);
+    public Source ConstruireSource(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, Distribution distribution, ConteneurPassagers passagers, Circuit circuit, Simulation sim){
+        Source nouvelleSource = new SourceHeureFin(heureFin , pointDepart, heureDebut, distribution, passagers, circuit, sim);
         return nouvelleSource;
     }
 }

@@ -7,6 +7,7 @@ import Metier.Circuit.ConteneurPassagersIllimite;
 
 public class ParametreSimulation {
     public static enum Etats {
+        AVANT_DEMARRAGE,
         ACTION,
         ARRET,
         PAUSE
@@ -42,7 +43,7 @@ public class ParametreSimulation {
     }    
     
     private void initialiserValeursParDefaut(){
-        etat = Etats.ARRET;
+        etat = Etats.AVANT_DEMARRAGE;
         distributionTempsTransitSegment = DISTRIBUTION_TEMPS_TRANSIT_SEGMENT_DEFAUT;
         distributionTempsGenerationVehicule = DISTRIBUTION_TEMPS_GENERATION_VEHICULE_DEFAUT;
         distributionTempsGenerationPassager = DISTRIBUTION_TEMPS_GENERATION_PASSAGER_DEFAUT;
@@ -59,6 +60,14 @@ public class ParametreSimulation {
         return etat;
     }
     
+    public boolean estAvantDemarrage() {
+        return etat == Etats.AVANT_DEMARRAGE;
+    }
+        
+    public void mettreEnAvantDemarrage() {
+        etat = Etats.AVANT_DEMARRAGE;
+    }
+        
     public boolean estEnPause() {
         return etat == Etats.PAUSE;
     }

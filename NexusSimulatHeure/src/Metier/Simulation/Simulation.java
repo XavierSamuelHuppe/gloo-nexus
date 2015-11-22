@@ -38,7 +38,7 @@ public class Simulation extends Observable{
     }
     
     public void demarrer(){
-        if(!(parametres.estEnArret()))
+        if(!(parametres.estEnArret() || parametres.estAvantDemarrage()))
             throw new SimulationEnMauvaisEtatException();
         
         initialiserDepartSimulation();
@@ -55,7 +55,7 @@ public class Simulation extends Observable{
             throw new SimulationEnMauvaisEtatException();
         
         terminerSimulation();
-        parametres.mettreEnArret();
+        parametres.mettreEnAvantDemarrage();
         boucleThread.interrupt();
         setChanged();
         notifyObservers();

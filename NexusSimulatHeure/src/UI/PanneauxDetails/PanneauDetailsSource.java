@@ -111,10 +111,10 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
 
         if(this.RadioHeureFin.isSelected()){
             LocalTime heureFin = LocalTime.parse(this.ChampHeureFin.getText(),formatter);
-            this.obtenirApplication().getSimulateur().ajouterSource(heureFin , this.pointMetierLie, heureDebut, Double.parseDouble(this.ChampFrequence.getText()), this.circuitActuel);
+            this.obtenirApplication().getSimulateur().ajouterSource(heureFin , this.pointMetierLie, heureDebut, this.circuitActuel);
         }
         if(this.RadioNombreMax.isSelected()){
-            this.obtenirApplication().getSimulateur().ajouterSource(Integer.parseInt(this.ChampNombreMax.getText()) , this.pointMetierLie, heureDebut, Double.parseDouble(this.ChampFrequence.getText()), this.circuitActuel);
+            this.obtenirApplication().getSimulateur().ajouterSource(Integer.parseInt(this.ChampNombreMax.getText()), this.pointMetierLie, heureDebut, this.circuitActuel);
             
         }
         this.obtenirApplication().repaint();
@@ -128,11 +128,10 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
         
         if(this.RadioHeureFin.isSelected()){
             LocalTime heureFin = LocalTime.parse(this.ChampHeureFin.getText(),formatter);
-            this.obtenirApplication().getSimulateur().modifierSource(sourceMetierLie, heureFin , this.pointMetierLie, heureDebut, Double.parseDouble(this.ChampFrequence.getText()), this.circuitActuel);
+            this.obtenirApplication().getSimulateur().modifierSource(sourceMetierLie, heureFin , this.pointMetierLie, heureDebut, this.circuitActuel);
         }
         if(this.RadioNombreMax.isSelected()){
-            this.obtenirApplication().getSimulateur().modifierSource(sourceMetierLie, Integer.parseInt(this.ChampNombreMax.getText()) , this.pointMetierLie, heureDebut, Double.parseDouble(this.ChampFrequence.getText()), this.circuitActuel);
-            
+            this.obtenirApplication().getSimulateur().modifierSource(sourceMetierLie, Integer.parseInt(this.ChampNombreMax.getText()) , this.pointMetierLie, heureDebut, this.circuitActuel);
         }
         this.obtenirApplication().repaint();
         this.obtenirApplication().viderPanneauDetails();

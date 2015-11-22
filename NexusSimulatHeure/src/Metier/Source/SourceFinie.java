@@ -11,10 +11,14 @@ public class SourceFinie extends Source {
     private int nombreMax;
     private int nombreCree;
     
-    public SourceFinie(int nombreMax, Point pointDepart, LocalTime heureDebut, double frequence, Distribution distribution, ConteneurPassagers passagers, Circuit circuit, Simulation sim){
-        super(pointDepart, heureDebut, frequence, distribution, passagers, circuit, sim);
+    private LocalTime prochaineGeneration;
+    
+    public SourceFinie(int nombreMax, Point pointDepart, LocalTime heureDebut, Distribution distribution, ConteneurPassagers passagers, Circuit circuit, Simulation sim){
+        super(pointDepart, heureDebut, distribution, passagers, circuit, sim);
         this.nombreMax = nombreMax;
         this.nombreCree = 0;
+        
+        prochaineGeneration = heureDebut;
     }
     
     public int getNombreMax(){
@@ -26,16 +30,19 @@ public class SourceFinie extends Source {
 
     @Override
     public void avancerCreation(LocalTime heureCourante, double tempsEcouleParRatioEnSeconde) {
-        if(heureDebut.isBefore(heureCourante) && nombreCree < nombreMax){
+        if(nombreCree == nombreMax)
+            return;
+        
+        if(prochaineGeneration.isBefore(heureCourante)){
             genererVehicule();
             nombreCree++;
+            prochaineGeneration = heureDebut.plusSeconds((long)(getFrequence() * (double)nombreCree));
         }
     }
 
     @Override
     public void reInitialiserValeursDepartSimulation() {
         nombreCree = 0;
+        prochaineGeneration = heureDebut;
     }
-    
-    
 }
