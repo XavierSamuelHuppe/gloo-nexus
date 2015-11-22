@@ -15,10 +15,6 @@ import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 
-/**
- *
- * @author Vagr
- */
 public class DessinateurVehicule {
     private final int LARGEUR = 100;
     private final int HAUTEUR = 37;
@@ -27,11 +23,6 @@ public class DessinateurVehicule {
     {
         if(!init)
             initialiserFormes();
-        
-//        this.setLayout(new FlowLayout());
-//        this.setSize(calculerZoom(LARGEUR), calculerZoom(HAUTEUR));
-//        this.setLocation(me.getX(), me.getY());
-//        this.setOpaque(false);
     }
 
     private double zoom;
@@ -105,8 +96,6 @@ public class DessinateurVehicule {
     
     private AffineTransform obtenirTransformation()
     {
-//        AffineTransform at = AffineTransform.getScaleInstance(zoom,zoom);
-//        at.concatenate(AffineTransform.getTranslateInstance(x,y));
         AffineTransform at = AffineTransform.getTranslateInstance(x,y);
         at.concatenate(AffineTransform.getScaleInstance(zoom,zoom));
         return at;
