@@ -263,17 +263,17 @@ public class PanneauDetailsSimu extends PanneauDetails{
         simulateur.modifierHeureFin(LocalTime.parse(this.ChampHeureFin.getText(), DateTimeFormatter.ISO_LOCAL_TIME));
         
         simulateur.modifierDistributionTempsTransitSegment(
-                new Metier.Distribution(Double.parseDouble(this.ChampDistSegmentMin.getText()),
+                                        Double.parseDouble(this.ChampDistSegmentMin.getText()),
                                         Double.parseDouble(this.ChampDistSegmentMode.getText()),
-                                        Double.parseDouble(this.ChampDistSegmentMax.getText())));
+                                        Double.parseDouble(this.ChampDistSegmentMax.getText()));
         simulateur.modifierDistributionTempsGenerationVehicule(
-                new Metier.Distribution(Double.parseDouble(this.ChampDistVehiculeMin.getText()),
+                                        Double.parseDouble(this.ChampDistVehiculeMin.getText()),
                                         Double.parseDouble(this.ChampDistVehiculeMode.getText()),
-                                        Double.parseDouble(this.ChampDistVehiculeMax.getText())));
+                                        Double.parseDouble(this.ChampDistVehiculeMax.getText()));
         simulateur.modifierDistributionTempsGenerationPassager(
-                new Metier.Distribution(Double.parseDouble(this.ChampDistPassagerMin.getText()),
+                                        Double.parseDouble(this.ChampDistPassagerMin.getText()),
                                         Double.parseDouble(this.ChampDistPassagerMode.getText()),
-                                        Double.parseDouble(this.ChampDistPassagerMax.getText())));
+                                        Double.parseDouble(this.ChampDistPassagerMax.getText()));
     }//GEN-LAST:event_BoutonSauvegarderActionPerformed
 
     private void BoutonRetourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonRetourActionPerformed
