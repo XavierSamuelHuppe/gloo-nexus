@@ -3,20 +3,18 @@ package UI;
 import UI.Constantes.Couleurs;
 import UI.PanneauxDetails.PanneauDetails;
 import UI.PanneauxDetails.PanneauDetailsPoint;
-import java.awt.BasicStroke;
-import java.awt.BorderLayout;
+
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
-import javax.swing.JComponent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+
 import java.util.LinkedList;
 import java.util.Observable;
-import javax.swing.BorderFactory;
 import java.util.Observer;
 
 public class Point extends ElementEspaceTravail implements MouseListener, MouseMotionListener, IDetailsAffichables, Observer {
@@ -47,8 +45,8 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
     private static final int POSITION_CERCLE_INTERNE = (int)Math.ceil(DIAMETRE/4.0);
     private static final int LARGEUR_CERCLE_INTERNE = (int)Math.ceil(DIAMETRE/2.0);
     
-    private static final int AJUSTEMENT_POSITION_NOM_X = DIAMETRE + 10;
-    private static final int AJUSTEMENT_POSITION_NOM_Y = (int)(UI.Constantes.Rendu.HAUTEUR_TEXTE / 2);
+    private static final int AJUSTEMENT_POSITION_NOM_X = DIAMETRE + 4;
+    private static final int AJUSTEMENT_POSITION_NOM_Y = (int)(DIAMETRE / 2.0) + (int)(UI.Constantes.Rendu.HAUTEUR_TEXTE / 2.0) ;
     
     public Point(int x, int y, double zoom, Metier.Carte.Point p)
     {
@@ -142,9 +140,7 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         {
             g2.setColor(Couleurs.POINT_NOM);
             g2.setFont(new Font(null, Font.PLAIN, (int)(UI.Constantes.Rendu.TAILLE_POLICE_POINTS * this.zoom)));
-            g2.drawString(this.getPointMetier().getNom(), this.getX() + (int)(this.zoom * 42), this.getY() + (int)(this.zoom * 16));
-            
-            //(int)(this.zoom * (this.getX())) + (int)this.zoom * 50, (int)(this.zoom * (this.getY())) + (int)this.zoom * 50
+            g2.drawString(this.getPointMetier().getNom(), this.getX() + (int)(this.zoom * AJUSTEMENT_POSITION_NOM_X), this.getY() + (int)(this.zoom * AJUSTEMENT_POSITION_NOM_Y));
         }
     }
     
