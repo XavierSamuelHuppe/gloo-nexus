@@ -102,12 +102,11 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
         
         this.circuitActuel =(Circuit) this.ChampCircuit.getSelectedItem();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-        LocalTime heureDebut = LocalTime.parse(this.ChampHeureDepart.getText(),formatter);
+        LocalTime heureDebut = LocalTime.parse(this.ChampHeureDepart.getText(), UI.Constantes.Formats.FORMAT_HEURE_COURANTE);
 
         if(this.RadioHeureFin.isSelected()){
-            LocalTime heureFin = LocalTime.parse(this.ChampHeureFin.getText(),formatter);
-            this.obtenirApplication().getSimulateur().ajouterSource(heureFin , this.pointMetierLie, heureDebut, this.circuitActuel, PanneauDistribution.obtenirMin(), PanneauDistribution.obtenirMode(), PanneauDistribution.obtenirMax());
+            LocalTime heureFin = LocalTime.parse(this.ChampHeureFin.getText(), UI.Constantes.Formats.FORMAT_HEURE_COURANTE);
+            this.obtenirApplication().getSimulateur().ajouterSource(heureFin, this.pointMetierLie, heureDebut, this.circuitActuel, PanneauDistribution.obtenirMin(), PanneauDistribution.obtenirMode(), PanneauDistribution.obtenirMax());
         }
         if(this.RadioNombreMax.isSelected()){
             this.obtenirApplication().getSimulateur().ajouterSource(Integer.parseInt(this.ChampNombreMax.getText()), this.pointMetierLie, heureDebut, this.circuitActuel, PanneauDistribution.obtenirMin(), PanneauDistribution.obtenirMode(), PanneauDistribution.obtenirMax());
@@ -122,11 +121,10 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
         
         this.circuitActuel =(Circuit) this.ChampCircuit.getSelectedItem();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-        LocalTime heureDebut = LocalTime.parse(this.ChampHeureDepart.getText(),formatter);
+        LocalTime heureDebut = LocalTime.parse(this.ChampHeureDepart.getText(), UI.Constantes.Formats.FORMAT_HEURE_COURANTE);
         
         if(this.RadioHeureFin.isSelected()){
-            LocalTime heureFin = LocalTime.parse(this.ChampHeureFin.getText(),formatter);
+            LocalTime heureFin = LocalTime.parse(this.ChampHeureFin.getText(),UI.Constantes.Formats.FORMAT_HEURE_COURANTE);
             this.obtenirApplication().getSimulateur().modifierSource(sourceMetierLie, heureFin, heureDebut, this.circuitActuel, PanneauDistribution.obtenirMin(), PanneauDistribution.obtenirMode(), PanneauDistribution.obtenirMax());
         }
         if(this.RadioNombreMax.isSelected()){
@@ -154,6 +152,13 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
             if(!java.util.regex.Pattern.matches(UI.Constantes.Validations.REGEX_FORMAT_HEURE, ChampHeureFin.getText()))
             {
                 validations += "L'heure de fin de génération des véhicules doit être inscrite dans un format 00:00:00.\r\n";
+            }
+            else
+            {
+                if(LocalTime.parse(this.ChampHeureDepart.getText(), UI.Constantes.Formats.FORMAT_HEURE_COURANTE).isAfter(LocalTime.parse(this.ChampHeureFin.getText(), UI.Constantes.Formats.FORMAT_HEURE_COURANTE)))
+                {
+                    validations += "L'heure de début de génération des véhicules doit précédé l'heure de fin de génération des véhicules.\r\n";
+                }
             }
         }
         if(this.RadioNombreMax.isSelected()){
