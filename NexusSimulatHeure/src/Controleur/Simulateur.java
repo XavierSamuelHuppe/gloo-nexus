@@ -261,14 +261,17 @@ public class Simulateur {
         return this.simulation.getParametres();
     }
     
-    public void modifierDistributionTempsTransitSegment(Distribution dist){
-        simulation.getParametres().setDistributionTempsTransitSegment(dist);
+    public void modifierDistributionTempsTransitSegment(double distributionMin, double distributionMode, double distributionMax){
+        Distribution distributionAUtiliser = new Distribution(distributionMin, distributionMode, distributionMax);
+        simulation.getParametres().setDistributionTempsTransitSegment(distributionAUtiliser);
     }
-    public void modifierDistributionTempsGenerationVehicule(Distribution dist){
-        simulation.getParametres().setDistributionTempsGenerationVehicule(dist);
+    public void modifierDistributionTempsGenerationVehicule(double distributionMin, double distributionMode, double distributionMax){
+        Distribution distributionAUtiliser = new Distribution(distributionMin, distributionMode, distributionMax);
+        simulation.getParametres().setDistributionTempsGenerationVehicule(distributionAUtiliser);
     }
-    public void modifierDistributionTempsGenerationPassager(Distribution dist){
-        simulation.getParametres().setDistributionTempsGenerationPassager(dist);
+    public void modifierDistributionTempsGenerationPassager(double distributionMin, double distributionMode, double distributionMax){
+        Distribution distributionAUtiliser = new Distribution(distributionMin, distributionMode, distributionMax);
+        simulation.getParametres().setDistributionTempsGenerationPassager(distributionAUtiliser);
     }
     public void modifierNombreJourSimulation(int nombreJours){
         simulation.getParametres().setNombreJourSimulation(nombreJours);
