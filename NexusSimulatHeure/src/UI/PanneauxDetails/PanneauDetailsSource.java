@@ -79,14 +79,14 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
             this.ChampCircuit.addItem(circuit);
         }
         this.ChampCircuit.setSelectedItem(this.circuitActuel);
-        this.ChampHeureDepart.setText(sourceMetierLie.getheureDebut().toString());
+        this.ChampHeureDepart.setText(sourceMetierLie.getheureDebut().format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE));
         if(this.sourceMetierLie.getClass() == SourceFinie.class){
             SourceFinie SourceCaster = (SourceFinie) sourceMetierLie;
             this.ChampNombreMax.setText(String.valueOf(SourceCaster.getNombreMax()));
             this.controlEnabler(false);
         }else if (this.sourceMetierLie.getClass() == SourceHeureFin.class){
             SourceHeureFin SourceCaster = (SourceHeureFin) sourceMetierLie;
-            this.ChampHeureFin.setText(SourceCaster.getheureFin().toString());
+            this.ChampHeureFin.setText(SourceCaster.getheureFin().format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE));
             this.controlEnabler(true);
         }
         
@@ -343,6 +343,7 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
         if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this.obtenirApplication(), "Désirez-vous vraiment retirer cette source?", "Retirer cette source?", JOptionPane.YES_NO_OPTION))
         {
             this.obtenirApplication().getSimulateur().retirerSource(sourceMetierLie);
+            this.obtenirApplication().viderPanneauDetails();
             this.obtenirApplication().repaint();
         }  
     }//GEN-LAST:event_BoutonSupprimerActionPerformed
