@@ -16,24 +16,11 @@ public class SituationVehicule {
         return x;
     }
 
-    public void setX(double x) {
-        this.x = x;
-    }
-
     public double getY() {
         return y;
-    }
-
-    public void setY(double y) {
-        this.y = y;
     }
 
     public String getCircuit() {
         return circuit;
     }
-
-    public void setCircuit(String circuit) {
-        this.circuit = circuit;
-    }
-    
 }

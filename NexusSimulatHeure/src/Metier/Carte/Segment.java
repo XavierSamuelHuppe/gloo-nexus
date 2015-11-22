@@ -7,9 +7,7 @@ public class Segment extends Observable{
     private final Point pointDepart;
     private final Point pointArrivee;
     private Distribution distribution;
-    
     private double tempsTransit;
-    
     private boolean existe;
     
     public Segment(Point pointDepart, Point pointArrivee, Distribution distribution) {
