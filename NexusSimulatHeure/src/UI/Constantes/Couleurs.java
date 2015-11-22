@@ -30,9 +30,7 @@ public class Couleurs {
     public static final java.awt.Color CIRCUIT_SELECTIONNE_EXTERIEUR = Color.decode("#FFC46B");
     public static final java.awt.Color CIRCUIT_TEXTE = Color.decode("#000000");
     
-    public static final java.awt.Color VEHICULE1 = Color.decode("#FFFFFF");
-    public static final java.awt.Color VEHICULE2 = Color.decode("#FFFFFF");
-    
+    public static final java.awt.Color VEHICULE_NOM_CIRCUIT = Color.decode("#FF0000");
     
     public static final java.awt.Color UI_BARRE_BOUTONS_COULEUR_FOND = Color.decode("#E5F2FF");
     public static final java.awt.Color UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF = Color.decode("#3399FF");

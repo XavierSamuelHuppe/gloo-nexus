@@ -3,12 +3,12 @@ import Metier.Carte.*;
 import Metier.Circuit.Circuit;
 import java.time.*;
 import java.util.*;
+import Metier.*;
 import Metier.Exceptions.*;
 import Metier.Profil.*;
 import Metier.Source.*;
 import Metier.Circuit.Vehicule;
 import Metier.Distribution;
-import java.time.temporal.TemporalUnit;
 
 public class Simulation extends Observable{
     private ParametreSimulation parametres;
@@ -57,6 +57,7 @@ public class Simulation extends Observable{
         
         terminerSimulation();
         parametres.mettreEnAvantDemarrage();
+        boucle.stop();
         boucleThread.interrupt();
         setChanged();
         notifyObservers();
@@ -84,6 +85,9 @@ public class Simulation extends Observable{
         for(Source s: sources){
             s.rafraichirDonneesDepart();
         }
+        
+        vehicules.clear();
+        
         //+ dist profils
         
         //Fermer les statistiques
@@ -261,14 +265,14 @@ public class Simulation extends Observable{
         carte.retirerSegment(s);
     }
     
-    public List<Position> obtenirPositionsVehicules()
+    public List<SituationVehicule> obtenirSituationsVehicules()
     {
-        ArrayList<Position> positions = new ArrayList<Position>();
+        ArrayList<SituationVehicule> situations = new ArrayList<SituationVehicule>();
         for(Vehicule v : vehicules)
         {
-            positions.add(v.obtenirPosition());
+            situations.add(v.obtenirSituation());
         }
-        return positions;
+        return situations;
     }
     
     public LocalTime getHeureCourante()

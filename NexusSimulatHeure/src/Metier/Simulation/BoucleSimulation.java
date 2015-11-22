@@ -3,6 +3,7 @@ package Metier.Simulation;
 public class BoucleSimulation implements Runnable{
 
     private Simulation sim;
+    private boolean executer = true;
     
     public BoucleSimulation(Simulation sim){
         this.sim = sim;
@@ -10,7 +11,7 @@ public class BoucleSimulation implements Runnable{
     
     @Override
     public void run() {
-        while(true)
+        while(executer)
         {
             long tStart = System.currentTimeMillis();
             if(sim.getParametres().estEnAction()){
@@ -25,11 +26,19 @@ public class BoucleSimulation implements Runnable{
             
             try {
                 int tempsAAttendreEnMili = (1000/sim.getParametres().getFramerate()) - tDelta;
-                Thread.sleep(tempsAAttendreEnMili);
+                //???
+                if(tempsAAttendreEnMili > 0)
+                {
+                    Thread.sleep(tempsAAttendreEnMili);    
+                }
             } catch(InterruptedException ex) {
                 System.out.println("Simulation stopée");
             }
         }
     }
     
+    public void stop()
+    {
+        executer = false;
+    }
 }

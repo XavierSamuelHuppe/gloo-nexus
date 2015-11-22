@@ -246,8 +246,8 @@ public class Simulateur {
         simulation.modifierSource(source, nombreMax, heureDebut, circuit, distributionMin, distributionMode, distributionMax);
     }  
     
-    public List<Position> obtenirPositionVehicules(){
-        return this.simulation.obtenirPositionsVehicules();
+    public List<SituationVehicule> obtenirSituationsVehicules(){
+        return this.simulation.obtenirSituationsVehicules();
     }
     
     public void modfierVitesse(int pourcentage){

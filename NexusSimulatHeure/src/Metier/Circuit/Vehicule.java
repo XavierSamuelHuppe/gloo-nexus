@@ -1,5 +1,6 @@
 package Metier.Circuit;
 
+import Metier.*;
 import Metier.Carte.*;
 import Metier.Exceptions.FinDeCircuitException;
 import Metier.Profil.Passager;
@@ -55,9 +56,10 @@ public class Vehicule extends Observable{
         notifyObservers();
     }
     
-    public Position obtenirPosition()
+    public SituationVehicule obtenirSituation()
     {
-        return calculerPosition(this.segmentActuel.getPointDepart().getPosition(), this.segmentActuel.getPointArrivee().getPosition());
+        Position p = calculerPosition(this.segmentActuel.getPointDepart().getPosition(), this.segmentActuel.getPointArrivee().getPosition());
+        return new SituationVehicule(p.getX(), p.getY(), this.circuitActuel.getNom());
     }
 
     private Position calculerPosition(Position posDepart, Position posArrivee)

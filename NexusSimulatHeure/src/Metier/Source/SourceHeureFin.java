@@ -12,6 +12,7 @@ public class SourceHeureFin extends Source {
     private LocalTime heureFin;
     
     private LocalTime prochaineGeneration;
+    private int nombreCree = 0;
     
     public SourceHeureFin(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, Distribution distribution, ConteneurPassagers passagers, Circuit circuit, Simulation sim){
         super(pointDepart, heureDebut, distribution, passagers, circuit, sim);
@@ -26,7 +27,7 @@ public class SourceHeureFin extends Source {
     public void setheureFin(LocalTime Fin){
         heureFin = Fin;
     }
-    private int nombreCree;
+
     
     @Override
     public void avancerCreation(LocalTime heureCourante, double tempsEcouleParRatioEnSeconde) {
@@ -42,7 +43,8 @@ public class SourceHeureFin extends Source {
     
     @Override
     public void reInitialiserValeursDepartSimulation() {
-        //Cette implémentation de réinitialise rien.
+        prochaineGeneration = heureDebut;
+        nombreCree = 0;
     }
     
     @Override

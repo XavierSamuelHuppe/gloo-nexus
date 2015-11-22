@@ -1,9 +1,9 @@
 package UI;
 
 import Controleur.Simulateur;
+import Metier.SituationVehicule;
 import Metier.Exceptions.AucunCheminPossibleException;
 import Metier.Exceptions.AucunPointCreateurException;
-import Metier.Exceptions.CreationInvalideException;
 import UI.Constantes.Couleurs;
 import UI.Dessinateurs.DessinateurVehicule;
 import UI.Exceptions.SegmentNonTrouveException;
@@ -28,7 +28,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
 
     private List<Point> points = new LinkedList<>();
     private List<Segment> segments = new LinkedList<>();
-    private List<Vehicule> vehicules = new LinkedList<>();
+//    private List<Vehicule> vehicules = new LinkedList<>();
     private double zoom = ZOOM_DEFAULT;
     private boolean fanionClavier1 = false;
     private java.awt.Point pointDrag = null;
@@ -55,7 +55,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         this.removeAll();
         points = new LinkedList<>();
         segments = new LinkedList<>();
-        vehicules = new LinkedList<>();
+//        vehicules = new LinkedList<>();
         zoom = ZOOM_DEFAULT;
         fanionClavier1 = false;
         pointDrag = null;
@@ -189,11 +189,11 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         UI.Dessinateurs.DessinateurVehicule dv = new DessinateurVehicule();
         if(this.simulateur!=null)
         {
-            for(Metier.Carte.Position p : this.simulateur.obtenirPositionVehicules())
+            for(SituationVehicule sv : this.simulateur.obtenirSituationsVehicules())
             {
-                PaireDoubles pd = new PaireDoubles(p.getX(), p.getY());
+                PaireDoubles pd = new PaireDoubles(sv.getX(), sv.getY());
                 java.awt.Point point = transformerPositionEspaceTravailEnPositionViewport(transformerPostionGeorgraphiqueEnPositionEspaceTravail(pd));
-                dv.dessiner(g2, point.x, point.y, this.zoom);
+                dv.dessiner(g2, point.x, point.y, sv.getCircuit(), this.zoom);
             }
         }
     }
@@ -216,10 +216,10 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
                 p.deplacer(delta);
             }
             
-            for(Vehicule v : vehicules)
-            {
-                v.deplacer(delta);
-            }
+//            for(Vehicule v : vehicules)
+//            {
+//                v.deplacer(delta);
+//            }
             
             mettreAJourPositionReferenceApresDrag(delta);
             this.repaint();
