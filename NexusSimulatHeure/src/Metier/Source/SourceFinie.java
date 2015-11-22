@@ -8,6 +8,7 @@ import Metier.Simulation.Simulation;
 import java.time.LocalTime;
 
 public class SourceFinie extends Source {
+
     private int nombreMax;
     private int nombreCree;
     
@@ -44,5 +45,10 @@ public class SourceFinie extends Source {
     public void reInitialiserValeursDepartSimulation() {
         nombreCree = 0;
         prochaineGeneration = heureDebut;
+    }
+    
+    @Override
+    public String obtenirDescriptionSource() {
+        return this.getCircuit().getNom() + " : " + ((Integer)nombreMax).toString() + " v., à partir de " + heureDebut.format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE);
     }
 }

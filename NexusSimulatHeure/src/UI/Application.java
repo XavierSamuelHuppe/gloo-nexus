@@ -33,13 +33,11 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         afficherVitesseExecution();
         this.revalidate();
     }
-    
-    private final static DateTimeFormatter FORMAT_HEURE_COURANTE = DateTimeFormatter.ofPattern("HH:mm:ss");
         
     private void afficherHeureCourante()
     {
         LocalTime heureCourante = this.simulateur.obtenirHeureCourante();
-        LibelleHeureCourante.setText(String.format("Temps : " + heureCourante.format(FORMAT_HEURE_COURANTE)));
+        LibelleHeureCourante.setText(String.format("Temps : " + heureCourante.format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE)));
     }
     
     private void afficherJoursSimulations()
@@ -289,6 +287,15 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     {
         this.PanneauDetails.removeAll();
         this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsSource(this.simulateur, point));
+        this.PanneauDetails.repaint();
+        
+        this.revalidate();
+    }
+    
+        public void afficherPanneauDetailsSource(Metier.Source.Source source)
+    {
+        this.PanneauDetails.removeAll();
+        this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsSource(this.simulateur, source));
         this.PanneauDetails.repaint();
         
         this.revalidate();

@@ -7,6 +7,7 @@ import Metier.Exceptions.*;
 import Metier.Profil.*;
 import Metier.Source.*;
 import Metier.Circuit.Vehicule;
+import Metier.Distribution;
 import java.time.temporal.TemporalUnit;
 
 public class Simulation extends Observable{
@@ -177,10 +178,32 @@ public class Simulation extends Observable{
     }
     
     public void ajouterSource(Source source){
+        source.getPointDepart().ajouterSource(source);
         sources.add(source);
     }
     
+    public void modifierSource(Source source, LocalTime heureFin, LocalTime heureDebut, Circuit circuit, double distributionMin, double distributionMode, double distributionMax)
+    {
+        SourceHeureFin sourceCible = (SourceHeureFin)source;
+        sourceCible.setheureFin(heureFin);
+        sourceCible.setheureDebut(heureDebut);
+        sourceCible.setCircuit(circuit);
+        Metier.Distribution dist = new Distribution(distributionMin, distributionMode, distributionMax);
+        sourceCible.setDistribution(dist);
+    }
+        
+    public void modifierSource(Source source, int nombreMax, LocalTime heureDebut, Circuit circuit, double distributionMin, double distributionMode, double distributionMax)
+    {
+        SourceFinie sourceCible = (SourceFinie)source;
+        sourceCible.setNombreMax(nombreMax);
+        sourceCible.setheureDebut(heureDebut);
+        sourceCible.setCircuit(circuit);
+        Metier.Distribution dist = new Distribution(distributionMin, distributionMode, distributionMax);
+        sourceCible.setDistribution(dist);
+    }
+    
     public void retirerSource(Source source){
+        source.getPointDepart().retirerSource(source);
         sources.remove(source);
     }
     

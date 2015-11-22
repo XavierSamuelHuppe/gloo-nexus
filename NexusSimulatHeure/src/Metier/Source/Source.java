@@ -66,6 +66,9 @@ public abstract class Source {
     public void setCircuit(Circuit circuit){
         circuitSource = circuit;
     }
+    public void setDistribution(Distribution d) {
+        this.distributionAUtiliser = d;
+    }
     
     public void pigerDonneesDepart()
     {
@@ -95,4 +98,12 @@ public abstract class Source {
     
     public abstract void avancerCreation(LocalTime heureCourante, double tempsEcouleParRatioEnSeconde);
     public abstract void reInitialiserValeursDepartSimulation();
+    
+    public abstract String obtenirDescriptionSource();
+    
+    @Override
+    public String toString()
+    {
+        return this.obtenirDescriptionSource();
+    }
 }

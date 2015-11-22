@@ -34,11 +34,11 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
         this.PanneauDistribution.setDistribution(this.simulateur.obtenirDistributionTempsGenerationVehiculeDefaut());
         this.modeCreation();
     }
-    public PanneauDetailsSource(Metier.Source.Source s)
+    public PanneauDetailsSource(Simulateur sim, Metier.Source.Source s)
     {
         super();
         initComponents();
-        this.simulateur = simulateur;
+        this.simulateur = sim;
         this.pointMetierLie = s.getPointDepart();
         this.circuitActuel = s.getCircuit();
         this.sourceMetierLie = s;
@@ -127,10 +127,10 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
         
         if(this.RadioHeureFin.isSelected()){
             LocalTime heureFin = LocalTime.parse(this.ChampHeureFin.getText(),formatter);
-            this.obtenirApplication().getSimulateur().modifierSource(sourceMetierLie, heureFin , this.pointMetierLie, heureDebut, this.circuitActuel);
+            this.obtenirApplication().getSimulateur().modifierSource(sourceMetierLie, heureFin, heureDebut, this.circuitActuel, PanneauDistribution.obtenirMin(), PanneauDistribution.obtenirMode(), PanneauDistribution.obtenirMax());
         }
         if(this.RadioNombreMax.isSelected()){
-            this.obtenirApplication().getSimulateur().modifierSource(sourceMetierLie, Integer.parseInt(this.ChampNombreMax.getText()), this.pointMetierLie, heureDebut, this.circuitActuel);
+            this.obtenirApplication().getSimulateur().modifierSource(sourceMetierLie, Integer.parseInt(this.ChampNombreMax.getText()), heureDebut, this.circuitActuel, PanneauDistribution.obtenirMin(), PanneauDistribution.obtenirMode(), PanneauDistribution.obtenirMax());
         }
         
         this.obtenirApplication().repaint();
@@ -311,8 +311,8 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
         
         if(modeCreationBool == true){
             sauvegarderNouvelleSource();
-        }else if(modeCreationBool == false)
-        {
+        }
+        else {
             sauvegarderSourceModifier();
         }
     }//GEN-LAST:event_BoutonSauvegarderActionPerformed

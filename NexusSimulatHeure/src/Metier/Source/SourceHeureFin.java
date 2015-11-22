@@ -44,4 +44,9 @@ public class SourceHeureFin extends Source {
     public void reInitialiserValeursDepartSimulation() {
         //Cette implémentation de réinitialise rien.
     }
+    
+    @Override
+    public String obtenirDescriptionSource() {
+        return this.getCircuit().getNom() + " : " + heureDebut.format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE) + " à " + heureFin.format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE);
+    }
 }

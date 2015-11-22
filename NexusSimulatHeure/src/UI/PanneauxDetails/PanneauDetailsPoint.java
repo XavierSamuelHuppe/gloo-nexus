@@ -39,6 +39,13 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
         this.ChampLatitude.setText(String.format("%1$f", pointMetierLie.getPosition().getY()));
         this.ChampLongitude.setText(String.format("%1$f", pointMetierLie.getPosition().getX()));
         this.ChampNom.setText(pointMetierLie.getNom());
+        
+        this.ListeSources.removeAllItems();
+        this.ListeSources.addItem("");
+        for(Metier.Source.Source s : this.pointMetierLie.getSources())
+        {
+            this.ListeSources.addItem(s);
+        }
     }
 
     @Override
@@ -181,6 +188,11 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
         jPanel6.add(LibelleSources);
 
         ListeSources.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ListeSources.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ListeSourcesActionPerformed(evt);
+            }
+        });
         jPanel6.add(ListeSources);
 
         jPanel5.add(jPanel6, java.awt.BorderLayout.CENTER);
@@ -204,6 +216,13 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
             this.obtenirApplication().repaint();
         }         
     }//GEN-LAST:event_BoutonSupprimerActionPerformed
+
+    private void ListeSourcesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListeSourcesActionPerformed
+        if(ListeSources.getSelectedItem() != null && !ListeSources.getSelectedItem().equals(""))
+        {
+            this.obtenirApplication().afficherPanneauDetailsSource((Metier.Source.Source)ListeSources.getSelectedItem());
+        }
+    }//GEN-LAST:event_ListeSourcesActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

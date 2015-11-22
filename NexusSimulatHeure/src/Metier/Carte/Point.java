@@ -62,6 +62,10 @@ public class Point extends Observable{
         this.sources.add(source);
     }
     
+    public void retirerSource(Source source) {
+        this.sources.remove(source);
+    }
+    
     public void retirerProfilPassager(Source source) {
         this.sources.remove(source);
     }
