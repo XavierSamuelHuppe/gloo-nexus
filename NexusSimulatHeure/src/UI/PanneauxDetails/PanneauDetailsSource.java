@@ -83,11 +83,11 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
         if(this.sourceMetierLie.getClass() == SourceFinie.class){
             SourceFinie SourceCaster = (SourceFinie) sourceMetierLie;
             this.ChampNombreMax.setText(String.valueOf(SourceCaster.getNombreMax()));
-            this.controlEnabler(false);
+            this.activerDesactiverControles(false);
         }else if (this.sourceMetierLie.getClass() == SourceHeureFin.class){
             SourceHeureFin SourceCaster = (SourceHeureFin) sourceMetierLie;
             this.ChampHeureFin.setText(SourceCaster.getheureFin().format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE));
-            this.controlEnabler(true);
+            this.activerDesactiverControles(true);
         }
         
     }
@@ -322,21 +322,21 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
         }
     }//GEN-LAST:event_BoutonSauvegarderActionPerformed
 
-    private void controlEnabler(Boolean bool){
-        this.ChampHeureFin.setEnabled(bool);
-        this.RadioHeureFin.setEnabled(bool);
-        this.RadioHeureFin.setSelected(bool);
-        this.ChampNombreMax.setEnabled(!bool);
-        this.RadioNombreMax.setEnabled(!bool);
-        this.RadioNombreMax.setSelected(!bool);
+    private void activerDesactiverControles(Boolean activer){
+        this.ChampHeureFin.setEnabled(activer);
+        this.RadioHeureFin.setEnabled(activer);
+        this.RadioHeureFin.setSelected(activer);
+        this.ChampNombreMax.setEnabled(!activer);
+        this.RadioNombreMax.setEnabled(!activer);
+        this.RadioNombreMax.setSelected(!activer);
     }
     
     private void RadioHeureFinMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RadioHeureFinMouseClicked
-        this.controlEnabler(true);
+        this.activerDesactiverControles(true);
     }//GEN-LAST:event_RadioHeureFinMouseClicked
 
     private void RadioNombreMaxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RadioNombreMaxMouseClicked
-        this.controlEnabler(false);
+        this.activerDesactiverControles(false);
     }//GEN-LAST:event_RadioNombreMaxMouseClicked
 
     private void BoutonSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSupprimerActionPerformed
