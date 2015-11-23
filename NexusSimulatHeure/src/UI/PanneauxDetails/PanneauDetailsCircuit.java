@@ -8,21 +8,15 @@ import Metier.Exceptions.CreationInvalideException;
 public class PanneauDetailsCircuit extends PanneauDetails implements java.util.Observer {
 
     private Metier.Circuit.Circuit circuitMetierLie;
-    private Controleur.Simulateur simulateur;
     
-    /**
-     * Creates new form PanneauDetailsPoint2
-     */
-    public PanneauDetailsCircuit(Simulateur sim) {
+    public PanneauDetailsCircuit() {
         super();
         initComponents();
-        this.simulateur = sim;
         this.LibelleEntete.setText("Création d'un nouveau circuit");
     }
     
-    public PanneauDetailsCircuit(Metier.Circuit.Circuit cMetier, Simulateur sim)
+    public PanneauDetailsCircuit(Metier.Circuit.Circuit cMetier)
     {
-        this(sim);
         this.circuitMetierLie = cMetier;
         this.LibelleEntete.setText("Détails : Circuit \"" + this.circuitMetierLie.getNom() + "\"");
         rafraichir();
@@ -90,7 +84,7 @@ public class PanneauDetailsCircuit extends PanneauDetails implements java.util.O
     private void BoutonSauvegarderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSauvegarderActionPerformed
         try
         {
-            this.simulateur.sauvergarderCircuit(this.ChampNom.getText());
+            this.obtenirApplication().getSimulateur().sauvergarderCircuit(this.ChampNom.getText());
             this.obtenirApplication().viderPanneauDetails();
         }
         catch(CreationInvalideException ex)

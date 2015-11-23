@@ -167,7 +167,6 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         }
     }
     
-       
     public int calculerCentreX()
     {
         return this.getX() + (calculerZoom(DIAMETRE) / 2);

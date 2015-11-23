@@ -20,26 +20,22 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
 
     private Metier.Source.Source sourceMetierLie;
     private Metier.Carte.Point pointMetierLie;
-    private Controleur.Simulateur simulateur;
     private Metier.Circuit.Circuit circuitActuel;
     private boolean modeCreationBool;
         
-    public PanneauDetailsSource(Simulateur sim, Metier.Carte.Point point) {
+    public PanneauDetailsSource(Metier.Carte.Point point) {
         super();
         initComponents();
-        this.simulateur = sim;
         
         this.pointMetierLie = point;
         this.modeCreationBool = true;
-        this.PanneauDistribution.setDistribution(this.simulateur.obtenirDistributionTempsGenerationVehiculeDefaut());
+        this.PanneauDistribution.setDistribution(this.obtenirApplication().getSimulateur().obtenirDistributionTempsGenerationVehiculeDefaut());
         this.modeCreation();
     }
     
-    public PanneauDetailsSource(Simulateur sim, Metier.Source.Source s)
-    {
+    public PanneauDetailsSource(Metier.Source.Source s) {
         super();
         initComponents();
-        this.simulateur = sim;
         this.pointMetierLie = s.getPointDepart();
         this.circuitActuel = s.getCircuit();
         this.sourceMetierLie = s;
@@ -48,12 +44,11 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
         
         rafraichir();
     }
-             
     
     private void modeCreation(){
         try {
             this.ChampCircuit.removeAllItems();
-            List<Circuit> circuits = this.simulateur.circuitsPassantPar(pointMetierLie);
+            List<Circuit> circuits = this.obtenirApplication().getSimulateur().circuitsPassantPar(pointMetierLie);
             for (Circuit circuit: circuits){
                 this.ChampCircuit.addItem(circuit);
             }
@@ -63,8 +58,8 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
         } 
         
         this.ChampCircuit.setEnabled(true);
-        this.ChampHeureDepart.setText(this.simulateur.obtenirHeureDebutSimulation().format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE));
-        this.ChampHeureFin.setText(this.simulateur.obtenirHeureFinSimulation().format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE));
+        this.ChampHeureDepart.setText(this.obtenirApplication().getSimulateur().obtenirHeureDebutSimulation().format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE));
+        this.ChampHeureFin.setText(this.obtenirApplication().getSimulateur().obtenirHeureFinSimulation().format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE));
         this.ChampNombreMax.setText("1");
         this.BoutonSupprimer.setEnabled(false);
     }
@@ -73,7 +68,7 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
     public void rafraichir() {
         System.err.println("rafr");
         this.ChampCircuit.removeAllItems();
-        List<Circuit> circuits = this.simulateur.circuitsPassantPar(pointMetierLie);
+        List<Circuit> circuits = this.obtenirApplication().getSimulateur().circuitsPassantPar(pointMetierLie);
         for (Circuit circuit: circuits){
             this.ChampCircuit.addItem(circuit);
         }
@@ -95,7 +90,7 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
         this.rafraichir();
     }
     
-    public void sauvegarderNouvelleSource(){
+    private void sauvegarderNouvelleSource(){
         if(!valider())
             return;
         
@@ -114,7 +109,7 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
         this.obtenirApplication().viderPanneauDetails();
     }
     
-    public void sauvegarderSourceModifier(){
+    private void sauvegarderSourceModifier(){
         if(!valider())
             return;
         

@@ -6,9 +6,6 @@ public class PanneauDistribution extends PanneauDetails {
 
     private Metier.Distribution distributionCourante;
     
-    /**
-     * Creates new form PanneauDetailsPoint2
-     */
     public PanneauDistribution() {
         initComponents();
     }
@@ -47,8 +44,7 @@ public class PanneauDistribution extends PanneauDetails {
         return Double.parseDouble(this.ChampMode.getText());
     }
     
-    public String validerValeurs()
-    {       
+    public String validerValeurs() {       
         String retour = "";
         double min = 0;
         double max = 0;
@@ -167,7 +163,6 @@ public class PanneauDistribution extends PanneauDetails {
 
         add(jPanel3);
     }// </editor-fold>//GEN-END:initComponents
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ChampMaximum;

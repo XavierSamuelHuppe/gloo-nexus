@@ -16,9 +16,6 @@ public abstract class ElementEspaceTravail extends javax.swing.JPanel{
     public void zoom(double facteurZoom, java.awt.Point positionCurseur)
     {
         this.zoom += facteurZoom;
-        
-//        double zoomEffectif = facteurZoom > 0 ? 1 + facteurZoom : 1 / (1 + Math.abs(facteurZoom));
-//        this.setLocation((int)(this.getX() * zoomEffectif), (int)(this.getY() * zoomEffectif));
     }
     
     public int calculerZoom(double d)

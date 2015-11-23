@@ -28,11 +28,9 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
 
     private List<Point> points = new LinkedList<>();
     private List<Segment> segments = new LinkedList<>();
-//    private List<Vehicule> vehicules = new LinkedList<>();
     private double zoom = ZOOM_DEFAULT;
     private boolean fanionClavier1 = false;
     private java.awt.Point pointDrag = null;
-    private Point tempSegmentPointDepart = null;
     
     private final double PAS_ZOOM = 0.1;
     
@@ -46,8 +44,6 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
         this.addMouseWheelListener(this);
-        
-        this.addKeyListener(new UI.IO.ZoneKeyListener());
     }
     
     public void reinitialiser()
@@ -55,11 +51,9 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         this.removeAll();
         points = new LinkedList<>();
         segments = new LinkedList<>();
-//        vehicules = new LinkedList<>();
         zoom = ZOOM_DEFAULT;
         fanionClavier1 = false;
         pointDrag = null;
-        tempSegmentPointDepart = null;
     }
     
     public void setSimulateur(Controleur.Simulateur s)
@@ -163,6 +157,10 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         Graphics2D g2 = (Graphics2D)g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+        dessiner(g2);
+    }
+    private void dessiner(Graphics2D g2)
+    {
         dessinerSegments(g2);
         dessinerPoints(g2);
         dessinerVehicules(g2);
@@ -197,7 +195,6 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
             }
         }
     }
-    
 
     public void setFanionClavier1(boolean b)
     {
@@ -328,7 +325,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
                                   (int)(posGeo.getSecond() / -ratioPixelDegreLatitude));
     }
     
-        public PaireDoubles transformerPositionEspaceTravailEnPostionGeorgraphique(java.awt.Point posET)
+    public PaireDoubles transformerPositionEspaceTravailEnPostionGeorgraphique(java.awt.Point posET)
     {
         return new PaireDoubles(posET.x * ratioPixelDegreLontitude, 
                                 posET.y * -ratioPixelDegreLatitude);

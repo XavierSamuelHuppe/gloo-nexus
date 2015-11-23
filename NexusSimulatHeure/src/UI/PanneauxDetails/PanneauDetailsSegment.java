@@ -1,29 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package UI.PanneauxDetails;
 
 import java.util.Observable;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author The Vagrant Geek
- */
 public class PanneauDetailsSegment extends PanneauDetails implements java.util.Observer {
 
     private Metier.Carte.Segment segmentMetierLie;
     
-    /**
-     * Creates new form PanneauDetailsPoint2
-     */
-    public PanneauDetailsSegment() {
-        initComponents();
-    }
-    
-    public PanneauDetailsSegment(Metier.Carte.Segment s, UI.Segment sUI)
+    public PanneauDetailsSegment(Metier.Carte.Segment s)
     {
         super();
         initComponents();

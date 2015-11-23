@@ -20,7 +20,7 @@ public class SegmentDroitDetectionClic extends SegmentDetectionClic {
     }
         
     @Override
-    public boolean estSegmentClique(Point p) {
+    public boolean estSegmentClique(java.awt.Point p) {
         return Line2D.ptSegDist((double)segment.getDepart().calculerCentreX(), (double)segment.getDepart().calculerCentreY(),
                                 (double)segment.getArrivee().calculerCentreX(), (double)segment.getArrivee().calculerCentreY(),
                                 (double)p.x, (double)p.y) <= TOLERANCE_CLIC;

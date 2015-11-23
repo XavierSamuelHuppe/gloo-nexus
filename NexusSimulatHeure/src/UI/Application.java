@@ -2,23 +2,67 @@ package UI;
 
 import Controleur.Simulateur;
 import UI.Constantes.Couleurs;
-import UI.PanneauxDetails.PanneauDetailsPoint;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.ActionListener;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Observable;
-import javafx.scene.input.KeyCode;
 import javax.swing.JOptionPane;
 import java.util.Observer;
 
 
 public class Application extends javax.swing.JFrame implements KeyListener, ActionListener, Observer {
+    private Controleur.Simulateur simulateur;
+    
+    
+    /**
+     * Creates new form MainFrame
+     */
+    public Application() {
+        initComponents();
+        this.addKeyListener(this);
 
+        this.BoutonNouveau.addKeyListener(this);
+        this.BoutonModeCircuit.addKeyListener(this);
+        this.BoutonModePoint.addKeyListener(this);
+        this.BoutonModeProfilPassager.addKeyListener(this);
+        this.BoutonModeSegment.addKeyListener(this);
+        this.BoutonModeSource.addKeyListener(this);
+        
+        this.simulateur = new Controleur.Simulateur();
+        
+        this.ZoneEspaceTravail.setSimulateur(simulateur);
+        
+        this.BoutonParametres.setActionCommand(UI.Constantes.Commandes.PARAMETRES_SIMULATION);
+        this.BoutonParametres.addActionListener(this);
+        
+        initialiserBoutonsModes();
+        BoutonModePoint.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
+        
+        this.simulateur.ajouterObserveurASimulation(this);
+    }
+    
+    private void initialiserBoutonsModes()
+    {
+        this.BoutonModePoint.setActionCommand(UI.Constantes.Commandes.MODE_POINT);
+        this.BoutonModePoint.addActionListener(this);
+        
+        this.BoutonModeSegment.setActionCommand(UI.Constantes.Commandes.MODE_SEGMENT);
+        this.BoutonModeSegment.addActionListener(this);
+        
+        this.BoutonModeCircuit.setActionCommand(UI.Constantes.Commandes.MODE_CIRCUIT);
+        this.BoutonModeCircuit.addActionListener(this);
+        
+        this.BoutonModeSource.setActionCommand(UI.Constantes.Commandes.MODE_SOURCE);
+        this.BoutonModeSource.addActionListener(this);
+        
+        this.BoutonModeProfilPassager.setActionCommand(UI.Constantes.Commandes.MODE_PROFIL_PASSAGER);
+        this.BoutonModeProfilPassager.addActionListener(this);        
+    }
+
+    
     @Override
     public void update(Observable o, Object o1) {
 //        System.out.println("S'passe de quoi.");
@@ -192,53 +236,6 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         }
     }
 
-    private Controleur.Simulateur simulateur;
-    
-    /**
-     * Creates new form MainFrame
-     */
-    public Application() {
-        initComponents();
-        this.addKeyListener(this);
-
-        this.BoutonNouveau.addKeyListener(this);
-        this.BoutonModeCircuit.addKeyListener(this);
-        this.BoutonModePoint.addKeyListener(this);
-        this.BoutonModeProfilPassager.addKeyListener(this);
-        this.BoutonModeSegment.addKeyListener(this);
-        this.BoutonModeSource.addKeyListener(this);
-        
-        this.simulateur = new Controleur.Simulateur();
-        
-        this.ZoneEspaceTravail.setSimulateur(simulateur);
-        
-        this.BoutonParametres.setActionCommand(UI.Constantes.Commandes.PARAMETRES_SIMULATION);
-        this.BoutonParametres.addActionListener(this);
-        
-        initialiserBoutonsModes();
-        BoutonModePoint.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
-        
-        this.simulateur.ajouterObserveurASimulation(this);
-    }
-    
-    private void initialiserBoutonsModes()
-    {
-        this.BoutonModePoint.setActionCommand(UI.Constantes.Commandes.MODE_POINT);
-        this.BoutonModePoint.addActionListener(this);
-        
-        this.BoutonModeSegment.setActionCommand(UI.Constantes.Commandes.MODE_SEGMENT);
-        this.BoutonModeSegment.addActionListener(this);
-        
-        this.BoutonModeCircuit.setActionCommand(UI.Constantes.Commandes.MODE_CIRCUIT);
-        this.BoutonModeCircuit.addActionListener(this);
-        
-        this.BoutonModeSource.setActionCommand(UI.Constantes.Commandes.MODE_SOURCE);
-        this.BoutonModeSource.addActionListener(this);
-        
-        this.BoutonModeProfilPassager.setActionCommand(UI.Constantes.Commandes.MODE_PROFIL_PASSAGER);
-        this.BoutonModeProfilPassager.addActionListener(this);        
-    }
-
     public void mettreAJourCoordonnesGeographiques(double latitude, double longitude)
     {
         this.LibelleCoordonneesGeographiques.setText(String.format("%1$.4f°, %2$.4f°", latitude, longitude));
@@ -270,7 +267,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     public void afficherPanneauDetailsCircuitNouveauCircuit()
     {
         this.PanneauDetails.removeAll();
-        this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsCircuit(this.simulateur));
+        this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsCircuit());
         this.PanneauDetails.repaint();
         this.revalidate();
     }
@@ -278,7 +275,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     public void afficherPanneauDetailsCircuitExistant(Metier.Circuit.Circuit c)
     {
         this.PanneauDetails.removeAll();
-        this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsCircuit(c, this.simulateur));
+        this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsCircuit(c));
         this.PanneauDetails.repaint();
         this.revalidate();
     }
@@ -286,47 +283,28 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     public void afficherPanneauDetailsSourceNouvelleSource(Metier.Carte.Point point)
     {
         this.PanneauDetails.removeAll();
-        this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsSource(this.simulateur, point));
+        this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsSource(point));
         this.PanneauDetails.repaint();
         
         this.revalidate();
     }
-    
-        public void afficherPanneauDetailsSource(Metier.Source.Source source)
-    {
+     
+    public void afficherPanneauDetailsSource(Metier.Source.Source source) {
         this.PanneauDetails.removeAll();
-        this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsSource(this.simulateur, source));
+        this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsSource(source));
         this.PanneauDetails.repaint();
         
         this.revalidate();
     }
     
-    public EspaceTravail getEspaceTravail()
-    {
+    public EspaceTravail getEspaceTravail() {
         return this.ZoneEspaceTravail;
-    }
-    
-    
-    public void repeindreEspaceTravail()
-    {
-        this.ZoneEspaceTravail.revalidate();
-        this.ZoneEspaceTravail.repaint();
     }
     
     public Controleur.Simulateur getSimulateur()
     {
         return this.simulateur;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     private void rafraichirIconeBoutonDemarrerPause()
     {
@@ -338,14 +316,14 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         }
         BoutonDemarrerPause.revalidate();
     }
+
+    public void repeindreEspaceTravail()
+    {
+        this.ZoneEspaceTravail.revalidate();
+        this.ZoneEspaceTravail.repaint();
+    }
     
-    
-    
-    
-    
-    
-    
-    
+        
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

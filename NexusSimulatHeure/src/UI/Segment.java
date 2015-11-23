@@ -51,40 +51,40 @@ public class Segment implements IDetailsAffichables, Observer {
         segmentMetier.addObserver(this);
     }
     
-        public void determinerMode()
+    public void determinerMode()
+    {
+        Controleur.Simulateur sim = this.espaceTravail.getSimulateur();
+
+        if(sim.verifierExistenceSegementEnSensInverse(this.segmentMetier))
         {
-            Controleur.Simulateur sim = this.espaceTravail.getSimulateur();
-            
-            if(sim.verifierExistenceSegementEnSensInverse(this.segmentMetier))
+            passerModeDecale();
+        }
+        else
+        {
+            passerModeDroit();
+        }
+
+        if(sim.estEnModeSegment()&& sim.estSegmentActif(this.segmentMetier))
+        {
+            this.modeActuel = Segment.Mode.SELECTIONNE;
+        }
+        else if (sim.estEnModeCircuit())
+        {
+            if((sim.estDansCircuitActif(this.segmentMetier) || sim.estDansCircuitEnCreation(this.segmentMetier)))
             {
-                passerModeDecale();
+                this.modeActuel = Segment.Mode.CIRCUIT_SELECTIONNE;
             }
-            else
+            else if (sim.estDansAuMoinsUnCircuit(this.segmentMetier))
             {
-                passerModeDroit();
+                this.modeActuel = Segment.Mode.CIRCUIT;
             }
-            
-            if(sim.estEnModeSegment()&& sim.estSegmentActif(this.segmentMetier))
-            {
-                this.modeActuel = Segment.Mode.SELECTIONNE;
-            }
-            else if (sim.estEnModeCircuit())
-            {
-                if((sim.estDansCircuitActif(this.segmentMetier) || sim.estDansCircuitEnCreation(this.segmentMetier)))
-                {
-                    this.modeActuel = Segment.Mode.CIRCUIT_SELECTIONNE;
-                }
-                else if (sim.estDansAuMoinsUnCircuit(this.segmentMetier))
-                {
-                    this.modeActuel = Segment.Mode.CIRCUIT;
-                }
-            }
-            else
-            {
-                this.modeActuel = Segment.Mode.NORMAL;
-            }        
-        }  
-        
+        }
+        else
+        {
+            this.modeActuel = Segment.Mode.NORMAL;
+        }        
+    }  
+
     private void passerModeDroit()
     {
         dessinateur = new DessinateurSegmentDroit(this);
@@ -130,7 +130,7 @@ public class Segment implements IDetailsAffichables, Observer {
         
     @Override
     public PanneauDetails obtenirPanneauDetails() {
-        return new PanneauDetailsSegment(this.getSegmentMetier(), this);
+        return new PanneauDetailsSegment(this.getSegmentMetier());
     }
     
     public Orientation obtenirOrientation()
