@@ -283,7 +283,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     public void afficherPanneauDetailsSourceNouvelleSource(Metier.Carte.Point point)
     {
         this.PanneauDetails.removeAll();
-        this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsSource(point));
+        this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsSource(point, this.simulateur));
         this.PanneauDetails.repaint();
         
         this.revalidate();
@@ -291,7 +291,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
      
     public void afficherPanneauDetailsSource(Metier.Source.Source source) {
         this.PanneauDetails.removeAll();
-        this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsSource(source));
+        this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsSource(source, this.simulateur));
         this.PanneauDetails.repaint();
         
         this.revalidate();
