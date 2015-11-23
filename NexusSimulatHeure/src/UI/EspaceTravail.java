@@ -77,6 +77,11 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         this.simulateur.modifierPoint(p.getPointMetier(), coords.getPremier(), coords.getSecond(), p.getPointMetier().getNom());
     }
     
+    public boolean permettreDeplacementPoint()
+    {
+        return this.simulateur.estEnModePoint() && !this.simulateur.simulationEstEnAction();
+    }
+    
     private final double ZOOM_BORNE_INFERIEURE = 0.1;
     private final double ZOOM_BORNE_SUPERIEURE = 2;
     

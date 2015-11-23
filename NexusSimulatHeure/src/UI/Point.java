@@ -16,6 +16,7 @@ import java.awt.event.MouseMotionListener;
 import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.SwingUtilities;
 
 public class Point extends ElementEspaceTravail implements MouseListener, MouseMotionListener, IDetailsAffichables, Observer {
 
@@ -159,11 +160,11 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
             g2.setColor(Couleurs.POINT_SOURCE_DETAILS);
             g2.setFont(new Font(null, Font.PLAIN, (int)(UI.Constantes.Rendu.TAILLE_POLICE_POINTS * this.zoom)));
             int offsetY = 0;
-            for(DetailsSource ds : liste)
-            {
-                g2.drawString(this.getPointMetier().getNom(), (int)(this.zoom * 50), offsetY);
-                offsetY += (int)(UI.Constantes.Rendu.TAILLE_POLICE_POINTS * this.zoom);
-            }
+//            for(DetailsSource ds : liste)
+//            {
+//                g2.drawString(this.getPointMetier().getNom(), (int)(this.zoom * 50), offsetY);
+//                offsetY += (int)(UI.Constantes.Rendu.TAILLE_POLICE_POINTS * this.zoom);
+//            }
         }
     }
     
@@ -210,9 +211,12 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
     //Implémentations MouseMotionListener
     @Override
     public void mouseDragged(MouseEvent me) {
-        dragged = true;
-        this.setLocation(this.getX() + me.getX() - (int)this.pointPoigneeDrag.getX(), this.getY() + me.getY() - (int)this.pointPoigneeDrag.getY());
-        obtenirZone().repaint();
+        if(this.obtenirEspaceTravail().permettreDeplacementPoint())
+        {
+            dragged = true;
+            this.setLocation(this.getX() + me.getX() - (int)this.pointPoigneeDrag.getX(), this.getY() + me.getY() - (int)this.pointPoigneeDrag.getY());
+            obtenirZone().repaint();
+        }
     }
  
     @Override

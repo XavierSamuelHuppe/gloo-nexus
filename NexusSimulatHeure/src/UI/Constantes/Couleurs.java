@@ -11,8 +11,10 @@ public class Couleurs {
     public static final java.awt.Color POINT_FOND = Color.decode("#B3F6B3");
     public static final java.awt.Color POINT_SELECTIONNE = Color.decode("#1DBB1D");
     public static final java.awt.Color POINT_FOND_SELECTIONNE = Color.decode("#FFFFFF");
-    public static final java.awt.Color POINT_CIRCUIT = Color.decode("#FFC46B");
-    public static final java.awt.Color POINT_FOND_CIRCUIT = Color.decode("#FFE4BA");
+//    public static final java.awt.Color POINT_CIRCUIT = Color.decode("#FFC46B");
+//    public static final java.awt.Color POINT_FOND_CIRCUIT = Color.decode("#FFE4BA");
+    public static final java.awt.Color POINT_CIRCUIT = Color.decode("#E99C25");
+    public static final java.awt.Color POINT_FOND_CIRCUIT = Color.decode("#FFC46B");
     public static final java.awt.Color POINT_CREATION_SEGMENT = Color.decode("#5B8CC3");
     public static final java.awt.Color POINT_FOND_CREATION_SEGMENT = Color.decode("#B3D0EF");
     
@@ -25,9 +27,14 @@ public class Couleurs {
     public static final java.awt.Color SEGMENT_SELECTIONNE_EXTERIEUR = Color.decode("#5B8CC3");
     public static final java.awt.Color SEGMENT_TEXTE = Color.decode("#000000");
     
-    public static final java.awt.Color CIRCUIT = Color.decode("#FFC46B");
-    public static final java.awt.Color CIRCUIT_SELECTIONNE_INTERIEUR = Color.decode("#FFE4BA");
-    public static final java.awt.Color CIRCUIT_SELECTIONNE_EXTERIEUR = Color.decode("#FFC46B");
+//    public static final java.awt.Color CIRCUIT = Color.decode("#FFC46B");
+//    public static final java.awt.Color CIRCUIT_SELECTIONNE_INTERIEUR = Color.decode("#FFE4BA");
+//    public static final java.awt.Color CIRCUIT_SELECTIONNE_EXTERIEUR = Color.decode("#FFC46B");
+//    public static final java.awt.Color CIRCUIT_TEXTE = Color.decode("#000000");
+    
+    public static final java.awt.Color CIRCUIT = Color.decode("#E99C25");
+    public static final java.awt.Color CIRCUIT_SELECTIONNE_INTERIEUR = Color.decode("#FFC46B");
+    public static final java.awt.Color CIRCUIT_SELECTIONNE_EXTERIEUR = Color.decode("#E99C25");
     public static final java.awt.Color CIRCUIT_TEXTE = Color.decode("#000000");
     
     public static final java.awt.Color VEHICULE_NOM_CIRCUIT = Color.decode("#FF0000");
