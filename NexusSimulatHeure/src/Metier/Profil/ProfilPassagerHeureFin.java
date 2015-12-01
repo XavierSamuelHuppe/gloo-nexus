@@ -20,4 +20,8 @@ public class ProfilPassagerHeureFin extends ProfilPassager {
     public void setHeureFin(LocalTime Fin){
         heureFin = Fin;
     }
+    @Override
+    public String obtenirDescriptionProfil() {
+        return heureDepart.format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE) + " à " + heureFin.format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE);
+    }
 }
