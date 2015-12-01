@@ -288,7 +288,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         
         this.revalidate();
     }
-     
+    
     public void afficherPanneauDetailsSource(Metier.Source.Source source) {
         this.PanneauDetails.removeAll();
         this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsSource(source, this.simulateur));
@@ -296,6 +296,26 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         
         this.revalidate();
     }
+    
+    public void afficherPanneauDetailsProfilPassagerNouveauProfil(Metier.Carte.Point point)
+    {
+        this.PanneauDetails.removeAll();
+        this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsProfilPassager(point, this.simulateur));
+        this.PanneauDetails.repaint();
+        
+        this.revalidate();
+    }
+    
+    public void afficherPanneauDetailsProfilPassager(Metier.Profil.ProfilPassager profil)
+    {
+        this.PanneauDetails.removeAll();
+        this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsProfilPassager(profil, this.simulateur));
+        this.PanneauDetails.repaint();
+        
+        this.revalidate();
+    }
+    
+    
     
     public EspaceTravail getEspaceTravail() {
         return this.ZoneEspaceTravail;
