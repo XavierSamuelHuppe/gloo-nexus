@@ -181,6 +181,33 @@ public class Simulation extends Observable{
         circuits.remove(circuit);
     }
     
+    public void ajouterProfil(ProfilPassager profil){
+        profil.getPointDepart().ajouterProfilPassaser(profil);
+        profils.add(profil);
+    }
+    
+    public void modifierProfil(ProfilPassager profil, LocalTime heureFin, LocalTime heureDebut, double distributionMin, double distributionMode, double distributionMax){
+        ProfilPassagerHeureFin profilCible = (ProfilPassagerHeureFin) profil;
+        profilCible.setHeureFin(heureFin);
+        profilCible.setHeureDepart(heureDebut);
+        Metier.Distribution dist = new Distribution(distributionMin, distributionMode, distributionMax);
+        profilCible.setDistribution(dist);
+    }
+    
+    public void modifierProfil(ProfilPassager profil, int nombreMax, LocalTime heureDebut, double distributionMin, double distributionMode, double distributionMax){
+        ProfilPassagerFini profilCible = (ProfilPassagerFini) profil;
+        profilCible.setHeureDepart(heureDebut);
+        profilCible.setNombreMax(nombreMax);
+        Metier.Distribution dist = new Distribution(distributionMin, distributionMode, distributionMax);
+        profilCible.setDistribution(dist);
+    }
+    
+    public void retirerProfil(ProfilPassager profil){
+        profil.getPointDepart().retirerProfilPassager(profil);
+        profils.remove(profil);
+    }
+    
+    
     public void ajouterSource(Source source){
         source.getPointDepart().ajouterSource(source);
         sources.add(source);
