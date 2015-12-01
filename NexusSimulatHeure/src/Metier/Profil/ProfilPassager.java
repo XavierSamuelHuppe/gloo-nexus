@@ -9,7 +9,7 @@ import java.time.LocalTime;
 
 public abstract class ProfilPassager {
     private Point pointDepart;
-    private LocalTime heureDepart;
+    protected LocalTime heureDepart;
     private double frequence;
     public Distribution distributionAUtiliser;
     public Statistiques statistiques;
@@ -68,10 +68,10 @@ public abstract class ProfilPassager {
         return unPieton;
     }*/
     
-    /*
+    public abstract String obtenirDescriptionProfil();
     @Override
     public String toString()
     {
         return this.obtenirDescriptionProfil();
-    }*/
+    }
 }
