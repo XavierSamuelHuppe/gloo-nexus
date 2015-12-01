@@ -464,7 +464,7 @@
         </Container>
         <Component class="javax.swing.JLabel" name="LibelleProfilPassager">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Profils Passager"/>
+            <Property name="text" type="java.lang.String" value="Profils Passagers"/>
           </Properties>
         </Component>
         <Component class="javax.swing.Box$Filler" name="filler16">

@@ -202,7 +202,7 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
         jPanel11.setLayout(new java.awt.GridLayout(2, 0));
         jPanel7.add(jPanel11);
 
-        LibelleProfilPassager.setText("Profils Passager");
+        LibelleProfilPassager.setText("Profils Passagers");
         jPanel7.add(LibelleProfilPassager);
         jPanel7.add(filler16);
 
