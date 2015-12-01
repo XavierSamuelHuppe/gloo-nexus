@@ -20,5 +20,9 @@ public class ProfilPassagerFini extends ProfilPassager{
     public void setNombreMax(int max){
         nombreMax = max;
     }
+    @Override
+    public String obtenirDescriptionProfil() {
+        return ((Integer)nombreMax).toString() + " p., à partir de " + heureDepart.format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE);
+    }
     
 }
