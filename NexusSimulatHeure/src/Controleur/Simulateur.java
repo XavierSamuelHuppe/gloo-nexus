@@ -6,6 +6,7 @@ import Metier.Simulation.Simulation;
 import Metier.*;
 import Metier.Exceptions.*;
 import Metier.Source.*;
+import Metier.Profil.*;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -201,8 +202,26 @@ public class Simulateur {
         simulation.ajouterSource(nouvelleSource);
     }  
     
+    public void ajouterProfil(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, double distributionMin, double distributionMode, double distributionMax){
+        ProfilBuilder builder = new ProfilBuilder();
+        Distribution distributionAUtiliser = new Distribution(distributionMin, distributionMode, distributionMax);
+        ProfilPassager nouveauPassager = builder.ConstruireProfil(heureFin, pointDepart, heureDebut, distributionAUtiliser, simulation);
+        simulation.ajouterProfil(nouveauPassager);
+    }
+    
+    public void ajouterProfil(int nombreMax, Point pointDepart, LocalTime heureDebut, double distributionMin, double distributionMode, double distributionMax){
+        ProfilBuilder builder = new ProfilBuilder();
+        Distribution distributionAUtiliser = new Distribution(distributionMin, distributionMode, distributionMax);
+        ProfilPassager nouveauPassager = builder.ConstruireProfil(nombreMax, pointDepart, heureDebut, distributionAUtiliser, simulation);
+        simulation.ajouterProfil(nouveauPassager);
+    }
+    
     public void retirerSource(Source source){
         simulation.retirerSource(source);
+    }
+    
+    public void retirerProfil(ProfilPassager profil){
+        simulation.retirerProfil(profil);
     }
     
 //    public void modifierSource(Source source, LocalTime heureFin, Point pointDepart, LocalTime heureDebut, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
@@ -245,6 +264,13 @@ public class Simulateur {
     public void modifierSource(Source source, int nombreMax, LocalTime heureDebut, Circuit circuit, double distributionMin, double distributionMode, double distributionMax){
         simulation.modifierSource(source, nombreMax, heureDebut, circuit, distributionMin, distributionMode, distributionMax);
     }  
+    
+    public void modifierProfil(ProfilPassager profil, LocalTime heureFin, LocalTime heureDebut, double distributionMin, double distributionMode, double distributionMax){
+        simulation.modifierProfil(profil, heureFin, heureDebut, distributionMin, distributionMode, distributionMax);
+    }
+    public void modifierProfil(ProfilPassager profil, int nombreMax, LocalTime heureDebut, double distributionMin, double distributionMode, double distributionMax){
+        simulation.modifierProfil(profil, nombreMax, heureDebut, distributionMin, distributionMode, distributionMax);
+    }
     
     public List<SituationVehicule> obtenirSituationsVehicules(){
         return this.simulation.obtenirSituationsVehicules();
