@@ -3,14 +3,17 @@ package UI;
 import Controleur.Simulateur;
 import UI.Constantes.Couleurs;
 import java.awt.BorderLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.time.LocalTime;
 import java.util.Observable;
 import javax.swing.JOptionPane;
 import java.util.Observer;
+import javax.swing.JFileChooser;
 
 
 public class Application extends javax.swing.JFrame implements KeyListener, ActionListener, Observer {
@@ -360,6 +363,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         BoutonAnnuler = new javax.swing.JButton();
         BoutonRepeter = new javax.swing.JButton();
         BoutonParametres = new javax.swing.JButton();
+        BoutonImageFond = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         BoutonModePoint = new javax.swing.JButton();
         BoutonModeSegment = new javax.swing.JButton();
@@ -454,6 +458,21 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         BoutonParametres.setMinimumSize(new java.awt.Dimension(24, 24));
         BoutonParametres.setPreferredSize(new java.awt.Dimension(24, 24));
         PanneauBarreOutils.add(BoutonParametres);
+
+        BoutonImageFond.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/image-2x.png"))); // NOI18N
+        BoutonImageFond.setToolTipText("Afficher une image de fond");
+        BoutonImageFond.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        BoutonImageFond.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        BoutonImageFond.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        BoutonImageFond.setMaximumSize(new java.awt.Dimension(24, 24));
+        BoutonImageFond.setMinimumSize(new java.awt.Dimension(24, 24));
+        BoutonImageFond.setPreferredSize(new java.awt.Dimension(24, 24));
+        BoutonImageFond.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BoutonImageFondActionPerformed(evt);
+            }
+        });
+        PanneauBarreOutils.add(BoutonImageFond);
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jSeparator1.setMaximumSize(new java.awt.Dimension(10, 32767));
@@ -674,6 +693,21 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         this.revalidate();
     }//GEN-LAST:event_SliderVitesseStateChanged
 
+    private void BoutonImageFondActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonImageFondActionPerformed
+        javax.swing.JFileChooser choixFichier = new JFileChooser();
+        
+         if (choixFichier.showDialog(this, null) == JFileChooser.APPROVE_OPTION) {
+            File fichier = choixFichier.getSelectedFile();
+            java.awt.Image i;
+            try
+            {
+                i = javax.imageio.ImageIO.read(fichier);
+                this.ZoneEspaceTravail.setImageFond(i);
+            }
+            catch (Exception x){}
+        }
+    }//GEN-LAST:event_BoutonImageFondActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -717,6 +751,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     private javax.swing.JButton BoutonArreter;
     private javax.swing.JButton BoutonCharger;
     private javax.swing.JButton BoutonDemarrerPause;
+    private javax.swing.JButton BoutonImageFond;
     private javax.swing.JButton BoutonModeCircuit;
     private javax.swing.JButton BoutonModePoint;
     private javax.swing.JButton BoutonModeProfilPassager;

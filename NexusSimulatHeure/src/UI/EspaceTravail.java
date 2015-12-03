@@ -14,6 +14,7 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelListener;
+import java.awt.geom.AffineTransform;
 
 import java.util.List;
 import java.util.LinkedList;
@@ -31,6 +32,8 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     private double zoom = ZOOM_DEFAULT;
     private boolean fanionClavier1 = false;
     private java.awt.Point pointDrag = null;
+    
+    private Image imageFond = null;
     
     private final double PAS_ZOOM = 0.1;
     
@@ -166,6 +169,12 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     }
     private void dessiner(Graphics2D g2)
     {
+        if(this.imageFond != null)
+        {
+            AffineTransform at = AffineTransform.getTranslateInstance(-this.posReferenceX, -this.posReferenceY);
+            at.concatenate(AffineTransform.getScaleInstance(zoom,zoom));
+            g2.drawImage(this.imageFond, at, this);
+        }
         dessinerSegments(g2);
         dessinerPoints(g2);
         dessinerVehicules(g2);
@@ -440,5 +449,10 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     private void afficherDetails(IDetailsAffichables elementCible)
     {
         this.obtenirApplication().afficherPanneauDetails(elementCible);
+    }
+    
+    public void setImageFond(Image i)
+    {
+        this.imageFond = i;
     }
 }
