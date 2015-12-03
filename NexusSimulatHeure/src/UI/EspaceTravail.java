@@ -196,7 +196,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
             {
                 PaireDoubles pd = new PaireDoubles(sv.getX(), sv.getY());
                 java.awt.Point point = transformerPositionEspaceTravailEnPositionViewport(transformerPostionGeorgraphiqueEnPositionEspaceTravail(pd));
-                dv.dessiner(g2, point.x, point.y, sv.getCircuit(), this.zoom);
+                dv.dessiner(g2, point.x, point.y, sv.getNombrePassagers(),sv.getCircuit(), this.zoom);
             }
         }
     }

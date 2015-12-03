@@ -74,6 +74,11 @@ public class Point extends Observable{
         this.passagers.octroyer(passagers);
     }
     
+    public int obtenirNombrePassagersEnAttente()
+    {
+        return this.passagers.obtenirNombrePassagers();
+    }
+    
     public List<Passager> faireMonterEnVehicule(Circuit circuit){
         return passagers.embarquer(circuit);
     }

@@ -3,6 +3,7 @@ package UI;
 import UI.Constantes.Couleurs;
 import UI.PanneauxDetails.PanneauDetails;
 import UI.PanneauxDetails.PanneauDetailsPoint;
+import java.awt.Color;
 
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -12,6 +13,8 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Path2D;
 
 import java.util.LinkedList;
 import java.util.Observable;
@@ -92,6 +95,10 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         dessinerCentre(g2);
         dessinerNomSiRequis(g2);
         dessinerDetailsSourcesSiRequis(g2);
+        if(this.obtenirEspaceTravail().getSimulateur().simulationEstEnAction())
+        {
+            dessinerDetailsPassagers(g2);
+        }
     }
     
     private void dessinerFond(Graphics2D g2)
@@ -166,6 +173,49 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
 //                offsetY += (int)(UI.Constantes.Rendu.TAILLE_POLICE_POINTS * this.zoom);
 //            }
         }
+    }
+    
+    private void dessinerDetailsPassagers(Graphics2D g2)
+    {
+        g2.setColor(Couleurs.POINT_PASSAGERS_DETAILS);
+        g2.setFont(new Font(null, Font.PLAIN, (int)(UI.Constantes.Rendu.TAILLE_POLICE_POINTS * this.zoom)));
+        Integer nbPassagers = this.getPointMetier().obtenirNombrePassagersEnAttente();
+//        String str = "Aucun passager en attente";
+//        if(nbPassagers > 0)
+//        {
+//            str = nbPassagers.toString() + "  passager" + (nbPassagers == 1 ? "" : "s") + " en attente";
+//        }
+        g2.drawString(nbPassagers.toString(), this.getX() + calculerZoom(ICONE_PASSAGER_LARGEUR + 4), this.getY() + calculerZoom(DIAMETRE + UI.Constantes.Rendu.HAUTEUR_TEXTE + 6));
+        dessinerIconePassagers(g2);
+    }
+    
+    private void dessinerIconePassagers(Graphics2D g2)
+    {
+        dessinerTetePassager(g2);
+        dessinerCorpsPassager(g2);
+    }
+    
+    private static final int ICONE_PASSAGER_LARGEUR = 8;
+    
+    private void dessinerTetePassager(Graphics2D g2)
+    {
+        g2.setColor(Couleurs.POINT_PASSAGERS_DETAILS);        
+        g2.fillOval(this.getX(), this.getY() + calculerZoom(DIAMETRE), calculerZoom(ICONE_PASSAGER_LARGEUR), calculerZoom(ICONE_PASSAGER_LARGEUR));
+    }
+    
+    private void dessinerCorpsPassager(Graphics2D g2)
+    {
+        Path2D p = new Path2D.Double();
+        p.moveTo(0, 0);
+        p.lineTo(8,0);
+        p.lineTo(4,16);
+        p.lineTo(0,0);
+        
+        AffineTransform at = AffineTransform.getTranslateInstance(this.getX(), this.getY() + calculerZoom(DIAMETRE + ICONE_PASSAGER_LARGEUR + 1));
+        at.concatenate(AffineTransform.getScaleInstance(zoom,zoom));
+        
+        g2.setColor(Couleurs.POINT_PASSAGERS_DETAILS);        
+        g2.fill(p.createTransformedShape(at));
     }
     
     public int calculerCentreX()

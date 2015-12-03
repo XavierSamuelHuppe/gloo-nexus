@@ -28,12 +28,14 @@ public class DessinateurVehicule {
     private double zoom;
     private int x;
     private int y;
+    private Integer nbPassagers;
     private String circuit;
     
-    public void dessiner(Graphics2D g2, int x, int y, String circuit, double zoom) {
+    public void dessiner(Graphics2D g2, int x, int y, int nbPassagers, String circuit, double zoom) {
         this.x = x - (LARGEUR / 2);
         this.y = y - (HAUTEUR / 2);
         this.circuit = circuit;
+        this.nbPassagers = nbPassagers;
         this.zoom = zoom;
         
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -51,6 +53,7 @@ public class DessinateurVehicule {
         dessinerFenetre(70,9,g2);
         dessinerFenetre(82,9,g2);
         dessinerNomCircuit(g2);
+        dessinerNombrePassagers(g2);
     }
     
     private static boolean init = false;
@@ -161,6 +164,13 @@ public class DessinateurVehicule {
         g2.setColor(Couleurs.VEHICULE_NOM_CIRCUIT);
         g2.setFont(new Font(null, Font.PLAIN, (int)(UI.Constantes.Rendu.TAILLE_POLICE_POINTS * this.zoom)));
         g2.drawString(this.circuit, this.x, this.y);
+    }
+    
+    private void dessinerNombrePassagers(Graphics2D g2)
+    {
+        g2.setColor(Couleurs.VEHICULE_NOMBRE_PASSAGERS);
+        g2.setFont(new Font(null, Font.PLAIN, (int)(UI.Constantes.Rendu.TAILLE_POLICE_POINTS * this.zoom)));
+        g2.drawString("Passagers : " + this.nbPassagers.toString(), this.x, this.y + calculerZoom(HAUTEUR + UI.Constantes.Rendu.HAUTEUR_TEXTE));
     }
             
     private int calculerZoom(int i)

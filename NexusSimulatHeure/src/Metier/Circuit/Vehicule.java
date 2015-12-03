@@ -59,7 +59,7 @@ public class Vehicule extends Observable{
     public SituationVehicule obtenirSituation()
     {
         Position p = calculerPosition(this.segmentActuel.getPointDepart().getPosition(), this.segmentActuel.getPointArrivee().getPosition());
-        return new SituationVehicule(p.getX(), p.getY(), this.circuitActuel.getNom());
+        return new SituationVehicule(p.getX(), p.getY(), this.passagers.obtenirNombrePassagers(), this.circuitActuel.getNom());
     }
 
     private Position calculerPosition(Position posDepart, Position posArrivee)
