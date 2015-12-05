@@ -26,6 +26,9 @@ public class Carte implements Serializable{
         for(Segment s: segments){
             s.recevoirNouveauTempsTransit();
         }
+        for(Point p: points){
+            p.viderConteneurPassager();
+        }
     }
     
     public void terminerSimulation(){

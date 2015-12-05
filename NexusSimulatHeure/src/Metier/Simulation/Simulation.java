@@ -83,17 +83,18 @@ public class Simulation extends Observable implements Serializable{
     private void terminerSimulation(){
         carte.terminerSimulation();
         
-        /*for(Source s: sources){
-            s.terminerSimulation();
-        }*/
+        for(Source s: sources){
+            s.retirerTempsGeneration();
+        }
+        for(ProfilPassager pp: profils){
+            pp.retirerTempsGeneration();
+        }
         
         vehicules.clear();
         
-        //+ dist profils
-        
         //Fermer les statistiques
         //-Sources
-        //-Segments
+        //-Segments ?
         //-ProfilPassagers
         
         initialiserHeureDebut();
@@ -106,16 +107,17 @@ public class Simulation extends Observable implements Serializable{
         initialiserDepartNouvelleJournee();
     }
     private void initialiserDepartNouvelleJournee(){
-        //reset des temps de sources
-        
-        //reset des temps de profils passagers
         initialiserHeureDebut();
         vehicules.clear();
         carte.initialiserDepartSimulation();
         for(Source s: sources){
+            s.setheureDebut(parametres.getHeureDebut());
             s.pigerDonneesDepartNouvelleJournee();
         }
-        //+ dist profils
+        for(ProfilPassager pp: profils){
+            pp.setHeureDepart(parametres.getHeureDebut());
+            pp.pigerDonneesDepartNouvelleJournee();
+        }
     }
     private void initialiserHeureDebut()
     {
@@ -130,6 +132,7 @@ public class Simulation extends Observable implements Serializable{
         
         faireAvancerToutLesVehicules(tempsEcouleParRatioEnSeconde);
         faireAvancerCreationVehicule(heureCourante, tempsEcouleParRatioEnSeconde);
+        faireAvancerGenerationPassagers(heureCourante, tempsEcouleParRatioEnSeconde);
         //faire spawner les gens
         
         if(!doitContinuerJournee()){
@@ -178,6 +181,12 @@ public class Simulation extends Observable implements Serializable{
     private void faireAvancerCreationVehicule(LocalTime heureCourante, double tempsEcouleParRatioEnSeconde){
         for(Source s: sources){
             s.avancerCreation(heureCourante, tempsEcouleParRatioEnSeconde);
+        }
+    }
+    
+    private void faireAvancerGenerationPassagers(LocalTime heureCourante, double tempsEcouleParRatioEnSeconde){
+        for(ProfilPassager pp: profils){
+            pp.avancerGeneration(heureCourante, tempsEcouleParRatioEnSeconde);
         }
     }
     

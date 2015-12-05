@@ -8,6 +8,9 @@ import java.time.LocalTime;
 public class ProfilPassagerFini extends ProfilPassager{
     
     private int nombreMax;
+    private int nombreCree;
+    
+    private LocalTime prochaineGeneration;
     
     public ProfilPassagerFini(int nombreMax, Point point, LocalTime heureDepart, Distribution distribution, Simulation simulation){
         super(point, heureDepart, distribution, simulation);
@@ -22,8 +25,26 @@ public class ProfilPassagerFini extends ProfilPassager{
     }
     
     @Override
+    public void avancerGeneration(LocalTime heureCourante, double tempsEcouleParRatioEnSeconde) {
+        if(nombreCree == nombreMax)
+            return;
+        
+        if(prochaineGeneration.isBefore(heureCourante)){
+            genererPassager();
+            nombreCree++;
+            prochaineGeneration = heureDebut.plusSeconds((long)(getFrequence() * (double)nombreCree));
+        }
+    }
+    
+    @Override
+    protected void reInitialiserValeursDepartSimulation() {
+        nombreCree = 0;
+        prochaineGeneration = heureDebut;
+    }
+    
+    @Override
     public String obtenirDescriptionProfil() {
-        return ((Integer)nombreMax).toString() + " p., à partir de " + heureDepart.format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE);
+        return ((Integer)nombreMax).toString() + " p., à partir de " + heureDebut.format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE);
     }
     
 }

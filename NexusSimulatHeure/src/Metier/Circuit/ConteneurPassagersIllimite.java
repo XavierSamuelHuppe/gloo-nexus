@@ -48,5 +48,13 @@ public class ConteneurPassagersIllimite implements ConteneurPassagers, Serializa
             this.passagers.add(p);
         }
     }
-    
+    @Override
+    public void octroyer(Passager passagers) {
+        this.passagers.add(passagers);
+    }
+
+    @Override
+    public void vider() {
+        passagers.clear();
+    }
 }
