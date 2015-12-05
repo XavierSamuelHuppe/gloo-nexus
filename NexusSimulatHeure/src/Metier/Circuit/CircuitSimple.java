@@ -13,22 +13,22 @@ public class CircuitSimple extends Circuit{
     
     @Override
     public Segment obtenirProchainSegment(Segment dernierSegment) {
-        int index = trajet.indexOf(dernierSegment);
+        int index = parcours.indexOf(dernierSegment);
         
         if(index == -1)
             throw new SegmentNonTrouveException();
         
-        if(index == trajet.size() - 1)
+        if(index == parcours.size() - 1)
             throw new FinDeCircuitException();
         
-        return trajet.get(index+1);
+        return parcours.get(index+1);
     }
     @Override
     public Segment obtenirProchainSegment(Point pointDepart){
         
-        for(int i = trajet.size() - 1; i >= 0; i--){
-            if (trajet.get(i).getPointDepart() == pointDepart){
-                return trajet.get(i);
+        for(int i = parcours.size() - 1; i >= 0; i--){
+            if (parcours.get(i).getPointDepart() == pointDepart){
+                return parcours.get(i);
             }
         }
         

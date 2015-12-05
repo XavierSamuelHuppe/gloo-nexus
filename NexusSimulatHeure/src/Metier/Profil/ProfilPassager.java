@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.time.LocalTime;
 
 public abstract class ProfilPassager implements Serializable{
+    private Trajet trajet;
     private Point pointDepart;
     protected LocalTime heureDepart;
     private double frequence;
@@ -49,7 +50,9 @@ public abstract class ProfilPassager implements Serializable{
         this.distributionAUtiliser = d;
     }
     
-    
+    public Trajet getTrajet(){
+        return this.trajet;
+    }
     
     public void pigerDonneesDepart()
     {

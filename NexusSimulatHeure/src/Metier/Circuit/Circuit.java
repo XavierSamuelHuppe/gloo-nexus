@@ -6,7 +6,7 @@ import java.util.*;
 
 public abstract class Circuit implements Serializable {
     protected String nom;
-    protected List<Segment> trajet;
+    protected List<Segment> parcours;
     
     public Circuit(){
     }
@@ -17,9 +17,9 @@ public abstract class Circuit implements Serializable {
     }
     
     private void appliquerCircuit(List<Segment> segments){
-        trajet = new ArrayList();
+        parcours = new ArrayList();
         for(Segment s : segments){
-            trajet.add(s);
+            parcours.add(s);
         }
     }
     
@@ -32,24 +32,51 @@ public abstract class Circuit implements Serializable {
     }
     
     public int longueurTrajet(){
-        return trajet.size();
+        return parcours.size();
     }
     
     public List<Segment> getTraget(){
-        return trajet;
+        return parcours;
     }
     
     public void setTrajet(List<Segment> trajet){
-        this.trajet = trajet;
+        this.parcours = trajet;
     }
     
     public boolean utilise(Segment s){
-        return trajet.contains(s);
+        return parcours.contains(s);
+    }
+    
+    public boolean utilise(Segment segmentCible, Point entreDebut, Point entreFin)
+    {
+        LinkedList<Segment> sousCircuit = new LinkedList<>();
+        boolean ajouter = false;
+        for(Segment s : parcours)
+        {
+            if(!ajouter)
+            {
+                if(s.getPointDepart() == entreDebut)
+                {
+                    sousCircuit.push(s);
+                    ajouter = true;
+                }
+            }
+            else
+            {
+                sousCircuit.push(s);
+                if(s.getPointArrivee()==entreFin)
+                {
+                    ajouter = false;
+                    break;
+                }
+            }
+        }
+        return sousCircuit.contains(segmentCible);
     }
     
     // TODO rencontre: Explain witchcraft to team
     public boolean utilise(Point p){
-        return trajet.stream().anyMatch((s) -> (s.getPointArrivee() == p || s.getPointDepart() == p));
+        return parcours.stream().anyMatch((s) -> (s.getPointArrivee() == p || s.getPointDepart() == p));
     }
     
     public abstract Segment obtenirProchainSegment(Segment dernierSegment);
@@ -69,8 +96,8 @@ public abstract class Circuit implements Serializable {
         if(longueurTrajet() != autreCircuit.longueurTrajet())
             return false;
         
-        for(int i = trajet.size(); i >= 0; i--){
-            if(trajet.get(i) != autreCircuit.getTraget().get(i))
+        for(int i = parcours.size(); i >= 0; i--){
+            if(parcours.get(i) != autreCircuit.getTraget().get(i))
                 return false;
         }
         return true;
