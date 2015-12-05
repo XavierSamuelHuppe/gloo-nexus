@@ -21,7 +21,7 @@ public abstract class DessinateurSegment {
     protected String obtenirTempsSegmentAffiche() {
         if(this.segment.getSegmentMetier().getTempsTransit() > 0.0)
         {
-            return ((Double)this.segment.getSegmentMetier().getTempsTransit()).toString();
+            return UI.Constantes.Formats.formatterDoubleSansDecimal(this.segment.getSegmentMetier().getTempsTransit());
         }
         return "";
     }
