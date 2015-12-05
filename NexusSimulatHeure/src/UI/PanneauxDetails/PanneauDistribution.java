@@ -26,9 +26,9 @@ public class PanneauDistribution extends PanneauDetails {
     @Override
     public void rafraichir()
     {
-        this.ChampMaximum.setText(((Double)distributionCourante.getMax()).toString());
-        this.ChampMinimum.setText(((Double)distributionCourante.getMin()).toString());
-        this.ChampMode.setText(((Double)distributionCourante.getMode()).toString());
+        this.ChampMaximum.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(distributionCourante.getMax()));
+        this.ChampMinimum.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(distributionCourante.getMin()));
+        this.ChampMode.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(distributionCourante.getMode()));
         this.revalidate();
     }
     
@@ -46,32 +46,32 @@ public class PanneauDistribution extends PanneauDetails {
     
     public String validerValeurs() {       
         String retour = "";
-        double min = 0;
-        double max = 0;
-        double mode = 0;
+        long min = 0;
+        long max = 0;
+        long mode = 0;
         boolean nombresValides = true;
         try{
-            min = Double.parseDouble(this.ChampMinimum.getText());   
+            min = Long.parseLong(this.ChampMinimum.getText());   
         }
         catch(NumberFormatException ex){
             nombresValides = false;
-            retour += "La valeur minimale est obligatoire et doit être un nombre.\r\n";
+            retour += "La valeur minimale est obligatoire et doit être un nombre entier.\r\n";
         }
         
         try{
-            max = Double.parseDouble(this.ChampMaximum.getText());   
+            max = Long.parseLong(this.ChampMaximum.getText());   
         }
         catch(NumberFormatException ex){
             nombresValides = false;
-            retour += "La valeur maximale est obligatoire et doit être un nombre.\r\n";
+            retour += "La valeur maximale est obligatoire et doit être un nombre entier.\r\n";
         }
         
         try{
-            mode = Double.parseDouble(this.ChampMode.getText());   
+            mode = Long.parseLong(this.ChampMode.getText());   
         }
         catch(NumberFormatException ex){
             nombresValides = false;
-            retour += "Le mode est obligatoire et doit être un nombre.\r\n";
+            retour += "Le mode est obligatoire et doit être un nombre entier.\r\n";
         }
         
         if(nombresValides)
