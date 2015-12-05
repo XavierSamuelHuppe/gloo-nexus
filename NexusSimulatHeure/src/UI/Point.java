@@ -281,17 +281,16 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         }
     }        
 
-    boolean clicked = false;
     boolean dragged = false;
     
     //<editor-fold desc="Implémentations MouseMotionListener, MouseListener">
     //Implémentations MouseMotionListener
     @Override
     public void mouseDragged(MouseEvent me) {
+        dragged = true;
         if(this.obtenirEspaceTravail().permettreDeplacementPoint(this))
         {
             System.out.println("mouseDragged");
-            dragged = true;
             this.setLocation(this.getX() + me.getX() - (int)this.pointPoigneeDrag.getX(), this.getY() + me.getY() - (int)this.pointPoigneeDrag.getY());
             obtenirZone().repaint();
         }
@@ -310,11 +309,7 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
     @Override
     public void mouseClicked(MouseEvent me) {
         System.out.println("mouseClicked");
-        if(!clicked)
-        {
-            obtenirEspaceTravail().pointClique(this);
-            clicked = false;
-        }
+        obtenirEspaceTravail().pointClique(this);
     }
     
     @Override
@@ -323,15 +318,15 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         System.out.println("mouseReleased");
         if(dragged)
         {
-            this.obtenirEspaceTravail().deplacerPoint(this);    
-        }
-        else
-        {
-            if(!this.obtenirEspaceTravail().obtenirApplication().getSimulateur().estEnModeArret()
-               && !this.obtenirEspaceTravail().obtenirApplication().getSimulateur().estEnModeIntersection())
+            if(this.obtenirEspaceTravail().obtenirApplication().getSimulateur().estEnModeArret()
+               || this.obtenirEspaceTravail().obtenirApplication().getSimulateur().estEnModeIntersection())
             {
-                this.obtenirEspaceTravail().pointClique(this);
-                clicked = true;
+                this.obtenirEspaceTravail().deplacerPoint(this); 
+            }
+            else
+            {
+                System.out.println("mouseReleased1111");
+                this.obtenirEspaceTravail().pointClique(this);  
             }
         }
         dragged = false;
