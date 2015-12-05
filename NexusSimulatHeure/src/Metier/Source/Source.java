@@ -9,11 +9,12 @@ import Metier.Carte.Segment;
 import Metier.Circuit.ConteneurPassagers;
 import Metier.Exceptions.CreationInvalideException;
 import Metier.Simulation.Simulation;
+import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.*;
 
 
-public abstract class Source {
+public abstract class Source implements Serializable{
     
     private double frequence;
     protected LocalTime heureDebut;

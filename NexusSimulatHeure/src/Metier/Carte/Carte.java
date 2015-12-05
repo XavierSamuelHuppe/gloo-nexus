@@ -1,10 +1,11 @@
 package Metier.Carte;
 import Metier.Distribution;
 import Metier.Exceptions.*;
+import java.io.Serializable;
 
 import java.util.*;
 
-public class Carte {
+public class Carte implements Serializable{
     private List<Segment> segments;
     private List<Point> points;
     

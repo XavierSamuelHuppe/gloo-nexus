@@ -435,6 +435,11 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         BoutonSauvegarder.setMaximumSize(new java.awt.Dimension(24, 24));
         BoutonSauvegarder.setMinimumSize(new java.awt.Dimension(24, 24));
         BoutonSauvegarder.setPreferredSize(new java.awt.Dimension(24, 24));
+        BoutonSauvegarder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BoutonSauvegarderActionPerformed(evt);
+            }
+        });
         PanneauBarreOutils.add(BoutonSauvegarder);
 
         BoutonCharger.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/data-transfer-upload-2x.png"))); // NOI18N
@@ -756,6 +761,13 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     private void BoutonModeSegmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonModeSegmentActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BoutonModeSegmentActionPerformed
+
+    private void BoutonSauvegarderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSauvegarderActionPerformed
+        if(simulateur.enregistrer())
+            JOptionPane.showMessageDialog(this, "La sauvegarde a réussie.");
+        else
+            JOptionPane.showMessageDialog(this, "La sauvegarde a explosé!");
+    }//GEN-LAST:event_BoutonSauvegarderActionPerformed
 
     /**
      * @param args the command line arguments

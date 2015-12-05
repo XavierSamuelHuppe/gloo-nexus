@@ -2,9 +2,10 @@ package Metier.Circuit;
 
 import Metier.Carte.Point;
 import Metier.Profil.Passager;
+import java.io.Serializable;
 import java.util.*;
 
-public class ConteneurPassagersIllimite implements ConteneurPassagers{
+public class ConteneurPassagersIllimite implements ConteneurPassagers, Serializable{
 
     private List<Passager> passagers;
     

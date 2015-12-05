@@ -7,6 +7,9 @@ import Metier.*;
 import Metier.Exceptions.*;
 import Metier.Source.*;
 import Metier.Profil.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -20,6 +23,27 @@ public class Simulateur {
         carte = new Carte();
         simulation = new Simulation(carte);
         contexte = new ContexteEdition(carte);
+    }
+    
+    public boolean enregistrer(){
+        try
+        {
+           FileOutputStream fileOut = new FileOutputStream("sauvegarde.ser");
+           ObjectOutputStream out = new ObjectOutputStream(fileOut);
+           out.writeObject(simulation);
+           out.close();
+           fileOut.close();
+           System.out.printf("Simulation enregistré sous /enregistrements/Sauvegarde.ser");
+           return true;
+        }catch(IOException i)
+        {
+            i.printStackTrace();
+            System.out.printf("ERREUR - la serialisation a explosé!");
+            return false;
+        }
+    }
+    public void charger(String path){
+        
     }
  
     public boolean estEnModeArret(){

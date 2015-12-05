@@ -1,9 +1,10 @@
 package Metier.Carte;
 
 import Metier.Distribution;
+import java.io.Serializable;
 import java.util.Observable;
 
-public class Segment extends Observable{
+public class Segment extends Observable implements Serializable{
     private final Point pointDepart;
     private final Point pointArrivee;
     private Distribution distribution;

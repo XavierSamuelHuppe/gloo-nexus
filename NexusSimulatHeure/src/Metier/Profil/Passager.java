@@ -3,8 +3,9 @@ package Metier.Profil;
 import Metier.Carte.ElementTrajet;
 import Metier.Carte.Point;
 import Metier.Circuit.Circuit;
+import java.io.Serializable;
 
-public class Passager {
+public class Passager implements Serializable{
     private ElementTrajet[] trajet;
     private int etapeActuelle; // Vu que le trajet est un array..
     private Point pointActuel;

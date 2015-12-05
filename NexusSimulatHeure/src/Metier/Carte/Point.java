@@ -4,9 +4,10 @@ import Metier.Circuit.*;
 import Metier.Profil.Passager;
 import Metier.Profil.ProfilPassager;
 import Metier.Source.Source;
+import java.io.Serializable;
 import java.util.*;
 
-public class Point extends Observable{
+public class Point extends Observable implements Serializable{
     private String nom;
     private Position position;
     private List<ProfilPassager> profilsPassagers;

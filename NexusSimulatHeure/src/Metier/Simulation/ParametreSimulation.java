@@ -4,8 +4,9 @@ import Metier.Distribution;
 import Metier.Exceptions.SimulationEnMauvaisEtatException;
 import java.time.LocalTime;
 import Metier.Circuit.ConteneurPassagersIllimite;
+import java.io.Serializable;
 
-public class ParametreSimulation {
+public class ParametreSimulation implements Serializable{
     public static enum Etats {
         AVANT_DEMARRAGE,
         ACTION,

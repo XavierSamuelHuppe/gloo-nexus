@@ -1,6 +1,8 @@
 package Metier;
 
-public class Distribution{
+import java.io.Serializable;
+
+public class Distribution implements Serializable{
     
     private final double min;
     private final double max;

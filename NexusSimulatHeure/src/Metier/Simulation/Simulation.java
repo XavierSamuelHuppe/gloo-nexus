@@ -9,15 +9,16 @@ import Metier.Profil.*;
 import Metier.Source.*;
 import Metier.Circuit.Vehicule;
 import Metier.Distribution;
+import java.io.Serializable;
 
-public class Simulation extends Observable{
+public class Simulation extends Observable implements Serializable{
     private ParametreSimulation parametres;
     
-    private Thread boucleThread;
-    private BoucleSimulation boucle;
+    private transient Thread boucleThread;
+    private transient BoucleSimulation boucle;
+    
     private LocalTime heureCourante;
     private int JourneeCourante;
-    
     private Carte carte;
     private List<Circuit> circuits;
     private List<Vehicule> vehicules;

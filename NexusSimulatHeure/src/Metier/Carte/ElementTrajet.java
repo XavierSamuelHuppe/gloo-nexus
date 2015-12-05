@@ -1,8 +1,9 @@
 package Metier.Carte;
 
 import Metier.Circuit.Circuit;
+import java.io.Serializable;
 
-public class ElementTrajet {
+public class ElementTrajet implements Serializable{
     private final Circuit circuit;
     private final Point point;
     

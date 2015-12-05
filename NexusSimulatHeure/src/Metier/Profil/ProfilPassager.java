@@ -5,9 +5,10 @@ import Metier.Carte.Point;
 import Metier.Distribution;
 import Metier.Simulation.Simulation;
 import Metier.Simulation.Statistiques;
+import java.io.Serializable;
 import java.time.LocalTime;
 
-public abstract class ProfilPassager {
+public abstract class ProfilPassager implements Serializable{
     private Point pointDepart;
     protected LocalTime heureDepart;
     private double frequence;

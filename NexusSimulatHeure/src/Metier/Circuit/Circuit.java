@@ -1,9 +1,10 @@
 package Metier.Circuit;
 
 import Metier.Carte.*;
+import java.io.Serializable;
 import java.util.*;
 
-public abstract class Circuit {
+public abstract class Circuit implements Serializable {
     protected String nom;
     protected List<Segment> trajet;
     
