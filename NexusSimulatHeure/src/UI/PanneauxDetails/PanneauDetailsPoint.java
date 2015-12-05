@@ -23,17 +23,27 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
         this.ChampLongitude.setText(String.format("%1$f", pointMetierLie.getPosition().getX()));
         this.ChampNom.setText(pointMetierLie.getNom());
         
-        this.ListeSources.removeAllItems();
-        this.ListeSources.addItem("");
-        for(Metier.Source.Source s : this.pointMetierLie.getSources())
+        if(this.pointMetierLie.estArret())
         {
-            this.ListeSources.addItem(s);
+            this.PanneauSources.setVisible(true);
+            this.PanneauProfilsPassagers.setVisible(true);
+            this.ListeSources.removeAllItems();
+            this.ListeSources.addItem("");
+            for(Metier.Source.Source s : this.pointMetierLie.getSources())
+            {
+                this.ListeSources.addItem(s);
+            }
+            this.ListeProfilsPassager.removeAllItems();
+            this.ListeProfilsPassager.addItem("");
+            for(Metier.Profil.ProfilPassager p : this.pointMetierLie.getProfilsPassagers())
+            {
+                this.ListeProfilsPassager.addItem(p);
+            }
         }
-        this.ListeProfilsPassager.removeAllItems();
-        this.ListeProfilsPassager.addItem("");
-        for(Metier.Profil.ProfilPassager p : this.pointMetierLie.getProfilsPassagers())
+        else
         {
-            this.ListeProfilsPassager.addItem(p);
+            this.PanneauSources.setVisible(false);
+            this.PanneauProfilsPassagers.setVisible(false);
         }
     }
 
@@ -75,21 +85,19 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
         BoutonSauvegarder = new javax.swing.JButton();
         BoutonSupprimer = new javax.swing.JButton();
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5));
-        jPanel5 = new javax.swing.JPanel();
+        PanneauSources = new javax.swing.JPanel();
         filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
         filler10 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
         jPanel6 = new javax.swing.JPanel();
         LibelleSources = new javax.swing.JLabel();
         ListeSources = new javax.swing.JComboBox();
-        jPanel7 = new javax.swing.JPanel();
-        filler15 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
+        PanneauProfilsPassagers = new javax.swing.JPanel();
+        filler17 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
+        filler18 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
         jPanel11 = new javax.swing.JPanel();
         LibelleProfilPassager = new javax.swing.JLabel();
-        filler16 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
         ListeProfilsPassager = new javax.swing.JComboBox();
-        filler14 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
-        filler13 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
-        filler11 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
+        filler16 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
 
         setMaximumSize(new java.awt.Dimension(250, 32822));
         setMinimumSize(new java.awt.Dimension(250, 200));
@@ -173,11 +181,11 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
         add(jPanel1);
         add(filler2);
 
-        jPanel5.setMaximumSize(new java.awt.Dimension(2147483647, 50));
-        jPanel5.setPreferredSize(new java.awt.Dimension(100, 50));
-        jPanel5.setLayout(new java.awt.BorderLayout());
-        jPanel5.add(filler5, java.awt.BorderLayout.WEST);
-        jPanel5.add(filler10, java.awt.BorderLayout.EAST);
+        PanneauSources.setMaximumSize(new java.awt.Dimension(2147483647, 50));
+        PanneauSources.setPreferredSize(new java.awt.Dimension(100, 50));
+        PanneauSources.setLayout(new java.awt.BorderLayout());
+        PanneauSources.add(filler5, java.awt.BorderLayout.WEST);
+        PanneauSources.add(filler10, java.awt.BorderLayout.EAST);
 
         jPanel6.setLayout(new java.awt.GridLayout(2, 0));
 
@@ -192,21 +200,21 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
         });
         jPanel6.add(ListeSources);
 
-        jPanel5.add(jPanel6, java.awt.BorderLayout.CENTER);
+        PanneauSources.add(jPanel6, java.awt.BorderLayout.CENTER);
 
-        add(jPanel5);
+        add(PanneauSources);
 
-        jPanel7.setLayout(new java.awt.GridLayout(2, 0));
-        jPanel7.add(filler15);
+        PanneauProfilsPassagers.setMaximumSize(new java.awt.Dimension(2147483647, 50));
+        PanneauProfilsPassagers.setMinimumSize(new java.awt.Dimension(76, 40));
+        PanneauProfilsPassagers.setPreferredSize(new java.awt.Dimension(100, 50));
+        PanneauProfilsPassagers.setLayout(new java.awt.BorderLayout());
+        PanneauProfilsPassagers.add(filler17, java.awt.BorderLayout.WEST);
+        PanneauProfilsPassagers.add(filler18, java.awt.BorderLayout.EAST);
 
         jPanel11.setLayout(new java.awt.GridLayout(2, 0));
-        jPanel7.add(jPanel11);
 
-        LibelleProfilPassager.setText("Profils Passagers");
-        jPanel7.add(LibelleProfilPassager);
-        jPanel7.add(filler16);
-
-        add(jPanel7);
+        LibelleProfilPassager.setText("Profils de passagers");
+        jPanel11.add(LibelleProfilPassager);
 
         ListeProfilsPassager.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         ListeProfilsPassager.addActionListener(new java.awt.event.ActionListener() {
@@ -214,10 +222,12 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
                 ListeProfilsPassagerActionPerformed(evt);
             }
         });
-        add(ListeProfilsPassager);
-        add(filler14);
-        add(filler13);
-        add(filler11);
+        jPanel11.add(ListeProfilsPassager);
+
+        PanneauProfilsPassagers.add(jPanel11, java.awt.BorderLayout.CENTER);
+        PanneauProfilsPassagers.add(filler16, java.awt.BorderLayout.LINE_END);
+
+        add(PanneauProfilsPassagers);
 
         getAccessibleContext().setAccessibleDescription("");
     }// </editor-fold>//GEN-END:initComponents
@@ -261,14 +271,14 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
     private javax.swing.JLabel LibelleSources;
     private javax.swing.JComboBox ListeProfilsPassager;
     private javax.swing.JComboBox ListeSources;
+    private javax.swing.JPanel PanneauProfilsPassagers;
+    private javax.swing.JPanel PanneauSources;
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler10;
-    private javax.swing.Box.Filler filler11;
     private javax.swing.Box.Filler filler12;
-    private javax.swing.Box.Filler filler13;
-    private javax.swing.Box.Filler filler14;
-    private javax.swing.Box.Filler filler15;
     private javax.swing.Box.Filler filler16;
+    private javax.swing.Box.Filler filler17;
+    private javax.swing.Box.Filler filler18;
     private javax.swing.Box.Filler filler2;
     private javax.swing.Box.Filler filler3;
     private javax.swing.Box.Filler filler4;
@@ -286,9 +296,7 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     // End of variables declaration//GEN-END:variables

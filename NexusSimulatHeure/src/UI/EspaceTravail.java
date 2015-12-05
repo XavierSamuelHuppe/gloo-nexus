@@ -408,7 +408,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
             this.simulateur.selectionnerPoint(p.getPointMetier());
             this.obtenirApplication().afficherPanneauDetails(p);
         }
-        else if (simulateur.estEnModeCircuit() && p.getPointMetier().estArret())
+        else if (simulateur.estEnModeCircuit())
         {
             try
             {
