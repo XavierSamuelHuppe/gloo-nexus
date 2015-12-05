@@ -27,9 +27,11 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         initComponents();
         this.addKeyListener(this);
 
+        this.setTitle("SimulatHeure");
         this.BoutonNouveau.addKeyListener(this);
         this.BoutonModeCircuit.addKeyListener(this);
-        this.BoutonModePoint.addKeyListener(this);
+        this.BoutonModeArret.addKeyListener(this);
+        this.BoutonModeIntersection.addKeyListener(this);
         this.BoutonModeProfilPassager.addKeyListener(this);
         this.BoutonModeSegment.addKeyListener(this);
         this.BoutonModeSource.addKeyListener(this);
@@ -42,15 +44,18 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         this.BoutonParametres.addActionListener(this);
         
         initialiserBoutonsModes();
-        BoutonModePoint.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
+        BoutonModeArret.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
         
         this.simulateur.ajouterObserveurASimulation(this);
     }
     
     private void initialiserBoutonsModes()
     {
-        this.BoutonModePoint.setActionCommand(UI.Constantes.Commandes.MODE_POINT);
-        this.BoutonModePoint.addActionListener(this);
+        this.BoutonModeArret.setActionCommand(UI.Constantes.Commandes.MODE_ARRET);
+        this.BoutonModeArret.addActionListener(this);
+        
+        this.BoutonModeIntersection.setActionCommand(UI.Constantes.Commandes.MODE_INTERSECTION);
+        this.BoutonModeIntersection.addActionListener(this);
         
         this.BoutonModeSegment.setActionCommand(UI.Constantes.Commandes.MODE_SEGMENT);
         this.BoutonModeSegment.addActionListener(this);
@@ -101,8 +106,11 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     public void actionPerformed(ActionEvent ae) {
         switch(ae.getActionCommand())
         {
-            case UI.Constantes.Commandes.MODE_POINT:
-                passerEnModePoint();
+            case UI.Constantes.Commandes.MODE_ARRET:
+                passerEnModeArret();
+                break;
+            case UI.Constantes.Commandes.MODE_INTERSECTION:
+                passerEnModeIntersection();
                 break;
             case UI.Constantes.Commandes.MODE_SEGMENT:
                 passerEnModeSegment();
@@ -127,7 +135,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         System.out.println("keyTyped " + ke.getKeyChar());
         if(ke.getKeyChar()=='1')
         {
-            passerEnModePoint();
+            passerEnModeArret();
         }
         else if (ke.getKeyChar()=='2')
         {
@@ -155,12 +163,20 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         frame.setVisible(true);
     }
     
-    public void passerEnModePoint()
+    public void passerEnModeArret()
     {
         reinitialiserCouleurBoutonsModes();
-        simulateur.passerEnModePoint();
+        simulateur.passerEnModeArret();
         viderPanneauDetails();
-        BoutonModePoint.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
+        BoutonModeArret.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
+    }
+    
+    public void passerEnModeIntersection()
+    {
+        reinitialiserCouleurBoutonsModes();
+        simulateur.passerEnModeIntersection();
+        viderPanneauDetails();
+        BoutonModeIntersection.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
     }
     
     public void passerEnModeSegment()
@@ -199,7 +215,8 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     
     private void reinitialiserCouleurBoutonsModes()
     {
-        BoutonModePoint.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND);
+        BoutonModeArret.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND);
+        BoutonModeIntersection.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND);
         BoutonModeSegment.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND);
         BoutonModeCircuit.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND);
         BoutonModeSource.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND);
@@ -365,7 +382,8 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         BoutonParametres = new javax.swing.JButton();
         BoutonImageFond = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        BoutonModePoint = new javax.swing.JButton();
+        BoutonModeArret = new javax.swing.JButton();
+        BoutonModeIntersection = new javax.swing.JButton();
         BoutonModeSegment = new javax.swing.JButton();
         BoutonModeCircuit = new javax.swing.JButton();
         BoutonModeSource = new javax.swing.JButton();
@@ -479,15 +497,30 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         jSeparator1.setPreferredSize(new java.awt.Dimension(10, 10));
         PanneauBarreOutils.add(jSeparator1);
 
-        BoutonModePoint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/target-2x.png"))); // NOI18N
-        BoutonModePoint.setToolTipText("Édition de points");
-        BoutonModePoint.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        BoutonModePoint.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        BoutonModePoint.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        BoutonModePoint.setMaximumSize(new java.awt.Dimension(24, 24));
-        BoutonModePoint.setMinimumSize(new java.awt.Dimension(24, 24));
-        BoutonModePoint.setPreferredSize(new java.awt.Dimension(24, 24));
-        PanneauBarreOutils.add(BoutonModePoint);
+        BoutonModeArret.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/target-2x.png"))); // NOI18N
+        BoutonModeArret.setToolTipText("Édition d'arrêts");
+        BoutonModeArret.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        BoutonModeArret.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        BoutonModeArret.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        BoutonModeArret.setMaximumSize(new java.awt.Dimension(24, 24));
+        BoutonModeArret.setMinimumSize(new java.awt.Dimension(24, 24));
+        BoutonModeArret.setPreferredSize(new java.awt.Dimension(24, 24));
+        BoutonModeArret.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BoutonModeArretActionPerformed(evt);
+            }
+        });
+        PanneauBarreOutils.add(BoutonModeArret);
+
+        BoutonModeIntersection.setText("+");
+        BoutonModeIntersection.setToolTipText("Édition d'intersections");
+        BoutonModeIntersection.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        BoutonModeIntersection.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        BoutonModeIntersection.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        BoutonModeIntersection.setMaximumSize(new java.awt.Dimension(24, 24));
+        BoutonModeIntersection.setMinimumSize(new java.awt.Dimension(24, 24));
+        BoutonModeIntersection.setPreferredSize(new java.awt.Dimension(24, 24));
+        PanneauBarreOutils.add(BoutonModeIntersection);
 
         BoutonModeSegment.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/transfer-2x.png"))); // NOI18N
         BoutonModeSegment.setToolTipText("Édition de segments");
@@ -497,6 +530,11 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         BoutonModeSegment.setMaximumSize(new java.awt.Dimension(24, 24));
         BoutonModeSegment.setMinimumSize(new java.awt.Dimension(24, 24));
         BoutonModeSegment.setPreferredSize(new java.awt.Dimension(24, 24));
+        BoutonModeSegment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BoutonModeSegmentActionPerformed(evt);
+            }
+        });
         PanneauBarreOutils.add(BoutonModeSegment);
 
         BoutonModeCircuit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/fork-2x.png"))); // NOI18N
@@ -659,7 +697,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
             this.simulateur = new Simulateur();
             this.getEspaceTravail().reinitialiser();
             this.getEspaceTravail().setSimulateur(this.simulateur);
-            this.passerEnModePoint();
+            this.passerEnModeArret();
             this.repaint();
             this.revalidate();
         }
@@ -711,6 +749,14 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         }
     }//GEN-LAST:event_BoutonImageFondActionPerformed
 
+    private void BoutonModeArretActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonModeArretActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BoutonModeArretActionPerformed
+
+    private void BoutonModeSegmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonModeSegmentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BoutonModeSegmentActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -755,8 +801,9 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     private javax.swing.JButton BoutonCharger;
     private javax.swing.JButton BoutonDemarrerPause;
     private javax.swing.JButton BoutonImageFond;
+    private javax.swing.JButton BoutonModeArret;
     private javax.swing.JButton BoutonModeCircuit;
-    private javax.swing.JButton BoutonModePoint;
+    private javax.swing.JButton BoutonModeIntersection;
     private javax.swing.JButton BoutonModeProfilPassager;
     private javax.swing.JButton BoutonModeSegment;
     private javax.swing.JButton BoutonModeSource;

@@ -8,7 +8,8 @@ import java.util.*;
 public class ContexteEdition {
 
     public static enum ModeEdition {
-        POINT,
+        INTERSECTION,
+        ARRET,
         SEGMENT,
         CIRCUIT,
         SOURCE,
@@ -27,13 +28,16 @@ public class ContexteEdition {
     private Carte carte;
     
     public ContexteEdition(Carte carte){
-        mode = ModeEdition.POINT;
+        mode = ModeEdition.ARRET;
         this.carte = carte;
         circuitEnCreation = new ArrayList();
     }
     
-    public boolean estEnModePoint(){
-        return mode == ModeEdition.POINT;
+    public boolean estEnModeArret(){
+        return mode == ModeEdition.ARRET;
+    }
+    public boolean estEnModeIntersection(){
+        return mode == ModeEdition.INTERSECTION;
     }
     public boolean estEnModeSegment(){
         return mode == ModeEdition.SEGMENT;
@@ -48,9 +52,13 @@ public class ContexteEdition {
         return mode == ModeEdition.PASSAGER;
     }
     
-    public void passerEnModePoint(){
+    public void passerEnModeArret(){
         appliquerChangementMode();
-        mode = ModeEdition.POINT;
+        mode = ModeEdition.ARRET;
+    }
+    public void passerEnModeIntersection(){
+        appliquerChangementMode();
+        mode = ModeEdition.INTERSECTION;
     }
     public void passerEnModeSegment(){
         appliquerChangementMode();

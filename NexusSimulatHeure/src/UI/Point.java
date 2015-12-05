@@ -38,10 +38,10 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         }
     }
 
-    enum Mode {NORMAL, SELECTIONNE, CIRCUIT, CREATION_SEGMENT};
+    enum Mode {ARRET, ARRET_SELECTIONNE, INTERSECTION, INTERSECTION_SELECTIONNEE, CIRCUIT, CREATION_SEGMENT};
         
     private java.awt.Point pointPoigneeDrag;
-    private Mode modeActuel = Mode.NORMAL;
+    private Mode modeActuel = Mode.ARRET;
     
     private Metier.Carte.Point pointMetier;
     
@@ -103,13 +103,21 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
     
     private void dessinerFond(Graphics2D g2)
     {
-        if(modeActuel == Mode.NORMAL)
+        if(modeActuel == Mode.ARRET)
         {
-            g2.setColor(Couleurs.POINT);    
+            g2.setColor(Couleurs.POINT_ARRET);    
         }
-        else if(modeActuel == Mode.SELECTIONNE)
+        else if(modeActuel == Mode.ARRET_SELECTIONNE)
         {
-            g2.setColor(Couleurs.POINT_SELECTIONNE);    
+            g2.setColor(Couleurs.POINT_ARRET_SELECTIONNE);    
+        }
+        else if(modeActuel == Mode.INTERSECTION )
+        {
+            g2.setColor(Couleurs.POINT_INTERSECTION);    
+        }
+        else if(modeActuel == Mode.INTERSECTION_SELECTIONNEE)
+        {
+            g2.setColor(Couleurs.POINT_INTERSECTION_SELECTIONNE);    
         }
         else if(modeActuel == Mode.CIRCUIT)
         {
@@ -124,13 +132,21 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
     
     private void dessinerCentre(Graphics2D g2)
     {
-        if(modeActuel == Mode.NORMAL)
+        if(modeActuel == Mode.ARRET)
         {
-            g2.setColor(Couleurs.POINT_FOND);    
+            g2.setColor(Couleurs.POINT_ARRET_FOND);    
         }
-        else if(modeActuel == Mode.SELECTIONNE)
+        else if(modeActuel == Mode.ARRET_SELECTIONNE)
         {
-            g2.setColor(Couleurs.POINT_FOND_SELECTIONNE);    
+            g2.setColor(Couleurs.POINT_ARRET_FOND_SELECTIONNE);    
+        }
+        else if(modeActuel == Mode.INTERSECTION )
+        {
+            g2.setColor(Couleurs.POINT_INTERSECTION_FOND);    
+        }
+        else if(modeActuel == Mode.INTERSECTION_SELECTIONNEE)
+        {
+            g2.setColor(Couleurs.POINT_INTERSECTION_FOND_SELECTIONNE);    
         }
         else if(modeActuel == Mode.CIRCUIT)
         {
@@ -236,9 +252,13 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
     public void determinerMode()
     {
         Controleur.Simulateur sim = this.obtenirEspaceTravail().getSimulateur();
-        if(sim.estEnModePoint() && sim.estPointActif(this.pointMetier))
+        if(sim.estEnModeArret() && sim.estPointActif(this.pointMetier) && this.pointMetier.estArret())
         {
-            this.modeActuel = Mode.SELECTIONNE;
+            this.modeActuel = Mode.ARRET_SELECTIONNE;
+        }
+        else if (sim.estEnModeIntersection() && sim.estPointActif(this.pointMetier) && this.pointMetier.estIntersection())
+        {
+            this.modeActuel = Mode.INTERSECTION_SELECTIONNEE;
         }
         else if (sim.estEnModeCircuit() && (sim.estDansCircuitActif(pointMetier) || sim.estDansCircuitEnCreation(pointMetier) || sim.estDansAuMoinsUnCircuit(pointMetier)))
         {
@@ -250,9 +270,15 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         }       
         else
         {
-            this.modeActuel = Mode.NORMAL;
+            if (this.pointMetier.estArret())
+            {
+                this.modeActuel = Mode.ARRET;
+            }
+            else if (this.pointMetier.estIntersection())
+            {
+                this.modeActuel = Mode.INTERSECTION;
+            }
         }
-        
     }        
 
     boolean dragged = false;
@@ -261,7 +287,7 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
     //Implémentations MouseMotionListener
     @Override
     public void mouseDragged(MouseEvent me) {
-        if(this.obtenirEspaceTravail().permettreDeplacementPoint())
+        if(this.obtenirEspaceTravail().permettreDeplacementPoint(this))
         {
             dragged = true;
             this.setLocation(this.getX() + me.getX() - (int)this.pointPoigneeDrag.getX(), this.getY() + me.getY() - (int)this.pointPoigneeDrag.getY());

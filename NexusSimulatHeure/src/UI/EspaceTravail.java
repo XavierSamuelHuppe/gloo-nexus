@@ -80,9 +80,11 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         this.simulateur.modifierPoint(p.getPointMetier(), coords.getPremier(), coords.getSecond(), p.getPointMetier().getNom());
     }
     
-    public boolean permettreDeplacementPoint()
+    public boolean permettreDeplacementPoint(UI.Point p)
     {
-        return this.simulateur.estEnModePoint() && !this.simulateur.simulationEstEnAction();
+        return ((this.simulateur.estEnModeArret() && p.getPointMetier().estArret())
+                    || (this.simulateur.estEnModeIntersection() && p.getPointMetier().estIntersection())
+                && !this.simulateur.simulationEstEnAction());
     }
     
     private final double ZOOM_BORNE_INFERIEURE = 0.1;
@@ -131,10 +133,20 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         return this.zoom;
     }
     
-    private void ajouterPoint(MouseEvent me)
+    private void ajouterArret(MouseEvent me)
+    {
+        _ajouterPoint(me, true);
+    }
+    
+    private void ajouterIntersection(MouseEvent me)
+    {
+        _ajouterPoint(me, false);
+    }
+    
+    private void _ajouterPoint(MouseEvent me, boolean estArret)
     {
         PaireDoubles pd = transformerPositionEspaceTravailEnPostionGeorgraphique(transformerPositionViewportEnPositionEspaceTravail(me.getPoint()));
-        Metier.Carte.Point mp = this.simulateur.ajouterPoint(pd.getPremier(), pd.getSecond(), "");
+        Metier.Carte.Point mp = this.simulateur.ajouterPoint(pd.getPremier(), pd.getSecond(), estArret, "");
         
         Point p = new Point(me.getX() - (Point.DIAMETRE / 2),me.getY() - (Point.DIAMETRE / 2), this.zoom, mp);
         
@@ -286,8 +298,11 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     //Implémentations MouseListener.
     @Override
     public void mouseClicked(MouseEvent me) {
-        if(simulateur.estEnModePoint()){
-            ajouterPoint(me);
+        if(simulateur.estEnModeArret()){
+            ajouterArret(me);
+        }
+        else if(simulateur.estEnModeIntersection()){
+            ajouterIntersection(me);
         }
         else if(simulateur.estEnModeSegment() || simulateur.estEnModeCircuit()){
             for(Segment s : segments)
@@ -387,12 +402,13 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
                 JOptionPane.showMessageDialog(this.obtenirApplication(), "Un tel segment ne peut-être créé : " + ex.getMessage(), "Création invalide d'un segment.", JOptionPane.ERROR_MESSAGE);
             }
         }
-        else if (simulateur.estEnModePoint())
+        else if ((simulateur.estEnModeArret() && p.getPointMetier().estArret())
+                    || (simulateur.estEnModeIntersection() && p.getPointMetier().estIntersection()))
         {
             this.simulateur.selectionnerPoint(p.getPointMetier());
             this.obtenirApplication().afficherPanneauDetails(p);
         }
-        else if (simulateur.estEnModeCircuit())
+        else if (simulateur.estEnModeCircuit() && p.getPointMetier().estArret())
         {
             try
             {
@@ -407,7 +423,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
                 JOptionPane.showMessageDialog(this.obtenirApplication(), "Il n'existe pas de segments permettant de relier les deux points sélectionnés." + ex.getMessage(), "Création invalide d'un circuit.", JOptionPane.ERROR_MESSAGE);
             }
         }
-        else if (simulateur.estEnModeSource())
+        else if (simulateur.estEnModeSource() && p.getPointMetier().estArret())
         {
             try
             {
@@ -418,7 +434,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
                 System.err.println("AucunPointCreateurException");
             }
         }
-        else if (simulateur.estEnModePassager())
+        else if (simulateur.estEnModePassager() && p.getPointMetier().estArret())
         {
             try
             {

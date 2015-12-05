@@ -7,14 +7,14 @@ import Metier.Exceptions.CreationInvalideException;
 public class PointFactory {
     private Point pointEnCreation;
     
-    public PointFactory nouveauPoint(){
+    public PointFactory nouveauPoint(boolean estArret){
         ConteneurPassagers passagers = new ConteneurPassagersIllimite();
-        pointEnCreation = new Point(passagers);
+        pointEnCreation = new Point(passagers, estArret);
         return this;
     }
     
-    public PointFactory nouveauPointAvecCapacite(ConteneurPassagers passagers){
-        pointEnCreation = new Point(passagers);
+    public PointFactory nouveauPointAvecCapacite(ConteneurPassagers passagers, boolean estArret){
+        pointEnCreation = new Point(passagers, estArret);
         return this;
     }
     

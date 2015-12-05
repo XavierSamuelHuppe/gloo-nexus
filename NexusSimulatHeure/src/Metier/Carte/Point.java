@@ -13,9 +13,11 @@ public class Point extends Observable{
     private List<Source> sources;
     private ConteneurPassagers passagers;
     private boolean existe;
+    private boolean estArret;
     
-    public Point(ConteneurPassagers passagers){
+    public Point(ConteneurPassagers passagers, boolean estArret){
         this.passagers = passagers;
+        this.estArret = estArret;
         profilsPassagers = new ArrayList();
         sources = new ArrayList();
         existe = true;
@@ -87,8 +89,24 @@ public class Point extends Observable{
     {
         return this.sources;
     }
+    
     public List<ProfilPassager> getProfilsPassagers(){
         return this.profilsPassagers;
+    }
+    
+    public void setEstArret(boolean estArret)
+    {
+        this.estArret = estArret;
+    }
+    
+    public boolean estIntersection()
+    {
+        return !this.estArret;
+    }
+    
+    public boolean estArret()
+    {
+        return this.estArret;
     }
     
     @Override

@@ -22,8 +22,11 @@ public class Simulateur {
         contexte = new ContexteEdition(carte);
     }
  
-    public boolean estEnModePoint(){
-        return contexte.estEnModePoint();
+    public boolean estEnModeArret(){
+        return contexte.estEnModeArret();
+    }
+    public boolean estEnModeIntersection(){
+        return contexte.estEnModeIntersection();
     }
     public boolean estEnModeSegment(){
         return contexte.estEnModeSegment();
@@ -37,8 +40,11 @@ public class Simulateur {
     public boolean estEnModePassager(){
         return contexte.estEnModePassager();
     }
-    public void passerEnModePoint(){
-        contexte.passerEnModePoint();
+    public void passerEnModeArret(){
+        contexte.passerEnModeArret();
+    }
+    public void passerEnModeIntersection(){
+        contexte.passerEnModeIntersection();
     }
     public void passerEnModeSegment(){
         contexte.passerEnModeSegment();
@@ -78,21 +84,21 @@ public class Simulateur {
         return this.getParametresSimulation().estEnAction();
     }
     
-    public Point ajouterPoint(double x, double y){
+    public Point ajouterPoint(double x, double y, boolean estArret){
         PointFactory factory = new PointFactory();
-        Point nouveauPoint = factory.nouveauPoint().enPosition(x,y).construire();
+        Point nouveauPoint = factory.nouveauPoint(estArret).enPosition(x,y).construire();
         carte.ajouterPoint(nouveauPoint);
         return nouveauPoint;
     }
-    public Point ajouterPoint(double x, double y, String nom){
+    public Point ajouterPoint(double x, double y, boolean estArret, String nom){
         PointFactory factory = new PointFactory();
-        Point nouveauPoint = factory.nouveauPoint().avecUnNom(nom).enPosition(x,y).construire();
+        Point nouveauPoint = factory.nouveauPoint(estArret).avecUnNom(nom).enPosition(x,y).construire();
         carte.ajouterPoint(nouveauPoint);
         return nouveauPoint;
     }
-    public Point ajouterPoint(double x, double y, String nom, ConteneurPassagers passagers){
+    public Point ajouterPoint(double x, double y, boolean estArret, String nom, ConteneurPassagers passagers){
         PointFactory factory = new PointFactory();
-        Point nouveauPoint = factory.nouveauPointAvecCapacite(passagers).avecUnNom(nom).enPosition(x,y).construire();
+        Point nouveauPoint = factory.nouveauPointAvecCapacite(passagers, estArret).avecUnNom(nom).enPosition(x,y).construire();
         carte.ajouterPoint(nouveauPoint);
         return nouveauPoint;
     }
