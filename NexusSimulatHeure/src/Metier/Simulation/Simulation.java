@@ -272,6 +272,27 @@ public class Simulation extends Observable implements Serializable{
         return retour;
     }
     
+    public List<Trajet> trajetsPassantPar(Segment segment){
+        List<Trajet> retour = new ArrayList();
+        for(ProfilPassager pp: profils){
+            if(pp.getTrajet().utilise(segment)){
+                retour.add(pp.getTrajet());
+            }
+        }
+        return retour;
+    }
+
+    public List<Circuit> trajetsPassantPar(Point point){
+        List<Circuit> retour = new ArrayList();
+        for(Circuit c: circuits){
+            if(c.utilise(point)){
+                retour.add(c);
+            }
+        }
+        return retour;
+    }
+    
+    
     public void retirerPointAvecReferences(Point p){
         List<Source> sourcesAEnlever = p.getSources();
         List<ProfilPassager> profilsAEnlever = p.getProfilsPassagers();

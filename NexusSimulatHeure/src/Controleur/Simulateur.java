@@ -503,4 +503,45 @@ public class Simulateur {
     public LocalTime obtenirHeureFinSimulation(){
         return this.getParametresSimulation().getHeureFin();
     }
+    
+    
+    
+    
+    
+    
+    
+    public boolean estDansTrajetActif(Point point){
+        try{
+            return contexte.estDansTrajetActif(point);
+        }catch(AucunCircuitActifException e){
+            return false;
+        }
+    }
+    public boolean estDansTrajetActif(Segment segment){
+        try{
+            return contexte.estDansTrajetActif(segment) || contexte.estDansTrajetEnCreation(segment);
+        }catch(AucunTrajetActifException e){
+            return false;
+        }
+    }
+    public boolean estDansTrajetEnCreation(Point point){
+        try{
+            return contexte.estDansTrajetEnCreation(point) || contexte.getPointCreateur().equals(point);
+        }catch(AucunPointCreateurException e){
+            return false;
+        }
+    }
+    public boolean estDansTrajetEnCreation(Segment segment){
+        try{
+            return contexte.estDansTrajetEnCreation(segment);
+        }catch(AucunTrajetActifException e){
+            return false;
+        }
+    }
+    public boolean estDansAuMoinsUnTrajet(Point point){
+        return simulation.trajetsPassantPar(point).size() > 0;
+    }
+    public boolean estDansAuMoinsUnTrajet(Segment segment){
+        return simulation.trajetsPassantPar(segment).size() > 0;
+    }
 }

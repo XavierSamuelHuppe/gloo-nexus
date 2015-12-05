@@ -30,17 +30,17 @@ public class PanneauDetailsSimu extends PanneauDetails{
         this.ChampHeureDebut.setText(paramSimulation.getHeureDebut().toString());
         this.ChampHeureFin.setText(paramSimulation.getHeureFin().toString());
         
-        this.ChampDistSegmentMin.setText(((Double)paramSimulation.getDistributionTempsTransitSegmentDefaut().getMin()).toString());
-        this.ChampDistSegmentMax.setText(((Double)paramSimulation.getDistributionTempsTransitSegmentDefaut().getMax()).toString());
-        this.ChampDistSegmentMode.setText(((Double)paramSimulation.getDistributionTempsTransitSegmentDefaut().getMode()).toString());
+        this.ChampDistSegmentMin.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsTransitSegmentDefaut().getMin()));
+        this.ChampDistSegmentMax.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsTransitSegmentDefaut().getMax()));
+        this.ChampDistSegmentMode.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsTransitSegmentDefaut().getMode()));
         
-        this.ChampDistVehiculeMin.setText(((Double)paramSimulation.getDistributionTempsGenerationVehiculeDefaut().getMin()).toString());
-        this.ChampDistVehiculeMax.setText(((Double)paramSimulation.getDistributionTempsGenerationVehiculeDefaut().getMax()).toString());
-        this.ChampDistVehiculeMode.setText(((Double)paramSimulation.getDistributionTempsGenerationVehiculeDefaut().getMode()).toString());
+        this.ChampDistVehiculeMin.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsGenerationVehiculeDefaut().getMin()));
+        this.ChampDistVehiculeMax.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsGenerationVehiculeDefaut().getMax()));
+        this.ChampDistVehiculeMode.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsGenerationVehiculeDefaut().getMode()));
         
-        this.ChampDistPassagerMin.setText(((Double)paramSimulation.getDistributionTempsGenerationPassagerDefaut().getMin()).toString());
-        this.ChampDistPassagerMax.setText(((Double)paramSimulation.getDistributionTempsGenerationPassagerDefaut().getMax()).toString());
-        this.ChampDistPassagerMode.setText(((Double)paramSimulation.getDistributionTempsGenerationPassagerDefaut().getMode()).toString());
+        this.ChampDistPassagerMin.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsGenerationPassagerDefaut().getMin()));
+        this.ChampDistPassagerMax.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsGenerationPassagerDefaut().getMax()));
+        this.ChampDistPassagerMode.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsGenerationPassagerDefaut().getMode()));
     }
     
     /**

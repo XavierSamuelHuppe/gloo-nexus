@@ -52,11 +52,32 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     public void reinitialiser()
     {
         this.removeAll();
-        points = new LinkedList<>();
-        segments = new LinkedList<>();
+        viderListes();
+        this.revalidate();
         zoom = ZOOM_DEFAULT;
         fanionClavier1 = false;
         pointDrag = null;
+    }
+    
+    private void viderListes()
+    {
+        if(points != null)
+        {
+            points.clear();
+        }
+        else
+        {
+            points = new LinkedList<>();
+        }
+        
+        if(segments != null)
+        {
+            segments.clear();
+        }
+        else
+        {
+            segments = new LinkedList<>();
+        }
     }
     
     public void setSimulateur(Controleur.Simulateur s)
@@ -100,10 +121,6 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
             {
                 p.zoom(facteurZoom, positionCurseur);
             }
-    //        for(Vehicule v : vehicules)
-    //        {
-    //            v.zoom(facteurZoom, positionCurseur);
-    //        }
 
             obtenirApplication().mettreAJourZoom(this.zoom);
             this.repaint();
@@ -151,10 +168,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         Point p = new Point(me.getX() - (Point.DIAMETRE / 2),me.getY() - (Point.DIAMETRE / 2), this.zoom, mp);
         
         points.add(p);
-        
-        p.addMouseListener(p);
-        p.addMouseMotionListener(p);
-        
+
         this.add(p);
         this.repaint();
     }
@@ -172,6 +186,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
 
     public void paintComponent(Graphics g)
     {
+//        System.out.println("EspaceTravail.paintComponent");
         super.paintComponent(g);
         
         Graphics2D g2 = (Graphics2D)g;
@@ -181,6 +196,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     }
     private void dessiner(Graphics2D g2)
     {
+//        System.out.println("EspaceTravail.dessiner");
         if(this.imageFond != null)
         {
             AffineTransform at = AffineTransform.getTranslateInstance(-this.posReferenceX, -this.posReferenceY);
@@ -377,7 +393,6 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
             try
             {
                 Metier.Carte.Segment sp = null;
-//                System.err.println(fanionClavier1);
                 if(fanionClavier1)
                 {
                     System.out.println("creerSegmentAvecContinuation");
@@ -471,5 +486,28 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     public void setImageFond(Image i)
     {
         this.imageFond = i;
+    }
+    
+    
+    public void rechargerObjetsUI()
+    {
+        this.removeAll();
+        viderListes();
+        
+        for(Metier.Carte.Point p : this.simulateur.obtenirToutLesPoints())
+        {
+            java.awt.Point pViewport = transformerPositionEspaceTravailEnPositionViewport(transformerPostionGeorgraphiqueEnPositionEspaceTravail(p.getPosition()));
+            UI.Point uiP = new Point(pViewport.x, pViewport.y, zoom, p);
+            this.points.add(uiP);
+            this.add(uiP);
+        }
+        
+        for(Metier.Carte.Segment s : this.simulateur.obtenirToutLesSegments())
+        {
+            Segment uiS = new Segment(obtenirPointUIParPointMetier(s.getPointDepart()), obtenirPointUIParPointMetier(s.getPointArrivee()), this, s);
+            segments.add(uiS);   
+        }
+        
+        this.revalidate();
     }
 }

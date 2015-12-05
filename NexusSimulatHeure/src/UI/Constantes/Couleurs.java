@@ -44,4 +44,10 @@ public class Couleurs {
     
     public static final java.awt.Color UI_BARRE_BOUTONS_COULEUR_FOND = Color.decode("#E5F2FF");
     public static final java.awt.Color UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF = Color.decode("#3399FF");
+    
+    public static final java.awt.Color TRAJET = Color.decode("#BC53C3");
+    public static final java.awt.Color TRAJET_SELECTIONNE_INTERIEUR = Color.decode("#EBAFEF");
+    public static final java.awt.Color TRAJET_SELECTIONNE_EXTERIEUR = Color.decode("#901998");
+    public static final java.awt.Color TRAJET_TEXTE = Color.decode("#000000");
+
 }

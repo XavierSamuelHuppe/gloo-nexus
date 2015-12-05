@@ -38,7 +38,7 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         }
     }
 
-    enum Mode {ARRET, ARRET_SELECTIONNE, INTERSECTION, INTERSECTION_SELECTIONNEE, CIRCUIT, CREATION_SEGMENT};
+    enum Mode {ARRET, ARRET_SELECTIONNE, INTERSECTION, INTERSECTION_SELECTIONNEE, CIRCUIT, CREATION_SEGMENT, TRAJET};
         
     private java.awt.Point pointPoigneeDrag;
     private Mode modeActuel = Mode.ARRET;
@@ -60,6 +60,9 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         this.setSize(calculerZoom(DIAMETRE),calculerZoom(DIAMETRE));
         this.setLocation(x,y);
         this.setOpaque(false);
+        
+        this.addMouseListener(this);
+        this.addMouseMotionListener(this);
         
         this.pointMetier.addObserver(this);
     }
@@ -264,10 +267,14 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         {
             this.modeActuel = Mode.CIRCUIT;
         }
+        else if (sim.estEnModePassager() && (sim.estDansTrajetActif(pointMetier) || sim.estDansTrajetEnCreation(pointMetier) || sim.estDansAuMoinsUnTrajet(pointMetier)))
+        {
+            this.modeActuel = Mode.TRAJET;
+        }
         else if (sim.estEnModeSegment() && (sim.estPointCreateur(pointMetier)))
         {
             this.modeActuel = Mode.CREATION_SEGMENT;
-        }       
+        }
         else
         {
             if (this.pointMetier.estArret())

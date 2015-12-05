@@ -39,6 +39,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         this.simulateur = new Controleur.Simulateur();
         
         this.ZoneEspaceTravail.setSimulateur(simulateur);
+        this.simulateur.ajouterObserveurASimulation(this);
         
         this.BoutonParametres.setActionCommand(UI.Constantes.Commandes.PARAMETRES_SIMULATION);
         this.BoutonParametres.addActionListener(this);
@@ -46,7 +47,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         initialiserBoutonsModes();
         BoutonModeArret.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
         
-        this.simulateur.ajouterObserveurASimulation(this);
+        
     }
     
     private void initialiserBoutonsModes()
@@ -73,7 +74,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     
     @Override
     public void update(Observable o, Object o1) {
-//        System.out.println("S'passe de quoi.");
+        System.out.println("S'passe de quoi.");
         rafraichir();
     }
 
@@ -238,7 +239,6 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     public void keyReleased(KeyEvent ke) {
         if(ke.getKeyCode() == KeyEvent.VK_CONTROL)
         {
-//            System.err.println("fanion false");
             fanionClavier1 = false;
             this.ZoneEspaceTravail.setFanionClavier1(this.fanionClavier1);
             
@@ -704,7 +704,10 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Désirez-vous vraiment créer une nouvelle simulation? Toutes les modifications non-enregistrées seront perdues.", "Créer une nouvelle simulation?", JOptionPane.YES_NO_OPTION))
         {
             this.viderPanneauDetails();
+            
             this.simulateur = new Simulateur();
+            this.simulateur.ajouterObserveurASimulation(this);
+            
             this.getEspaceTravail().reinitialiser();
             this.getEspaceTravail().setSimulateur(this.simulateur);
             this.passerEnModeArret();
@@ -776,9 +779,17 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
 
     private void BoutonChargerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonChargerActionPerformed
         if(simulateur.charger())
+        {
             JOptionPane.showMessageDialog(this, "Le chargement a réussie.");
+            this.simulateur.ajouterObserveurASimulation(this);
+            this.ZoneEspaceTravail.rechargerObjetsUI();
+            this.revalidate();
+            this.repaint();
+        }
         else
+        {
             JOptionPane.showMessageDialog(this, "Le chargement a explosé!");
+        }
     }//GEN-LAST:event_BoutonChargerActionPerformed
 
     /**
@@ -818,7 +829,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
             }
         });
     }
-    
+        
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BoutonAnnuler;
     private javax.swing.JButton BoutonArreter;

@@ -215,4 +215,30 @@ public class ContexteEdition {
         return circuitEnCreation.stream().anyMatch((s) -> s.equals(segment));
     }
     
+    
+    public void setTrajetActif(Circuit p){
+        circuitActif = p;
+    }
+    public Circuit getTrajetActif(){
+        if(circuitActif == null)
+            throw new AucunCircuitActifException();
+        return circuitActif;
+    }
+    public void viderTrajetActif(){
+        circuitActif = null;
+    }
+    
+    public boolean estDansTrajetActif(Point point){
+        return getCircuitActif().utilise(point);
+    }
+    public boolean estDansTrajetActif(Segment segment){
+        return getCircuitActif().utilise(segment);
+    }
+    
+    public boolean estDansTrajetEnCreation(Point point){
+        return circuitEnCreation.stream().anyMatch((s) -> s.getPointDepart().equals(point) || s.getPointArrivee().equals(point));
+    }
+    public boolean estDansTrajetEnCreation(Segment segment){
+        return circuitEnCreation.stream().anyMatch((s) -> s.equals(segment));
+    }
 }
