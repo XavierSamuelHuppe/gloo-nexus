@@ -115,7 +115,7 @@ public class Simulateur {
         return segment;
     }
     public void retirerSegment(Segment segment){
-        carte.retirerSegment(segment);
+        simulation.retirerSegmentAvecReferences(segment);
         contexte.viderSegmentActif();
     }
     public void modifierSegment(Segment segmentCible, double min, double mode, double max){

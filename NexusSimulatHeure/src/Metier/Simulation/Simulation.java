@@ -284,19 +284,24 @@ public class Simulation extends Observable{
         carte.retirerPoint(p);
     }
     
-    public void retirerSegmentAvecReferences(Segment s){
+        public void retirerSegmentAvecReferences(Segment segment){
         List<Source> sourcesAEnlever = new ArrayList();
         
         List<Circuit> circuitsAEnlever = new ArrayList();
         for(Circuit c: circuits){
-            if(c.utilise(s)){
+            if(c.utilise(segment)){
                 circuitsAEnlever.add(c);
+                for(Source s: sources){
+                    if(s.estSurCircuit(c)){
+                        sourcesAEnlever.add(s);
+
+                    }
+                }
             }
         }
         sources.removeAll(sourcesAEnlever);
         circuits.removeAll(circuitsAEnlever);
-        
-        carte.retirerSegment(s);
+        carte.retirerSegment(segment);
     }
     
     public List<SituationVehicule> obtenirSituationsVehicules()
