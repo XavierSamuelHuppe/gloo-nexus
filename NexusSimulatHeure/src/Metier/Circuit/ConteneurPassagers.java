@@ -10,4 +10,6 @@ public interface ConteneurPassagers{
     public List<Passager> debarquer(Point point);
     public List<Passager> embarquer(Circuit circuit);
     public void octroyer(List<Passager> passagers);
+    public void octroyer(Passager passager0);
+    public void vider();
 }

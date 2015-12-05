@@ -76,6 +76,9 @@ public class Point extends Observable implements Serializable{
     public void faireDescendreAuPoint(List<Passager> passagers){
         this.passagers.octroyer(passagers);
     }
+    public void faireArriverNouveauPassager(Passager passager){
+        this.passagers.octroyer(passager);
+    }
     
     public int obtenirNombrePassagersEnAttente()
     {
@@ -86,8 +89,7 @@ public class Point extends Observable implements Serializable{
         return passagers.embarquer(circuit);
     }
     
-    public List<Source> getSources()
-    {
+    public List<Source> getSources(){
         return this.sources;
     }
     
@@ -95,19 +97,20 @@ public class Point extends Observable implements Serializable{
         return this.profilsPassagers;
     }
     
-    public void setEstArret(boolean estArret)
-    {
+    public void setEstArret(boolean estArret){
         this.estArret = estArret;
     }
     
-    public boolean estIntersection()
-    {
+    public boolean estIntersection(){
         return !this.estArret;
     }
     
-    public boolean estArret()
-    {
+    public boolean estArret(){
         return this.estArret;
+    }
+    
+    public void viderConteneurPassager(){
+        passagers.vider();
     }
     
     @Override

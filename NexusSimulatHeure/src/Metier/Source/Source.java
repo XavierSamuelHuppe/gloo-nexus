@@ -71,6 +71,10 @@ public abstract class Source implements Serializable{
         this.distributionAUtiliser = d;
     }
     
+    public void retirerTempsGeneration(){
+        frequence = 0;
+    }
+    
     public void pigerDonneesDepartNouvelleJournee()
     {
         frequence = distributionAUtiliser.obtenirProchaineValeurAleatoire();
