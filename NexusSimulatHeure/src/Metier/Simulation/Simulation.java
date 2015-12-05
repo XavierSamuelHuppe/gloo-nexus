@@ -268,12 +268,22 @@ public class Simulation extends Observable{
     public void retirerPointAvecReferences(Point p){
         List<Source> sourcesAEnlever = p.getSources();
         List<ProfilPassager> profilsAEnlever = p.getProfilsPassagers();
+        for(ProfilPassager pp: profilsAEnlever){
+            if(pp.estSurPoint(p)){
+                profilsAEnlever.add(pp);
+            }
+        }
         List<Segment> segmentsAEnlever = carte.obtenirSegmentsEntrantEtSortant(p);
         
         List<Circuit> circuitsAEnlever = new ArrayList();
         for(Circuit c: circuits){
             if(c.utilise(p)){
                 circuitsAEnlever.add(c);
+                for(Source s: sources){
+                    if(s.estSurCircuit(c)){
+                        sourcesAEnlever.add(s);
+                    }
+                }
             }
         }
         sources.removeAll(sourcesAEnlever);

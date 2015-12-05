@@ -23,8 +23,10 @@ public abstract class ProfilPassager {
     public Point getPointDepart(){
         return pointDepart;
     }
-    public Distribution getDistribution()
-    {
+    public boolean estSurPoint(Point point){
+        return point.equals(pointDepart);
+    }
+    public Distribution getDistribution(){
         return distributionAUtiliser;
     }
     public LocalTime getHeureDepart(){
