@@ -4,9 +4,10 @@ import Metier.*;
 import Metier.Carte.*;
 import Metier.Exceptions.FinDeCircuitException;
 import Metier.Profil.Passager;
+import java.io.Serializable;
 import java.util.*;
 
-public class Vehicule extends Observable{
+public class Vehicule extends Observable implements Serializable{
    
     private ConteneurPassagers passagers;
     private Circuit circuitActuel;
