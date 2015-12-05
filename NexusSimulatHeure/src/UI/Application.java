@@ -450,6 +450,11 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         BoutonCharger.setMaximumSize(new java.awt.Dimension(24, 24));
         BoutonCharger.setMinimumSize(new java.awt.Dimension(24, 24));
         BoutonCharger.setPreferredSize(new java.awt.Dimension(24, 24));
+        BoutonCharger.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BoutonChargerActionPerformed(evt);
+            }
+        });
         PanneauBarreOutils.add(BoutonCharger);
 
         BoutonAnnuler.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/action-undo-2x.png"))); // NOI18N
@@ -768,6 +773,13 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         else
             JOptionPane.showMessageDialog(this, "La sauvegarde a explosé!");
     }//GEN-LAST:event_BoutonSauvegarderActionPerformed
+
+    private void BoutonChargerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonChargerActionPerformed
+        if(simulateur.charger())
+            JOptionPane.showMessageDialog(this, "Le chargement a réussie.");
+        else
+            JOptionPane.showMessageDialog(this, "Le chargement a explosé!");
+    }//GEN-LAST:event_BoutonChargerActionPerformed
 
     /**
      * @param args the command line arguments

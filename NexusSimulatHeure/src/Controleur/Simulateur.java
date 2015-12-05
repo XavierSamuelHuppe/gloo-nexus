@@ -7,8 +7,10 @@ import Metier.*;
 import Metier.Exceptions.*;
 import Metier.Source.*;
 import Metier.Profil.*;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalTime;
 import java.util.*;
@@ -26,24 +28,46 @@ public class Simulateur {
     }
     
     public boolean enregistrer(){
-        try
-        {
+        try{
            FileOutputStream fileOut = new FileOutputStream("sauvegarde.ser");
            ObjectOutputStream out = new ObjectOutputStream(fileOut);
            out.writeObject(simulation);
            out.close();
            fileOut.close();
-           System.out.printf("Simulation enregistré sous /enregistrements/Sauvegarde.ser");
+           System.out.printf("Simulation enregistré sous sauvegarde.ser");
            return true;
-        }catch(IOException i)
-        {
+        }catch(IOException i){
             i.printStackTrace();
             System.out.printf("ERREUR - la serialisation a explosé!");
             return false;
         }
     }
-    public void charger(String path){
-        
+    public boolean charger(/*String path*/){
+        try{
+           FileInputStream fileIn = new FileInputStream("sauvegarde.ser");
+           ObjectInputStream in = new ObjectInputStream(fileIn);
+           simulation = (Simulation) in.readObject();
+           carte = simulation.getCarte();
+           in.close();
+           fileIn.close();
+           System.out.printf("Simulation chargé avec succes");
+           return true;
+        }catch(IOException i){
+           i.printStackTrace();
+           System.out.printf("ERREUR - le chargement a detruit l'espace!");
+           return false;
+        }catch(ClassNotFoundException c){
+         System.out.println("Classe pas trouvée");
+         c.printStackTrace();
+         return false;
+      }
+    }
+    
+    public List<Point> obtenirToutLesPoints(){
+        return carte.getPoints();
+    }
+    public List<Segment> obtenirToutLesSegments(){
+        return carte.getSegments();
     }
  
     public boolean estEnModeArret(){

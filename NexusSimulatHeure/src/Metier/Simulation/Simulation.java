@@ -345,4 +345,8 @@ public class Simulation extends Observable implements Serializable{
         vehicules.add(v);
     }
     
+    public Carte getCarte(){
+        return carte;
+    }
+    
 }

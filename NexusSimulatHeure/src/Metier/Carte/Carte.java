@@ -13,6 +13,14 @@ public class Carte implements Serializable{
         segments = new ArrayList();
         points = new ArrayList();
     }
+
+    public List<Segment> getSegments() {
+        return segments;
+    }
+
+    public List<Point> getPoints() {
+        return points;
+    }
     
     public void initialiserDepartSimulation(){
         for(Segment s: segments){
