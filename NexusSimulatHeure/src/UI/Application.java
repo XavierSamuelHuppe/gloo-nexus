@@ -595,9 +595,10 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         LibelleVitesse.getAccessibleContext().setAccessibleName("");
 
         SliderVitesse.setFont(new java.awt.Font("Tahoma", 0, 5)); // NOI18N
-        SliderVitesse.setMajorTickSpacing(10);
+        SliderVitesse.setMajorTickSpacing(100);
+        SliderVitesse.setMaximum(1000);
         SliderVitesse.setMinimum(1);
-        SliderVitesse.setMinorTickSpacing(5);
+        SliderVitesse.setMinorTickSpacing(50);
         SliderVitesse.setPaintTicks(true);
         SliderVitesse.setSnapToTicks(true);
         SliderVitesse.setToolTipText("Changer la vitesse d'exécution de la simulation.");
@@ -677,6 +678,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     private void BoutonArreterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonArreterActionPerformed
         this.simulateur.arreter();
         rafraichirIconeBoutonDemarrerPause();
+        afficherHeureCourante();
     }//GEN-LAST:event_BoutonArreterActionPerformed
 
     private void BoutonRedemarrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonRedemarrerActionPerformed
@@ -703,6 +705,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
             {
                 i = javax.imageio.ImageIO.read(fichier);
                 this.ZoneEspaceTravail.setImageFond(i);
+                this.ZoneEspaceTravail.repaint();
             }
             catch (Exception x){}
         }

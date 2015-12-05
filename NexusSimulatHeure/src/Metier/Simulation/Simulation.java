@@ -91,6 +91,9 @@ public class Simulation extends Observable{
         //+ dist profils
         
         //Fermer les statistiques
+        
+        initialiserHeureDebut();
+        
         setChanged();
         notifyObservers();
     }
@@ -99,7 +102,7 @@ public class Simulation extends Observable{
         initialiserDepartNouvelleJournee();
     }
     private void initialiserDepartNouvelleJournee(){
-        heureCourante = parametres.getHeureDebut();
+        initialiserHeureDebut();
         carte.initialiserDepartSimulation();
         for(Source s: sources){
             s.pigerDonneesDepart();
@@ -107,6 +110,10 @@ public class Simulation extends Observable{
         //+ dist profils
     }
     
+    private void initialiserHeureDebut()
+    {
+        heureCourante = parametres.getHeureDebut();
+    }
     
     public void faireAvancerSimulation(long tempsEcouleParRatioEnNanos, double tempsEcouleParRatioEnSeconde){
         if(!(parametres.estEnAction()))

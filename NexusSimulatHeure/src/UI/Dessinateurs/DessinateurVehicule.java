@@ -32,8 +32,8 @@ public class DessinateurVehicule {
     private String circuit;
     
     public void dessiner(Graphics2D g2, int x, int y, int nbPassagers, String circuit, double zoom) {
-        this.x = x - (LARGEUR / 2);
-        this.y = y - (HAUTEUR / 2);
+        this.x = x - calculerZoom(LARGEUR / 2);
+        this.y = y - calculerZoom(HAUTEUR / 2);
         this.circuit = circuit;
         this.nbPassagers = nbPassagers;
         this.zoom = zoom;
