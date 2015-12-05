@@ -281,6 +281,7 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         }
     }        
 
+    boolean clicked = false;
     boolean dragged = false;
     
     //<editor-fold desc="Implémentations MouseMotionListener, MouseListener">
@@ -289,6 +290,7 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
     public void mouseDragged(MouseEvent me) {
         if(this.obtenirEspaceTravail().permettreDeplacementPoint(this))
         {
+            System.out.println("mouseDragged");
             dragged = true;
             this.setLocation(this.getX() + me.getX() - (int)this.pointPoigneeDrag.getX(), this.getY() + me.getY() - (int)this.pointPoigneeDrag.getY());
             obtenirZone().repaint();
@@ -301,20 +303,36 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
     //Implémentations MouseListener.
     @Override
     public void mousePressed(MouseEvent me) {
+        System.out.println("mousePressed");
         this.pointPoigneeDrag = me.getPoint();
     }
 
     @Override
     public void mouseClicked(MouseEvent me) {
-        obtenirEspaceTravail().pointClique(this);
+        System.out.println("mouseClicked");
+        if(!clicked)
+        {
+            obtenirEspaceTravail().pointClique(this);
+            clicked = false;
+        }
     }
     
     @Override
     public void mouseReleased(MouseEvent me) 
     {
+        System.out.println("mouseReleased");
         if(dragged)
         {
             this.obtenirEspaceTravail().deplacerPoint(this);    
+        }
+        else
+        {
+            if(!this.obtenirEspaceTravail().obtenirApplication().getSimulateur().estEnModeArret()
+               && !this.obtenirEspaceTravail().obtenirApplication().getSimulateur().estEnModeIntersection())
+            {
+                this.obtenirEspaceTravail().pointClique(this);
+                clicked = true;
+            }
         }
         dragged = false;
     }

@@ -69,7 +69,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         return this.simulateur;
     }
     
-    private Application obtenirApplication()
+    public Application obtenirApplication()
     {
         return (Application)SwingUtilities.getWindowAncestor(this);
     }
@@ -416,6 +416,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
             }
             catch(AucunPointCreateurException ex)
             {
+                
                 System.err.println("AucunPointCreateurException");
             }
             catch(AucunCheminPossibleException ex)
