@@ -40,7 +40,7 @@ public class Distribution implements Serializable{
         else {
             retour = max - Math.sqrt((1 - x) * (max - min) * (max - mode));
         }
-        return retour;
+        return Math.round(retour);
         //Credit: https://en.wikipedia.org/wiki/Triangular_distribution
     }
     
