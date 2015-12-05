@@ -71,13 +71,9 @@ public abstract class Source implements Serializable{
         this.distributionAUtiliser = d;
     }
     
-    public void pigerDonneesDepart()
+    public void pigerDonneesDepartNouvelleJournee()
     {
         frequence = distributionAUtiliser.obtenirProchaineValeurAleatoire();
-    }
-    
-    public void rafraichirDonneesDepart(){
-        frequence = 0;
         reInitialiserValeursDepartSimulation();
     }
     
@@ -98,7 +94,7 @@ public abstract class Source implements Serializable{
     }
     
     public abstract void avancerCreation(LocalTime heureCourante, double tempsEcouleParRatioEnSeconde);
-    public abstract void reInitialiserValeursDepartSimulation();
+    protected abstract void reInitialiserValeursDepartSimulation();
     
     public abstract String obtenirDescriptionSource();
     

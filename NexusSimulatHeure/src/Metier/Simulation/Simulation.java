@@ -83,15 +83,18 @@ public class Simulation extends Observable implements Serializable{
     private void terminerSimulation(){
         carte.terminerSimulation();
         
-        for(Source s: sources){
-            s.rafraichirDonneesDepart();
-        }
+        /*for(Source s: sources){
+            s.terminerSimulation();
+        }*/
         
         vehicules.clear();
         
         //+ dist profils
         
         //Fermer les statistiques
+        //-Sources
+        //-Segments
+        //-ProfilPassagers
         
         initialiserHeureDebut();
         
@@ -103,14 +106,17 @@ public class Simulation extends Observable implements Serializable{
         initialiserDepartNouvelleJournee();
     }
     private void initialiserDepartNouvelleJournee(){
+        //reset des temps de sources
+        
+        //reset des temps de profils passagers
         initialiserHeureDebut();
+        vehicules.clear();
         carte.initialiserDepartSimulation();
         for(Source s: sources){
-            s.pigerDonneesDepart();
+            s.pigerDonneesDepartNouvelleJournee();
         }
         //+ dist profils
     }
-    
     private void initialiserHeureDebut()
     {
         heureCourante = parametres.getHeureDebut();
