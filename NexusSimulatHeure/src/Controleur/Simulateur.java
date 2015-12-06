@@ -439,6 +439,9 @@ public class Simulateur {
     public boolean possedeUnTrajetEnCoursDeCreation(){
         return contexte.possedeUnTrajetEnCoursDeCreation();
     }
+    public boolean segmentEstDansCircuitActifPourCreationTrajet(Segment segment){
+        return contexte.segmentEstDansCircuitActifPourCreationTrajet(segment);
+    }
     
     
     
