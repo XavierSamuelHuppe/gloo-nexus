@@ -243,7 +243,11 @@ public class ContexteEdition {
         return trajetEnCreationEnSegments.contains(segment);
     }
     public boolean pointEstDansCircuitActifPourCreationTrajet(Point point){
-        //DO THAT SHIT
+        for(Segment s: trajetEnCreationEnSegments){
+            if(s.getPointDepart().equals(point) ||
+               s.getPointArrivee().equals(point))
+                return true;
+        }
         return false;
     }
     
