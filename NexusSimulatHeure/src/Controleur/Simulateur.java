@@ -422,11 +422,11 @@ public class Simulateur {
     }
     
     public void commencerContinuerCreationTrajet(Point p){
-        //contexte.commencerContinuerCreationTrajet(p);
+        contexte.commencerContinuerCreationTrajet(p);
     }
     
     public void choisirCircuitActifPourCreationTrajet(Circuit c){
-        
+        contexte.changerCircuitActif(c);
     }
     
     public void sauvegarderProfilPassager(){
@@ -435,6 +435,9 @@ public class Simulateur {
     
     public void annulerCreationTrajet(){
         
+    }
+    public boolean possedeUnTrajetEnCoursDeCreation(){
+        return contexte.possedeUnTrajetEnCoursDeCreation();
     }
     
     
