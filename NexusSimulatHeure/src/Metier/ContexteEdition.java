@@ -248,10 +248,10 @@ public class ContexteEdition {
     }
     
     public void commencerContinuerCreationTrajet(Point p){
-        if(!pointCreateur.estArret())
-            throw new MauvaisPointDeDepartException();
         if(!estEnModePassager())
             throw new EditionEnMauvaisModeException();
+        if(!p.estArret())
+            throw new MauvaisPointDeDepartException();
         if(!possedePointCreateur()){
             setPointCreateur(p);
             dernierPointDeMonte = p;
