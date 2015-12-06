@@ -189,57 +189,7 @@ public class Simulateur {
     public boolean estSegmentSortantDePoint(Point point, Segment segment){
         return this.carte.estSegmentSortantDePoint(point, segment);
     }
-    
-//    public void ajouterSource(int nombreMax, Point pointDepart, LocalTime heureDebut, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
-//        SourceBuilder builder = new SourceBuilder();
-//        Source nouvelleSource = builder.ConstruireSource(nombreMax, pointDepart, heureDebut, distribution, passagers, circuit, this.simulation);
-//        simulation.ajouterSource(nouvelleSource);
-//    }
-//    public void ajouterSource(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
-//        SourceBuilder builder = new SourceBuilder();
-//        Source nouvelleSource = builder.ConstruireSource(heureFin, pointDepart, heureDebut, distribution, passagers, circuit, this.simulation);
-//        simulation.ajouterSource(nouvelleSource);
-//    }
-//    public void ajouterSource(int nombreMax, Point pointDepart, LocalTime heureDebut, ConteneurPassagers passagers, Circuit circuit){
-//        SourceBuilder builder = new SourceBuilder();
-//        Distribution distributionParDefaut = simulation.getParametres().getDistributionTempsGenerationVehiculeDefaut();
-//        Source nouvelleSource = builder.ConstruireSource(nombreMax, pointDepart, heureDebut, distributionParDefaut, passagers, circuit, this.simulation);
-//        simulation.ajouterSource(nouvelleSource);
-//    }
-//    public void ajouterSource(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, ConteneurPassagers passagers, Circuit circuit){
-//        SourceBuilder builder = new SourceBuilder();
-//        Distribution distributionParDefaut = simulation.getParametres().getDistributionTempsGenerationVehiculeDefaut();
-//        Source nouvelleSource = builder.ConstruireSource(heureFin, pointDepart, heureDebut, distributionParDefaut, passagers, circuit, this.simulation);
-//        simulation.ajouterSource(nouvelleSource);
-//    }
-//    public void ajouterSource(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, Circuit circuit){
-//        SourceBuilder builder = new SourceBuilder();
-//        ConteneurPassagersIllimite conteneurPassagersIllimiteParDefaut = simulation.getParametres().getConteneurPassagersIllimiteSource();
-//        Distribution distributionParDefaut = simulation.getParametres().getDistributionTempsGenerationVehiculeDefaut();
-//        
-//        Source nouvelleSource = builder.ConstruireSource(heureFin, pointDepart, heureDebut, distributionParDefaut, conteneurPassagersIllimiteParDefaut, circuit, this.simulation);
-//        simulation.ajouterSource(nouvelleSource);
-//    }
-//    public void ajouterSource(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, Distribution distribution, Circuit circuit){
-//        SourceBuilder builder = new SourceBuilder();
-//        ConteneurPassagersIllimite conteneurPassagersIllimiteParDefaut = simulation.getParametres().getConteneurPassagersIllimiteSource();
-//        Source nouvelleSource = builder.ConstruireSource(heureFin, pointDepart, heureDebut, distribution, conteneurPassagersIllimiteParDefaut, circuit, this.simulation);
-//        simulation.ajouterSource(nouvelleSource);
-//    }
-//    public void ajouterSource(int nombreMax, Point pointDepart, LocalTime heureDebut, Circuit circuit){
-//        SourceBuilder builder = new SourceBuilder();
-//        Distribution distributionParDefaut = simulation.getParametres().getDistributionTempsGenerationVehiculeDefaut();
-//        ConteneurPassagersIllimite conteneurPassagersIllimiteParDefaut = simulation.getParametres().getConteneurPassagersIllimiteSource();
-//        Source nouvelleSource = builder.ConstruireSource(nombreMax, pointDepart, heureDebut, distributionParDefaut, conteneurPassagersIllimiteParDefaut, circuit, this.simulation);
-//        simulation.ajouterSource(nouvelleSource);
-//    }   
-//    public void ajouterSource(int nombreMax, Point pointDepart, LocalTime heureDebut, Distribution distribution, Circuit circuit){
-//        SourceBuilder builder = new SourceBuilder();
-//        ConteneurPassagersIllimite conteneurPassagersIllimiteParDefaut = simulation.getParametres().getConteneurPassagersIllimiteSource();
-//        Source nouvelleSource = builder.ConstruireSource(nombreMax, pointDepart, heureDebut, distribution, conteneurPassagersIllimiteParDefaut, circuit, this.simulation);
-//        simulation.ajouterSource(nouvelleSource);
-//    }  
-//    
+
     public void ajouterSource(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, Circuit circuit, double distributionMin, double distributionMode, double distributionMax){
         SourceBuilder builder = new SourceBuilder();
         ConteneurPassagersIllimite conteneurPassagersIllimiteParDefaut = simulation.getParametres().getConteneurPassagersIllimiteSource();
@@ -277,39 +227,6 @@ public class Simulateur {
     public void retirerProfil(ProfilPassager profil){
         simulation.retirerProfil(profil);
     }
-    
-//    public void modifierSource(Source source, LocalTime heureFin, Point pointDepart, LocalTime heureDebut, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
-//        retirerSource(source);
-//        this.ajouterSource(heureFin, pointDepart, heureDebut, distribution, passagers, circuit);
-//    }
-//    public void modifierSource(Source source, int nombreMax, Point pointDepart, LocalTime heureDebut, Distribution distribution, ConteneurPassagers passagers, Circuit circuit){
-//        retirerSource(source);
-//        this.ajouterSource(nombreMax, pointDepart, heureDebut, distribution, passagers, circuit);
-//    }
-//    public void modifierSource(Source source, LocalTime heureFin, Point pointDepart, LocalTime heureDebut, ConteneurPassagers passagers, Circuit circuit){
-//        retirerSource(source);
-//        this.ajouterSource(heureFin, pointDepart, heureDebut, passagers, circuit);
-//    }
-//    public void modifierSource(Source source, int nombreMax, Point pointDepart, LocalTime heureDebut, ConteneurPassagers passagers, Circuit circuit){
-//        retirerSource(source);
-//        this.ajouterSource(nombreMax, pointDepart, heureDebut, passagers, circuit);
-//    }
-//    public void modifierSource(Source source, int nombreMax, Point pointDepart, LocalTime heureDebut, Distribution distribution, Circuit circuit){
-//        retirerSource(source);
-//        this.ajouterSource(nombreMax, pointDepart, heureDebut, distribution, circuit);
-//    }
-//    public void modifierSource(Source source, int nombreMax, Point pointDepart, LocalTime heureDebut, Circuit circuit){
-//        retirerSource(source);
-//        this.ajouterSource(nombreMax, pointDepart, heureDebut, circuit);
-//    }
-//    public void modifierSource(Source source, LocalTime heureFin, Point pointDepart, LocalTime heureDebut, Distribution distribution, Circuit circuit){
-//        retirerSource(source);
-//        this.ajouterSource(heureFin, pointDepart, heureDebut, distribution, circuit);
-//    }
-//    public void modifierSource(Source source, LocalTime heureFin, Point pointDepart, LocalTime heureDebut, Circuit circuit){
-//        retirerSource(source);
-//        this.ajouterSource(heureFin, pointDepart, heureDebut, circuit);
-//    }
 
     public void modifierSource(Source source, LocalTime heureFin, LocalTime heureDebut, Circuit circuit, double distributionMin, double distributionMode, double distributionMax){
         simulation.modifierSource(source, heureFin, heureDebut, circuit, distributionMin, distributionMode, distributionMax);
@@ -504,6 +421,21 @@ public class Simulateur {
         return this.getParametresSimulation().getHeureFin();
     }
     
+    public void commencerContinuerCreationTrajet(Point p){
+        //contexte.commencerContinuerCreationTrajet(p);
+    }
+    
+    public void choisirCircuitActifPourCreationTrajet(Circuit c){
+        
+    }
+    
+    public void sauvegarderProfilPassager(){
+        
+    }
+    
+    public void annulerCreationTrajet(){
+        
+    }
     
     
     
