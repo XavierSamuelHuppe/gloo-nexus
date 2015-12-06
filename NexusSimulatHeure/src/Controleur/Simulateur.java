@@ -429,12 +429,13 @@ public class Simulateur {
         contexte.changerCircuitActif(c);
     }
     
-    public void sauvegarderProfilPassager(){
-        
+    private Trajet sauvegarderTrajetPourProfilPassager(){
+        Trajet trajetAEmprunter = contexte.terminerConstructionTrajet();
+        return trajetAEmprunter;
     }
     
     public void annulerCreationTrajet(){
-        
+        contexte.annulerCreationTrajet();
     }
     public boolean possedeUnTrajetEnCoursDeCreation(){
         return contexte.possedeUnTrajetEnCoursDeCreation();
@@ -442,7 +443,9 @@ public class Simulateur {
     public boolean segmentEstDansCircuitActifPourCreationTrajet(Segment segment){
         return contexte.segmentEstDansCircuitActifPourCreationTrajet(segment);
     }
-    
+    public boolean pointEstDansCircuitActifPourCreationTrajet(Point point){
+        return contexte.pointEstDansCircuitActifPourCreationTrajet(point);
+    }
     
     
     

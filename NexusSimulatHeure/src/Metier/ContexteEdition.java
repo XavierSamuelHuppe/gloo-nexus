@@ -3,6 +3,7 @@ package Metier;
 import Metier.Carte.*;
 import Metier.Circuit.*;
 import Metier.Exceptions.*;
+import Metier.Profil.Trajet;
 import java.util.*;
 
 public class ContexteEdition {
@@ -24,6 +25,9 @@ public class ContexteEdition {
     private List<Segment> circuitEnCreation;
     private Point pointCreateur;
     
+    private Trajet trajetEnCreation;
+    private Point dernierPointDeMonte;
+    private List<Segment> trajetEnCreationEnSegments;
     
     private Carte carte;
     
@@ -31,6 +35,7 @@ public class ContexteEdition {
         mode = ModeEdition.ARRET;
         this.carte = carte;
         circuitEnCreation = new ArrayList();
+        trajetEnCreationEnSegments = new ArrayList();
     }
     
     public boolean estEnModeArret(){
@@ -214,6 +219,96 @@ public class ContexteEdition {
     public boolean estDansCircuitEnCreation(Segment segment){
         return circuitEnCreation.stream().anyMatch((s) -> s.equals(segment));
     }
+    
+    private boolean possedePointCreateur(){
+        try{
+            getPointCreateur();
+        }catch(AucunPointCreateurException e){
+            return false;
+        }
+        return true;
+    }
+    private boolean possedeCircuitActif(){
+        try{
+            getCircuitActif();
+        }catch(AucunCircuitActifException e){
+            return false;
+        }
+        return true;
+    }
+    public boolean possedeUnTrajetEnCoursDeCreation(){
+        return !(trajetEnCreation == null);
+    }
+    public boolean segmentEstDansCircuitActifPourCreationTrajet(Segment segment){
+        return trajetEnCreationEnSegments.contains(segment);
+    }
+    public boolean pointEstDansCircuitActifPourCreationTrajet(Point point){
+        //DO THAT SHIT
+        return false;
+    }
+    
+    public void commencerContinuerCreationTrajet(Point p){
+        if(!pointCreateur.estArret())
+            throw new MauvaisPointDeDepartException();
+        if(!estEnModePassager())
+            throw new EditionEnMauvaisModeException();
+        if(!possedePointCreateur()){
+            setPointCreateur(p);
+            dernierPointDeMonte = p;
+            trajetEnCreation = new Trajet();
+            return;
+        }
+        if(!possedeCircuitActif())
+            throw new AucunCircuitActifException();
+        if(!circuitActif.utilise(p))
+            throw new PointPasSurCircuitActifException();
+        
+        Point monPointCreateur = null;
+        monPointCreateur = getPointCreateur();
+        setPointCreateur(p);
+        try
+        {
+            if(carte.verifierExistenceSegment(monPointCreateur, p)){
+                Segment segmentAAjouter = carte.obtenirSegment(monPointCreateur, p);
+                trajetEnCreationEnSegments.add(segmentAAjouter);
+            }else{
+                List<Segment> segmentsAAjouter = carte.plusCourtCheminEnTempsMoyen(monPointCreateur, p);
+                trajetEnCreationEnSegments.addAll(segmentsAAjouter);
+            }
+        }catch(AucunCheminPossibleException e){
+            setPointCreateur(monPointCreateur);
+            throw e;
+        }
+        
+    }
+    
+    public void changerCircuitActif(Circuit c){
+        if(!pointCreateur.estArret())
+            throw new ChangementDeCircuitInvalideException();
+        
+        ElementTrajet nouvelElement = new ElementTrajet(circuitActif, dernierPointDeMonte, pointCreateur);
+        trajetEnCreation.ajouterElementTrajet(nouvelElement);
+        dernierPointDeMonte = pointCreateur;
+        circuitActif = c;
+    }
+    public void annulerCreationTrajet(){
+        setPointCreateur(null);
+        trajetEnCreation = null;
+        trajetEnCreationEnSegments.clear();
+        dernierPointDeMonte = null;
+    }
+    public Trajet terminerConstructionTrajet(){
+         if(!pointCreateur.estArret())
+            throw new MauvaisPointArriveException();
+        
+        ElementTrajet nouvelElement = new ElementTrajet(circuitActif, dernierPointDeMonte, pointCreateur);
+        trajetEnCreation.ajouterElementTrajet(nouvelElement);
+        setPointCreateur(null);
+        trajetEnCreationEnSegments.clear();
+        dernierPointDeMonte = null;
+        return trajetEnCreation;
+    }
+    
     
     
     public void setTrajetActif(Circuit p){
