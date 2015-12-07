@@ -91,10 +91,10 @@ public class PanneauDetailsProfilPassager extends PanneauDetails implements java
 
         if(this.RadioHeureFin.isSelected()){
             LocalTime heureFin = LocalTime.parse(this.ChampHeureFin.getText(), UI.Constantes.Formats.FORMAT_HEURE_COURANTE);
-            this.obtenirApplication().getSimulateur().ajouterProfil(heureFin, this.pointMetierLie, heureDebut, PanneauDistribution.obtenirMin(), PanneauDistribution.obtenirMode(), PanneauDistribution.obtenirMax());
+            this.obtenirApplication().getSimulateur().ajouterProfil(heureFin, heureDebut, PanneauDistribution.obtenirMin(), PanneauDistribution.obtenirMode(), PanneauDistribution.obtenirMax());
         }
         if(this.RadioNombreMax.isSelected()){
-            this.obtenirApplication().getSimulateur().ajouterProfil(Integer.parseInt(this.ChampNombreMax.getText()), this.pointMetierLie, heureDebut, PanneauDistribution.obtenirMin(), PanneauDistribution.obtenirMode(), PanneauDistribution.obtenirMax());
+            this.obtenirApplication().getSimulateur().ajouterProfil(Integer.parseInt(this.ChampNombreMax.getText()), heureDebut, PanneauDistribution.obtenirMin(), PanneauDistribution.obtenirMode(), PanneauDistribution.obtenirMax());
         }
         this.obtenirApplication().repaint();
         this.obtenirApplication().viderPanneauDetails();

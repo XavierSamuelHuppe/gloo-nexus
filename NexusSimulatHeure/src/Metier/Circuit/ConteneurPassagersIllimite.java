@@ -57,4 +57,16 @@ public class ConteneurPassagersIllimite implements ConteneurPassagers, Serializa
     public void vider() {
         passagers.clear();
     }
+    
+    @Override
+    public List<Passager> obtenirPassagers()
+    {
+        return passagers;
+    }
+    
+    @Override
+    public void retirer(Passager passager)
+    {
+        passagers.remove(passager);
+    }
 }

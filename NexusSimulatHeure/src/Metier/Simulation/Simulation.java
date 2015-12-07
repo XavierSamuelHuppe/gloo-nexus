@@ -111,11 +111,12 @@ public class Simulation extends Observable implements Serializable{
         vehicules.clear();
         carte.initialiserDepartSimulation();
         for(Source s: sources){
-            s.setheureDebut(parametres.getHeureDebut());
+            s.reInitialiserValeursDepartSimulation();
+            //s.setheureDebut(parametres.getHeureDebut());
             s.pigerDonneesDepartNouvelleJournee();
         }
         for(ProfilPassager pp: profils){
-            pp.setHeureDepart(parametres.getHeureDebut());
+            //pp.setHeureDepart(parametres.getHeureDebut());
             pp.pigerDonneesDepartNouvelleJournee();
         }
     }
@@ -133,7 +134,8 @@ public class Simulation extends Observable implements Serializable{
         faireAvancerToutLesVehicules(tempsEcouleParRatioEnSeconde);
         faireAvancerCreationVehicule(heureCourante, tempsEcouleParRatioEnSeconde);
         faireAvancerGenerationPassagers(heureCourante, tempsEcouleParRatioEnSeconde);
-        //faire spawner les gens
+        
+        mettreAJourPassagersADesPoints(tempsEcouleParRatioEnSeconde);
         
         if(!doitContinuerJournee()){
             if(derniereJournee())
@@ -190,6 +192,28 @@ public class Simulation extends Observable implements Serializable{
         }
     }
     
+    private void mettreAJourPassagersADesPoints(double tempsEcouleParRatioEnSeconde)
+    {
+        for(Point p : carte.getPoints())
+        {
+            if(p.obtenirNombrePassagersEnAttente() > 0)
+            {
+                for(Object px : p.obtenirPassagersEnAttente().toArray())
+                {
+                    Passager passager = (Passager)px;
+                    if(passager.estArriveADestination(p))
+                    {
+                        passager.comptabiliserTempsAttenteDansProfilPassager();
+                        p.retirerPasserDeConteneurPassager(passager);
+                    }
+                    else
+                    {
+                        passager.incrementerTempsAttente(tempsEcouleParRatioEnSeconde);
+                    }
+                }
+            }
+        }   
+    }
     
     public void ajouterCircuit(Circuit circuit){
         circuits.add(circuit);

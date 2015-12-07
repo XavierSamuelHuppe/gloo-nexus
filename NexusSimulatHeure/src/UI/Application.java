@@ -1,6 +1,7 @@
 package UI;
 
 import Controleur.Simulateur;
+import Metier.Circuit.Circuit;
 import UI.Constantes.Couleurs;
 import java.awt.BorderLayout;
 import java.awt.Image;
@@ -10,6 +11,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Observable;
 import javax.swing.JOptionPane;
 import java.util.Observer;
@@ -76,7 +78,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     
     @Override
     public void update(Observable o, Object o1) {
-        System.out.println("S'passe de quoi.");
+        //System.out.println("S'passe de quoi.");
         rafraichir();
     }
 
@@ -168,7 +170,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     
     public void passerEnModeArret()
     {
-        reinitialiserCouleurBoutonsModes();
+        reinitialiserAffichageAvantChangementMode();
         simulateur.passerEnModeArret();
         viderPanneauDetails();
         BoutonModeArret.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
@@ -176,7 +178,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     
     public void passerEnModeIntersection()
     {
-        reinitialiserCouleurBoutonsModes();
+        reinitialiserAffichageAvantChangementMode();
         simulateur.passerEnModeIntersection();
         viderPanneauDetails();
         BoutonModeIntersection.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
@@ -184,7 +186,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     
     public void passerEnModeSegment()
     {
-        reinitialiserCouleurBoutonsModes();
+        reinitialiserAffichageAvantChangementMode();
         simulateur.passerEnModeSegment();
         viderPanneauDetails();
         BoutonModeSegment.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
@@ -192,7 +194,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     
     public void passerEnModeCircuit()
     {
-        reinitialiserCouleurBoutonsModes();
+        reinitialiserAffichageAvantChangementMode();
         simulateur.passerEnModeCircuit();
         afficherPanneauDetailsCircuitNouveauCircuit();
         BoutonModeCircuit.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
@@ -201,7 +203,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     
     public void passerEnModeSource()
     {
-        reinitialiserCouleurBoutonsModes();
+        reinitialiserAffichageAvantChangementMode();
         simulateur.passerEnModeSource();
         //afficherPanneauDetailsSourceNouvelleSource();
         viderPanneauDetails();
@@ -210,13 +212,13 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     
     public void passerEnModeProfilPassager()
     {
-        reinitialiserCouleurBoutonsModes();
+        reinitialiserAffichageAvantChangementMode();
         simulateur.passerEnModePassager();
         viderPanneauDetails();
         BoutonModeProfilPassager.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
     }
     
-    private void reinitialiserCouleurBoutonsModes()
+    private void reinitialiserAffichageAvantChangementMode()
     {
         BoutonModeArret.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND);
         BoutonModeIntersection.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND);
@@ -224,6 +226,8 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         BoutonModeCircuit.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND);
         BoutonModeSource.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND);
         BoutonModeProfilPassager.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND);
+        
+        cacherListeCircuitTrajet();
     }
 
     private boolean fanionClavier1 = false;
@@ -271,6 +275,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     public void viderPanneauDetails()
     {
         this.simulateur.annulerCreationCircuit();
+        this.simulateur.annulerCreationTrajet();
         this.PanneauDetails.removeAll();
         this.repaint();
         this.revalidate();
@@ -594,17 +599,8 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         LibelleCircuit.setText("Circuit du trajet :");
         PanneauBarreOutilsChoixCircuitTrajet.add(LibelleCircuit);
 
-        ListeCircuitTrajet.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "A" }));
-        ListeCircuitTrajet.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ListeCircuitTrajetActionPerformed(evt);
-            }
-        });
-        ListeCircuitTrajet.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                ListeCircuitTrajetPropertyChange(evt);
-            }
-        });
+        ListeCircuitTrajet.setMaximumSize(new java.awt.Dimension(32767, 22));
+        ListeCircuitTrajet.setPreferredSize(new java.awt.Dimension(28, 22));
         PanneauBarreOutilsChoixCircuitTrajet.add(ListeCircuitTrajet);
 
         PanneauBarreOutils.add(PanneauBarreOutilsChoixCircuitTrajet);
@@ -823,34 +819,61 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
             JOptionPane.showMessageDialog(this, "Le chargement a explosé!");
         }
     }//GEN-LAST:event_BoutonChargerActionPerformed
-
-    private void ListeCircuitTrajetPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_ListeCircuitTrajetPropertyChange
-        
-    }//GEN-LAST:event_ListeCircuitTrajetPropertyChange
-
-    private void ListeCircuitTrajetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListeCircuitTrajetActionPerformed
-        System.out.println("ListeCircuitTrajetActionPerformed");
-        this.simulateur.choisirCircuitActifPourCreationTrajet((Metier.Circuit.Circuit)ListeCircuitTrajet.getSelectedItem());
-    }//GEN-LAST:event_ListeCircuitTrajetActionPerformed
     
     public void remplirListeCircuitTrajet(Metier.Carte.Point p)
     {
+        List<Circuit> circuits = this.simulateur.circuitsPassantPar(p);
+        if(circuits.size() == 0)
+        {
+            JOptionPane.showMessageDialog(this, "Vous devez choisir un arrêt figurant dans un circuit.", "Création invalide d'un trajet.", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        System.out.println("remove");
+        ListeCircuitTrajet.removeActionListener(actionListenerListeCircuitTrajet);
         System.out.println("remplirListeCircuitTrajet");
         
-        Object circuitCourant = ListeCircuitTrajet.getSelectedItem();
-        //ListeCircuitTrajet.removeAllItems();
+        Metier.Circuit.Circuit circuitCourant = (Metier.Circuit.Circuit)ListeCircuitTrajet.getSelectedItem();
+
+        ListeCircuitTrajet.removeAllItems();
         for(Metier.Circuit.Circuit c : this.simulateur.circuitsPassantPar(p))
         {
-            System.out.println(c.toString());
             ListeCircuitTrajet.addItem(c);
         }
+        
         ListeCircuitTrajet.setSelectedItem(circuitCourant);
+        
+        System.out.println("add");
+        ListeCircuitTrajet.addActionListener(actionListenerListeCircuitTrajet);
         
         if(!PanneauBarreOutilsChoixCircuitTrajet.isVisible())
         {
             PanneauBarreOutilsChoixCircuitTrajet.setVisible(true);
             this.revalidate();
         }
+    }
+    
+    public Metier.Circuit.Circuit obtenirCircuitDansListeChoixCircuit()
+    {
+        return (Metier.Circuit.Circuit)ListeCircuitTrajet.getSelectedItem();
+    }
+    
+    private final ActionListener actionListenerListeCircuitTrajet = new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            ListeCircuitTrajetActionPerformed(evt);
+        }
+    };
+    
+    private void ListeCircuitTrajetActionPerformed(java.awt.event.ActionEvent evt) {                                                   
+        this.simulateur.choisirCircuitActifPourCreationTrajet((Metier.Circuit.Circuit)ListeCircuitTrajet.getSelectedItem());
+    }        
+
+    private void cacherListeCircuitTrajet()
+    {
+        System.out.println("remove");
+        ListeCircuitTrajet.removeActionListener(actionListenerListeCircuitTrajet);
+        ListeCircuitTrajet.removeAllItems();
+        PanneauBarreOutilsChoixCircuitTrajet.setVisible(false);
+        this.revalidate();
     }
     
     /**

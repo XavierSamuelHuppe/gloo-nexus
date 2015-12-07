@@ -4,6 +4,7 @@ import Metier.Carte.Point;
 import Metier.Distribution;
 import Metier.Simulation.ParametreSimulation;
 import Metier.Simulation.Simulation;
+import Metier.Simulation.Statistiques;
 import java.time.DateTimeException;
 import java.time.LocalTime;
 
@@ -12,8 +13,8 @@ public class ProfilPassagerHeureFin extends ProfilPassager {
     private LocalTime heureFin;
     private LocalTime prochaineGeneration;
     
-    public ProfilPassagerHeureFin(LocalTime heureFin, Point point, LocalTime heureDepart, Distribution distribution, Trajet trajet, Simulation simulation){
-        super(point, heureDepart, distribution, trajet, simulation);
+    public ProfilPassagerHeureFin(LocalTime heureFin, Point pointDepart, LocalTime heureDepart, Distribution distribution, Trajet trajet, Simulation simulation){
+        super(pointDepart, heureDepart, distribution, trajet, simulation);
         this.heureFin = heureFin;
     }
     
@@ -57,5 +58,6 @@ public class ProfilPassagerHeureFin extends ProfilPassager {
     @Override
     protected void reInitialiserValeursDepartSimulation() {
         prochaineGeneration = heureDebut;
+        statistiques = new Statistiques();
     }
 }

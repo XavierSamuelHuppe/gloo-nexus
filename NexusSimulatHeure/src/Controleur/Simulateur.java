@@ -24,7 +24,7 @@ public class Simulateur {
     public Simulateur(){
         carte = new Carte();
         simulation = new Simulation(carte);
-        contexte = new ContexteEdition(carte);
+        contexte = new ContexteEdition(carte, simulation);
     }
     
     public boolean enregistrer(){
@@ -48,6 +48,8 @@ public class Simulateur {
            ObjectInputStream in = new ObjectInputStream(fileIn);
            simulation = (Simulation) in.readObject();
            carte = simulation.getCarte();
+           contexte.setCarte(carte);
+           contexte.setSimulation(simulation);
            in.close();
            fileIn.close();
            System.out.printf("Simulation chargé avec succes");
@@ -206,19 +208,19 @@ public class Simulateur {
         simulation.ajouterSource(nouvelleSource);
     }  
     
-    public void ajouterProfil(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, double distributionMin, double distributionMode, double distributionMax){
+    public void ajouterProfil(LocalTime heureFin, LocalTime heureDebut, double distributionMin, double distributionMode, double distributionMax){
         ProfilBuilder builder = new ProfilBuilder();
         Distribution distributionAUtiliser = new Distribution(distributionMin, distributionMode, distributionMax);
         Trajet trajet = this.sauvegarderTrajetPourProfilPassager();
-        ProfilPassager nouveauPassager = builder.ConstruireProfil(heureFin, pointDepart, heureDebut, distributionAUtiliser, trajet, simulation);
+        ProfilPassager nouveauPassager = builder.ConstruireProfil(heureFin, trajet.obtenirPointDepart(), heureDebut, distributionAUtiliser, trajet, simulation);
         simulation.ajouterProfil(nouveauPassager);
     }
     
-    public void ajouterProfil(int nombreMax, Point pointDepart, LocalTime heureDebut, double distributionMin, double distributionMode, double distributionMax){
+    public void ajouterProfil(int nombreMax, LocalTime heureDebut, double distributionMin, double distributionMode, double distributionMax){
         ProfilBuilder builder = new ProfilBuilder();
         Distribution distributionAUtiliser = new Distribution(distributionMin, distributionMode, distributionMax);
         Trajet trajet = this.sauvegarderTrajetPourProfilPassager();
-        ProfilPassager nouveauPassager = builder.ConstruireProfil(nombreMax, pointDepart, heureDebut, distributionAUtiliser, trajet, simulation);
+        ProfilPassager nouveauPassager = builder.ConstruireProfil(nombreMax, trajet.obtenirPointDepart(), heureDebut, distributionAUtiliser, trajet, simulation);
         simulation.ajouterProfil(nouveauPassager);
     }
     
@@ -423,12 +425,21 @@ public class Simulateur {
         return this.getParametresSimulation().getHeureFin();
     }
     
+    
+    
     public void commencerContinuerCreationTrajet(Point p){
         contexte.commencerContinuerCreationTrajet(p);
     }
     
     public void choisirCircuitActifPourCreationTrajet(Circuit c){
-        contexte.changerCircuitActif(c);
+        if(!contexte.trajetEnCoursDeCreationContientAuMoinsUneEtape())
+        {
+            contexte.setCircuitActif(c);
+        }
+        else
+        {
+            contexte.changerCircuitActif(c);
+        }
     }
     
     private Trajet sauvegarderTrajetPourProfilPassager(){

@@ -3,6 +3,7 @@ package Metier.Profil;
 import Metier.Carte.Point;
 import Metier.Distribution;
 import Metier.Simulation.Simulation;
+import Metier.Simulation.Statistiques;
 import java.time.LocalTime;
 
 public class ProfilPassagerFini extends ProfilPassager{
@@ -12,8 +13,8 @@ public class ProfilPassagerFini extends ProfilPassager{
     
     private LocalTime prochaineGeneration;
     
-    public ProfilPassagerFini(int nombreMax, Point point, LocalTime heureDepart, Distribution distribution, Trajet trajet, Simulation simulation){
-        super(point, heureDepart, distribution, trajet, simulation);
+    public ProfilPassagerFini(int nombreMax, Point pointDepart, LocalTime heureDepart, Distribution distribution, Trajet trajet, Simulation simulation){
+        super(pointDepart, heureDepart, distribution, trajet, simulation);
         this.nombreMax = nombreMax;
     }
     
@@ -40,6 +41,7 @@ public class ProfilPassagerFini extends ProfilPassager{
     protected void reInitialiserValeursDepartSimulation() {
         nombreCree = 0;
         prochaineGeneration = heureDebut;
+        statistiques = new Statistiques();
     }
     
     @Override

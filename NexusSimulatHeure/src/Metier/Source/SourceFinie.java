@@ -42,7 +42,7 @@ public class SourceFinie extends Source {
     }
 
     @Override
-    protected void reInitialiserValeursDepartSimulation() {
+    public void reInitialiserValeursDepartSimulation() {
         nombreCree = 0;
         prochaineGeneration = heureDebut;
     }

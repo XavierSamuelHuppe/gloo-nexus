@@ -31,7 +31,7 @@ public abstract class Circuit implements Serializable {
         return this.nom;
     }
     
-    public int longueurTrajet(){
+    public int longueurParcours(){
         return parcours.size();
     }
     
@@ -93,10 +93,10 @@ public abstract class Circuit implements Serializable {
         if (o == this) return true;
         if (!(o instanceof Circuit))return false;
         Circuit autreCircuit = (Circuit)o;
-        if(longueurTrajet() != autreCircuit.longueurTrajet())
+        if(longueurParcours() != autreCircuit.longueurParcours())
             return false;
         
-        for(int i = parcours.size(); i >= 0; i--){
+        for(int i = parcours.size() - 1; i >= 0; i--){
             if(parcours.get(i) != autreCircuit.getTraget().get(i))
                 return false;
         }

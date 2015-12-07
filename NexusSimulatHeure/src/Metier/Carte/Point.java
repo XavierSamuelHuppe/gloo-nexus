@@ -89,6 +89,11 @@ public class Point extends Observable implements Serializable{
         return passagers.embarquer(circuit);
     }
     
+    public List<Passager> obtenirPassagersEnAttente()
+    {
+        return passagers.obtenirPassagers();
+    }
+    
     public List<Source> getSources(){
         return this.sources;
     }
@@ -111,6 +116,10 @@ public class Point extends Observable implements Serializable{
     
     public void viderConteneurPassager(){
         passagers.vider();
+    }
+    
+    public void retirerPasserDeConteneurPassager(Passager passager){
+        passagers.retirer(passager);
     }
     
     @Override

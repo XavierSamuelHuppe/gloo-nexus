@@ -27,7 +27,7 @@ public class Segment implements IDetailsAffichables, Observer {
         }
     }
     
-    public enum Mode {NORMAL, SELECTIONNE, CIRCUIT, CIRCUIT_SELECTIONNE};
+    public enum Mode {NORMAL, SELECTIONNE, CIRCUIT, CIRCUIT_SELECTIONNE, TRAJET};
                
     private Point pointDepart;
     private Point pointArrivee;
@@ -87,7 +87,7 @@ public class Segment implements IDetailsAffichables, Observer {
             }
             else if (sim.segmentEstDansCircuitActifPourCreationTrajet(this.getSegmentMetier()))
             {
-                this.modeActuel = Segment.Mode.CIRCUIT;
+                this.modeActuel = Segment.Mode.TRAJET;
             }
         }
         else

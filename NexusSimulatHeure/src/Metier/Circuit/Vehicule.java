@@ -31,6 +31,12 @@ public class Vehicule extends Observable implements Serializable{
         return segmentActuel;
     }
     
+    public void embarquerAuPointDepart()
+    {
+        List<Passager> passagersVoulantMonter = segmentActuel.getPointDepart().faireMonterEnVehicule(circuitActuel);
+        passagers.octroyer(passagersVoulantMonter);
+    }
+    
     public void avancer(double tempsEcouleParRatioEnSeconde){
         double tempsTotal = secondesSurSegment+tempsEcouleParRatioEnSeconde;
         if(tempsTotal > segmentActuel.getTempsTransit()){

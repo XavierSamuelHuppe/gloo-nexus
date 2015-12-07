@@ -6,13 +6,15 @@ import Metier.Circuit.Circuit;
 import java.io.Serializable;
 
 public class Passager implements Serializable{
+    private ProfilPassager profilPassager;
     private Trajet trajet;
     private int etapeActuelle; // Vu que le trajet est un array..
     private Point pointActuel;
-    private int tempsAttente; // Pour stats plus tard
+    private double tempsAttente; // Pour stats plus tard
     
     
-    public Passager(Trajet trajet, Point pointDepart){
+    public Passager(ProfilPassager profilPassagerGenerateur, Trajet trajet, Point pointDepart){
+        this.profilPassager = profilPassagerGenerateur;
         this.trajet = trajet;
         this.etapeActuelle = 0;
         this.pointActuel = pointDepart;
@@ -31,5 +33,20 @@ public class Passager implements Serializable{
     public boolean veut(Circuit c){
         // Assume que si on demande au passager s'il attend ce circuit, il n'est pas dans un véhicule
         return trajet.obtenirEtape(etapeActuelle).getCircuit() == c;
+    }
+    
+    public boolean estArriveADestination(Point p)
+    {
+        return trajet.obtenirPointArrivee() == p;
+    }
+
+    public void incrementerTempsAttente(double tempsEcouleParRatioEnSeconde)
+    {
+        this.tempsAttente += tempsEcouleParRatioEnSeconde;
+    }
+   
+    public void comptabiliserTempsAttenteDansProfilPassager()
+    {
+        this.profilPassager.comptabiliserTempsAttente(tempsAttente);
     }
 }

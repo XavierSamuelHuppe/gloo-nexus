@@ -19,7 +19,7 @@ public class ElementTrajet implements Serializable{
     }
     
     public Point getPointMontee() {
-        return pointDescente;
+        return pointMontee;
     }
     
     public Point getPointDescente() {

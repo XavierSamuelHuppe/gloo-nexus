@@ -16,13 +16,14 @@ public abstract class ProfilPassager implements Serializable{
     protected LocalTime heureDebut;
     private double frequence;
     public Distribution distributionAUtiliser;
-    public Statistiques statistiques;
+    public transient Statistiques statistiques;
     
-    public ProfilPassager(Point point, LocalTime heureDepart, Distribution distribution, Trajet trajet, Simulation simulation){
+    public ProfilPassager(Point pointDepart, LocalTime heureDepart, Distribution distribution, Trajet trajet, Simulation simulation){
         this.heureDebut = heureDepart;
-        this.pointDepart = point;
+        this.pointDepart = pointDepart;
         this.trajet = trajet;
         this.distributionAUtiliser = distribution;
+        this.statistiques = new Statistiques();
     }
     public Point getPointDepart(){
         return pointDepart;
@@ -63,13 +64,23 @@ public abstract class ProfilPassager implements Serializable{
     }
     
     public Passager genererPassager(){
-        Passager nouveauPassager = new Passager(null, pointDepart);
+        Passager nouveauPassager = new Passager(this, trajet, pointDepart);
         pointDepart.faireArriverNouveauPassager(nouveauPassager);
         return nouveauPassager;
     }
     
     public void retirerTempsGeneration(){
         frequence = 0;
+    }
+    
+    public void comptabiliserTempsAttente(double tempsAttente)
+    {
+        statistiques.ajouterDonnee(tempsAttente);
+    }
+    
+    public Statistiques getStatistiques()
+    {
+        return this.statistiques;
     }
     
     public abstract void avancerGeneration(LocalTime heureCourante, double tempsEcouleParRatioEnSeconde);

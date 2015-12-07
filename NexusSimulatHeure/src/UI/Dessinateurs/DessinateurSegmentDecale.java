@@ -35,6 +35,10 @@ public class DessinateurSegmentDecale extends DessinateurSegment {
         {
             dessinerFlecheDeuxTons(g2, Couleurs.CIRCUIT_SELECTIONNE_EXTERIEUR, Couleurs.CIRCUIT_SELECTIONNE_INTERIEUR);
         }
+        else if(segment.getMode() == Segment.Mode.TRAJET)
+        {
+            dessinerFlecheUnTon(g2, Couleurs.TRAJET);
+        }
 
         //Temps segment.
         java.awt.Point centreSegment = calculerCentreSegment();

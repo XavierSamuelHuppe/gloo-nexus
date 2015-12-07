@@ -93,12 +93,13 @@ public abstract class Source implements Serializable{
     {
         Segment segment = circuitSource.obtenirProchainSegment(pointDepart);
         Vehicule vehicule = new Vehicule(circuitSource, segment, passagers);
+        vehicule.embarquerAuPointDepart();
         this.simulation.ajouterVehicule(vehicule);
         return vehicule;
     }
     
     public abstract void avancerCreation(LocalTime heureCourante, double tempsEcouleParRatioEnSeconde);
-    protected abstract void reInitialiserValeursDepartSimulation();
+    public abstract void reInitialiserValeursDepartSimulation();
     
     public abstract String obtenirDescriptionSource();
     
