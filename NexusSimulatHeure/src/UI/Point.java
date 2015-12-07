@@ -275,19 +275,21 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         {
             this.modeActuel = Mode.CIRCUIT;
         }
-        else if (sim.estEnModePassager() && (sim.estDansTrajetActif(pointMetier) || sim.estDansTrajetEnCreation(pointMetier) || sim.estDansAuMoinsUnTrajet(pointMetier)))
+        //else if (sim.estEnModePassager() && (sim.estDansTrajetActif(pointMetier) || sim.estDansTrajetEnCreation(pointMetier) || sim.estDansAuMoinsUnTrajet(pointMetier)))
+        else if (sim.estEnModePassager())
         {
-            if(!sim.possedeUnTrajetEnCoursDeCreation() && sim.estDansAuMoinsUnCircuit(this.getPointMetier()))
-            {
-                this.modeActuel = Mode.CIRCUIT;
-            }
-            else if (!sim.pointEstDansCircuitActifPourCreationTrajet(this.getPointMetier()))
-            {
-                this.modeActuel = Mode.CIRCUIT;
-            }
-            else if (sim.pointEstDansCircuitActifPourCreationTrajet(this.getPointMetier()))
+            if ((sim.estDansTrajetActif(pointMetier) || sim.estDansTrajetEnCreation(pointMetier)))
             {
                 this.modeActuel = Mode.TRAJET;
+            }
+            else if((!sim.possedeUnTrajetEnCoursDeCreation() && sim.estDansAuMoinsUnCircuit(this.getPointMetier()))
+                    || sim.pointEstDansCircuitActifPourCreationTrajet(this.getPointMetier()))
+            {
+                this.modeActuel = Mode.CIRCUIT;
+            }
+            else
+            {
+                choisirModeParDefautSelonArretOuIntersection();
             }
         }
         else if (sim.estEnModeSegment() && (sim.estPointCreateur(pointMetier)))
@@ -296,17 +298,21 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         }
         else
         {
-            if (this.pointMetier.estArret())
-            {
-                this.modeActuel = Mode.ARRET;
-            }
-            else if (this.pointMetier.estIntersection())
-            {
-                this.modeActuel = Mode.INTERSECTION;
-            }
+            choisirModeParDefautSelonArretOuIntersection();
         }
     }        
 
+    private void choisirModeParDefautSelonArretOuIntersection(){
+        if (this.pointMetier.estArret())
+        {
+            this.modeActuel = Mode.ARRET;
+        }
+        else if (this.pointMetier.estIntersection())
+        {
+            this.modeActuel = Mode.INTERSECTION;
+        }
+    }
+    
     boolean dragged = false;
     
     //<editor-fold desc="Implémentations MouseMotionListener, MouseListener">

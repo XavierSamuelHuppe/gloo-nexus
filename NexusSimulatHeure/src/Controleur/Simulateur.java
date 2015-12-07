@@ -453,11 +453,13 @@ public class Simulateur {
     public boolean possedeUnTrajetEnCoursDeCreation(){
         return contexte.possedeUnTrajetEnCoursDeCreation();
     }
+    //!!!!
     public boolean segmentEstDansCircuitActifPourCreationTrajet(Segment segment){
-        return contexte.segmentEstDansCircuitActifPourCreationTrajet(segment);
+        
+        return estDansCircuitActif(segment);
     }
     public boolean pointEstDansCircuitActifPourCreationTrajet(Point point){
-        return contexte.pointEstDansCircuitActifPourCreationTrajet(point);
+        return estDansCircuitActif(point);
     }
     
     
@@ -467,7 +469,7 @@ public class Simulateur {
     public boolean estDansTrajetActif(Point point){
         try{
             return contexte.estDansTrajetActif(point);
-        }catch(AucunCircuitActifException e){
+        }catch(AucunTrajetActifException e){
             return false;
         }
     }
@@ -492,10 +494,10 @@ public class Simulateur {
             return false;
         }
     }
-    public boolean estDansAuMoinsUnTrajet(Point point){
-        return simulation.trajetsPassantPar(point).size() > 0;
-    }
-    public boolean estDansAuMoinsUnTrajet(Segment segment){
-        return simulation.trajetsPassantPar(segment).size() > 0;
-    }
+//    public boolean estDansAuMoinsUnTrajet(Point point){
+//        return simulation.trajetsPassantPar(point).size() > 0;
+//    }
+//    public boolean estDansAuMoinsUnTrajet(Segment segment){
+//        return simulation.trajetsPassantPar(segment).size() > 0;
+//    }
 }

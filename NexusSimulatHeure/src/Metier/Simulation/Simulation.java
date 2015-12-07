@@ -315,15 +315,15 @@ public class Simulation extends Observable implements Serializable{
         return retour;
     }
 
-    public List<Circuit> trajetsPassantPar(Point point){
-        List<Circuit> retour = new ArrayList();
-        for(Circuit c: circuits){
-            if(c.utilise(point)){
-                retour.add(c);
-            }
-        }
-        return retour;
-    }
+//    public List<Circuit> trajetsPassantPar(Point point){
+//        List<Circuit> retour = new ArrayList();
+//        for(Circuit c: circuits){
+//            if(c.utilise(point)){
+//                retour.add(c);
+//            }
+//        }
+//        return retour;
+//    }
     
     
     public void retirerPointAvecReferences(Point p){

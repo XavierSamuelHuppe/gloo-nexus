@@ -30,6 +30,11 @@ public class Trajet implements Serializable {
         return elementsTrajet.get(etape);
     }
     
+    public boolean utilise(Point p)
+    {
+        return elementsTrajet.stream().anyMatch((t) -> t.getCircuit().utilise(p, t.getPointMontee(), t.getPointDescente()));
+    }
+        
     public boolean utilise(Segment s)
     {
         return elementsTrajet.stream().anyMatch((t) -> t.getCircuit().utilise(s, t.getPointMontee(), t.getPointDescente()));

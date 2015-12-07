@@ -47,7 +47,17 @@ public abstract class Circuit implements Serializable {
         return parcours.contains(s);
     }
     
+    public boolean utilise(Point pointCible, Point entreDebut, Point entreFin)
+    {
+        return obtenirSousCircuit(entreDebut, entreFin).stream().anyMatch((s)-> (s.getPointDepart() == pointCible || s.getPointArrivee() == pointCible));
+    }
+    
     public boolean utilise(Segment segmentCible, Point entreDebut, Point entreFin)
+    {
+        return obtenirSousCircuit(entreDebut, entreFin).contains(segmentCible);
+    }
+    
+    private List<Segment> obtenirSousCircuit(Point entreDebut, Point entreFin)
     {
         LinkedList<Segment> sousCircuit = new LinkedList<>();
         boolean ajouter = false;
@@ -71,8 +81,9 @@ public abstract class Circuit implements Serializable {
                 }
             }
         }
-        return sousCircuit.contains(segmentCible);
+        return sousCircuit;
     }
+    
     
     // TODO rencontre: Explain witchcraft to team
     public boolean utilise(Point p){

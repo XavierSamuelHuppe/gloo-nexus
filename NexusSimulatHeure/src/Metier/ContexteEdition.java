@@ -22,6 +22,7 @@ public class ContexteEdition {
     private Point pointActif;
     private Circuit circuitActif;
     private Segment segmentActif;
+    private Trajet trajecActif;
     
     private List<Segment> circuitEnCreation;
     private Point pointCreateur;
@@ -250,7 +251,7 @@ public class ContexteEdition {
     
     
     public boolean possedeUnTrajetEnCoursDeCreation(){
-        return !(trajetEnCreation == null);
+        return (trajetEnCreation != null) || pointCreateur != null;
     }
     
     public boolean trajetEnCoursDeCreationContientAuMoinsUneEtape()
@@ -258,25 +259,25 @@ public class ContexteEdition {
         return possedeUnTrajetEnCoursDeCreation() && trajetEnCreation.contientAuMoinsUneEtape();
     }
     
-    public boolean segmentEstDansCircuitActifPourCreationTrajet(Segment segment){
-        return trajetEnCreationEnSegments.contains(segment);
-    }
-    public boolean pointEstDansCircuitActifPourCreationTrajet(Point point){
-        if(point == this.pointCreateur)
-            return true;
-        
-        for(Segment s: trajetEnCreationEnSegments){
-            if(s.getPointDepart().equals(point) ||
-               s.getPointArrivee().equals(point))
-                return true;
-        }
-        return false;
-    }
+//    public boolean segmentEstDansCircuitActifPourCreationTrajet(Segment segment){
+//        return circuitActif.utilise(segment);
+//    }
+//    public boolean pointEstDansCircuitActifPourCreationTrajet(Point point){
+//        if(point == this.pointCreateur)
+//            return true;
+//        
+//        for(Segment s: trajetEnCreationEnSegments){
+//            if(s.getPointDepart().equals(point) ||
+//               s.getPointArrivee().equals(point))
+//                return true;
+//        }
+//        return false;
+//    }
     
     public void commencerContinuerCreationTrajet(Point p){
         if(!estEnModePassager())
             throw new EditionEnMauvaisModeException();
-        if(!p.estArret() || simulation.circuitsPassantPar(p).size() == 0)
+        if(!p.estArret() && simulation.circuitsPassantPar(p).size() == 0)
             throw new MauvaisPointDeDepartException();
         if(!possedePointCreateur()){
             setPointCreateur(p);
@@ -338,29 +339,29 @@ public class ContexteEdition {
     
     
     
-    public void setTrajetActif(Circuit p){
-        circuitActif = p;
+    public void setTrajetActif(Trajet t){
+        trajecActif = t;
     }
-    public Circuit getTrajetActif(){
-        if(circuitActif == null)
-            throw new AucunCircuitActifException();
-        return circuitActif;
+    public Trajet getTrajetActif(){
+        if(trajecActif == null)
+            throw new AucunTrajetActifException();
+        return trajecActif;
     }
     public void viderTrajetActif(){
         circuitActif = null;
     }
     
     public boolean estDansTrajetActif(Point point){
-        return getCircuitActif().utilise(point);
+        return getTrajetActif().utilise(point);
     }
     public boolean estDansTrajetActif(Segment segment){
-        return getCircuitActif().utilise(segment);
+        return getTrajetActif().utilise(segment);
     }
     
     public boolean estDansTrajetEnCreation(Point point){
-        return circuitEnCreation.stream().anyMatch((s) -> s.getPointDepart().equals(point) || s.getPointArrivee().equals(point));
+        return trajetEnCreationEnSegments.stream().anyMatch((s) -> s.getPointDepart().equals(point) || s.getPointArrivee().equals(point));
     }
     public boolean estDansTrajetEnCreation(Segment segment){
-        return circuitEnCreation.stream().anyMatch((s) -> s.equals(segment));
+        return trajetEnCreationEnSegments.stream().anyMatch((s) -> s.equals(segment));
     }
 }
