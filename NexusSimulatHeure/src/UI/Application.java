@@ -36,6 +36,8 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         this.BoutonModeSegment.addKeyListener(this);
         this.BoutonModeSource.addKeyListener(this);
         
+        this.PanneauBarreOutilsChoixCircuitTrajet.setVisible(false);
+        
         this.simulateur = new Controleur.Simulateur();
         
         this.ZoneEspaceTravail.setSimulateur(simulateur);
@@ -374,6 +376,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     private void initComponents() {
 
         PanneauBarreOutils = new javax.swing.JPanel();
+        PanneauBarreOutilsBoutons = new javax.swing.JPanel();
         BoutonNouveau = new javax.swing.JButton();
         BoutonSauvegarder = new javax.swing.JButton();
         BoutonCharger = new javax.swing.JButton();
@@ -388,6 +391,10 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         BoutonModeCircuit = new javax.swing.JButton();
         BoutonModeSource = new javax.swing.JButton();
         BoutonModeProfilPassager = new javax.swing.JButton();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(100, 0), new java.awt.Dimension(100, 0), new java.awt.Dimension(100, 0));
+        PanneauBarreOutilsChoixCircuitTrajet = new javax.swing.JPanel();
+        LibelleCircuit = new javax.swing.JLabel();
+        ListeCircuitTrajet = new javax.swing.JComboBox();
         PanneauEtat = new javax.swing.JPanel();
         PanneauEtatGauche = new javax.swing.JPanel();
         PanneauControleSimulation = new javax.swing.JPanel();
@@ -412,6 +419,8 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
 
         PanneauBarreOutils.setLayout(new javax.swing.BoxLayout(PanneauBarreOutils, javax.swing.BoxLayout.LINE_AXIS));
 
+        PanneauBarreOutilsBoutons.setLayout(new javax.swing.BoxLayout(PanneauBarreOutilsBoutons, javax.swing.BoxLayout.LINE_AXIS));
+
         BoutonNouveau.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/file-2x.png"))); // NOI18N
         BoutonNouveau.setToolTipText("Nouveau");
         BoutonNouveau.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -425,7 +434,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
                 BoutonNouveauActionPerformed(evt);
             }
         });
-        PanneauBarreOutils.add(BoutonNouveau);
+        PanneauBarreOutilsBoutons.add(BoutonNouveau);
 
         BoutonSauvegarder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/data-transfer-download-2x.png"))); // NOI18N
         BoutonSauvegarder.setToolTipText("Sauvegarder");
@@ -440,7 +449,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
                 BoutonSauvegarderActionPerformed(evt);
             }
         });
-        PanneauBarreOutils.add(BoutonSauvegarder);
+        PanneauBarreOutilsBoutons.add(BoutonSauvegarder);
 
         BoutonCharger.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/data-transfer-upload-2x.png"))); // NOI18N
         BoutonCharger.setToolTipText("Charger");
@@ -455,7 +464,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
                 BoutonChargerActionPerformed(evt);
             }
         });
-        PanneauBarreOutils.add(BoutonCharger);
+        PanneauBarreOutilsBoutons.add(BoutonCharger);
 
         BoutonAnnuler.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/action-undo-2x.png"))); // NOI18N
         BoutonAnnuler.setToolTipText("Undo");
@@ -465,7 +474,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         BoutonAnnuler.setMaximumSize(new java.awt.Dimension(24, 24));
         BoutonAnnuler.setMinimumSize(new java.awt.Dimension(24, 24));
         BoutonAnnuler.setPreferredSize(new java.awt.Dimension(24, 24));
-        PanneauBarreOutils.add(BoutonAnnuler);
+        PanneauBarreOutilsBoutons.add(BoutonAnnuler);
 
         BoutonRepeter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/action-redo-2x.png"))); // NOI18N
         BoutonRepeter.setToolTipText("Redo");
@@ -475,7 +484,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         BoutonRepeter.setMaximumSize(new java.awt.Dimension(24, 24));
         BoutonRepeter.setMinimumSize(new java.awt.Dimension(24, 24));
         BoutonRepeter.setPreferredSize(new java.awt.Dimension(24, 24));
-        PanneauBarreOutils.add(BoutonRepeter);
+        PanneauBarreOutilsBoutons.add(BoutonRepeter);
 
         BoutonParametres.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/wrench-2x.png"))); // NOI18N
         BoutonParametres.setToolTipText("Paramètres de la Simulation");
@@ -485,7 +494,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         BoutonParametres.setMaximumSize(new java.awt.Dimension(24, 24));
         BoutonParametres.setMinimumSize(new java.awt.Dimension(24, 24));
         BoutonParametres.setPreferredSize(new java.awt.Dimension(24, 24));
-        PanneauBarreOutils.add(BoutonParametres);
+        PanneauBarreOutilsBoutons.add(BoutonParametres);
 
         BoutonImageFond.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/image-2x.png"))); // NOI18N
         BoutonImageFond.setToolTipText("Afficher une image de fond");
@@ -500,12 +509,12 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
                 BoutonImageFondActionPerformed(evt);
             }
         });
-        PanneauBarreOutils.add(BoutonImageFond);
+        PanneauBarreOutilsBoutons.add(BoutonImageFond);
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jSeparator1.setMaximumSize(new java.awt.Dimension(10, 32767));
         jSeparator1.setPreferredSize(new java.awt.Dimension(10, 10));
-        PanneauBarreOutils.add(jSeparator1);
+        PanneauBarreOutilsBoutons.add(jSeparator1);
 
         BoutonModeArret.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/target-2x.png"))); // NOI18N
         BoutonModeArret.setToolTipText("Édition d'arrêts");
@@ -520,7 +529,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
                 BoutonModeArretActionPerformed(evt);
             }
         });
-        PanneauBarreOutils.add(BoutonModeArret);
+        PanneauBarreOutilsBoutons.add(BoutonModeArret);
 
         BoutonModeIntersection.setText("+");
         BoutonModeIntersection.setToolTipText("Édition d'intersections");
@@ -530,7 +539,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         BoutonModeIntersection.setMaximumSize(new java.awt.Dimension(24, 24));
         BoutonModeIntersection.setMinimumSize(new java.awt.Dimension(24, 24));
         BoutonModeIntersection.setPreferredSize(new java.awt.Dimension(24, 24));
-        PanneauBarreOutils.add(BoutonModeIntersection);
+        PanneauBarreOutilsBoutons.add(BoutonModeIntersection);
 
         BoutonModeSegment.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/transfer-2x.png"))); // NOI18N
         BoutonModeSegment.setToolTipText("Édition de segments");
@@ -545,7 +554,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
                 BoutonModeSegmentActionPerformed(evt);
             }
         });
-        PanneauBarreOutils.add(BoutonModeSegment);
+        PanneauBarreOutilsBoutons.add(BoutonModeSegment);
 
         BoutonModeCircuit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/fork-2x.png"))); // NOI18N
         BoutonModeCircuit.setToolTipText("Édition de circuits");
@@ -555,7 +564,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         BoutonModeCircuit.setMaximumSize(new java.awt.Dimension(24, 24));
         BoutonModeCircuit.setMinimumSize(new java.awt.Dimension(24, 24));
         BoutonModeCircuit.setPreferredSize(new java.awt.Dimension(24, 24));
-        PanneauBarreOutils.add(BoutonModeCircuit);
+        PanneauBarreOutilsBoutons.add(BoutonModeCircuit);
 
         BoutonModeSource.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/dashboard-2x.png"))); // NOI18N
         BoutonModeSource.setToolTipText("Édition de sources");
@@ -565,7 +574,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         BoutonModeSource.setMaximumSize(new java.awt.Dimension(24, 24));
         BoutonModeSource.setMinimumSize(new java.awt.Dimension(24, 24));
         BoutonModeSource.setPreferredSize(new java.awt.Dimension(24, 24));
-        PanneauBarreOutils.add(BoutonModeSource);
+        PanneauBarreOutilsBoutons.add(BoutonModeSource);
 
         BoutonModeProfilPassager.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/people-2x.png"))); // NOI18N
         BoutonModeProfilPassager.setToolTipText("Édition de profils passagers");
@@ -575,7 +584,30 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         BoutonModeProfilPassager.setMaximumSize(new java.awt.Dimension(24, 24));
         BoutonModeProfilPassager.setMinimumSize(new java.awt.Dimension(24, 24));
         BoutonModeProfilPassager.setPreferredSize(new java.awt.Dimension(24, 24));
-        PanneauBarreOutils.add(BoutonModeProfilPassager);
+        PanneauBarreOutilsBoutons.add(BoutonModeProfilPassager);
+
+        PanneauBarreOutils.add(PanneauBarreOutilsBoutons);
+        PanneauBarreOutils.add(filler1);
+
+        PanneauBarreOutilsChoixCircuitTrajet.setLayout(new javax.swing.BoxLayout(PanneauBarreOutilsChoixCircuitTrajet, javax.swing.BoxLayout.LINE_AXIS));
+
+        LibelleCircuit.setText("Circuit du trajet :");
+        PanneauBarreOutilsChoixCircuitTrajet.add(LibelleCircuit);
+
+        ListeCircuitTrajet.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "A" }));
+        ListeCircuitTrajet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ListeCircuitTrajetActionPerformed(evt);
+            }
+        });
+        ListeCircuitTrajet.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                ListeCircuitTrajetPropertyChange(evt);
+            }
+        });
+        PanneauBarreOutilsChoixCircuitTrajet.add(ListeCircuitTrajet);
+
+        PanneauBarreOutils.add(PanneauBarreOutilsChoixCircuitTrajet);
 
         getContentPane().add(PanneauBarreOutils, java.awt.BorderLayout.PAGE_START);
 
@@ -792,6 +824,35 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         }
     }//GEN-LAST:event_BoutonChargerActionPerformed
 
+    private void ListeCircuitTrajetPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_ListeCircuitTrajetPropertyChange
+        
+    }//GEN-LAST:event_ListeCircuitTrajetPropertyChange
+
+    private void ListeCircuitTrajetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListeCircuitTrajetActionPerformed
+        System.out.println("ListeCircuitTrajetActionPerformed");
+        this.simulateur.choisirCircuitActifPourCreationTrajet((Metier.Circuit.Circuit)ListeCircuitTrajet.getSelectedItem());
+    }//GEN-LAST:event_ListeCircuitTrajetActionPerformed
+    
+    public void remplirListeCircuitTrajet(Metier.Carte.Point p)
+    {
+        System.out.println("remplirListeCircuitTrajet");
+        
+        Object circuitCourant = ListeCircuitTrajet.getSelectedItem();
+        //ListeCircuitTrajet.removeAllItems();
+        for(Metier.Circuit.Circuit c : this.simulateur.circuitsPassantPar(p))
+        {
+            System.out.println(c.toString());
+            ListeCircuitTrajet.addItem(c);
+        }
+        ListeCircuitTrajet.setSelectedItem(circuitCourant);
+        
+        if(!PanneauBarreOutilsChoixCircuitTrajet.isVisible())
+        {
+            PanneauBarreOutilsChoixCircuitTrajet.setVisible(true);
+            this.revalidate();
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -847,12 +908,16 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     private javax.swing.JButton BoutonRedemarrer;
     private javax.swing.JButton BoutonRepeter;
     private javax.swing.JButton BoutonSauvegarder;
+    private javax.swing.JLabel LibelleCircuit;
     private javax.swing.JLabel LibelleCoordonneesGeographiques;
     private javax.swing.JLabel LibelleHeureCourante;
     private javax.swing.JLabel LibelleJoursSimulation;
     private javax.swing.JLabel LibelleVitesse;
     private javax.swing.JLabel LibelleZoom;
+    private javax.swing.JComboBox ListeCircuitTrajet;
     private javax.swing.JPanel PanneauBarreOutils;
+    private javax.swing.JPanel PanneauBarreOutilsBoutons;
+    private javax.swing.JPanel PanneauBarreOutilsChoixCircuitTrajet;
     private javax.swing.JSplitPane PanneauCentre;
     private javax.swing.JPanel PanneauControleSimulation;
     private javax.swing.JPanel PanneauDetails;
@@ -863,6 +928,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     private javax.swing.JPanel PanneauPrincipal;
     private javax.swing.JSlider SliderVitesse;
     private UI.EspaceTravail ZoneEspaceTravail;
+    private javax.swing.Box.Filler filler1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     // End of variables declaration//GEN-END:variables

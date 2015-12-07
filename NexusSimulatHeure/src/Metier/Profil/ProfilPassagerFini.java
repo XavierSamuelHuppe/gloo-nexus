@@ -12,8 +12,8 @@ public class ProfilPassagerFini extends ProfilPassager{
     
     private LocalTime prochaineGeneration;
     
-    public ProfilPassagerFini(int nombreMax, Point point, LocalTime heureDepart, Distribution distribution, Simulation simulation){
-        super(point, heureDepart, distribution, simulation);
+    public ProfilPassagerFini(int nombreMax, Point point, LocalTime heureDepart, Distribution distribution, Trajet trajet, Simulation simulation){
+        super(point, heureDepart, distribution, trajet, simulation);
         this.nombreMax = nombreMax;
     }
     

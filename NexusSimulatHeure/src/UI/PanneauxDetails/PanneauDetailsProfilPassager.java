@@ -296,6 +296,23 @@ public class PanneauDetailsProfilPassager extends PanneauDetails implements java
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void BoutonSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSupprimerActionPerformed
+        if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this.obtenirApplication(), "Désirez-vous vraiment retirer ce profil de passager?", "Retirer ce profil de passager?", JOptionPane.YES_NO_OPTION))
+        {
+            this.obtenirApplication().getSimulateur().retirerProfil(ProfilPassagerMetierLie);
+            this.obtenirApplication().viderPanneauDetails();
+            this.obtenirApplication().repaint();
+        }
+    }//GEN-LAST:event_BoutonSupprimerActionPerformed
+
+    private void RadioNombreMaxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RadioNombreMaxMouseClicked
+        this.activerDesactiverControles(false);
+    }//GEN-LAST:event_RadioNombreMaxMouseClicked
+
+    private void RadioHeureFinMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RadioHeureFinMouseClicked
+        this.activerDesactiverControles(true);
+    }//GEN-LAST:event_RadioHeureFinMouseClicked
+
     private void BoutonSauvegarderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSauvegarderActionPerformed
 
         if(modeCreationBool == true){
@@ -305,23 +322,6 @@ public class PanneauDetailsProfilPassager extends PanneauDetails implements java
             sauvegarderProfilModifier();
         }
     }//GEN-LAST:event_BoutonSauvegarderActionPerformed
-
-    private void RadioHeureFinMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RadioHeureFinMouseClicked
-        this.activerDesactiverControles(true);
-    }//GEN-LAST:event_RadioHeureFinMouseClicked
-
-    private void RadioNombreMaxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RadioNombreMaxMouseClicked
-        this.activerDesactiverControles(false);
-    }//GEN-LAST:event_RadioNombreMaxMouseClicked
-
-    private void BoutonSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSupprimerActionPerformed
-        if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this.obtenirApplication(), "Désirez-vous vraiment retirer ce profil de passager?", "Retirer ce profil de passager?", JOptionPane.YES_NO_OPTION))
-        {
-            this.obtenirApplication().getSimulateur().retirerProfil(ProfilPassagerMetierLie);
-            this.obtenirApplication().viderPanneauDetails();
-            this.obtenirApplication().repaint();
-        }
-    }//GEN-LAST:event_BoutonSupprimerActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -12,8 +12,8 @@ public class ProfilPassagerHeureFin extends ProfilPassager {
     private LocalTime heureFin;
     private LocalTime prochaineGeneration;
     
-    public ProfilPassagerHeureFin(LocalTime heureFin, Point point, LocalTime heureDepart, Distribution distribution, Simulation simulation){
-        super(point, heureDepart, distribution, simulation);
+    public ProfilPassagerHeureFin(LocalTime heureFin, Point point, LocalTime heureDepart, Distribution distribution, Trajet trajet, Simulation simulation){
+        super(point, heureDepart, distribution, trajet, simulation);
         this.heureFin = heureFin;
     }
     

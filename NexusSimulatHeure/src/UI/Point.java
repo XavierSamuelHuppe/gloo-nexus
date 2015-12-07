@@ -130,6 +130,10 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         {
             g2.setColor(Couleurs.POINT_CREATION_SEGMENT);
         }
+        else if(modeActuel == Mode.TRAJET)
+        {
+            g2.setColor(Couleurs.POINT_TRAJET);
+        }
         g2.fillOval(this.getX(), this.getY(), calculerZoom(DIAMETRE), calculerZoom(DIAMETRE));
     }
     
@@ -158,6 +162,10 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         else if(modeActuel == Mode.CREATION_SEGMENT)
         {
             g2.setColor(Couleurs.POINT_FOND_CREATION_SEGMENT);
+        }
+        else if(modeActuel == Mode.TRAJET )
+        {
+            g2.setColor(Couleurs.POINT_TRAJET_FOND);
         }
         g2.fillOval(this.getX() + calculerZoom(POSITION_CERCLE_INTERNE), this.getY() + calculerZoom(POSITION_CERCLE_INTERNE), calculerZoom(LARGEUR_CERCLE_INTERNE), calculerZoom(LARGEUR_CERCLE_INTERNE));
     }
@@ -269,7 +277,18 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         }
         else if (sim.estEnModePassager() && (sim.estDansTrajetActif(pointMetier) || sim.estDansTrajetEnCreation(pointMetier) || sim.estDansAuMoinsUnTrajet(pointMetier)))
         {
-            this.modeActuel = Mode.TRAJET;
+            if(!sim.possedeUnTrajetEnCoursDeCreation() && sim.estDansAuMoinsUnCircuit(this.getPointMetier()))
+            {
+                this.modeActuel = Mode.CIRCUIT;
+            }
+            else if (!sim.pointEstDansCircuitActifPourCreationTrajet(this.getPointMetier()))
+            {
+                this.modeActuel = Mode.CIRCUIT;
+            }
+            else if (sim.pointEstDansCircuitActifPourCreationTrajet(this.getPointMetier()))
+            {
+                this.modeActuel = Mode.TRAJET;
+            }
         }
         else if (sim.estEnModeSegment() && (sim.estPointCreateur(pointMetier)))
         {

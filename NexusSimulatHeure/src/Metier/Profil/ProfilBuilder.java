@@ -13,13 +13,13 @@ import java.time.LocalTime;
 
 
 public class ProfilBuilder {
-    public ProfilPassager ConstruireProfil(int nombreMax, Point pointDepart, LocalTime heureDebut, Distribution distribution, Simulation sim){
-        ProfilPassager nouveauProfil = new ProfilPassagerFini(nombreMax , pointDepart, heureDebut, distribution, sim);
+    public ProfilPassager ConstruireProfil(int nombreMax, Point pointDepart, LocalTime heureDebut, Distribution distribution, Trajet trajet, Simulation sim){
+        ProfilPassager nouveauProfil = new ProfilPassagerFini(nombreMax , pointDepart, heureDebut, distribution, trajet, sim);
         return nouveauProfil;
     }
     
-    public ProfilPassager ConstruireProfil(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, Distribution distribution, Simulation sim){
-        ProfilPassager nouveauProfil = new ProfilPassagerHeureFin(heureFin , pointDepart, heureDebut ,  distribution, sim);
+    public ProfilPassager ConstruireProfil(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, Distribution distribution, Trajet trajet, Simulation sim){
+        ProfilPassager nouveauProfil = new ProfilPassagerHeureFin(heureFin , pointDepart, heureDebut , distribution, trajet, sim);
         return nouveauProfil;
     }
 }

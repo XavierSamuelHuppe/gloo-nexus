@@ -18,11 +18,11 @@ public abstract class ProfilPassager implements Serializable{
     public Distribution distributionAUtiliser;
     public Statistiques statistiques;
     
-    public ProfilPassager(Point point, LocalTime heureDepart, Distribution distribution, Simulation simulation){
+    public ProfilPassager(Point point, LocalTime heureDepart, Distribution distribution, Trajet trajet, Simulation simulation){
         this.heureDebut = heureDepart;
         this.pointDepart = point;
+        this.trajet = trajet;
         this.distributionAUtiliser = distribution;
-        
     }
     public Point getPointDepart(){
         return pointDepart;

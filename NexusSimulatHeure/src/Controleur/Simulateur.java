@@ -209,14 +209,16 @@ public class Simulateur {
     public void ajouterProfil(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, double distributionMin, double distributionMode, double distributionMax){
         ProfilBuilder builder = new ProfilBuilder();
         Distribution distributionAUtiliser = new Distribution(distributionMin, distributionMode, distributionMax);
-        ProfilPassager nouveauPassager = builder.ConstruireProfil(heureFin, pointDepart, heureDebut, distributionAUtiliser, simulation);
+        Trajet trajet = this.sauvegarderTrajetPourProfilPassager();
+        ProfilPassager nouveauPassager = builder.ConstruireProfil(heureFin, pointDepart, heureDebut, distributionAUtiliser, trajet, simulation);
         simulation.ajouterProfil(nouveauPassager);
     }
     
     public void ajouterProfil(int nombreMax, Point pointDepart, LocalTime heureDebut, double distributionMin, double distributionMode, double distributionMax){
         ProfilBuilder builder = new ProfilBuilder();
         Distribution distributionAUtiliser = new Distribution(distributionMin, distributionMode, distributionMax);
-        ProfilPassager nouveauPassager = builder.ConstruireProfil(nombreMax, pointDepart, heureDebut, distributionAUtiliser, simulation);
+        Trajet trajet = this.sauvegarderTrajetPourProfilPassager();
+        ProfilPassager nouveauPassager = builder.ConstruireProfil(nombreMax, pointDepart, heureDebut, distributionAUtiliser, trajet, simulation);
         simulation.ajouterProfil(nouveauPassager);
     }
     

@@ -431,7 +431,6 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
             }
             catch(AucunPointCreateurException ex)
             {
-                
                 System.err.println("AucunPointCreateurException");
             }
             catch(AucunCheminPossibleException ex)
@@ -454,7 +453,8 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         {
             try
             {
-                this.obtenirApplication().afficherPanneauDetailsProfilPassagerNouveauProfil(p.getPointMetier());
+                this.obtenirApplication().remplirListeCircuitTrajet(p.getPointMetier());
+                this.simulateur.commencerContinuerCreationTrajet(p.getPointMetier());
             }
             catch(AucunPointCreateurException ex)
             {
