@@ -98,6 +98,8 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         dessinerCentre(g2);
         dessinerNomSiRequis(g2);
         dessinerDetailsSourcesSiRequis(g2);
+        dessinerIndicateurSourcesSiRequis(g2);
+        dessinerIndicateurProfilsSiRequis(g2);
         if(this.obtenirEspaceTravail().getSimulateur().simulationEstEnAction())
         {
             dessinerDetailsPassagers(g2);
@@ -221,6 +223,7 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         dessinerTetePassager(g2);
         dessinerCorpsPassager(g2);
     }
+
     
     private static final int ICONE_PASSAGER_LARGEUR = 8;
     
@@ -243,6 +246,23 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         
         g2.setColor(Couleurs.POINT_PASSAGERS_DETAILS);        
         g2.fill(p.createTransformedShape(at));
+    }
+    
+        
+    private void dessinerIndicateurSourcesSiRequis(Graphics2D g2)
+    {
+        if(this.getPointMetier().getSources().size() > 0){
+            g2.setColor(Couleurs.POINT_INDICATEUR_SOURCES);        
+            g2.fillOval(this.getX(), this.getY(), calculerZoom(10), calculerZoom(10));
+        }
+    }
+    
+    private void dessinerIndicateurProfilsSiRequis(Graphics2D g2)
+    {
+        if(this.getPointMetier().getProfilsPassagers().size() > 0){
+            g2.setColor(Couleurs.POINT_INDICATEUR_PROFILS);        
+            g2.fillOval(this.getX() + calculerZoom(10), this.getY(), calculerZoom(10), calculerZoom(10));
+        }
     }
     
     public int calculerCentreX()
