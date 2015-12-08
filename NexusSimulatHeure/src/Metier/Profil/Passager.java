@@ -23,7 +23,7 @@ public class Passager implements Serializable{
     // On pourrait donc faire le changement d'étape séprarément appelé par le 
     public boolean veut(Point p){
         // Assume que si on demande au passager s'il attend cet arrêt, il est dans un véchicule
-        if(trajet.obtenirEtape(etapeActuelle).getPointDescente() == p){
+        if(trajet.obtenirEtape(etapeActuelle).getPointDescente().equals(p)){
             etapeActuelle++; //TODO: behaviour de fin de trajet (arrivé)
             return true;
         }
@@ -32,12 +32,12 @@ public class Passager implements Serializable{
     
     public boolean veut(Circuit c){
         // Assume que si on demande au passager s'il attend ce circuit, il n'est pas dans un véhicule
-        return trajet.obtenirEtape(etapeActuelle).getCircuit() == c;
+        return trajet.obtenirEtape(etapeActuelle).getCircuit().equals(c);
     }
     
     public boolean estArriveADestination(Point p)
     {
-        return trajet.obtenirPointArrivee() == p;
+        return trajet.obtenirPointArrivee().equals(p);
     }
 
     public void incrementerTempsAttente(double tempsEcouleParRatioEnSeconde)

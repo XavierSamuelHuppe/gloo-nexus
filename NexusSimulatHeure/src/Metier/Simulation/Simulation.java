@@ -196,7 +196,7 @@ public class Simulation extends Observable implements Serializable{
     {
         for(Point p : carte.getPoints())
         {
-            if(p.obtenirNombrePassagersEnAttente() > 0)
+            /*if(p.obtenirNombrePassagersEnAttente() > 0)
             {
                 for(Object px : p.obtenirPassagersEnAttente().toArray())
                 {
@@ -211,6 +211,13 @@ public class Simulation extends Observable implements Serializable{
                         passager.incrementerTempsAttente(tempsEcouleParRatioEnSeconde);
                     }
                 }
+            }*/
+            for(Passager px : p.getPassagersArrives()){
+                px.comptabiliserTempsAttenteDansProfilPassager();
+            }
+            p.viderPassagersArrives();
+            for(Passager px : p.obtenirPassagersEnAttente()){
+                px.incrementerTempsAttente(tempsEcouleParRatioEnSeconde);
             }
         }   
     }

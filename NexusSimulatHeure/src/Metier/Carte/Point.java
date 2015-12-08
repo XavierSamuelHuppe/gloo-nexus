@@ -13,6 +13,7 @@ public class Point extends Observable implements Serializable{
     private List<ProfilPassager> profilsPassagers;
     private List<Source> sources;
     private ConteneurPassagers passagers;
+    private List<Passager> passagersArrives;
     private boolean existe;
     private boolean estArret;
     
@@ -21,9 +22,17 @@ public class Point extends Observable implements Serializable{
         this.estArret = estArret;
         profilsPassagers = new ArrayList();
         sources = new ArrayList();
+        passagersArrives = new ArrayList();
         existe = true;
     }
 
+    public List<Passager> getPassagersArrives() {
+        return passagersArrives;
+    }
+    public void viderPassagersArrives(){
+        passagersArrives.clear();
+    }
+    
     public String getNom() {
         return nom;
     }
@@ -74,7 +83,12 @@ public class Point extends Observable implements Serializable{
     }
     
     public void faireDescendreAuPoint(List<Passager> passagers){
-        this.passagers.octroyer(passagers);
+        for(Passager p : passagers){
+            if(p.estArriveADestination(this))
+                passagersArrives.add(p);
+            else
+                this.passagers.octroyer(p);
+        }
     }
     public void faireArriverNouveauPassager(Passager passager){
         this.passagers.octroyer(passager);

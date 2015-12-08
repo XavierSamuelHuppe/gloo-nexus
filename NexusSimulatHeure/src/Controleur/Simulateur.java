@@ -432,9 +432,10 @@ public class Simulateur {
     }
     
     public void choisirCircuitActifPourCreationTrajet(Circuit c){
-        if(!contexte.trajetEnCoursDeCreationContientAuMoinsUneEtape())
+        if(!contexte.isPremiereEtapeConstruite())
         {
             contexte.setCircuitActif(c);
+            contexte.setPremiereEtapeConstruite(true);
         }
         else
         {

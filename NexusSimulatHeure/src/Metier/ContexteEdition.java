@@ -283,6 +283,7 @@ public class ContexteEdition {
             setPointCreateur(p);
             dernierPointDeMonte = p;
             trajetEnCreation = new Trajet();
+            setPremiereEtapeConstruite(false);
             return;
         }
         if(!possedeCircuitActif())
@@ -307,6 +308,14 @@ public class ContexteEdition {
             throw e;
         }
         
+    }
+    
+    private boolean premiereEtapeConstruite;
+    public void setPremiereEtapeConstruite(boolean premiereEtapeConstruite) {
+        this.premiereEtapeConstruite = premiereEtapeConstruite;
+    }
+    public boolean isPremiereEtapeConstruite() {
+        return premiereEtapeConstruite;
     }
     
     public void changerCircuitActif(Circuit c){
