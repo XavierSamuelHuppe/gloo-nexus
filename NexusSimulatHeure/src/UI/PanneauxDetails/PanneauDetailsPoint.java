@@ -233,7 +233,10 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
     }// </editor-fold>//GEN-END:initComponents
 
     private void BoutonSauvegarderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSauvegarderActionPerformed
-        this.obtenirApplication().getSimulateur().modifierPoint(this.pointMetierLie, Double.parseDouble(this.ChampLongitude.getText()), Double.parseDouble(this.ChampLatitude.getText()), this.ChampNom.getText());
+        this.obtenirApplication().getSimulateur()
+                .modifierPoint(this.pointMetierLie, 
+                        Double.parseDouble(this.ChampLongitude.getText().replace(',', '.')), 
+                        Double.parseDouble(this.ChampLatitude.getText().replace(',', '.')), this.ChampNom.getText());
         this.obtenirApplication().repaint();
     }//GEN-LAST:event_BoutonSauvegarderActionPerformed
 
