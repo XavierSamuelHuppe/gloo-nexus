@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.text.DateFormat;
 import Metier.Carte.Point;
+import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import javax.swing.DefaultComboBoxModel;
 
@@ -55,6 +56,10 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
             for (Circuit circuit: circuits){
                 this.ChampCircuit.addItem(circuit);
             }
+            this.simulateur.activerCircuit((Metier.Circuit.Circuit)this.ChampCircuit.getSelectedItem());
+            ChampCircuit.addActionListener(actionListenerChampCircuit);
+            
+            this.simulateur.selectionnerPoint(this.pointMetierLie);
         }
         catch (Exception ex) {
                JOptionPane.showMessageDialog(this.obtenirApplication(),ex.toString());
@@ -67,14 +72,29 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
         this.BoutonSupprimer.setEnabled(false);
     }
     
+    private final ActionListener actionListenerChampCircuit = new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+             ChampCircuitActionPerformed(evt);
+        }
+    };
+    
+    private void ChampCircuitActionPerformed(java.awt.event.ActionEvent evt)
+    {
+        this.simulateur.activerCircuit((Metier.Circuit.Circuit)ChampCircuit.getSelectedItem());
+    }
+    
+    
     @Override
     public void rafraichir() {
         this.ChampCircuit.removeAllItems();
         List<Circuit> circuits = this.simulateur.circuitsPassantPar(pointMetierLie);
+        ChampCircuit.removeActionListener(actionListenerChampCircuit);
         for (Circuit circuit: circuits){
             this.ChampCircuit.addItem(circuit);
         }
+        ChampCircuit.addActionListener(actionListenerChampCircuit);
         this.ChampCircuit.setSelectedItem(this.circuitActuel);
+
         this.ChampHeureDepart.setText(sourceMetierLie.getheureDebut().format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE));
         if(this.sourceMetierLie.getClass() == SourceFinie.class){
             SourceFinie SourceCaster = (SourceFinie) sourceMetierLie;
@@ -85,7 +105,6 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
             this.ChampHeureFin.setText(SourceCaster.getheureFin().format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE));
             this.activerDesactiverControles(true);
         }
-        
     }
     @Override
     public void update(Observable o, Object o1) {

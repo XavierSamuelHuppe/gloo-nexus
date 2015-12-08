@@ -199,13 +199,19 @@ public class Simulateur {
         
         Source nouvelleSource = builder.ConstruireSource(heureFin, pointDepart, heureDebut, distributionAUtiliser, conteneurPassagersIllimiteParDefaut, circuit, this.simulation);
         simulation.ajouterSource(nouvelleSource);
+        contexte.viderPointActif();
+        contexte.viderCircuitActif();
     }
+    
     public void ajouterSource(int nombreMax, Point pointDepart, LocalTime heureDebut, Circuit circuit, double distributionMin, double distributionMode, double distributionMax){
         SourceBuilder builder = new SourceBuilder();
         Distribution distributionAUtiliser = new Distribution(distributionMin, distributionMode, distributionMax);
         ConteneurPassagersIllimite conteneurPassagersIllimiteParDefaut = simulation.getParametres().getConteneurPassagersIllimiteSource();
+        
         Source nouvelleSource = builder.ConstruireSource(nombreMax, pointDepart, heureDebut, distributionAUtiliser, conteneurPassagersIllimiteParDefaut, circuit, this.simulation);
         simulation.ajouterSource(nouvelleSource);
+        contexte.viderPointActif();
+        contexte.viderCircuitActif();
     }  
     
     public void ajouterProfil(LocalTime heureFin, LocalTime heureDebut, double distributionMin, double distributionMode, double distributionMax){
@@ -342,6 +348,16 @@ public class Simulateur {
     }
     public void viderCircuitActif(){
         contexte.viderCircuitActif();
+    }
+    public boolean circuitActifEstConnu()
+    {
+        try{
+           contexte.getCircuitActif();
+        }
+        catch(AucunCircuitActifException ex){
+            return false;
+        }
+        return true;
     }
     
     public void commencerContinuerCreationCircuit(Point p){

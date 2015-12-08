@@ -78,6 +78,10 @@ public class Segment implements IDetailsAffichables, Observer {
             {
                 this.modeActuel = Segment.Mode.CIRCUIT;
             }
+            else
+            {
+                this.modeActuel = Segment.Mode.NORMAL;
+            }
         }
         else if (sim.estEnModePassager())
         {
@@ -91,6 +95,18 @@ public class Segment implements IDetailsAffichables, Observer {
                 this.modeActuel = Segment.Mode.CIRCUIT;
             }
             else
+            {
+                this.modeActuel = Segment.Mode.NORMAL;
+            }
+        }
+        else if (sim.estEnModeSource())
+        {
+            if(sim.estDansCircuitActif(this.getSegmentMetier())
+                || (!sim.circuitActifEstConnu() && sim.estDansAuMoinsUnCircuit(this.getSegmentMetier())))
+            {
+                this.modeActuel = Segment.Mode.CIRCUIT;
+            }
+            else 
             {
                 this.modeActuel = Segment.Mode.NORMAL;
             }
