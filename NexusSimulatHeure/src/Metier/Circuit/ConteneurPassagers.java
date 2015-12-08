@@ -14,4 +14,5 @@ public interface ConteneurPassagers{
     public void octroyer(Passager passager0);
     public void retirer(Passager passager);
     public void vider();
+    public ConteneurPassagers obtenirCopieVide();
 }

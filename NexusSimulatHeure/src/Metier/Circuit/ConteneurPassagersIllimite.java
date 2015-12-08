@@ -69,4 +69,9 @@ public class ConteneurPassagersIllimite implements ConteneurPassagers, Serializa
     {
         passagers.remove(passager);
     }
+    
+    @Override
+    public ConteneurPassagers obtenirCopieVide(){
+        return new ConteneurPassagersIllimite();
+    }
 }
