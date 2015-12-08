@@ -85,7 +85,14 @@ public class PanneauDetailsCircuit extends PanneauDetails implements java.util.O
         try
         {
             this.obtenirApplication().getSimulateur().sauvergarderCircuit(this.ChampNom.getText());
-            this.obtenirApplication().viderPanneauDetails();
+            if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Désirez-vous vraiment créer un autre nouveau circuit?", "Créer un autre nouveau circuit?", JOptionPane.YES_NO_OPTION))
+            {
+                this.obtenirApplication().afficherPanneauDetailsCircuitNouveauCircuit();
+            }
+            else
+            {
+                this.obtenirApplication().viderPanneauDetails();
+            }
         }
         catch(CreationInvalideException ex)
         {
