@@ -4,14 +4,14 @@ package UI.PanneauxDetails;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-public class PanneauDetailsSimu extends PanneauDetails{
+public class PanneauDetailsSimu extends javax.swing.JFrame{
 
     //private Controleur.Simulateur simulateur;
     private Metier.Simulation.ParametreSimulation paramSimulation;
     private Controleur.Simulateur simulateur;
     
     public PanneauDetailsSimu()
-    {
+    {   
         initComponents();
     }
     
@@ -185,11 +185,11 @@ public class PanneauDetailsSimu extends PanneauDetails{
         BoutonRetour = new javax.swing.JButton();
         filler10 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
 
+        setAlwaysOnTop(true);
+        setAutoRequestFocus(false);
         setMinimumSize(new java.awt.Dimension(410, 200));
         setName(""); // NOI18N
-        setPreferredSize(new java.awt.Dimension(410, 200));
-        setRequestFocusEnabled(false);
-        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
+        getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.PAGE_AXIS));
 
         jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
@@ -201,8 +201,8 @@ public class PanneauDetailsSimu extends PanneauDetails{
         jPanel1.add(filler4);
         jPanel1.add(filler7);
 
-        add(jPanel1);
-        add(filler2);
+        getContentPane().add(jPanel1);
+        getContentPane().add(filler2);
 
         jPanel3.setLayout(new java.awt.GridLayout(1, 0));
 
@@ -218,7 +218,7 @@ public class PanneauDetailsSimu extends PanneauDetails{
         ChampHeureFin.setText("ChampHeureFin");
         jPanel3.add(ChampHeureFin);
 
-        add(jPanel3);
+        getContentPane().add(jPanel3);
 
         jPanel4.setAutoscrolls(true);
         jPanel4.setLayout(new java.awt.GridLayout(1, 0));
@@ -246,8 +246,8 @@ public class PanneauDetailsSimu extends PanneauDetails{
         jPanel4.add(RadioMinutes);
         jPanel4.add(filler11);
 
-        add(jPanel4);
-        add(filler1);
+        getContentPane().add(jPanel4);
+        getContentPane().add(filler1);
 
         jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
@@ -256,7 +256,7 @@ public class PanneauDetailsSimu extends PanneauDetails{
         jLabel5.setToolTipText("");
         jPanel2.add(jLabel5);
 
-        add(jPanel2);
+        getContentPane().add(jPanel2);
 
         jPanel9.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
 
@@ -276,7 +276,7 @@ public class PanneauDetailsSimu extends PanneauDetails{
         jLabel11.setText("Mode");
         jPanel9.add(jLabel11);
 
-        add(jPanel9);
+        getContentPane().add(jPanel9);
 
         jPanel6.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
 
@@ -297,7 +297,7 @@ public class PanneauDetailsSimu extends PanneauDetails{
         ChampDistSegmentMode.setText("5");
         jPanel6.add(ChampDistSegmentMode);
 
-        add(jPanel6);
+        getContentPane().add(jPanel6);
 
         jPanel7.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
 
@@ -318,7 +318,7 @@ public class PanneauDetailsSimu extends PanneauDetails{
         ChampDistVehiculeMode.setText("5");
         jPanel7.add(ChampDistVehiculeMode);
 
-        add(jPanel7);
+        getContentPane().add(jPanel7);
 
         jPanel8.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
 
@@ -339,8 +339,8 @@ public class PanneauDetailsSimu extends PanneauDetails{
         ChampDistPassagerMode.setText("5");
         jPanel8.add(ChampDistPassagerMode);
 
-        add(jPanel8);
-        add(filler3);
+        getContentPane().add(jPanel8);
+        getContentPane().add(filler3);
 
         jPanel5.setLayout(new javax.swing.BoxLayout(jPanel5, javax.swing.BoxLayout.LINE_AXIS));
 
@@ -360,8 +360,8 @@ public class PanneauDetailsSimu extends PanneauDetails{
         });
         jPanel5.add(BoutonRetour);
 
-        add(jPanel5);
-        add(filler10);
+        getContentPane().add(jPanel5);
+        getContentPane().add(filler10);
     }// </editor-fold>//GEN-END:initComponents
 
     private void BoutonSauvegarderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSauvegarderActionPerformed
@@ -369,7 +369,7 @@ public class PanneauDetailsSimu extends PanneauDetails{
     }//GEN-LAST:event_BoutonSauvegarderActionPerformed
 
     private void BoutonRetourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonRetourActionPerformed
-        //((javax.swing.JDialog)this.getParent()).setVisible(false);
+        this.setVisible(false);
     }//GEN-LAST:event_BoutonRetourActionPerformed
 
     private void RadioSecondeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_RadioSecondeItemStateChanged

@@ -158,10 +158,15 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     
     public void afficherParametreSimulation()
     {
-        UI.PanneauxDetails.PanneauDetailsSimu testPanel;
+        /*UI.PanneauxDetails.PanneauDetailsSimu testPanel;
         testPanel = new UI.PanneauxDetails.PanneauDetailsSimu(this.simulateur);
         final javax.swing.JDialog frame = new javax.swing.JDialog(this, "Paramètres Simulation", true);
         frame.getContentPane().add(testPanel);
+        frame.setResizable(false);
+        frame.pack();
+        frame.setLocationRelativeTo(this);
+        frame.setVisible(true);*/
+        UI.PanneauxDetails.PanneauDetailsSimu frame = new UI.PanneauxDetails.PanneauDetailsSimu(this.simulateur);
         frame.setResizable(false);
         frame.pack();
         frame.setLocationRelativeTo(this);
