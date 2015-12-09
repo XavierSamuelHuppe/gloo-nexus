@@ -66,7 +66,6 @@ public class PanneauDetailsProfilPassager extends PanneauDetails implements java
             this.ChampHeureFin.setText(ProfilCaster.getHeureFin().format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE));
             this.activerDesactiverControles(true);
         }
-        
     }
     
     @Override
@@ -314,7 +313,6 @@ public class PanneauDetailsProfilPassager extends PanneauDetails implements java
     }//GEN-LAST:event_RadioHeureFinMouseClicked
 
     private void BoutonSauvegarderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSauvegarderActionPerformed
-
         if(modeCreationBool == true){
             sauvegarderNouveauProfil();
         }

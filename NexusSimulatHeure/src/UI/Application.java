@@ -276,6 +276,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     {
         this.simulateur.annulerCreationCircuit();
         this.simulateur.annulerCreationTrajet();
+        cacherListeCircuitTrajet();
         this.PanneauDetails.removeAll();
         this.repaint();
         this.revalidate();

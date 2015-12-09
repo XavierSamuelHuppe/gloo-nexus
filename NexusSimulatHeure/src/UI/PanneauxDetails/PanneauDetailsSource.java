@@ -95,6 +95,9 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
         ChampCircuit.addActionListener(actionListenerChampCircuit);
         this.ChampCircuit.setSelectedItem(this.circuitActuel);
 
+        this.simulateur.activerCircuit((Metier.Circuit.Circuit)this.ChampCircuit.getSelectedItem());
+        this.simulateur.selectionnerPoint(this.pointMetierLie);
+            
         this.ChampHeureDepart.setText(sourceMetierLie.getheureDebut().format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE));
         if(this.sourceMetierLie.getClass() == SourceFinie.class){
             SourceFinie SourceCaster = (SourceFinie) sourceMetierLie;

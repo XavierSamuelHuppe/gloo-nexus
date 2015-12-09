@@ -314,7 +314,6 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
                 choisirModeParDefautSelonArretOuIntersection();
             }
         }
-        //else if (sim.estEnModePassager() && (sim.estDansTrajetActif(pointMetier) || sim.estDansTrajetEnCreation(pointMetier) || sim.estDansAuMoinsUnTrajet(pointMetier)))
         else if (sim.estEnModePassager())
         {
             if ((sim.estDansTrajetActif(pointMetier) || sim.estDansTrajetEnCreation(pointMetier)))
