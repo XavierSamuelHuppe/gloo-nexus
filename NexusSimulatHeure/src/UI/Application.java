@@ -542,10 +542,11 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         });
         PanneauBarreOutilsBoutons.add(BoutonModeArret);
 
-        BoutonModeIntersection.setText("+");
+        BoutonModeIntersection.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/cross-2x.png"))); // NOI18N
         BoutonModeIntersection.setToolTipText("Édition d'intersections");
         BoutonModeIntersection.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonModeIntersection.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        BoutonModeIntersection.setLabel("");
         BoutonModeIntersection.setMargin(new java.awt.Insets(2, 2, 2, 2));
         BoutonModeIntersection.setMaximumSize(new java.awt.Dimension(24, 24));
         BoutonModeIntersection.setMinimumSize(new java.awt.Dimension(24, 24));
