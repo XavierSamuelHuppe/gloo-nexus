@@ -1,6 +1,6 @@
 package UI.PanneauxDetails;
 
-import java.util.Observable;
+import javax.swing.JOptionPane;
 
 public class PanneauDistribution extends PanneauDetails {
 
@@ -26,22 +26,44 @@ public class PanneauDistribution extends PanneauDetails {
     @Override
     public void rafraichir()
     {
-        this.ChampMaximum.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(distributionCourante.getMax()));
-        this.ChampMinimum.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(distributionCourante.getMin()));
-        this.ChampMode.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(distributionCourante.getMode()));
+        if(this.RadioMinutes.isSelected()){
+            this.ChampMaximum.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(distributionCourante.getMax()/60));
+            this.ChampMinimum.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(distributionCourante.getMin()/60));
+            this.ChampMode.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(distributionCourante.getMode()/60));
+        }else{
+            this.ChampMaximum.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(distributionCourante.getMax()));
+            this.ChampMinimum.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(distributionCourante.getMin()));
+            this.ChampMode.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(distributionCourante.getMode()));
+        }
         this.revalidate();
     }
     
     public double obtenirMin(){
-        return Double.parseDouble(this.ChampMinimum.getText());
+        
+        if(this.RadioMinutes.isSelected()){
+            return Double.parseDouble(this.ChampMinimum.getText()) * 60;
+        }else{
+            return Double.parseDouble(this.ChampMinimum.getText());
+        }
     }
     
     public double obtenirMax(){
-        return Double.parseDouble(this.ChampMaximum.getText());
+        
+        if(this.RadioMinutes.isSelected()){
+            return Double.parseDouble(this.ChampMaximum.getText()) * 60;
+        }else{
+            return Double.parseDouble(this.ChampMaximum.getText());
+        }
+        
     }
     
     public double obtenirMode(){
-        return Double.parseDouble(this.ChampMode.getText());
+        if(this.RadioMinutes.isSelected()){
+            return Double.parseDouble(this.ChampMode.getText()) * 60;
+        }else{
+            return Double.parseDouble(this.ChampMode.getText());
+        }
+        
     }
     
     public String validerValeurs() {       
@@ -92,7 +114,22 @@ public class PanneauDistribution extends PanneauDetails {
         
         return retour;
     }
-    
+    private void Changertemps(String mode){
+        if(mode.equals("MINUTES"))
+        {
+            this.ChampMaximum.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(Double.parseDouble(this.ChampMaximum.getText()) / 60));
+            this.ChampMinimum.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(Double.parseDouble(this.ChampMinimum.getText()) / 60));
+            this.ChampMode.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(Double.parseDouble(this.ChampMode.getText()) / 60));
+            
+        }else if(mode.equals("SECONDES")){
+            this.ChampMaximum.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(Double.parseDouble(this.ChampMaximum.getText()) * 60));
+            this.ChampMinimum.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(Double.parseDouble(this.ChampMinimum.getText()) * 60));
+            this.ChampMode.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(Double.parseDouble(this.ChampMode.getText()) * 60));
+        }
+        
+        
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -102,6 +139,7 @@ public class PanneauDistribution extends PanneauDetails {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        TempsRadioGroup = new javax.swing.ButtonGroup();
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5));
@@ -115,6 +153,9 @@ public class PanneauDistribution extends PanneauDetails {
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         ChampMaximum = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        RadioSeconde = new javax.swing.JRadioButton();
+        RadioMinutes = new javax.swing.JRadioButton();
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
@@ -162,18 +203,56 @@ public class PanneauDistribution extends PanneauDetails {
         jPanel3.add(ChampMaximum, java.awt.BorderLayout.CENTER);
 
         add(jPanel3);
+
+        TempsRadioGroup.add(RadioSeconde);
+        RadioSeconde.setSelected(true);
+        RadioSeconde.setText("Secondes");
+        RadioSeconde.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                RadioSecondeItemStateChanged(evt);
+            }
+        });
+        jPanel1.add(RadioSeconde);
+
+        TempsRadioGroup.add(RadioMinutes);
+        RadioMinutes.setText("Minutes");
+        RadioMinutes.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                RadioMinutesItemStateChanged(evt);
+            }
+        });
+        jPanel1.add(RadioMinutes);
+
+        add(jPanel1);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void RadioSecondeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_RadioSecondeItemStateChanged
+        if(this.RadioSeconde.isSelected()){
+            Changertemps("SECONDES");
+        }
+
+    }//GEN-LAST:event_RadioSecondeItemStateChanged
+
+    private void RadioMinutesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_RadioMinutesItemStateChanged
+        if(this.RadioMinutes.isSelected()){
+            Changertemps("MINUTES");
+        }
+    }//GEN-LAST:event_RadioMinutesItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ChampMaximum;
     private javax.swing.JTextField ChampMinimum;
     private javax.swing.JTextField ChampMode;
+    private javax.swing.JRadioButton RadioMinutes;
+    private javax.swing.JRadioButton RadioSeconde;
+    private javax.swing.ButtonGroup TempsRadioGroup;
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
