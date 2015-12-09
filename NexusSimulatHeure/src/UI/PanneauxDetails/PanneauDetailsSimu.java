@@ -30,17 +30,104 @@ public class PanneauDetailsSimu extends PanneauDetails{
         this.ChampHeureDebut.setText(paramSimulation.getHeureDebut().toString());
         this.ChampHeureFin.setText(paramSimulation.getHeureFin().toString());
         
-        this.ChampDistSegmentMin.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsTransitSegmentDefaut().getMin()));
-        this.ChampDistSegmentMax.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsTransitSegmentDefaut().getMax()));
-        this.ChampDistSegmentMode.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsTransitSegmentDefaut().getMode()));
+        if(this.RadioMinutes.isSelected())
+        {
+            this.ChampDistSegmentMin.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsTransitSegmentDefaut().getMin()/60));
+            this.ChampDistSegmentMax.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsTransitSegmentDefaut().getMax()/60));
+            this.ChampDistSegmentMode.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsTransitSegmentDefaut().getMode()/60));
+
+            this.ChampDistVehiculeMin.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsGenerationVehiculeDefaut().getMin()/60));
+            this.ChampDistVehiculeMax.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsGenerationVehiculeDefaut().getMax()/60));
+            this.ChampDistVehiculeMode.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsGenerationVehiculeDefaut().getMode()/60));
+
+            this.ChampDistPassagerMin.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsGenerationPassagerDefaut().getMin()/60));
+            this.ChampDistPassagerMax.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsGenerationPassagerDefaut().getMax()/60));
+            this.ChampDistPassagerMode.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsGenerationPassagerDefaut().getMode()/60));
+            
+        }else{
+            this.ChampDistSegmentMin.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsTransitSegmentDefaut().getMin()));
+            this.ChampDistSegmentMax.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsTransitSegmentDefaut().getMax()));
+            this.ChampDistSegmentMode.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsTransitSegmentDefaut().getMode()));
         
-        this.ChampDistVehiculeMin.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsGenerationVehiculeDefaut().getMin()));
-        this.ChampDistVehiculeMax.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsGenerationVehiculeDefaut().getMax()));
-        this.ChampDistVehiculeMode.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsGenerationVehiculeDefaut().getMode()));
+            this.ChampDistVehiculeMin.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsGenerationVehiculeDefaut().getMin()));
+            this.ChampDistVehiculeMax.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsGenerationVehiculeDefaut().getMax()));
+            this.ChampDistVehiculeMode.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsGenerationVehiculeDefaut().getMode()));
         
-        this.ChampDistPassagerMin.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsGenerationPassagerDefaut().getMin()));
-        this.ChampDistPassagerMax.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsGenerationPassagerDefaut().getMax()));
-        this.ChampDistPassagerMode.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsGenerationPassagerDefaut().getMode()));
+            this.ChampDistPassagerMin.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsGenerationPassagerDefaut().getMin()));
+            this.ChampDistPassagerMax.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsGenerationPassagerDefaut().getMax()));
+            this.ChampDistPassagerMode.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(paramSimulation.getDistributionTempsGenerationPassagerDefaut().getMode()));
+        }
+        
+        
+    }
+    
+    private void changerTemps(String mode){
+        if(mode.equals("MINUTES"))
+        {
+            this.ChampDistPassagerMin.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(Double.parseDouble(this.ChampDistPassagerMin.getText()) / 60));
+            this.ChampDistPassagerMax.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(Double.parseDouble(this.ChampDistPassagerMax.getText()) / 60));
+            this.ChampDistPassagerMode.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(Double.parseDouble(this.ChampDistPassagerMode.getText()) / 60));
+            
+            this.ChampDistVehiculeMin.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(Double.parseDouble(this.ChampDistVehiculeMin.getText()) / 60));
+            this.ChampDistVehiculeMax.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(Double.parseDouble(this.ChampDistVehiculeMax.getText()) / 60));
+            this.ChampDistVehiculeMode.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(Double.parseDouble(this.ChampDistVehiculeMode.getText()) / 60));
+            
+            this.ChampDistSegmentMin.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(Double.parseDouble(this.ChampDistSegmentMin.getText()) / 60));
+            this.ChampDistSegmentMax.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(Double.parseDouble(this.ChampDistSegmentMax.getText()) / 60));
+            this.ChampDistSegmentMode.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(Double.parseDouble(this.ChampDistSegmentMode.getText()) / 60));
+            
+            
+        }else if(mode.equals("SECONDES")){
+            this.ChampDistPassagerMin.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(Double.parseDouble(this.ChampDistPassagerMin.getText()) * 60));
+            this.ChampDistPassagerMax.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(Double.parseDouble(this.ChampDistPassagerMax.getText()) * 60));
+            this.ChampDistPassagerMode.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(Double.parseDouble(this.ChampDistPassagerMode.getText()) * 60));
+            
+            this.ChampDistVehiculeMin.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(Double.parseDouble(this.ChampDistVehiculeMin.getText()) * 60));
+            this.ChampDistVehiculeMax.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(Double.parseDouble(this.ChampDistVehiculeMax.getText()) * 60));
+            this.ChampDistVehiculeMode.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(Double.parseDouble(this.ChampDistVehiculeMode.getText()) * 60));
+            
+            this.ChampDistSegmentMin.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(Double.parseDouble(this.ChampDistSegmentMin.getText()) * 60));
+            this.ChampDistSegmentMax.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(Double.parseDouble(this.ChampDistSegmentMax.getText()) * 60));
+            this.ChampDistSegmentMode.setText(UI.Constantes.Formats.formatterDoubleSansDecimal(Double.parseDouble(this.ChampDistSegmentMode.getText()) * 60));
+            
+        }
+        
+        
+        
+    }
+    
+    private void sauvegarder(){
+        simulateur.modifierNombreJourSimulation((int)this.ChampNbJours.getValue());
+        simulateur.modifierHeureDebut(LocalTime.parse(this.ChampHeureDebut.getText(), DateTimeFormatter.ISO_LOCAL_TIME));
+        simulateur.modifierHeureFin(LocalTime.parse(this.ChampHeureFin.getText(), DateTimeFormatter.ISO_LOCAL_TIME));
+        if(this.RadioMinutes.isSelected()){
+            simulateur.modifierDistributionTempsTransitSegment(
+                                        Double.parseDouble(this.ChampDistSegmentMin.getText())*60,
+                                        Double.parseDouble(this.ChampDistSegmentMode.getText())*60,
+                                        Double.parseDouble(this.ChampDistSegmentMax.getText())*60);
+            simulateur.modifierDistributionTempsGenerationVehicule(
+                                        Double.parseDouble(this.ChampDistVehiculeMin.getText())*60,
+                                        Double.parseDouble(this.ChampDistVehiculeMode.getText())*60,
+                                        Double.parseDouble(this.ChampDistVehiculeMax.getText())*60);
+            simulateur.modifierDistributionTempsGenerationPassager(
+                                        Double.parseDouble(this.ChampDistPassagerMin.getText())*60,
+                                        Double.parseDouble(this.ChampDistPassagerMode.getText())*60,
+                                        Double.parseDouble(this.ChampDistPassagerMax.getText())*60);
+        }else {
+            simulateur.modifierDistributionTempsTransitSegment(
+                                        Double.parseDouble(this.ChampDistSegmentMin.getText()),
+                                        Double.parseDouble(this.ChampDistSegmentMode.getText()),
+                                        Double.parseDouble(this.ChampDistSegmentMax.getText()));
+            simulateur.modifierDistributionTempsGenerationVehicule(
+                                        Double.parseDouble(this.ChampDistVehiculeMin.getText()),
+                                        Double.parseDouble(this.ChampDistVehiculeMode.getText()),
+                                        Double.parseDouble(this.ChampDistVehiculeMax.getText()));
+            simulateur.modifierDistributionTempsGenerationPassager(
+                                        Double.parseDouble(this.ChampDistPassagerMin.getText()),
+                                        Double.parseDouble(this.ChampDistPassagerMode.getText()),
+                                        Double.parseDouble(this.ChampDistPassagerMax.getText()));
+        }
+        
     }
     
     /**
@@ -52,6 +139,7 @@ public class PanneauDetailsSimu extends PanneauDetails{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         ChampNbJours = new javax.swing.JSpinner();
@@ -61,13 +149,13 @@ public class PanneauDetailsSimu extends PanneauDetails{
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         ChampHeureDebut = new javax.swing.JTextField();
-        filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
-        filler8 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
-        jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         ChampHeureFin = new javax.swing.JTextField();
-        filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
-        filler9 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
+        jPanel4 = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        RadioSeconde = new javax.swing.JRadioButton();
+        RadioMinutes = new javax.swing.JRadioButton();
+        filler11 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5));
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -103,7 +191,7 @@ public class PanneauDetailsSimu extends PanneauDetails{
         setRequestFocusEnabled(false);
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
-        jPanel1.setLayout(new java.awt.GridLayout());
+        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel1.setText("Nb Jours");
         jPanel1.add(jLabel1);
@@ -116,33 +204,52 @@ public class PanneauDetailsSimu extends PanneauDetails{
         add(jPanel1);
         add(filler2);
 
-        jPanel3.setLayout(new java.awt.GridLayout());
+        jPanel3.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel3.setText("Heure Début");
         jPanel3.add(jLabel3);
 
         ChampHeureDebut.setText("ChampHeureDebut");
         jPanel3.add(ChampHeureDebut);
-        jPanel3.add(filler5);
-        jPanel3.add(filler8);
+
+        jLabel4.setText("Heure Fin");
+        jPanel3.add(jLabel4);
+
+        ChampHeureFin.setText("ChampHeureFin");
+        jPanel3.add(ChampHeureFin);
 
         add(jPanel3);
 
         jPanel4.setAutoscrolls(true);
-        jPanel4.setLayout(new java.awt.GridLayout());
+        jPanel4.setLayout(new java.awt.GridLayout(1, 0));
 
-        jLabel4.setText("Heure Fin");
-        jPanel4.add(jLabel4);
+        jLabel12.setText("Temps:");
+        jPanel4.add(jLabel12);
 
-        ChampHeureFin.setText("ChampHeureFin");
-        jPanel4.add(ChampHeureFin);
-        jPanel4.add(filler6);
-        jPanel4.add(filler9);
+        buttonGroup1.add(RadioSeconde);
+        RadioSeconde.setSelected(true);
+        RadioSeconde.setText("Secondes");
+        RadioSeconde.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                RadioSecondeItemStateChanged(evt);
+            }
+        });
+        jPanel4.add(RadioSeconde);
+
+        buttonGroup1.add(RadioMinutes);
+        RadioMinutes.setText("Minutes");
+        RadioMinutes.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                RadioMinutesItemStateChanged(evt);
+            }
+        });
+        jPanel4.add(RadioMinutes);
+        jPanel4.add(filler11);
 
         add(jPanel4);
         add(filler1);
 
-        jPanel2.setLayout(new java.awt.GridLayout());
+        jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Distributions par défaut");
@@ -258,27 +365,24 @@ public class PanneauDetailsSimu extends PanneauDetails{
     }// </editor-fold>//GEN-END:initComponents
 
     private void BoutonSauvegarderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSauvegarderActionPerformed
-        simulateur.modifierNombreJourSimulation((int)this.ChampNbJours.getValue());
-        simulateur.modifierHeureDebut(LocalTime.parse(this.ChampHeureDebut.getText(), DateTimeFormatter.ISO_LOCAL_TIME));
-        simulateur.modifierHeureFin(LocalTime.parse(this.ChampHeureFin.getText(), DateTimeFormatter.ISO_LOCAL_TIME));
-        
-        simulateur.modifierDistributionTempsTransitSegment(
-                                        Double.parseDouble(this.ChampDistSegmentMin.getText()),
-                                        Double.parseDouble(this.ChampDistSegmentMode.getText()),
-                                        Double.parseDouble(this.ChampDistSegmentMax.getText()));
-        simulateur.modifierDistributionTempsGenerationVehicule(
-                                        Double.parseDouble(this.ChampDistVehiculeMin.getText()),
-                                        Double.parseDouble(this.ChampDistVehiculeMode.getText()),
-                                        Double.parseDouble(this.ChampDistVehiculeMax.getText()));
-        simulateur.modifierDistributionTempsGenerationPassager(
-                                        Double.parseDouble(this.ChampDistPassagerMin.getText()),
-                                        Double.parseDouble(this.ChampDistPassagerMode.getText()),
-                                        Double.parseDouble(this.ChampDistPassagerMax.getText()));
+        sauvegarder();
     }//GEN-LAST:event_BoutonSauvegarderActionPerformed
 
     private void BoutonRetourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonRetourActionPerformed
         //((javax.swing.JDialog)this.getParent()).setVisible(false);
     }//GEN-LAST:event_BoutonRetourActionPerformed
+
+    private void RadioSecondeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_RadioSecondeItemStateChanged
+        if(this.RadioSeconde.isSelected()){
+            changerTemps("SECONDES");
+        }
+    }//GEN-LAST:event_RadioSecondeItemStateChanged
+
+    private void RadioMinutesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_RadioMinutesItemStateChanged
+        if(this.RadioMinutes.isSelected()){
+            changerTemps("MINUTES");
+        }
+    }//GEN-LAST:event_RadioMinutesItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -296,19 +400,20 @@ public class PanneauDetailsSimu extends PanneauDetails{
     private javax.swing.JTextField ChampHeureDebut;
     private javax.swing.JTextField ChampHeureFin;
     private javax.swing.JSpinner ChampNbJours;
+    private javax.swing.JRadioButton RadioMinutes;
+    private javax.swing.JRadioButton RadioSeconde;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler10;
+    private javax.swing.Box.Filler filler11;
     private javax.swing.Box.Filler filler2;
     private javax.swing.Box.Filler filler3;
     private javax.swing.Box.Filler filler4;
-    private javax.swing.Box.Filler filler5;
-    private javax.swing.Box.Filler filler6;
     private javax.swing.Box.Filler filler7;
-    private javax.swing.Box.Filler filler8;
-    private javax.swing.Box.Filler filler9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
