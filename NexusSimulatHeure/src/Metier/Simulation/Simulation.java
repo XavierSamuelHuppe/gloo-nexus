@@ -112,11 +112,9 @@ public class Simulation extends Observable implements Serializable{
         carte.initialiserDepartSimulation();
         for(Source s: sources){
             s.reInitialiserValeursDepartSimulation();
-            //s.setheureDebut(parametres.getHeureDebut());
             s.pigerDonneesDepartNouvelleJournee();
         }
         for(ProfilPassager pp: profils){
-            //pp.setHeureDepart(parametres.getHeureDebut());
             pp.pigerDonneesDepartNouvelleJournee();
         }
     }
@@ -416,4 +414,108 @@ public class Simulation extends Observable implements Serializable{
         return carte;
     }
     
+    
+    
+    
+    
+    
+    public void executerInstantanement()
+    {
+        JourneeCourante = 1;
+        while(JourneeCourante <= this.parametres.getNombreJourSimulation())
+        {
+            initialiserDepartNouvelleJournee();
+            
+            JourneeCourante = 1;
+            
+            Map<Point, Map<Circuit, Set<LocalTime>>> tout = genererTout();
+
+            debugTout(tout);
+                    
+            Map<Passager, LocalTime> passagers = genererTousPassagers();
+            debugPassagers(passagers);
+            for(Passager passagerCourant : passagers.keySet())
+            {
+                //Quelque chose de cool.
+            }
+            
+            JourneeCourante += 1;
+        }
+    }
+    
+    private Map<Vehicule, LocalTime> genererTousVehicules()
+    {
+        Map<Vehicule, LocalTime> vehicules = new HashMap<Vehicule, LocalTime>();
+        for(Source s : sources)
+        {
+            vehicules.putAll(s.genererTousVehiculesAvecMoment());
+        }
+        return vehicules;
+    }
+    
+    private Map<Point, Map<Circuit, Set<LocalTime>>> genererTout()
+    {
+        Map<Vehicule, LocalTime> vehicules = genererTousVehicules();
+        //vehicules.forEach((v,t) -> System.out.println(v.toString() + " " + t.toString()));
+
+        Map<Point, Map<Circuit, Set<LocalTime>>> tout = new HashMap<Point, Map<Circuit, Set<LocalTime>>>();
+
+        for(Vehicule v : vehicules.keySet())
+        {
+            Map<Point, LocalTime> passages = v.obtenirPointsEtHeuresDePassage(vehicules.get(v));
+            for(Point p : passages.keySet())
+            {
+                if(!tout.containsKey(p))
+                {
+                    tout.put(p, new HashMap<Circuit, Set<LocalTime>>());
+                }
+
+                if(!tout.get(p).containsKey(v.getCircuit()))
+                {
+                    tout.get(p).put(v.getCircuit(), new HashSet<LocalTime>());
+                }
+
+                tout.get(p).get(v.getCircuit()).add(passages.get(p));
+            }
+        }
+        
+        return tout;
+    }
+    
+    private void debugTout(Map<Point, Map<Circuit, Set<LocalTime>>> tout)
+    {
+        for(Point p : tout.keySet())
+        {
+            System.out.println(p.toString());
+            for(Circuit c : tout.get(p).keySet())
+            {
+                System.out.println("\t" + c.toString());
+                LinkedList<LocalTime> temps = new LinkedList<LocalTime>(tout.get(p).get(c));
+                Collections.sort(temps);
+                for(LocalTime lt : temps)
+                {
+                    System.out.println("\t\t" + lt.toString());
+                }
+            }
+        }
+    }
+    
+    private void debugPassagers(Map<Passager, LocalTime> passagers)
+    {
+        
+        for(Passager passagerCourant : passagers.keySet())
+        {
+            System.out.println(passagers.get(passagerCourant).toString() + " : " + passagerCourant.toString());
+        }
+    }
+    
+    private Map<Passager, LocalTime> genererTousPassagers()
+    {
+        Map<Passager, LocalTime> passagers = new HashMap<Passager, LocalTime>();
+        for(ProfilPassager pp : profils)
+        {
+            passagers.putAll(pp.genererTousPassagersAvecMoment());
+        }
+        return passagers;
+    }
 }

@@ -5,6 +5,7 @@ import Metier.Carte.*;
 import Metier.Exceptions.FinDeCircuitException;
 import Metier.Profil.Passager;
 import java.io.Serializable;
+import java.time.LocalTime;
 import java.util.*;
 
 public class Vehicule extends Observable implements Serializable{
@@ -88,5 +89,26 @@ public class Vehicule extends Observable implements Serializable{
     private double calculerDeltaY(Position posDepart, Position posArrivee)
     {
         return posArrivee.getY() - posDepart.getY();
+    }
+    
+    public Map<Point, LocalTime> obtenirPointsEtHeuresDePassage(LocalTime heureDepart)
+    {
+        Map<Point, LocalTime> passages = new HashMap<Point, LocalTime>();
+        LocalTime heureActuelle = heureDepart;
+        
+        passages.put(this.segmentActuel.getPointDepart(), heureActuelle);       
+
+        while(true)
+        {
+            try{
+                heureActuelle = heureActuelle.plusSeconds((long)segmentActuel.getTempsTransit());
+                passages.put(this.segmentActuel.getPointArrivee(), heureActuelle);
+                this.segmentActuel = circuitActuel.obtenirProchainSegment(segmentActuel);
+            }catch(FinDeCircuitException e){
+                break;
+            }
+        }
+        
+        return passages;
     }
 }

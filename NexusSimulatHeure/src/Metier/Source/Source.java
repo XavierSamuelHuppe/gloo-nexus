@@ -103,6 +103,8 @@ public abstract class Source implements Serializable{
     
     public abstract String obtenirDescriptionSource();
     
+    public abstract Map<Vehicule, LocalTime> genererTousVehiculesAvecMoment();
+    
     @Override
     public String toString()
     {

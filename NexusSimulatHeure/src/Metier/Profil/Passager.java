@@ -49,4 +49,10 @@ public class Passager implements Serializable{
     {
         this.profilPassager.comptabiliserTempsAttente(tempsAttente);
     }
+    
+    @Override
+    public String toString()
+    {
+        return this.trajet.obtenirPointDepart().toString() + " à " + this.trajet.obtenirPointArrivee().toString();
+    }
 }

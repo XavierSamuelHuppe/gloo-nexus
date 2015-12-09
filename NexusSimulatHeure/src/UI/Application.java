@@ -746,13 +746,21 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     }//GEN-LAST:event_BoutonNouveauActionPerformed
 
     private void BoutonDemarrerPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonDemarrerPauseActionPerformed
-        if(this.simulateur.simulationEstEnAction()) {
-            this.simulateur.pauser();
+        
+        if(false)
+        {
+            this.simulateur.executerSimulationInstantanement();
         }
-        else {
-            this.simulateur.demarerRedemarer();
+        else
+        {
+            if(this.simulateur.simulationEstEnAction()) {
+                this.simulateur.pauser();
+            }
+            else {
+                this.simulateur.demarerRedemarer();
+            }
+            rafraichirIconeBoutonDemarrerPause();
         }
-        rafraichirIconeBoutonDemarrerPause();
     }//GEN-LAST:event_BoutonDemarrerPauseActionPerformed
 
     private void BoutonArreterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonArreterActionPerformed
@@ -829,9 +837,8 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
             JOptionPane.showMessageDialog(this, "Vous devez choisir un arrêt figurant dans un circuit.", "Création invalide d'un trajet.", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        System.out.println("remove");
+
         ListeCircuitTrajet.removeActionListener(actionListenerListeCircuitTrajet);
-        System.out.println("remplirListeCircuitTrajet");
         
         Metier.Circuit.Circuit circuitCourant = (Metier.Circuit.Circuit)ListeCircuitTrajet.getSelectedItem();
 
@@ -843,7 +850,6 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         
         ListeCircuitTrajet.setSelectedItem(circuitCourant);
         
-        System.out.println("add");
         ListeCircuitTrajet.addActionListener(actionListenerListeCircuitTrajet);
         
         if(!PanneauBarreOutilsChoixCircuitTrajet.isVisible())

@@ -34,11 +34,11 @@ public class Simulateur {
            out.writeObject(simulation);
            out.close();
            fileOut.close();
-           System.out.printf("Simulation enregistré sous sauvegarde.ser");
+           System.out.println("Simulation enregistré sous sauvegarde.ser");
            return true;
         }catch(IOException i){
             i.printStackTrace();
-            System.out.printf("ERREUR - la serialisation a explosé!");
+            System.out.println("ERREUR - la serialisation a explosé!");
             return false;
         }
     }
@@ -511,10 +511,9 @@ public class Simulateur {
             return false;
         }
     }
-//    public boolean estDansAuMoinsUnTrajet(Point point){
-//        return simulation.trajetsPassantPar(point).size() > 0;
-//    }
-//    public boolean estDansAuMoinsUnTrajet(Segment segment){
-//        return simulation.trajetsPassantPar(segment).size() > 0;
-//    }
+    
+    public void executerSimulationInstantanement()
+    {
+        this.simulation.executerInstantanement();
+    }
 }

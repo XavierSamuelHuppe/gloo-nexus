@@ -5,6 +5,8 @@ import Metier.Distribution;
 import Metier.Simulation.Simulation;
 import Metier.Simulation.Statistiques;
 import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProfilPassagerFini extends ProfilPassager{
     
@@ -49,4 +51,18 @@ public class ProfilPassagerFini extends ProfilPassager{
         return ((Integer)nombreMax).toString() + " p., à partir de " + heureDebut.format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE);
     }
     
+    @Override
+    public Map<Passager, LocalTime> genererTousPassagersAvecMoment()
+    {
+        Map<Passager, LocalTime> vehicules = new HashMap<Passager, LocalTime>();
+        prochaineGeneration = this.heureDebut;
+        nombreCree = 0;
+        while(nombreCree < nombreMax)
+        {
+            vehicules.put(genererPassager(), prochaineGeneration);
+            nombreCree += 1;
+            prochaineGeneration = heureDebut.plusSeconds((long)(getFrequence() * (double)nombreCree));
+        }
+        return vehicules;
+    }
 }

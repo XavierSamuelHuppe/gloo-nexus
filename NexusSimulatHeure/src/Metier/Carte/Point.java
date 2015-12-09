@@ -144,4 +144,14 @@ public class Point extends Observable implements Serializable{
         Point autrePoint = (Point)o;
         return position.equals(autrePoint.getPosition());
     }
+    
+    @Override
+    public String toString()
+    {
+        if(nom != null && !nom.isEmpty())
+        {
+            return "Point \"" + nom + "\"";
+        }
+        return super.toString();
+    }
 }

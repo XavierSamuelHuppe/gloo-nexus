@@ -1,12 +1,15 @@
 package Metier.Profil;
 
 import Metier.Carte.Point;
+import Metier.Circuit.Vehicule;
 import Metier.Distribution;
 import Metier.Simulation.ParametreSimulation;
 import Metier.Simulation.Simulation;
 import Metier.Simulation.Statistiques;
 import java.time.DateTimeException;
 import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProfilPassagerHeureFin extends ProfilPassager {
     
@@ -31,7 +34,7 @@ public class ProfilPassagerHeureFin extends ProfilPassager {
 
     @Override
     public void avancerGeneration(LocalTime heureCourante, double tempsEcouleParRatioEnSeconde) {
-        if(!doitSpawnerVehicule(heureCourante))
+        if(!doitSpawnerPassager(heureCourante))
             return;
         
         if(prochaineGeneration.isBefore(heureCourante)){
@@ -40,7 +43,7 @@ public class ProfilPassagerHeureFin extends ProfilPassager {
         }
     }
     
-    private boolean doitSpawnerVehicule(LocalTime heureCourante){
+    private boolean doitSpawnerPassager(LocalTime heureCourante){
         LocalTime heureDebutNouvelleJournee = ParametreSimulation.HEURE_DEBUT_NOUVELLE_JOURNEE;
         LocalTime minuit = LocalTime.MIDNIGHT;
         LocalTime justeAvantMinuit = LocalTime.MAX;
@@ -59,5 +62,21 @@ public class ProfilPassagerHeureFin extends ProfilPassager {
     protected void reInitialiserValeursDepartSimulation() {
         prochaineGeneration = heureDebut;
         statistiques = new Statistiques();
+    }
+    
+    
+    @Override
+    public Map<Passager, LocalTime> genererTousPassagersAvecMoment()
+    {
+        Map<Passager, LocalTime> vehicules = new HashMap<Passager, LocalTime>();
+        prochaineGeneration = this.heureDebut;
+        int nombreCree = 0;
+        while(doitSpawnerPassager(prochaineGeneration))
+        {
+            vehicules.put(genererPassager(), prochaineGeneration);
+            nombreCree += 1;
+            prochaineGeneration = heureDebut.plusSeconds((long)(getFrequence() * (double)nombreCree));
+        }
+        return vehicules;
     }
 }

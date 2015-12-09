@@ -9,6 +9,7 @@ import Metier.Simulation.Simulation;
 import Metier.Simulation.Statistiques;
 import java.io.Serializable;
 import java.time.LocalTime;
+import java.util.Map;
 
 public abstract class ProfilPassager implements Serializable{
     private Trajet trajet;
@@ -92,4 +93,7 @@ public abstract class ProfilPassager implements Serializable{
     {
         return this.obtenirDescriptionProfil();
     }
+    
+    public abstract Map<Passager, LocalTime> genererTousPassagersAvecMoment();
+    
 }

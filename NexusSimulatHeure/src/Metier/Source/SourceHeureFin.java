@@ -5,10 +5,13 @@ import Metier.Carte.Point;
 import Metier.Circuit.Circuit;
 import Metier.Distribution;
 import Metier.Circuit.ConteneurPassagers;
+import Metier.Circuit.Vehicule;
 import Metier.Simulation.ParametreSimulation;
 import Metier.Simulation.Simulation;
 import java.time.DateTimeException;
 import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SourceHeureFin extends Source {
     private LocalTime heureFin;
@@ -67,5 +70,20 @@ public class SourceHeureFin extends Source {
     @Override
     public String obtenirDescriptionSource() {
         return this.getCircuit().getNom() + " : " + heureDebut.format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE) + " à " + heureFin.format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE);
+    }
+    
+        @Override
+    public Map<Vehicule, LocalTime> genererTousVehiculesAvecMoment()
+    {
+        Map<Vehicule, LocalTime> vehicules = new HashMap<Vehicule, LocalTime>();
+        prochaineGeneration = this.heureDebut;
+        nombreCree = 0;
+        while(doitSpawnerVehicule(prochaineGeneration))
+        {
+            vehicules.put(genererVehicule(), prochaineGeneration);
+            nombreCree += 1;
+            prochaineGeneration = heureDebut.plusSeconds((long)(getFrequence() * (double)nombreCree));
+        }
+        return vehicules;
     }
 }
