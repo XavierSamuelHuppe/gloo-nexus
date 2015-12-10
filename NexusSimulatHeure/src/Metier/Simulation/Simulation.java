@@ -131,8 +131,9 @@ public class Simulation extends Observable implements Serializable{
         heureCourante = heureCourante.plusNanos(tempsEcouleParRatioEnNanos);
         
         faireAvancerToutLesVehicules(tempsEcouleParRatioEnSeconde);
-        faireAvancerCreationVehicule(heureCourante, tempsEcouleParRatioEnSeconde);
         faireAvancerGenerationPassagers(heureCourante, tempsEcouleParRatioEnSeconde);
+        faireAvancerCreationVehicule(heureCourante, tempsEcouleParRatioEnSeconde);
+        
         
         mettreAJourPassagersADesPoints(tempsEcouleParRatioEnSeconde);
         
@@ -212,12 +213,12 @@ public class Simulation extends Observable implements Serializable{
                 }
             }*/
             for(Passager px : p.getPassagersArrives()){
-                px.comptabiliserTempsAttenteDansProfilPassager();
+                px.comptabiliserPassagerDansStatistiquesProfilPassager(heureCourante);
             }
             p.viderPassagersArrives();
-            for(Passager px : p.obtenirPassagersEnAttente()){
-                px.incrementerTempsAttente(tempsEcouleParRatioEnSeconde);
-            }
+//            for(Passager px : p.obtenirPassagersEnAttente()){
+//                px.incrementerTempsVie(tempsEcouleParRatioEnSeconde);
+//            }
         }   
     }
     
@@ -438,6 +439,7 @@ public class Simulation extends Observable implements Serializable{
             for(Passager passagerCourant : passagers.keySet())
             {
                 LocalTime heureCourante = passagers.get(passagerCourant);
+                
                 int etape = 0;
                 Trajet trajetCourant = passagerCourant.getTrajet();
                 
@@ -453,7 +455,6 @@ public class Simulation extends Observable implements Serializable{
                             LocalTime heurePassage = obtenirProchaineHeurePassage(heureCourante, circuitsParPoint.get(etapeCourante.getCircuit()));
                             if(heurePassage != null)
                             {
-                                passagerCourant.incrementerTempsAttente(ChronoUnit.SECONDS.between(heureCourante, heurePassage));
                                 heureCourante = heurePassage;
 
                                 heureCourante = heureCourante.plusSeconds((long)etapeCourante.getCircuit().obtenirTempsTransitTotalSousCircuitEnSecondes(etapeCourante.getPointMontee(), etapeCourante.getPointDescente()));
@@ -469,7 +470,7 @@ public class Simulation extends Observable implements Serializable{
                 
                 if(passagerRenduADestination)
                 {
-                    passagerCourant.comptabiliserTempsAttenteDansProfilPassager();
+                    passagerCourant.comptabiliserPassagerDansStatistiquesProfilPassager(heureCourante);
                 }
             }
             

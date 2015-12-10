@@ -38,7 +38,7 @@ public class ProfilPassagerHeureFin extends ProfilPassager {
             return;
         
         if(prochaineGeneration.isBefore(heureCourante)){
-            genererPassager();
+            genererPassager(prochaineGeneration);
             prochaineGeneration = prochaineGeneration.plusSeconds((long)/*(*/getFrequence()/* * (double)nombreCree)*/);
         }
     }
@@ -73,7 +73,7 @@ public class ProfilPassagerHeureFin extends ProfilPassager {
         int nombreCree = 0;
         while(doitSpawnerPassager(prochaineGeneration))
         {
-            vehicules.put(genererPassager(), prochaineGeneration);
+            vehicules.put(genererPassager(prochaineGeneration), prochaineGeneration);
             nombreCree += 1;
             prochaineGeneration = heureDebut.plusSeconds((long)(getFrequence() * (double)nombreCree));
         }

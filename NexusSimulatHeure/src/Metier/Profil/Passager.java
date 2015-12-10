@@ -4,20 +4,23 @@ import Metier.Carte.ElementTrajet;
 import Metier.Carte.Point;
 import Metier.Circuit.Circuit;
 import java.io.Serializable;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 
 public class Passager implements Serializable{
     private ProfilPassager profilPassager;
     private Trajet trajet;
     private int etapeActuelle; // Vu que le trajet est un array..
     private Point pointActuel;
-    private double tempsAttente; // Pour stats plus tard
+    private double tempsVie = 0.0; // Pour stats plus tard
+    private LocalTime heureCreation;
     
-    
-    public Passager(ProfilPassager profilPassagerGenerateur, Trajet trajet, Point pointDepart){
+    public Passager(ProfilPassager profilPassagerGenerateur, Trajet trajet, Point pointDepart, LocalTime momentCreation){
         this.profilPassager = profilPassagerGenerateur;
         this.trajet = trajet;
         this.etapeActuelle = 0;
         this.pointActuel = pointDepart;
+        this.heureCreation = momentCreation;
     }
     
     // On pourrait donc faire le changement d'étape séprarément appelé par le 
@@ -40,14 +43,9 @@ public class Passager implements Serializable{
         return trajet.obtenirPointArrivee().equals(p);
     }
 
-    public void incrementerTempsAttente(double tempsEcouleParRatioEnSeconde)
+    public void comptabiliserPassagerDansStatistiquesProfilPassager(LocalTime heureDestination)
     {
-        this.tempsAttente += tempsEcouleParRatioEnSeconde;
-    }
-   
-    public void comptabiliserTempsAttenteDansProfilPassager()
-    {
-        this.profilPassager.comptabiliserTempsAttente(tempsAttente);
+        this.profilPassager.comptabiliserPassager(ChronoUnit.SECONDS.between(heureCreation, heureDestination));
     }
     
     public Trajet getTrajet()

@@ -64,8 +64,8 @@ public abstract class ProfilPassager implements Serializable{
         reInitialiserValeursDepartSimulation();
     }
     
-    public Passager genererPassager(){
-        Passager nouveauPassager = new Passager(this, trajet, pointDepart);
+    public Passager genererPassager(LocalTime heureCreation){
+        Passager nouveauPassager = new Passager(this, trajet, pointDepart, heureCreation);
         pointDepart.faireArriverNouveauPassager(nouveauPassager);
         return nouveauPassager;
     }
@@ -74,9 +74,9 @@ public abstract class ProfilPassager implements Serializable{
         frequence = 0;
     }
     
-    public void comptabiliserTempsAttente(double tempsAttente)
+    public void comptabiliserPassager(double temps)
     {
-        statistiques.ajouterDonnee(tempsAttente);
+        statistiques.ajouterDonnee(temps);
     }
     
     public Statistiques getStatistiques()
