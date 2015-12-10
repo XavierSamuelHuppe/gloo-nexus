@@ -38,10 +38,10 @@ public class SourceFinie extends Source {
         if(nombreCree == nombreMax)
             return;
         
-        if(prochaineGeneration.isBefore(heureCourante)){
+        if(this.simulation.heureEstPassee(heureCourante, prochaineGeneration)){
             genererVehicule();
             nombreCree++;
-            prochaineGeneration = heureDebut.plusSeconds((long)(getFrequence() * (double)nombreCree));
+            prochaineGeneration = prochaineGeneration.plusSeconds((long)getFrequence());
         }
     }
 
@@ -62,11 +62,11 @@ public class SourceFinie extends Source {
         Map<Vehicule, LocalTime> vehicules = new HashMap<Vehicule, LocalTime>();
         prochaineGeneration = this.heureDebut;
         nombreCree = 0;
-        while(nombreCree < nombreMax)
+        while(nombreCree < nombreMax && !this.simulation.heureEstPassee(prochaineGeneration, this.simulation.getParametres().getHeureFin()))
         {
             vehicules.put(genererVehicule(false), prochaineGeneration);
             nombreCree += 1;
-            prochaineGeneration = heureDebut.plusSeconds((long)(getFrequence() * (double)nombreCree));
+            prochaineGeneration = prochaineGeneration.plusSeconds((long)getFrequence());
         }
         return vehicules;
     }

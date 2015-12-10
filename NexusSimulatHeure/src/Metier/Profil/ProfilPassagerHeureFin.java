@@ -32,51 +32,48 @@ public class ProfilPassagerHeureFin extends ProfilPassager {
         return heureDebut.format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE) + " à " + heureFin.format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE);
     }
 
+    private boolean generationTerminee = false;
+    
     @Override
     public void avancerGeneration(LocalTime heureCourante, double tempsEcouleParRatioEnSeconde) {
-        if(!doitSpawnerPassager(heureCourante))
+        if(generationTerminee)
             return;
         
-        if(prochaineGeneration.isBefore(heureCourante)){
+        if(doitSpawnerPassager(heureCourante)){
             genererPassager(prochaineGeneration);
-            prochaineGeneration = prochaineGeneration.plusSeconds((long)/*(*/getFrequence()/* * (double)nombreCree)*/);
+            prochaineGeneration = prochaineGeneration.plusSeconds((long)getFrequence());
+            if(this.simulation.heureEstPassee(prochaineGeneration, heureFin))
+            {
+                generationTerminee = true;
+            }
+            System.out.println(prochaineGeneration);
         }
     }
     
     private boolean doitSpawnerPassager(LocalTime heureCourante){
-        LocalTime heureDebutNouvelleJournee = ParametreSimulation.HEURE_DEBUT_NOUVELLE_JOURNEE;
-        LocalTime minuit = LocalTime.MIDNIGHT;
-        LocalTime justeAvantMinuit = LocalTime.MAX;
-        if(heureFin.isBefore(justeAvantMinuit) && heureFin.isAfter(heureDebutNouvelleJournee)){
-            return heureCourante.isBefore(heureFin);
-        }else if(heureFin.isAfter(minuit) && heureFin.isBefore(heureDebutNouvelleJournee)){
-            if(heureCourante.isBefore(justeAvantMinuit) && heureCourante.isAfter(heureDebutNouvelleJournee))
-                return true;
-            else
-                return heureCourante.isBefore(heureFin);
-        }
-        throw new DateTimeException("Les paramètres de la simulation ne sont pas bien réglés.");
+        return this.simulation.heureEstPassee(heureCourante, prochaineGeneration);
     }
 
     @Override
     protected void reInitialiserValeursDepartSimulation() {
         prochaineGeneration = heureDebut;
         statistiques = new Statistiques();
+        generationTerminee = false;
     }
     
     
     @Override
     public Map<Passager, LocalTime> genererTousPassagersAvecMoment()
     {
-        Map<Passager, LocalTime> vehicules = new HashMap<Passager, LocalTime>();
+        Map<Passager, LocalTime> passagers = new HashMap<Passager, LocalTime>();
         prochaineGeneration = this.heureDebut;
         int nombreCree = 0;
-        while(doitSpawnerPassager(prochaineGeneration))
+        while(!simulation.heureEstPassee(prochaineGeneration, heureFin))
         {
-            vehicules.put(genererPassager(prochaineGeneration), prochaineGeneration);
-            nombreCree += 1;
-            prochaineGeneration = heureDebut.plusSeconds((long)(getFrequence() * (double)nombreCree));
+            passagers.put(genererPassager(prochaineGeneration), prochaineGeneration);
+            prochaineGeneration = prochaineGeneration.plusSeconds((long)getFrequence());
         }
-        return vehicules;
+        return passagers;
     }
+        
 }

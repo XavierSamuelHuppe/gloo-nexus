@@ -22,7 +22,7 @@ public abstract class Source implements Serializable{
     private Circuit circuitSource;
     private ConteneurPassagers passagers;
     private Distribution distributionAUtiliser;
-    private Simulation simulation;
+    protected Simulation simulation;
 
     public Source(Point pointDepart, LocalTime heureDebut, Distribution distribution, ConteneurPassagers passagers, Circuit circuit, Simulation simulation){
         this.frequence = frequence;

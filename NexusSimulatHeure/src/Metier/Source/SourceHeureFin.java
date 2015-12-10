@@ -33,38 +33,33 @@ public class SourceHeureFin extends Source {
         heureFin = Fin;
     }
 
-    
+    private boolean generationTerminee = false;
     @Override
     public void avancerCreation(LocalTime heureCourante, double tempsEcouleParRatioEnSeconde) {
-        if(!doitSpawnerVehicule(heureCourante))
+        if(generationTerminee)
             return;
         
-        if(prochaineGeneration.isBefore(heureCourante)){
+        if(doitSpawnerVehicule(heureCourante)){
             genererVehicule();
             nombreCree++;
-            prochaineGeneration = prochaineGeneration.plusSeconds((long)/*(*/getFrequence()/* * (double)nombreCree)*/);
+            prochaineGeneration = prochaineGeneration.plusSeconds((long)getFrequence());
+            if(this.simulation.heureEstPassee(prochaineGeneration, heureFin))
+            {
+                generationTerminee = true;
+            }
+            System.out.println(prochaineGeneration);
         }
     }
     
     private boolean doitSpawnerVehicule(LocalTime heureCourante){
-        LocalTime heureDebutNouvelleJournee = ParametreSimulation.HEURE_DEBUT_NOUVELLE_JOURNEE;
-        LocalTime minuit = LocalTime.MIDNIGHT;
-        LocalTime justeAvantMinuit = LocalTime.MAX;
-        if(heureFin.isBefore(justeAvantMinuit) && heureFin.isAfter(heureDebutNouvelleJournee)){
-            return heureCourante.isBefore(heureFin);
-        }else if(heureFin.isAfter(minuit) && heureFin.isBefore(heureDebutNouvelleJournee)){
-            if(heureCourante.isBefore(justeAvantMinuit) && heureCourante.isAfter(heureDebutNouvelleJournee))
-                return true;
-            else
-                return heureCourante.isBefore(heureFin);
-        }
-        throw new DateTimeException("Les paramètres de la simulation ne sont pas bien réglés.");
+        return this.simulation.heureEstPassee(heureCourante, prochaineGeneration);
     }
     
     @Override
     public void reInitialiserValeursDepartSimulation() {
         prochaineGeneration = heureDebut;
         nombreCree = 0;
+        generationTerminee = false;
     }
     
     @Override
@@ -78,12 +73,12 @@ public class SourceHeureFin extends Source {
         Map<Vehicule, LocalTime> vehicules = new HashMap<Vehicule, LocalTime>();
         prochaineGeneration = this.heureDebut;
         nombreCree = 0;
-        while(doitSpawnerVehicule(prochaineGeneration))
+        while(!simulation.heureEstPassee(prochaineGeneration, heureFin))
         {
             vehicules.put(genererVehicule(false), prochaineGeneration);
-            nombreCree += 1;
-            prochaineGeneration = heureDebut.plusSeconds((long)(getFrequence() * (double)nombreCree));
+            prochaineGeneration = prochaineGeneration.plusSeconds((long)getFrequence());
         }
+
         return vehicules;
     }
 }

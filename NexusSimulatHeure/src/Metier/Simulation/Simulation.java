@@ -615,6 +615,28 @@ public class Simulation extends Observable implements Serializable{
             System.out.println(passagers.get(passagerCourant).toString() + " : " + passagerCourant.toString());
         }
     }
-    
+
+    public boolean heureEstPassee(LocalTime heureActuelle, LocalTime heureVerifiee)
+    {
+        LocalTime heureDebutSimulation = this.getParametres().getHeureDebut();
+        
+        //Après minuit.
+        if(heureVerifiee.isBefore(heureDebutSimulation)){
+            //Après minuit.
+            if(heureActuelle.isBefore(heureDebutSimulation))
+            {
+                return (heureActuelle.isAfter(heureVerifiee));
+            }
+            else
+            {
+                return false;
+            }
+            
+        }
+        else   
+        {
+            return (heureActuelle.isAfter(heureVerifiee));
+        }
+    }
 
 }
