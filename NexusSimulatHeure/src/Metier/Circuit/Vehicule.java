@@ -5,6 +5,7 @@ import Metier.Carte.*;
 import Metier.Exceptions.FinDeCircuitException;
 import Metier.Profil.Passager;
 import java.io.Serializable;
+import java.time.DateTimeException;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -91,18 +92,23 @@ public class Vehicule extends Observable implements Serializable{
         return posArrivee.getY() - posDepart.getY();
     }
     
-    public Map<Point, LocalTime> obtenirPointsEtHeuresDePassage(LocalTime heureDepart)
+    public Map<Point, List<LocalTime>> obtenirPointsEtHeuresDePassage(LocalTime heureDepart, LocalTime heureDebutSimulation, LocalTime heureFinSimulation)
     {
-        Map<Point, LocalTime> passages = new HashMap<Point, LocalTime>();
+        Map<Point, List<LocalTime>> passages = new HashMap<Point, List<LocalTime>>();
         LocalTime heureActuelle = heureDepart;
         
-        passages.put(this.segmentActuel.getPointDepart(), heureActuelle);       
-
-        while(true)
+        passages.put(this.segmentActuel.getPointDepart(), new LinkedList<LocalTime>());       
+        passages.get(this.segmentActuel.getPointDepart()).add(heureActuelle);
+        
+        while(doitContinuer(heureActuelle, heureDebutSimulation, heureFinSimulation))
         {
             try{
                 heureActuelle = heureActuelle.plusSeconds((long)segmentActuel.getTempsTransit());
-                passages.put(this.segmentActuel.getPointArrivee(), heureActuelle);
+                if(!passages.containsKey(this.segmentActuel.getPointArrivee()))
+                {
+                    passages.put(this.segmentActuel.getPointArrivee(), new LinkedList<LocalTime>());
+                }
+                passages.get(this.segmentActuel.getPointArrivee()).add(heureActuelle);
                 this.segmentActuel = circuitActuel.obtenirProchainSegment(segmentActuel);
             }catch(FinDeCircuitException e){
                 break;
@@ -110,5 +116,19 @@ public class Vehicule extends Observable implements Serializable{
         }
         
         return passages;
+    }
+    
+    private boolean doitContinuer(LocalTime heureCourante, LocalTime heureDebutSimulation, LocalTime heureFinSimulation){
+        LocalTime minuit = LocalTime.MIDNIGHT;
+        LocalTime justeAvantMinuit = LocalTime.MAX;
+        if(heureFinSimulation.isBefore(justeAvantMinuit) && heureFinSimulation.isAfter(heureDebutSimulation)){
+            return (heureCourante.isBefore(heureFinSimulation) || heureCourante == heureFinSimulation);
+        }else if(heureFinSimulation.isAfter(minuit) && heureFinSimulation.isBefore(heureDebutSimulation)){
+            if(heureCourante.isBefore(justeAvantMinuit) && (heureCourante.isAfter(heureDebutSimulation) || heureCourante == heureDebutSimulation))
+                return true;
+            else
+                return (heureCourante.isBefore(heureFinSimulation) || heureCourante == heureFinSimulation);
+        }
+        throw new DateTimeException("Les paramètres de la simulation ne sont pas bien réglés.");
     }
 }

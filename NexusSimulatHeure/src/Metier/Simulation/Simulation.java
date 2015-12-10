@@ -148,6 +148,7 @@ public class Simulation extends Observable implements Serializable{
         setChanged();
         notifyObservers();
     }
+    
     private boolean doitContinuerJournee(){
         LocalTime heureFin = parametres.getHeureFin();
         LocalTime heureDebutNouvelleJournee = ParametreSimulation.HEURE_DEBUT_NOUVELLE_JOURNEE;
@@ -529,7 +530,7 @@ public class Simulation extends Observable implements Serializable{
 
         for(Vehicule v : vehicules.keySet())
         {
-            Map<Point, LocalTime> passages = v.obtenirPointsEtHeuresDePassage(vehicules.get(v));
+            Map<Point, List<LocalTime>> passages = v.obtenirPointsEtHeuresDePassage(vehicules.get(v), this.parametres.getHeureDebut(), this.parametres.getHeureFin());
             for(Point p : passages.keySet())
             {
                 if(!tout.containsKey(p))
@@ -542,7 +543,7 @@ public class Simulation extends Observable implements Serializable{
                     tout.get(p).put(v.getCircuit(), new TreeSet<LocalTime>());
                 }
 
-                tout.get(p).get(v.getCircuit()).add(passages.get(p));
+                tout.get(p).get(v.getCircuit()).addAll(passages.get(p));
             }
         }
         
