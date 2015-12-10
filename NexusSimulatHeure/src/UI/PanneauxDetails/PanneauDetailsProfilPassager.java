@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.text.DateFormat;
 import Metier.Carte.Point;
+import Metier.Exceptions.TrajetVideException;
 import javax.swing.JOptionPane;
 import javax.swing.DefaultComboBoxModel;
 
@@ -88,15 +89,21 @@ public class PanneauDetailsProfilPassager extends PanneauDetails implements java
         
         LocalTime heureDebut = LocalTime.parse(this.ChampHeureDepart.getText(), UI.Constantes.Formats.FORMAT_HEURE_COURANTE);
 
-        if(this.RadioHeureFin.isSelected()){
-            LocalTime heureFin = LocalTime.parse(this.ChampHeureFin.getText(), UI.Constantes.Formats.FORMAT_HEURE_COURANTE);
-            this.obtenirApplication().getSimulateur().ajouterProfil(heureFin, heureDebut, PanneauDistribution.obtenirMin(), PanneauDistribution.obtenirMode(), PanneauDistribution.obtenirMax());
+        try
+        {
+            if(this.RadioHeureFin.isSelected()){
+                LocalTime heureFin = LocalTime.parse(this.ChampHeureFin.getText(), UI.Constantes.Formats.FORMAT_HEURE_COURANTE);
+                this.obtenirApplication().getSimulateur().ajouterProfil(heureFin, heureDebut, PanneauDistribution.obtenirMin(), PanneauDistribution.obtenirMode(), PanneauDistribution.obtenirMax());
+            }
+            if(this.RadioNombreMax.isSelected()){
+                this.obtenirApplication().getSimulateur().ajouterProfil(Integer.parseInt(this.ChampNombreMax.getText()), heureDebut, PanneauDistribution.obtenirMin(), PanneauDistribution.obtenirMode(), PanneauDistribution.obtenirMax());
+            }
+            this.obtenirApplication().repaint();
+            this.obtenirApplication().viderPanneauDetails();
         }
-        if(this.RadioNombreMax.isSelected()){
-            this.obtenirApplication().getSimulateur().ajouterProfil(Integer.parseInt(this.ChampNombreMax.getText()), heureDebut, PanneauDistribution.obtenirMin(), PanneauDistribution.obtenirMode(), PanneauDistribution.obtenirMax());
+        catch(TrajetVideException ex){
+            JOptionPane.showMessageDialog(this.obtenirApplication(), "Le trajet ne peut pas être vide." + ex.getMessage(), "Trajet vide", JOptionPane.ERROR_MESSAGE);
         }
-        this.obtenirApplication().repaint();
-        this.obtenirApplication().viderPanneauDetails();
     }
     
     private void sauvegarderProfilModifier(){

@@ -851,11 +851,6 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     public void remplirListeCircuitTrajet(Metier.Carte.Point p)
     {
         List<Circuit> circuits = this.simulateur.circuitsPassantPar(p);
-        if(circuits.size() == 0)
-        {
-            JOptionPane.showMessageDialog(this, "Vous devez choisir un arrêt figurant dans un circuit.", "Création invalide d'un trajet.", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
 
         ListeCircuitTrajet.removeActionListener(actionListenerListeCircuitTrajet);
         

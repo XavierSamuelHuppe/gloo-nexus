@@ -10,7 +10,6 @@ import Metier.Exceptions.MauvaisPointDeDepartException;
 import Metier.Exceptions.PointPasSurCircuitActifException;
 import UI.Constantes.Couleurs;
 import UI.Dessinateurs.DessinateurVehicule;
-import UI.Exceptions.SegmentNonTrouveException;
 import UI.Utils.PaireDoubles;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -270,18 +269,6 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         java.awt.Point pET = transformerPositionViewportEnPositionEspaceTravail(me.getPoint());
         PaireDoubles pd = transformerPositionEspaceTravailEnPostionGeorgraphique(pET);
         obtenirApplication().mettreAJourCoordonnesGeographiques(pd.getSecond(), pd.getPremier());
-    }
-
-    public Segment obtenirSegmentParPoints(Point pD, Point pA)
-    {
-        for(Segment s : segments)
-        {
-            if(s.getDepart() == pD && s.getArrivee() == pA)
-            {
-                return s;
-            }
-        }
-        throw new SegmentNonTrouveException();
     }
     
     public UI.Point obtenirPointUIParPointMetier(Metier.Carte.Point point)

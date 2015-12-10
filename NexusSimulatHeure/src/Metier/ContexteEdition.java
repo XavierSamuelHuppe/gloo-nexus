@@ -277,7 +277,7 @@ public class ContexteEdition {
     public void commencerContinuerCreationTrajet(Point p){
         if(!estEnModePassager())
             throw new EditionEnMauvaisModeException();
-        if(!p.estArret() && simulation.circuitsPassantPar(p).size() == 0)
+        if(!p.estArret() || simulation.circuitsPassantPar(p).size() == 0)
             throw new MauvaisPointDeDepartException();
         if(!possedePointCreateur()){
             setPointCreateur(p);
@@ -337,6 +337,8 @@ public class ContexteEdition {
     public Trajet terminerConstructionTrajet(){
         if(!pointCreateur.estArret())
             throw new MauvaisPointArriveException();
+        if(trajetEnCreation.obtenirNombreEtapes() == 0 && dernierPointDeMonte == pointCreateur)
+            throw new TrajetVideException();
         
         ElementTrajet nouvelElement = new ElementTrajet(circuitActif, dernierPointDeMonte, pointCreateur);
         trajetEnCreation.ajouterElementTrajet(nouvelElement);

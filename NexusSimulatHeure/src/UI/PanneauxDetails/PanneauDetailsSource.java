@@ -50,26 +50,31 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
     }
     
     private void modeCreation(Simulateur sim){
-        try {
-            this.ChampCircuit.removeAllItems();
-            List<Circuit> circuits = sim.circuitsPassantPar(pointMetierLie);
+ 
+        this.ChampCircuit.removeAllItems();
+        List<Circuit> circuits = sim.circuitsPassantPar(pointMetierLie);
+        if(circuits.size() > 0)
+        {
             for (Circuit circuit: circuits){
                 this.ChampCircuit.addItem(circuit);
             }
             this.simulateur.activerCircuit((Metier.Circuit.Circuit)this.ChampCircuit.getSelectedItem());
             ChampCircuit.addActionListener(actionListenerChampCircuit);
-            
+
             this.simulateur.selectionnerPoint(this.pointMetierLie);
+
+
+            this.ChampCircuit.setEnabled(true);
+            this.ChampHeureDepart.setText(sim.obtenirHeureDebutSimulation().format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE));
+            this.ChampHeureFin.setText(sim.obtenirHeureFinSimulation().format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE));
+            this.ChampNombreMax.setText("1");
+            this.BoutonSupprimer.setEnabled(false);
         }
-        catch (Exception ex) {
-               JOptionPane.showMessageDialog(this.obtenirApplication(),ex.toString());
-        } 
+        else
+        {
+            JOptionPane.showMessageDialog(this.obtenirApplication(), "L!!!", "Point de départ de trajet invalide", JOptionPane.ERROR_MESSAGE);
+        }
         
-        this.ChampCircuit.setEnabled(true);
-        this.ChampHeureDepart.setText(sim.obtenirHeureDebutSimulation().format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE));
-        this.ChampHeureFin.setText(sim.obtenirHeureFinSimulation().format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE));
-        this.ChampNombreMax.setText("1");
-        this.BoutonSupprimer.setEnabled(false);
     }
     
     private final ActionListener actionListenerChampCircuit = new java.awt.event.ActionListener() {
