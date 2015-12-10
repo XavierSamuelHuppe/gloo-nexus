@@ -367,6 +367,7 @@ public class Simulateur {
         if(contexte.circuitEstEnCoursDeCreation()){
             Circuit nouveauCircuit = contexte.obtenirNouveauCircuit(nom);
             simulation.ajouterCircuit(nouveauCircuit);
+            contexte.viderCircuitEnCreation();
         }
         else{
             simulation.modifierCircuit(contexte.getCircuitActif(), nom);

@@ -49,4 +49,20 @@ public class Trajet implements Serializable {
     {
         return elementsTrajet.getLast().getPointDescente();
     }
+    
+    public int obtenirNombreEtapes()
+    {
+        return elementsTrajet.size();
+    }
+    
+    @Override
+    public String toString()
+    {
+        String retour = this.obtenirPointDepart().toString();
+        for(ElementTrajet et : elementsTrajet)
+        {
+            retour += " -> (" + et.getCircuit().toString() + " : " + et.getPointDescente().toString() + ")";
+        }
+        return retour;
+    }
 }

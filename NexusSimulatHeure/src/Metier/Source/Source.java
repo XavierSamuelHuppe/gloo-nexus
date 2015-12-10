@@ -91,10 +91,18 @@ public abstract class Source implements Serializable{
     
     public Vehicule genererVehicule()
     {
+        return genererVehicule(true);
+    }
+    
+    public Vehicule genererVehicule(boolean ajouterDansSimulation)
+    {
         Segment segment = circuitSource.obtenirProchainSegment(pointDepart);
         Vehicule vehicule = new Vehicule(circuitSource, segment, passagers.obtenirCopieVide());
         vehicule.embarquerAuPointDepart();
-        this.simulation.ajouterVehicule(vehicule);
+        if(ajouterDansSimulation)
+        {
+            this.simulation.ajouterVehicule(vehicule);    
+        }
         return vehicule;
     }
     

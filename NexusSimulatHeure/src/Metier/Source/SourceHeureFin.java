@@ -80,7 +80,7 @@ public class SourceHeureFin extends Source {
         nombreCree = 0;
         while(doitSpawnerVehicule(prochaineGeneration))
         {
-            vehicules.put(genererVehicule(), prochaineGeneration);
+            vehicules.put(genererVehicule(false), prochaineGeneration);
             nombreCree += 1;
             prochaineGeneration = heureDebut.plusSeconds((long)(getFrequence() * (double)nombreCree));
         }

@@ -394,12 +394,10 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
                 Metier.Carte.Segment sp = null;
                 if(fanionClavier1)
                 {
-                    System.out.println("creerSegmentAvecContinuation");
                     sp = this.simulateur.creerSegmentAvecContinuation(p.getPointMetier());
                 }
                 else
                 {
-                    System.out.println("creerSegmentSansContinuation");
                     sp = this.simulateur.creerSegmentSansContinuation(p.getPointMetier());
                 }
 

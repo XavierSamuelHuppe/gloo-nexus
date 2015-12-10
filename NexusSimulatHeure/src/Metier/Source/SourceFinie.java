@@ -64,7 +64,7 @@ public class SourceFinie extends Source {
         nombreCree = 0;
         while(nombreCree < nombreMax)
         {
-            vehicules.put(genererVehicule(), prochaineGeneration);
+            vehicules.put(genererVehicule(false), prochaineGeneration);
             nombreCree += 1;
             prochaineGeneration = heureDebut.plusSeconds((long)(getFrequence() * (double)nombreCree));
         }

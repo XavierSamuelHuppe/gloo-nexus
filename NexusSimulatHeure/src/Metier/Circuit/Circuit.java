@@ -94,6 +94,11 @@ public abstract class Circuit implements Serializable {
     
     public abstract Segment obtenirProchainSegment(Point pointDepart);
     
+    public double obtenirTempsTransitTotalSousCircuitEnSecondes(Point d, Point a)
+    {
+        return this.obtenirSousCircuit(d, a).stream().mapToDouble(s -> s.getTempsTransit()).sum();
+    }
+    
     @Override
     public String toString(){
         return this.nom;
