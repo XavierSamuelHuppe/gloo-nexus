@@ -335,10 +335,10 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         this.revalidate();
     }
     
-    public void afficherPanneauDetailsProfilPassagerNouveauProfil(Metier.Carte.Point point)
+    public void afficherPanneauDetailsProfilPassagerNouveauProfil()
     {
         this.PanneauDetails.removeAll();
-        this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsProfilPassager(point, this.simulateur));
+        this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsProfilPassager(this.simulateur));
         this.PanneauDetails.repaint();
         
         this.revalidate();
@@ -353,6 +353,10 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         this.revalidate();
     }
     
+    public boolean panneauDetailsEstPresentementAffiche()
+    {
+        return this.PanneauDetails.getComponentCount() > 0;
+    }
     
     
     public EspaceTravail getEspaceTravail() {

@@ -18,15 +18,13 @@ import javax.swing.DefaultComboBoxModel;
 public class PanneauDetailsProfilPassager extends PanneauDetails implements java.util.Observer {
 
     private Metier.Profil.ProfilPassager ProfilPassagerMetierLie;
-    private Metier.Carte.Point pointMetierLie;
     private Simulateur simulateur;
     private boolean modeCreationBool;
     
-    public PanneauDetailsProfilPassager(Metier.Carte.Point point, Simulateur sim) {
+    public PanneauDetailsProfilPassager(Simulateur sim) {
         super();
         initComponents();
         
-        this.pointMetierLie = point;
         this.modeCreationBool = true;
         this.simulateur = sim;
         this.PanneauDistribution.setDistribution(this.simulateur.obtenirDistributionTempsGenerationVehiculeDefaut());
@@ -38,7 +36,6 @@ public class PanneauDetailsProfilPassager extends PanneauDetails implements java
         super();
         initComponents();
         this.simulateur = sim;
-        this.pointMetierLie = p.getPointDepart();
         this.ProfilPassagerMetierLie = p;
         this.modeCreationBool = false;
         this.PanneauDistribution.setDistribution(p.getDistribution());
@@ -71,7 +68,7 @@ public class PanneauDetailsProfilPassager extends PanneauDetails implements java
     
     @Override
     public void update(Observable o, Object o1) {
-        this.rafraichir();
+        //this.rafraichir();
     }
     
     private void activerDesactiverControles(Boolean activer){
@@ -102,7 +99,7 @@ public class PanneauDetailsProfilPassager extends PanneauDetails implements java
             this.obtenirApplication().viderPanneauDetails();
         }
         catch(TrajetVideException ex){
-            JOptionPane.showMessageDialog(this.obtenirApplication(), "Le trajet ne peut pas être vide." + ex.getMessage(), "Trajet vide", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this.obtenirApplication(), "Le trajet ne peut pas être vide.", "Trajet vide", JOptionPane.ERROR_MESSAGE);
         }
     }
     

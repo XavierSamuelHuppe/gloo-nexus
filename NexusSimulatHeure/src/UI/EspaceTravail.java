@@ -405,7 +405,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
             }
             catch(Metier.Exceptions.CreationInvalideException ex)
             {
-                JOptionPane.showMessageDialog(this.obtenirApplication(), "Un tel segment ne peut-être créé : " + ex.getMessage(), "Création invalide d'un segment.", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this.obtenirApplication(), "Un tel segment ne peut-être créé : ", "Création invalide d'un segment.", JOptionPane.ERROR_MESSAGE);
             }
         }
         else if ((simulateur.estEnModeArret() && p.getPointMetier().estArret())
@@ -426,7 +426,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
             }
             catch(AucunCheminPossibleException ex)
             {
-                JOptionPane.showMessageDialog(this.obtenirApplication(), "Il n'existe pas de segments permettant de relier les deux points sélectionnés." + ex.getMessage(), "Création invalide d'un circuit.", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this.obtenirApplication(), "Il n'existe pas de segments permettant de relier les deux points sélectionnés.", "Création invalide d'un circuit.", JOptionPane.ERROR_MESSAGE);
             }
         }
         else if (simulateur.estEnModeSource() && p.getPointMetier().estArret())
@@ -447,9 +447,9 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
                 this.simulateur.commencerContinuerCreationTrajet(p.getPointMetier());
                 this.obtenirApplication().remplirListeCircuitTrajet(p.getPointMetier());
 
-                if(this.simulateur.estPointCreateur(p.getPointMetier()))
+                if(!this.obtenirApplication().panneauDetailsEstPresentementAffiche())
                 {
-                    this.obtenirApplication().afficherPanneauDetailsProfilPassagerNouveauProfil(p.getPointMetier());
+                    this.obtenirApplication().afficherPanneauDetailsProfilPassagerNouveauProfil();
                 }
             }
             catch(AucunPointCreateurException ex){
@@ -459,16 +459,16 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
                 System.err.println("EditionEnMauvaisModeException");
             }
             catch(AucunCircuitActifException ex){
-                JOptionPane.showMessageDialog(this.obtenirApplication(), "Vous devez choisir un circuit avant de pouvoir tracer un trajet." + ex.getMessage(), "Aucun circuit actif", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this.obtenirApplication(), "Vous devez choisir un circuit avant de pouvoir tracer un trajet.", "Aucun circuit actif", JOptionPane.ERROR_MESSAGE);
             }
             catch(PointPasSurCircuitActifException ex){
-                JOptionPane.showMessageDialog(this.obtenirApplication(), "Le point sélectionné n'est pas un arrêt du circuit actif." + ex.getMessage(), "Arrêt doit être sur circuit actif", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this.obtenirApplication(), "Le point sélectionné n'est pas un arrêt du circuit actif.", "Arrêt doit être sur circuit actif", JOptionPane.ERROR_MESSAGE);
             }
             catch(MauvaisPointDeDepartException ex){
-                JOptionPane.showMessageDialog(this.obtenirApplication(), "Le point de départ du trajet doit être un arrêt par lequel passe au moins un circuit." + ex.getMessage(), "Point de départ de trajet invalide", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this.obtenirApplication(), "Le point de départ du trajet doit être un arrêt par lequel passe au moins un circuit.", "Point de départ de trajet invalide", JOptionPane.ERROR_MESSAGE);
             }
             catch(AucunCheminPossibleException ex){
-                JOptionPane.showMessageDialog(this.obtenirApplication(), "Il n'existe pas de segments permettant de relier les deux arrêts sélectionnés sur le circuit actif." + ex.getMessage(), "Création invalide d'un trajet pour un profil de passager", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this.obtenirApplication(), "Il n'existe pas de segments permettant de relier les deux arrêts sélectionnés sur le circuit actif.", "Création invalide d'un trajet pour un profil de passager", JOptionPane.ERROR_MESSAGE);
             }
         }
         this.repaint();

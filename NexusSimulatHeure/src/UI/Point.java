@@ -100,7 +100,7 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         dessinerDetailsSourcesSiRequis(g2);
         dessinerIndicateurSourcesSiRequis(g2);
         dessinerIndicateurProfilsSiRequis(g2);
-        if(this.obtenirEspaceTravail().getSimulateur().simulationEstEnAction())
+        if(this.getPointMetier().estArret() && this.obtenirEspaceTravail().getSimulateur().simulationEstEnAction())
         {
             dessinerDetailsPassagers(g2);
         }

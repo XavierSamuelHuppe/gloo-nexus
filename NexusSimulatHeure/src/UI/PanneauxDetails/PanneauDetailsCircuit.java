@@ -98,7 +98,7 @@ public class PanneauDetailsCircuit extends PanneauDetails implements java.util.O
         }
         catch(CreationInvalideException ex)
         {
-            JOptionPane.showMessageDialog(this.obtenirApplication(), "Le circuit ne peut pas être sauvegardé : " + ex.getMessage(), "Création invalide d'un circuit.", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this.obtenirApplication(), "Le circuit ne peut pas être sauvegardé : ", "Création invalide d'un circuit.", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_BoutonSauvegarderActionPerformed
 
