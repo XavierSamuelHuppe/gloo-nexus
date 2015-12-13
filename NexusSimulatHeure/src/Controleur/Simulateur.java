@@ -72,6 +72,9 @@ public class Simulateur {
         return carte.getSegments();
     }
  
+    public boolean estEnModeAucun(){
+        return contexte.estEnModeAucun();
+    }
     public boolean estEnModeArret(){
         return contexte.estEnModeArret();
     }
@@ -113,6 +116,7 @@ public class Simulateur {
         simulation.arreter();
     }
     public void demarerRedemarer(){
+        this.contexte.passerEnModeAucun();
         if(simulation.getParametres().estEnPause())
             simulation.redemarrer();
         else if (simulation.getParametres().estAvantDemarrage())
@@ -121,6 +125,7 @@ public class Simulateur {
     
     public void recommencer()
     {
+        this.contexte.passerEnModeAucun();
         simulation.recommencer();
     }
     

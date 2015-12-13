@@ -10,6 +10,7 @@ import java.util.*;
 public class ContexteEdition {
 
     public static enum ModeEdition {
+        AUCUN,
         INTERSECTION,
         ARRET,
         SEGMENT,
@@ -50,6 +51,9 @@ public class ContexteEdition {
         this.simulation = simulation;
     }
     
+    public boolean estEnModeAucun(){
+        return mode == ModeEdition.AUCUN;
+    }
     public boolean estEnModeArret(){
         return mode == ModeEdition.ARRET;
     }
@@ -68,7 +72,10 @@ public class ContexteEdition {
     public boolean estEnModePassager(){
         return mode == ModeEdition.PASSAGER;
     }
-    
+    public void passerEnModeAucun(){
+        appliquerChangementMode();
+        mode = ModeEdition.AUCUN;
+    }
     public void passerEnModeArret(){
         appliquerChangementMode();
         mode = ModeEdition.ARRET;

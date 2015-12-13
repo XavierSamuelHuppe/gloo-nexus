@@ -307,6 +307,9 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     //Implémentations MouseListener.
     @Override
     public void mouseClicked(MouseEvent me) {
+        if(simulateur.estEnModeAucun())
+            return;
+        
         if(simulateur.estEnModeArret()){
             ajouterArret(me);
         }
@@ -381,6 +384,9 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
 
     public void pointClique(Point p)
     {
+        if(simulateur.estEnModeAucun())
+            return;
+        
         if(simulateur.estEnModeSegment())
         {
             try

@@ -75,13 +75,15 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         this.BoutonModeProfilPassager.addActionListener(this);        
     }
 
-    
     @Override
     public void update(Observable o, Object o1) {
         //System.out.println("S'passe de quoi.");
         rafraichir();
+        
+        //Simulation terminée normalement.
         if(o1 != null && o1 instanceof Boolean && (boolean)o1)
         {
+            deverrouillerBarreBoutons();
             afficherStatistiques();
         }
     }
@@ -162,14 +164,6 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     
     public void afficherParametreSimulation()
     {
-        /*UI.PanneauxDetails.PanneauDetailsSimu testPanel;
-        testPanel = new UI.PanneauxDetails.PanneauDetailsSimu(this.simulateur);
-        final javax.swing.JDialog frame = new javax.swing.JDialog(this, "Paramètres Simulation", true);
-        frame.getContentPane().add(testPanel);
-        frame.setResizable(false);
-        frame.pack();
-        frame.setLocationRelativeTo(this);
-        frame.setVisible(true);*/
         UI.PanneauxDetails.PanneauDetailsSimu frame = new UI.PanneauxDetails.PanneauDetailsSimu(this, this.simulateur);
         frame.setResizable(false);
         frame.setModal(true);
@@ -780,17 +774,21 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     }//GEN-LAST:event_BoutonNouveauActionPerformed
 
     private void BoutonDemarrerPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonDemarrerPauseActionPerformed
+        verrouillerBarreBoutons();
         if(this.simulateur.simulationEstEnAction()) {
             this.simulateur.pauser();
         }
         else {
             this.simulateur.demarerRedemarer();
         }
+        reinitialiserAffichageAvantChangementMode();
         rafraichirIconeBoutonDemarrerPause();
     }//GEN-LAST:event_BoutonDemarrerPauseActionPerformed
 
     private void BoutonArreterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonArreterActionPerformed
         this.simulateur.arreter();
+        deverrouillerBarreBoutons();
+        reinitialiserAffichageAvantChangementMode();
         rafraichirIconeBoutonDemarrerPause();
         afficherHeureCourante();
     }//GEN-LAST:event_BoutonArreterActionPerformed
@@ -917,6 +915,40 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         ListeCircuitTrajet.removeAllItems();
         PanneauBarreOutilsChoixCircuitTrajet.setVisible(false);
         this.revalidate();
+    }
+    
+    private void verrouillerBarreBoutons()
+    {
+        BoutonNouveau.setEnabled(false);
+        BoutonSauvegarder.setEnabled(false);
+        BoutonCharger.setEnabled(false);
+        BoutonAnnuler.setEnabled(false);
+        BoutonRepeter.setEnabled(false);
+        BoutonParametres.setEnabled(false);
+        BoutonImageFond.setEnabled(false);
+        BoutonModeArret.setEnabled(false);
+        BoutonModeIntersection.setEnabled(false);
+        BoutonModeSegment.setEnabled(false);
+        BoutonModeCircuit.setEnabled(false);
+        BoutonModeSource.setEnabled(false);
+        BoutonModeProfilPassager.setEnabled(false);
+    }
+    
+    private void deverrouillerBarreBoutons()
+    {
+        BoutonNouveau.setEnabled(true);
+        BoutonSauvegarder.setEnabled(true);
+        BoutonCharger.setEnabled(true);
+        BoutonAnnuler.setEnabled(true);
+        BoutonRepeter.setEnabled(true);
+        BoutonParametres.setEnabled(true);
+        BoutonImageFond.setEnabled(true);
+        BoutonModeArret.setEnabled(true);
+        BoutonModeIntersection.setEnabled(true);
+        BoutonModeSegment.setEnabled(true);
+        BoutonModeCircuit.setEnabled(true);
+        BoutonModeSource.setEnabled(true);
+        BoutonModeProfilPassager.setEnabled(true);
     }
     
     /**
