@@ -27,7 +27,7 @@ public class PanneauDetailsProfilPassager extends PanneauDetails implements java
         
         this.modeCreationBool = true;
         this.simulateur = sim;
-        this.PanneauDistribution.setDistribution(this.simulateur.obtenirDistributionTempsGenerationVehiculeDefaut());
+        this.PanneauDistribution.setDistribution(this.simulateur.obtenirDistributionTempsGenerationPassagersDefaut());
         this.modeCreation(sim);
         
     }

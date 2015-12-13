@@ -445,6 +445,10 @@ public class Simulateur {
         return this.simulation.getParametres().getDistributionTempsGenerationVehiculeDefaut();
     }
     
+    public Metier.Distribution obtenirDistributionTempsGenerationPassagersDefaut(){
+        return this.simulation.getParametres().getDistributionTempsGenerationPassagerDefaut();
+    }
+    
     public LocalTime obtenirHeureDebutSimulation(){
         return this.getParametresSimulation().getHeureDebut();
     }
