@@ -8,15 +8,24 @@ public class PanneauDistribution extends PanneauDetails {
     
     public PanneauDistribution() {
         initComponents();
+        ajouterFocusListeners();
     }
     
     public PanneauDistribution(Metier.Distribution dt)
     {
         super();
         initComponents();
+        ajouterFocusListeners();
         setDistribution(dt);
     }
 
+    private void ajouterFocusListeners()
+    {
+        ChampMaximum.addFocusListener(new UI.Utils.FocusListenerSelectionTexte());
+        ChampMinimum.addFocusListener(new UI.Utils.FocusListenerSelectionTexte());
+        ChampMode.addFocusListener(new UI.Utils.FocusListenerSelectionTexte());
+    }
+    
     public void setDistribution(Metier.Distribution dt)
     {
         this.distributionCourante  = dt;
