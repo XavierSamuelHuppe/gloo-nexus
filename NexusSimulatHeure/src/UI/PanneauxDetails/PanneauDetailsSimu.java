@@ -189,6 +189,30 @@ public class PanneauDetailsSimu extends javax.swing.JDialog {
             {
                 retour += "La valeur maximale doit être plus grande que la valeur minimale et le mode.\r\n";
             }
+            if(min2 > mode2 || min2 > max2)
+            {
+                retour += "La valeur minimale doit être plus petite que le mode et la valeur maximale.\r\n";
+            }
+            if(mode2 < min2  || max2 < mode2)
+            {
+                retour += "Le mode doit être en la valeur minimale et la valeur maximale.\r\n";
+            }
+            if(max2 < mode2 || max2 < min2)
+            {
+                retour += "La valeur maximale doit être plus grande que la valeur minimale et le mode.\r\n";
+            }
+            if(min3 > mode3 || min3 > max3)
+            {
+                retour += "La valeur minimale doit être plus petite que le mode et la valeur maximale.\r\n";
+            }
+            if(mode3 < min3  || max3 < mode3)
+            {
+                retour += "Le mode doit être en la valeur minimale et la valeur maximale.\r\n";
+            }
+            if(max3 < mode3 || max3 < min3)
+            {
+                retour += "La valeur maximale doit être plus grande que la valeur minimale et le mode.\r\n";
+            }
         }
         
         return retour;
