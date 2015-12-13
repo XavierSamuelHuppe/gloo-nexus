@@ -165,7 +165,7 @@ public class Segment implements IDetailsAffichables, Observer {
         
     @Override
     public PanneauDetails obtenirPanneauDetails() {
-        return new PanneauDetailsSegment(this.getSegmentMetier());
+        return new PanneauDetailsSegment(this.getSegmentMetier(), this.obtenirEspaceTravail().obtenirApplication().getSimulateur());
     }
     
     public Orientation obtenirOrientation()

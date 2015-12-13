@@ -18,24 +18,21 @@ import javax.swing.DefaultComboBoxModel;
 public class PanneauDetailsProfilPassager extends PanneauDetails implements java.util.Observer {
 
     private Metier.Profil.ProfilPassager ProfilPassagerMetierLie;
-    private Simulateur simulateur;
     private boolean modeCreationBool;
     
     public PanneauDetailsProfilPassager(Simulateur sim) {
-        super();
+        super(sim);
         initComponents();
         
         this.modeCreationBool = true;
-        this.simulateur = sim;
         this.PanneauDistribution.setDistribution(this.simulateur.obtenirDistributionTempsGenerationPassagersDefaut());
         this.modeCreation(sim);
         
     }
     
     public PanneauDetailsProfilPassager(Metier.Profil.ProfilPassager p, Simulateur sim) {
-        super();
+        super(sim);
         initComponents();
-        this.simulateur = sim;
         this.ProfilPassagerMetierLie = p;
         this.modeCreationBool = false;
         this.PanneauDistribution.setDistribution(p.getDistribution());

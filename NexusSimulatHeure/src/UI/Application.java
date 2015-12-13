@@ -299,7 +299,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     public void afficherPanneauDetailsCircuitNouveauCircuit()
     {
         this.PanneauDetails.removeAll();
-        this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsCircuit());
+        this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsCircuit(this.simulateur));
         this.PanneauDetails.repaint();
         this.revalidate();
     }
@@ -307,7 +307,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     public void afficherPanneauDetailsCircuitExistant(Metier.Circuit.Circuit c)
     {
         this.PanneauDetails.removeAll();
-        this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsCircuit(c));
+        this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsCircuit(c, this.simulateur));
         this.PanneauDetails.repaint();
         this.revalidate();
     }

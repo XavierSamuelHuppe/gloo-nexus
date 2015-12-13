@@ -26,7 +26,7 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
     private boolean modeCreationBool;
         
     public PanneauDetailsSource(Metier.Carte.Point point, Simulateur sim) {
-        super();
+        super(sim);
         initComponents();
         
         this.pointMetierLie = point;
@@ -37,7 +37,7 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
     }
     
     public PanneauDetailsSource(Metier.Source.Source s, Simulateur sim) {
-        super();
+        super(sim);
         initComponents();
         this.simulateur = sim;
         this.pointMetierLie = s.getPointDepart();

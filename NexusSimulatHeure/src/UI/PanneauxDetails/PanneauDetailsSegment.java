@@ -7,9 +7,9 @@ public class PanneauDetailsSegment extends PanneauDetails implements java.util.O
 
     private Metier.Carte.Segment segmentMetierLie;
     
-    public PanneauDetailsSegment(Metier.Carte.Segment s)
+    public PanneauDetailsSegment(Metier.Carte.Segment s, Controleur.Simulateur sim)
     {
-        super();
+        super(sim);
         initComponents();
 
         this.segmentMetierLie = s;
@@ -37,23 +37,17 @@ public class PanneauDetailsSegment extends PanneauDetails implements java.util.O
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
-        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
         jPanel2 = new javax.swing.JPanel();
-        PanneauDistribution = new UI.PanneauxDetails.PanneauDistribution();
         jPanel1 = new javax.swing.JPanel();
         BoutonSauvegarder = new javax.swing.JButton();
         BoutonSupprimer = new javax.swing.JButton();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
+        PanneauDistribution = new UI.PanneauxDetails.PanneauDistribution();
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
 
         setLayout(new java.awt.BorderLayout());
-        add(filler1, java.awt.BorderLayout.WEST);
-        add(filler2, java.awt.BorderLayout.EAST);
 
         jPanel2.setLayout(new java.awt.GridLayout(2, 0));
-
-        PanneauDistribution.setAlignmentX(1.0F);
-        PanneauDistribution.setMinimumSize(new java.awt.Dimension(400, 153));
-        jPanel2.add(PanneauDistribution);
 
         jPanel1.setMaximumSize(new java.awt.Dimension(2000000, 23));
 
@@ -75,7 +69,13 @@ public class PanneauDetailsSegment extends PanneauDetails implements java.util.O
 
         jPanel2.add(jPanel1);
 
-        add(jPanel2, java.awt.BorderLayout.CENTER);
+        add(jPanel2, java.awt.BorderLayout.SOUTH);
+        add(filler1, java.awt.BorderLayout.WEST);
+
+        PanneauDistribution.setAlignmentX(1.0F);
+        PanneauDistribution.setMinimumSize(new java.awt.Dimension(400, 153));
+        add(PanneauDistribution, java.awt.BorderLayout.NORTH);
+        add(filler2, java.awt.BorderLayout.EAST);
     }// </editor-fold>//GEN-END:initComponents
 
     private void BoutonSauvegarderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSauvegarderActionPerformed
