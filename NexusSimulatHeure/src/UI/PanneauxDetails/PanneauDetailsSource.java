@@ -166,13 +166,13 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
             validations += "Une source de véhicule doit absolument être lié à un circuit.\r\n";
         }
         
-        if(!java.util.regex.Pattern.matches(UI.Constantes.Validations.REGEX_FORMAT_HEURE, ChampHeureDepart.getText()))
+        if(!java.util.regex.Pattern.matches(UI.Constantes.Validations.REGEX_FORMAT_HEURE, ChampHeureDepart.getText().trim()))
         {
             validations += "L'heure de début de génération des véhicules doit être inscrite dans un format 00:00:00.\r\n";
         }
         if(RadioHeureFin.isSelected())
         {
-            if(!java.util.regex.Pattern.matches(UI.Constantes.Validations.REGEX_FORMAT_HEURE, ChampHeureFin.getText()))
+            if(!java.util.regex.Pattern.matches(UI.Constantes.Validations.REGEX_FORMAT_HEURE, ChampHeureFin.getText().trim()))
             {
                 validations += "L'heure de fin de génération des véhicules doit être inscrite dans un format 00:00:00.\r\n";
             }
