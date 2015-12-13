@@ -764,9 +764,11 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
             
             this.simulateur = new Simulateur();
             this.simulateur.ajouterObserveurASimulation(this);
+            this.simulateur.modfierVitesse(100 * SliderVitesse.getValue());
             
             this.getEspaceTravail().reinitialiser();
             this.getEspaceTravail().setSimulateur(this.simulateur);
+            
             this.passerEnModeArret();
             this.repaint();
             this.revalidate();
