@@ -57,7 +57,7 @@ public abstract class Circuit implements Serializable {
         return obtenirSousCircuit(entreDebut, entreFin).contains(segmentCible);
     }
     
-    private List<Segment> obtenirSousCircuit(Point entreDebut, Point entreFin)
+    public List<Segment> obtenirSousCircuit(Point entreDebut, Point entreFin)
     {
         LinkedList<Segment> sousCircuit = new LinkedList<>();
         boolean ajouter = false;

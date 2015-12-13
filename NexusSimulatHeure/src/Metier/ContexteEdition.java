@@ -258,22 +258,7 @@ public class ContexteEdition {
     {
         return possedeUnTrajetEnCoursDeCreation() && trajetEnCreation.contientAuMoinsUneEtape();
     }
-    
-//    public boolean segmentEstDansCircuitActifPourCreationTrajet(Segment segment){
-//        return circuitActif.utilise(segment);
-//    }
-//    public boolean pointEstDansCircuitActifPourCreationTrajet(Point point){
-//        if(point == this.pointCreateur)
-//            return true;
-//        
-//        for(Segment s: trajetEnCreationEnSegments){
-//            if(s.getPointDepart().equals(point) ||
-//               s.getPointArrivee().equals(point))
-//                return true;
-//        }
-//        return false;
-//    }
-    
+       
     public void commencerContinuerCreationTrajet(Point p){
         if(!estEnModePassager())
             throw new EditionEnMauvaisModeException();
@@ -300,7 +285,7 @@ public class ContexteEdition {
                 Segment segmentAAjouter = carte.obtenirSegment(monPointCreateur, p);
                 trajetEnCreationEnSegments.add(segmentAAjouter);
             }else{
-                List<Segment> segmentsAAjouter = carte.plusCourtCheminEnTempsMoyen(monPointCreateur, p);
+                List<Segment> segmentsAAjouter = circuitActif.obtenirSousCircuit(monPointCreateur, p);
                 trajetEnCreationEnSegments.addAll(segmentsAAjouter);
             }
         }catch(AucunCheminPossibleException e){
