@@ -101,13 +101,13 @@ public class PanneauDetailsSimu extends javax.swing.JDialog {
     {
         String validations = "";
       
-        if(!java.util.regex.Pattern.matches(UI.Constantes.Validations.REGEX_FORMAT_HEURE_SIMULATION, ChampHeureDebut.getText()) &&
+        if(!java.util.regex.Pattern.matches(UI.Constantes.Validations.REGEX_FORMAT_HEURE_SIMULATION, ChampHeureDebut.getText().trim()) &&
            !java.util.regex.Pattern.matches(UI.Constantes.Validations.REGEX_FORMAT_HEURE, ChampHeureDebut.getText()))
         {
             validations += "L'heure de début de génération des passagers doit être inscrite dans un format 00:00 ou 00:00:00.\r\n";
         }
         
-        if(!java.util.regex.Pattern.matches(UI.Constantes.Validations.REGEX_FORMAT_HEURE_SIMULATION, ChampHeureFin.getText()) &&
+        if(!java.util.regex.Pattern.matches(UI.Constantes.Validations.REGEX_FORMAT_HEURE_SIMULATION, ChampHeureFin.getText().trim()) &&
            !java.util.regex.Pattern.matches(UI.Constantes.Validations.REGEX_FORMAT_HEURE, ChampHeureFin.getText()))
         {
             validations += "L'heure de fin de génération des passagers doit être inscrite dans un format 00:00 ou 00:00:00.\r\n";
