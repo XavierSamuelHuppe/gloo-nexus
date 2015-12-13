@@ -12,6 +12,7 @@ import java.time.LocalTime;
 import java.text.DateFormat;
 import Metier.Carte.Point;
 import Metier.Exceptions.TrajetVideException;
+import Metier.Exceptions.MauvaisPointArriveException;
 import javax.swing.JOptionPane;
 import javax.swing.DefaultComboBoxModel;
 
@@ -97,6 +98,10 @@ public class PanneauDetailsProfilPassager extends PanneauDetails implements java
         }
         catch(TrajetVideException ex){
             JOptionPane.showMessageDialog(this.obtenirApplication(), "Le trajet ne peut pas être vide.", "Trajet vide", JOptionPane.ERROR_MESSAGE);
+        }
+        catch(MauvaisPointArriveException ex)
+        {
+            JOptionPane.showMessageDialog(this.obtenirApplication(), "Le trajet doit se terminer sur un arrêt.", "Mauvais point d'arrivée.", JOptionPane.ERROR_MESSAGE);
         }
     }
     
