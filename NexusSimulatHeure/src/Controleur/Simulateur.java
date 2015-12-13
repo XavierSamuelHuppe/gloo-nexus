@@ -118,6 +118,12 @@ public class Simulateur {
         else if (simulation.getParametres().estAvantDemarrage())
             simulation.demarrer();
     }
+    
+    public void recommencer()
+    {
+        simulation.recommencer();
+    }
+    
     public void pauser(){
         simulation.pauser();
     }
@@ -471,7 +477,7 @@ public class Simulateur {
     public boolean possedeUnTrajetEnCoursDeCreation(){
         return contexte.possedeUnTrajetEnCoursDeCreation();
     }
-    //!!!!
+    
     public boolean segmentEstDansCircuitActifPourCreationTrajet(Segment segment){
         
         return estDansCircuitActif(segment);
@@ -479,10 +485,6 @@ public class Simulateur {
     public boolean pointEstDansCircuitActifPourCreationTrajet(Point point){
         return estDansCircuitActif(point);
     }
-    
-    
-    
-    
     
     public boolean estDansTrajetActif(Point point){
         try{
@@ -515,6 +517,13 @@ public class Simulateur {
     
     public void executerSimulationInstantanement()
     {
-        this.simulation.executerInstantanement();
+        this.simulation.executerInstantanement(false);
+    }
+    
+    
+    
+    public String obtenirStatistiques()
+    {
+        return simulation.obtenirStatistiques();
     }
 }

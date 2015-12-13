@@ -207,4 +207,9 @@ public class Segment implements IDetailsAffichables, Observer {
         return this.pointDepart.getZoom();
     }
         
+    
+    public EspaceTravail obtenirEspaceTravail()
+    {
+        return this.espaceTravail;
+    }
 }

@@ -80,6 +80,10 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     public void update(Observable o, Object o1) {
         //System.out.println("S'passe de quoi.");
         rafraichir();
+        if(o1 != null && o1 instanceof Boolean && (boolean)o1)
+        {
+            afficherStatistiques();
+        }
     }
 
     private void rafraichir()
@@ -166,8 +170,9 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         frame.pack();
         frame.setLocationRelativeTo(this);
         frame.setVisible(true);*/
-        UI.PanneauxDetails.PanneauDetailsSimu frame = new UI.PanneauxDetails.PanneauDetailsSimu(this.simulateur);
+        UI.PanneauxDetails.PanneauDetailsSimu frame = new UI.PanneauxDetails.PanneauDetailsSimu(this, this.simulateur);
         frame.setResizable(false);
+        frame.setModal(true);
         frame.pack();
         frame.setLocationRelativeTo(this);
         frame.setVisible(true);
@@ -846,7 +851,18 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
 
     private void BoutonSimulationInfinieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSimulationInfinieActionPerformed
         this.simulateur.executerSimulationInstantanement();
+        afficherStatistiques();
     }//GEN-LAST:event_BoutonSimulationInfinieActionPerformed
+    
+    private void afficherStatistiques()
+    {
+        DialogueStatistiques dialog = new DialogueStatistiques(this, this.simulateur);
+        dialog.setResizable(false);
+        dialog.setModal(true);
+        dialog.pack();
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }
     
     public void remplirListeCircuitTrajet(Metier.Carte.Point p)
     {

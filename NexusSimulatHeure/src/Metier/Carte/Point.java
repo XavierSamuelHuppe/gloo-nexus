@@ -150,8 +150,11 @@ public class Point extends Observable implements Serializable{
     {
         if(nom != null && !nom.isEmpty())
         {
-            return "Point \"" + nom + "\"";
+            return "(" + nom + ")";
         }
-        return super.toString();
+        else
+        {
+            return "(" + this.position.toString() + ")";
+        }
     }
 }

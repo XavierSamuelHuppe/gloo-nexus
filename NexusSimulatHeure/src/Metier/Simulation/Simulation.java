@@ -45,6 +45,9 @@ public class Simulation extends Observable implements Serializable{
             throw new SimulationEnMauvaisEtatException();
         
         initialiserDepartSimulation();
+        
+        executerInstantanement(true);
+        
         parametres.mettreEnAction();
         boucle = new BoucleSimulation(this);
         boucleThread = new Thread(boucle, "boucle de la simulation");
@@ -68,6 +71,7 @@ public class Simulation extends Observable implements Serializable{
         if(!(parametres.estEnAction()))
             throw new SimulationEnMauvaisEtatException();
         
+        
         parametres.mettreEnPause();
         setChanged();
         notifyObservers();
@@ -79,6 +83,11 @@ public class Simulation extends Observable implements Serializable{
         parametres.mettreEnAction();
         setChanged();
         notifyObservers();
+    }
+    
+    public void recommencer()
+    {
+        
     }
             
     private void terminerSimulation(){
@@ -93,30 +102,37 @@ public class Simulation extends Observable implements Serializable{
         
         vehicules.clear();
         
-        //Fermer les statistiques
-        //-Sources
-        //-Segments ?
-        //-ProfilPassagers
-        
         initialiserHeureDebut();
         
         setChanged();
-        notifyObservers();
+        notifyObservers(true);
     }
+    
     private void initialiserDepartSimulation(){
         JourneeCourante = 1;
+        carte.initialiserDepartSimulation(this.getNombreJourSimulation());
+        for(Source s: sources){
+            s.pigerDonneesDepart(this.getNombreJourSimulation());
+        }
+        for(ProfilPassager pp : profils)
+        {
+            pp.pigerDonneesDepart(this.getNombreJourSimulation());
+            pp.reinitialiserStatistiques();
+        }
+        
         initialiserDepartNouvelleJournee();
     }
     private void initialiserDepartNouvelleJournee(){
         initialiserHeureDebut();
         vehicules.clear();
-        carte.initialiserDepartSimulation();
+        carte.initialiserNouvelleJourneeSimulation(JourneeCourante - 1);
         for(Source s: sources){
+            s.setJournee(JourneeCourante - 1);
             s.reInitialiserValeursDepartSimulation();
-            s.pigerDonneesDepartNouvelleJournee();
         }
         for(ProfilPassager pp: profils){
-            pp.pigerDonneesDepartNouvelleJournee();
+            pp.setJournee(JourneeCourante - 1);
+            pp.reInitialiserValeursDepartSimulation();
         }
     }
     private void initialiserHeureDebut()
@@ -197,29 +213,10 @@ public class Simulation extends Observable implements Serializable{
     {
         for(Point p : carte.getPoints())
         {
-            /*if(p.obtenirNombrePassagersEnAttente() > 0)
-            {
-                for(Object px : p.obtenirPassagersEnAttente().toArray())
-                {
-                    Passager passager = (Passager)px;
-                    if(passager.estArriveADestination(p))
-                    {
-                        passager.comptabiliserTempsAttenteDansProfilPassager();
-                        p.retirerPasserDeConteneurPassager(passager);
-                    }
-                    else
-                    {
-                        passager.incrementerTempsAttente(tempsEcouleParRatioEnSeconde);
-                    }
-                }
-            }*/
             for(Passager px : p.getPassagersArrives()){
-                px.comptabiliserPassagerDansStatistiquesProfilPassager(heureCourante);
+                //px.comptabiliserPassagerDansStatistiquesProfilPassager(heureCourante);
             }
             p.viderPassagersArrives();
-//            for(Passager px : p.obtenirPassagersEnAttente()){
-//                px.incrementerTempsVie(tempsEcouleParRatioEnSeconde);
-//            }
         }   
     }
     
@@ -322,17 +319,6 @@ public class Simulation extends Observable implements Serializable{
         }
         return retour;
     }
-
-//    public List<Circuit> trajetsPassantPar(Point point){
-//        List<Circuit> retour = new ArrayList();
-//        for(Circuit c: circuits){
-//            if(c.utilise(point)){
-//                retour.add(c);
-//            }
-//        }
-//        return retour;
-//    }
-    
     
     public void retirerPointAvecReferences(Point p){
         List<Source> sourcesAEnlever = p.getSources();
@@ -418,64 +404,77 @@ public class Simulation extends Observable implements Serializable{
     }
     
     
-    
-    
     private Map<Point, Map<Circuit, SortedSet<LocalTime>>> tout;
     
-    public void executerInstantanement()
+    public void executerInstantanement(boolean avantSimulationTempsReel)
     {
+        if(!avantSimulationTempsReel)
+            initialiserDepartSimulation();
+        
         JourneeCourante = 1;
+        
         while(JourneeCourante <= this.parametres.getNombreJourSimulation())
         {
-            initialiserDepartNouvelleJournee();
-            
+            simulerJourneeInstanement();
+            JourneeCourante += 1;
+        }
+        
+        if(avantSimulationTempsReel)
+        {
             JourneeCourante = 1;
-            
-            tout = genererTout();
+            initialiserDepartNouvelleJournee();
+        }
+    }
+    
+    private void simulerJourneeInstanement()
+    {
+        initialiserDepartNouvelleJournee();
+        for(ProfilPassager pp: profils){
+            pp.commencerNouvelleJourneeStatistiques();
+        }
+        
+        tout = genererTout();
 
-            debugTout(tout);
-                    
-            Map<Passager, LocalTime> passagers = genererTousPassagers();
-            debugPassagers(passagers);
-            for(Passager passagerCourant : passagers.keySet())
+        debugTout(tout);
+
+        Map<Passager, LocalTime> passagers = genererTousPassagers();
+        debugPassagers(passagers);
+        for(Passager passagerCourant : passagers.keySet())
+        {
+            LocalTime heureCourante = passagers.get(passagerCourant);
+
+            int etape = 0;
+            Trajet trajetCourant = passagerCourant.getTrajet();
+
+            boolean passagerRenduADestination = true;
+            while(etape < trajetCourant.obtenirNombreEtapes())
             {
-                LocalTime heureCourante = passagers.get(passagerCourant);
-                
-                int etape = 0;
-                Trajet trajetCourant = passagerCourant.getTrajet();
-                
-                boolean passagerRenduADestination = true;
-                while(etape < trajetCourant.obtenirNombreEtapes())
+                ElementTrajet etapeCourante = trajetCourant.obtenirEtape(etape);
+                if(tout.containsKey(etapeCourante.getPointMontee()))
                 {
-                    ElementTrajet etapeCourante = trajetCourant.obtenirEtape(etape);
-                    if(tout.containsKey(etapeCourante.getPointMontee()))
+                    Map<Circuit, SortedSet<LocalTime>> circuitsParPoint = tout.get(etapeCourante.getPointMontee());
+                    if(circuitsParPoint.containsKey(etapeCourante.getCircuit()))
                     {
-                        Map<Circuit, SortedSet<LocalTime>> circuitsParPoint = tout.get(etapeCourante.getPointMontee());
-                        if(circuitsParPoint.containsKey(etapeCourante.getCircuit()))
+                        LocalTime heurePassage = obtenirProchaineHeurePassage(heureCourante, circuitsParPoint.get(etapeCourante.getCircuit()));
+                        if(heurePassage != null)
                         {
-                            LocalTime heurePassage = obtenirProchaineHeurePassage(heureCourante, circuitsParPoint.get(etapeCourante.getCircuit()));
-                            if(heurePassage != null)
-                            {
-                                heureCourante = heurePassage;
+                            heureCourante = heurePassage;
 
-                                heureCourante = heureCourante.plusSeconds((long)etapeCourante.getCircuit().obtenirTempsTransitTotalSousCircuitEnSecondes(etapeCourante.getPointMontee(), etapeCourante.getPointDescente()));
+                            heureCourante = heureCourante.plusSeconds((long)etapeCourante.getCircuit().obtenirTempsTransitTotalSousCircuitEnSecondes(etapeCourante.getPointMontee(), etapeCourante.getPointDescente()));
 
-                                etape += 1;
-                                continue;
-                            }
+                            etape += 1;
+                            continue;
                         }
                     }
-                    passagerRenduADestination = false;
-                    break;
                 }
-                
-                if(passagerRenduADestination)
-                {
-                    passagerCourant.comptabiliserPassagerDansStatistiquesProfilPassager(heureCourante);
-                }
+                passagerRenduADestination = false;
+                break;
             }
-            
-            JourneeCourante += 1;
+
+            if(passagerRenduADestination)
+            {
+                passagerCourant.comptabiliserPassagerDansStatistiquesProfilPassager(heureCourante);
+            }
         }
     }
     
@@ -498,8 +497,6 @@ public class Simulation extends Observable implements Serializable{
         
         return null;
     }
-    
-    
     
     private Map<Vehicule, LocalTime> genererTousVehicules()
     {
@@ -639,4 +636,16 @@ public class Simulation extends Observable implements Serializable{
         }
     }
 
+    public String obtenirStatistiques()
+    {
+        StringBuilder sb = new StringBuilder();
+        for(ProfilPassager pp : profils)
+        {
+            sb.append(pp.toString());
+            sb.append("\r\n");
+            sb.append(pp.obtenirStatistiques());
+            sb.append("\r\n");
+        }
+        return sb.toString();
+    }
 }

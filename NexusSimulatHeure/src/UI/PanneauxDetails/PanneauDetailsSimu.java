@@ -3,8 +3,9 @@ package UI.PanneauxDetails;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import javax.swing.JFrame;
 
-public class PanneauDetailsSimu extends javax.swing.JFrame{
+public class PanneauDetailsSimu extends javax.swing.JDialog {
 
     //private Controleur.Simulateur simulateur;
     private Metier.Simulation.ParametreSimulation paramSimulation;
@@ -15,8 +16,8 @@ public class PanneauDetailsSimu extends javax.swing.JFrame{
         initComponents();
     }
     
-    public PanneauDetailsSimu(Controleur.Simulateur s) {
-        super();
+    public PanneauDetailsSimu(JFrame frameParent, Controleur.Simulateur s) {
+        super(frameParent);
         initComponents();
         
         this.simulateur = s;
@@ -369,7 +370,8 @@ public class PanneauDetailsSimu extends javax.swing.JFrame{
     }//GEN-LAST:event_BoutonSauvegarderActionPerformed
 
     private void BoutonRetourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonRetourActionPerformed
-        this.setVisible(false);
+        this.dispose();
+        
     }//GEN-LAST:event_BoutonRetourActionPerformed
 
     private void RadioSecondeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_RadioSecondeItemStateChanged

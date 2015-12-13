@@ -322,10 +322,17 @@ public class ContexteEdition {
         if(!pointCreateur.estArret())
             throw new ChangementDeCircuitInvalideException();
         
-        ElementTrajet nouvelElement = new ElementTrajet(circuitActif, dernierPointDeMonte, pointCreateur);
-        trajetEnCreation.ajouterElementTrajet(nouvelElement);
-        dernierPointDeMonte = pointCreateur;
-        circuitActif = c;
+        if(dernierPointDeMonte != pointCreateur)
+        {
+            ElementTrajet nouvelElement = new ElementTrajet(circuitActif, dernierPointDeMonte, pointCreateur);
+            trajetEnCreation.ajouterElementTrajet(nouvelElement);
+            dernierPointDeMonte = pointCreateur;
+            circuitActif = c;
+        }
+        else
+        {
+            circuitActif = c;
+        }
     }
     
     public void annulerCreationTrajet(){

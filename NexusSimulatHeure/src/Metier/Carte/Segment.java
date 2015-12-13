@@ -8,7 +8,8 @@ public class Segment extends Observable implements Serializable{
     private final Point pointDepart;
     private final Point pointArrivee;
     private Distribution distribution;
-    private double tempsTransit;
+    private double[] tempsTransit;
+    private int journee;
     private boolean existe;
     
     public Segment(Point pointDepart, Point pointArrivee, Distribution distribution) {
@@ -36,7 +37,19 @@ public class Segment extends Observable implements Serializable{
     }
     
     public double getTempsTransit() {
-        return tempsTransit;
+        if(tempsTransit == null || tempsTransit.length == 0)
+            return 0.0;
+        return tempsTransit[journee];
+    }
+    
+    public void setJournee(int journee)
+    {
+        this.journee = journee;
+    }
+    
+    public int getJournee()
+    {
+        return this.journee;
     }
     
     public double obtenirMoyenneTempsTransit() {
@@ -51,13 +64,17 @@ public class Segment extends Observable implements Serializable{
         return this.distribution;
     }
     
-    public void recevoirNouveauTempsTransit() {
-        tempsTransit = distribution.obtenirProchaineValeurAleatoire();
+    public void recevoirNouveauTempsTransit(int nbJournees) {
+        tempsTransit = new double[nbJournees];
+        for(int i = 0; i < nbJournees; i++)
+        {
+            tempsTransit[i] = distribution.obtenirProchaineValeurAleatoire();
+        }
         notifyObservers();
     }
     
     public void retirerTempsTransit() {
-        tempsTransit = 0;
+        tempsTransit = null;
     }
     
     @Override

@@ -40,15 +40,14 @@ public class ProfilPassagerFini extends ProfilPassager{
     }
     
     @Override
-    protected void reInitialiserValeursDepartSimulation() {
+    public void reInitialiserValeursDepartSimulation() {
         nombreCree = 0;
         prochaineGeneration = heureDebut;
-        statistiques = new Statistiques();
     }
     
     @Override
     public String obtenirDescriptionProfil() {
-        return ((Integer)nombreMax).toString() + " p., à partir de " + heureDebut.format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE);
+        return ((Integer)nombreMax).toString() + " p., à partir de " + heureDebut.format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE) + " : " + trajet.toString();
     }
     
     @Override

@@ -29,7 +29,7 @@ public class ProfilPassagerHeureFin extends ProfilPassager {
     }
     @Override
     public String obtenirDescriptionProfil() {
-        return heureDebut.format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE) + " à " + heureFin.format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE);
+        return heureDebut.format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE) + " à " + heureFin.format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE) + " : " + trajet.toString();
     }
 
     private boolean generationTerminee = false;
@@ -55,9 +55,8 @@ public class ProfilPassagerHeureFin extends ProfilPassager {
     }
 
     @Override
-    protected void reInitialiserValeursDepartSimulation() {
+    public void reInitialiserValeursDepartSimulation() {
         prochaineGeneration = heureDebut;
-        statistiques = new Statistiques();
         generationTerminee = false;
     }
     

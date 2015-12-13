@@ -45,7 +45,14 @@ public class Passager implements Serializable{
 
     public void comptabiliserPassagerDansStatistiquesProfilPassager(LocalTime heureDestination)
     {
-        this.profilPassager.comptabiliserPassager(ChronoUnit.SECONDS.between(heureCreation, heureDestination));
+        double temps = ChronoUnit.SECONDS.between(heureCreation, heureDestination);
+        if(temps < 0)
+        {
+            temps += (24 * 60 * 60);
+        }
+            
+        this.profilPassager.comptabiliserPassager(temps);
+                    
     }
     
     public Trajet getTrajet()
