@@ -122,13 +122,13 @@ public class PanneauDetailsProfilPassager extends PanneauDetails implements java
     {
         String validations = "";
       
-        if(!java.util.regex.Pattern.matches(UI.Constantes.Validations.REGEX_FORMAT_HEURE, ChampHeureDepart.getText()))
+        if(!java.util.regex.Pattern.matches(UI.Constantes.Validations.REGEX_FORMAT_HEURE, ChampHeureDepart.getText().trim()))
         {
             validations += "L'heure de début de génération des passagers doit être inscrite dans un format 00:00:00.\r\n";
         }
         if(RadioHeureFin.isSelected())
         {
-            if(!java.util.regex.Pattern.matches(UI.Constantes.Validations.REGEX_FORMAT_HEURE, ChampHeureFin.getText()))
+            if(!java.util.regex.Pattern.matches(UI.Constantes.Validations.REGEX_FORMAT_HEURE, ChampHeureFin.getText().trim()))
             {
                 validations += "L'heure de fin de génération des passagers doit être inscrite dans un format 00:00:00.\r\n";
             }
