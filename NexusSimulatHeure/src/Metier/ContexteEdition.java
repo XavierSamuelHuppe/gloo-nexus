@@ -186,6 +186,9 @@ public class ContexteEdition {
     public void commencerContinuerCreationCircuit(Point p){
         if(!estEnModeCircuit())
             throw new EditionEnMauvaisModeException();
+        if(!p.estArret() && !possedePointCreateur())
+            throw new MauvaisPointDeDepartException();
+            
         Point monPointCreateur = null;
         try
         {

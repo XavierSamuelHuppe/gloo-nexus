@@ -5,6 +5,7 @@ import Metier.SituationVehicule;
 import Metier.Exceptions.AucunCheminPossibleException;
 import Metier.Exceptions.AucunCircuitActifException;
 import Metier.Exceptions.AucunPointCreateurException;
+import Metier.Exceptions.CircuitNeContientAucunSegmentException;
 import Metier.Exceptions.EditionEnMauvaisModeException;
 import Metier.Exceptions.MauvaisPointDeDepartException;
 import Metier.Exceptions.PointPasSurCircuitActifException;
@@ -429,6 +430,10 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
             catch(AucunPointCreateurException ex)
             {
                 System.err.println("AucunPointCreateurException");
+            }
+            catch(MauvaisPointDeDepartException ex)
+            {
+                JOptionPane.showMessageDialog(this.obtenirApplication(), "Un nouveau circuit doit commencer sur un arrêt.", "Point de départ de circuit invalide.", JOptionPane.ERROR_MESSAGE);
             }
             catch(AucunCheminPossibleException ex)
             {

@@ -13,6 +13,9 @@ public class CircuitBuilder {
         if(nom.isEmpty())
             throw new CreationInvalideException("Le nom du circuit est obligatoire.");
         
+        if(!segments.get(segments.size() - 1).getPointArrivee().estArret())
+            throw new CreationInvalideException("Le point d'arrivée du circuit doit être un arrêt.");
+                
         Circuit nouveauCircuit;
         
         int indexDebut = 0;
