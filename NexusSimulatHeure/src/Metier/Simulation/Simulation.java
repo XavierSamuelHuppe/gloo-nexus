@@ -11,6 +11,7 @@ import Metier.Circuit.Vehicule;
 import Metier.Distribution;
 import java.io.Serializable;
 import java.time.temporal.ChronoUnit;
+import javafx.scene.transform.Transform;
 
 public class Simulation extends Observable implements Serializable{
     private ParametreSimulation parametres;
@@ -105,7 +106,7 @@ public class Simulation extends Observable implements Serializable{
         initialiserHeureDebut();
         
         setChanged();
-        notifyObservers(true);
+        notifyObservers();
     }
     
     private void initialiserDepartSimulation(){
@@ -155,7 +156,12 @@ public class Simulation extends Observable implements Serializable{
         
         if(!doitContinuerJournee()){
             if(derniereJournee())
+            {
                 arreter();
+                //Afficher les statistiques.
+                setChanged();
+                notifyObservers(true);
+            }
             else{
                 JourneeCourante += 1;
                 initialiserDepartNouvelleJournee();

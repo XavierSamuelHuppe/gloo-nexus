@@ -165,10 +165,12 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     
     private void _ajouterPoint(MouseEvent me, boolean estArret)
     {
-        PaireDoubles pd = transformerPositionEspaceTravailEnPostionGeorgraphique(transformerPositionViewportEnPositionEspaceTravail(me.getPoint()));
+        java.awt.Point posAjustee = new java.awt.Point(me.getX() - calculerZoom(Point.DIAMETRE / 2), me.getY() - calculerZoom(Point.DIAMETRE / 2));
+        
+        PaireDoubles pd = transformerPositionEspaceTravailEnPostionGeorgraphique(transformerPositionViewportEnPositionEspaceTravail(posAjustee));
         Metier.Carte.Point mp = this.simulateur.ajouterPoint(pd.getPremier(), pd.getSecond(), estArret, "");
         
-        Point p = new Point(me.getX() - (Point.DIAMETRE / 2),me.getY() - (Point.DIAMETRE / 2), this.zoom, mp);
+        Point p = new Point(posAjustee.x, posAjustee.y, this.zoom, mp);
         
         points.add(p);
 
@@ -176,6 +178,11 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         this.repaint();
     }
 
+    private int calculerZoom(double d)
+    {
+        return (int)(d*zoom);
+    }
+        
     public void retirerPoint(Point p){
         points.remove(p);
         this.remove(p);

@@ -19,8 +19,8 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
     
     @Override
     public void rafraichir() {
-        this.ChampLatitude.setText(String.format("%1$.9f", pointMetierLie.getPosition().getY()));
-        this.ChampLongitude.setText(String.format("%1$.9f", pointMetierLie.getPosition().getX()));
+        this.ChampLatitude.setText(String.format("%1$.6f", pointMetierLie.getPosition().getY()));
+        this.ChampLongitude.setText(String.format("%1$.6f", pointMetierLie.getPosition().getX()));
         this.ChampNom.setText(pointMetierLie.getNom());
         
         if(this.pointMetierLie.estArret())
