@@ -34,11 +34,11 @@ public class Simulateur {
            out.writeObject(simulation);
            out.close();
            fileOut.close();
-           System.out.printf("Simulation enregistré sous sauvegarde.ser");
+           System.out.println("Simulation enregistré sous sauvegarde.ser");
            return true;
         }catch(IOException i){
             i.printStackTrace();
-            System.out.printf("ERREUR - la serialisation a explosé!");
+            System.out.println("ERREUR - la serialisation a explosé!");
             return false;
         }
     }
@@ -72,6 +72,9 @@ public class Simulateur {
         return carte.getSegments();
     }
  
+    public boolean estEnModeAucun(){
+        return contexte.estEnModeAucun();
+    }
     public boolean estEnModeArret(){
         return contexte.estEnModeArret();
     }
@@ -113,11 +116,19 @@ public class Simulateur {
         simulation.arreter();
     }
     public void demarerRedemarer(){
+        this.contexte.passerEnModeAucun();
         if(simulation.getParametres().estEnPause())
             simulation.redemarrer();
         else if (simulation.getParametres().estAvantDemarrage())
             simulation.demarrer();
     }
+    
+    public void recommencer()
+    {
+        this.contexte.passerEnModeAucun();
+        simulation.recommencer();
+    }
+    
     public void pauser(){
         simulation.pauser();
     }
@@ -367,6 +378,7 @@ public class Simulateur {
         if(contexte.circuitEstEnCoursDeCreation()){
             Circuit nouveauCircuit = contexte.obtenirNouveauCircuit(nom);
             simulation.ajouterCircuit(nouveauCircuit);
+            contexte.viderCircuitEnCreation();
         }
         else{
             simulation.modifierCircuit(contexte.getCircuitActif(), nom);
@@ -433,6 +445,10 @@ public class Simulateur {
         return this.simulation.getParametres().getDistributionTempsGenerationVehiculeDefaut();
     }
     
+    public Metier.Distribution obtenirDistributionTempsGenerationPassagersDefaut(){
+        return this.simulation.getParametres().getDistributionTempsGenerationPassagerDefaut();
+    }
+    
     public LocalTime obtenirHeureDebutSimulation(){
         return this.getParametresSimulation().getHeureDebut();
     }
@@ -470,7 +486,7 @@ public class Simulateur {
     public boolean possedeUnTrajetEnCoursDeCreation(){
         return contexte.possedeUnTrajetEnCoursDeCreation();
     }
-    //!!!!
+    
     public boolean segmentEstDansCircuitActifPourCreationTrajet(Segment segment){
         
         return estDansCircuitActif(segment);
@@ -478,10 +494,6 @@ public class Simulateur {
     public boolean pointEstDansCircuitActifPourCreationTrajet(Point point){
         return estDansCircuitActif(point);
     }
-    
-    
-    
-    
     
     public boolean estDansTrajetActif(Point point){
         try{
@@ -511,10 +523,16 @@ public class Simulateur {
             return false;
         }
     }
-//    public boolean estDansAuMoinsUnTrajet(Point point){
-//        return simulation.trajetsPassantPar(point).size() > 0;
-//    }
-//    public boolean estDansAuMoinsUnTrajet(Segment segment){
-//        return simulation.trajetsPassantPar(segment).size() > 0;
-//    }
+    
+    public void executerSimulationInstantanement()
+    {
+        this.simulation.executerInstantanement(false);
+    }
+    
+    
+    
+    public String obtenirStatistiques()
+    {
+        return simulation.obtenirStatistiques();
+    }
 }

@@ -10,6 +10,7 @@ import java.util.*;
 public class ContexteEdition {
 
     public static enum ModeEdition {
+        AUCUN,
         INTERSECTION,
         ARRET,
         SEGMENT,
@@ -50,6 +51,9 @@ public class ContexteEdition {
         this.simulation = simulation;
     }
     
+    public boolean estEnModeAucun(){
+        return mode == ModeEdition.AUCUN;
+    }
     public boolean estEnModeArret(){
         return mode == ModeEdition.ARRET;
     }
@@ -68,7 +72,10 @@ public class ContexteEdition {
     public boolean estEnModePassager(){
         return mode == ModeEdition.PASSAGER;
     }
-    
+    public void passerEnModeAucun(){
+        appliquerChangementMode();
+        mode = ModeEdition.AUCUN;
+    }
     public void passerEnModeArret(){
         appliquerChangementMode();
         mode = ModeEdition.ARRET;
@@ -179,6 +186,9 @@ public class ContexteEdition {
     public void commencerContinuerCreationCircuit(Point p){
         if(!estEnModeCircuit())
             throw new EditionEnMauvaisModeException();
+        if(!p.estArret() && !possedePointCreateur())
+            throw new MauvaisPointDeDepartException();
+            
         Point monPointCreateur = null;
         try
         {
@@ -258,26 +268,11 @@ public class ContexteEdition {
     {
         return possedeUnTrajetEnCoursDeCreation() && trajetEnCreation.contientAuMoinsUneEtape();
     }
-    
-//    public boolean segmentEstDansCircuitActifPourCreationTrajet(Segment segment){
-//        return circuitActif.utilise(segment);
-//    }
-//    public boolean pointEstDansCircuitActifPourCreationTrajet(Point point){
-//        if(point == this.pointCreateur)
-//            return true;
-//        
-//        for(Segment s: trajetEnCreationEnSegments){
-//            if(s.getPointDepart().equals(point) ||
-//               s.getPointArrivee().equals(point))
-//                return true;
-//        }
-//        return false;
-//    }
-    
+       
     public void commencerContinuerCreationTrajet(Point p){
         if(!estEnModePassager())
             throw new EditionEnMauvaisModeException();
-        if(!p.estArret() && simulation.circuitsPassantPar(p).size() == 0)
+        if(simulation.circuitsPassantPar(p).size() == 0)
             throw new MauvaisPointDeDepartException();
         if(!possedePointCreateur()){
             setPointCreateur(p);
@@ -300,7 +295,7 @@ public class ContexteEdition {
                 Segment segmentAAjouter = carte.obtenirSegment(monPointCreateur, p);
                 trajetEnCreationEnSegments.add(segmentAAjouter);
             }else{
-                List<Segment> segmentsAAjouter = carte.plusCourtCheminEnTempsMoyen(monPointCreateur, p);
+                List<Segment> segmentsAAjouter = circuitActif.obtenirSousCircuit(monPointCreateur, p);
                 trajetEnCreationEnSegments.addAll(segmentsAAjouter);
             }
         }catch(AucunCheminPossibleException e){
@@ -322,10 +317,17 @@ public class ContexteEdition {
         if(!pointCreateur.estArret())
             throw new ChangementDeCircuitInvalideException();
         
-        ElementTrajet nouvelElement = new ElementTrajet(circuitActif, dernierPointDeMonte, pointCreateur);
-        trajetEnCreation.ajouterElementTrajet(nouvelElement);
-        dernierPointDeMonte = pointCreateur;
-        circuitActif = c;
+        if(dernierPointDeMonte != pointCreateur)
+        {
+            ElementTrajet nouvelElement = new ElementTrajet(circuitActif, dernierPointDeMonte, pointCreateur);
+            trajetEnCreation.ajouterElementTrajet(nouvelElement);
+            dernierPointDeMonte = pointCreateur;
+            circuitActif = c;
+        }
+        else
+        {
+            circuitActif = c;
+        }
     }
     
     public void annulerCreationTrajet(){
@@ -337,6 +339,8 @@ public class ContexteEdition {
     public Trajet terminerConstructionTrajet(){
         if(!pointCreateur.estArret())
             throw new MauvaisPointArriveException();
+        if(trajetEnCreation.obtenirNombreEtapes() == 0 && dernierPointDeMonte == pointCreateur)
+            throw new TrajetVideException();
         
         ElementTrajet nouvelElement = new ElementTrajet(circuitActif, dernierPointDeMonte, pointCreateur);
         trajetEnCreation.ajouterElementTrajet(nouvelElement);

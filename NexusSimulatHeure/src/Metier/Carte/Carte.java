@@ -22,9 +22,18 @@ public class Carte implements Serializable{
         return points;
     }
     
-    public void initialiserDepartSimulation(){
+    public void initialiserDepartSimulation(int nbJournees){
         for(Segment s: segments){
-            s.recevoirNouveauTempsTransit();
+            s.recevoirNouveauTempsTransit(nbJournees);
+        }
+        for(Point p: points){
+            p.viderConteneurPassager();
+        }
+    }
+    
+    public void initialiserNouvelleJourneeSimulation(int journee){
+        for(Segment s: segments){
+            s.setJournee(journee);
         }
         for(Point p: points){
             p.viderConteneurPassager();

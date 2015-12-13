@@ -146,6 +146,9 @@ public class Segment implements IDetailsAffichables, Observer {
     
     public boolean estSegmentClique(java.awt.Point p)
     {
+        if(this.obtenirEspaceTravail().obtenirApplication().getSimulateur().estEnModeAucun())
+            return false;
+        
         return detectionClic.estSegmentClique(p);
     }
 
@@ -207,4 +210,9 @@ public class Segment implements IDetailsAffichables, Observer {
         return this.pointDepart.getZoom();
     }
         
+    
+    public EspaceTravail obtenirEspaceTravail()
+    {
+        return this.espaceTravail;
+    }
 }

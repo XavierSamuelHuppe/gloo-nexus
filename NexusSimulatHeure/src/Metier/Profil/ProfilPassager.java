@@ -9,20 +9,24 @@ import Metier.Simulation.Simulation;
 import Metier.Simulation.Statistiques;
 import java.io.Serializable;
 import java.time.LocalTime;
+import java.util.Map;
 
 public abstract class ProfilPassager implements Serializable{
-    private Trajet trajet;
+    protected Trajet trajet;
     private Point pointDepart;
     protected LocalTime heureDebut;
-    private double frequence;
+    private double[] frequence;
+    private int journee;
     public Distribution distributionAUtiliser;
     public transient Statistiques statistiques;
+    protected Simulation simulation;
     
     public ProfilPassager(Point pointDepart, LocalTime heureDepart, Distribution distribution, Trajet trajet, Simulation simulation){
         this.heureDebut = heureDepart;
         this.pointDepart = pointDepart;
         this.trajet = trajet;
         this.distributionAUtiliser = distribution;
+        this.simulation = simulation;
         this.statistiques = new Statistiques();
     }
     public Point getPointDepart(){
@@ -38,16 +42,17 @@ public abstract class ProfilPassager implements Serializable{
         return heureDebut;
     }
     public double getFrequence(){
-        return frequence;
+        return frequence[journee];
+    }
+    public void setJournee(int journee)
+    {
+        this.journee = journee;
     }
     public void setPointDepart(Point point){
         pointDepart = point;
     }
     public void setHeureDepart(LocalTime heureD){
         heureDebut = heureD;
-    }
-    public void setFrequence(int freq){
-        frequence = freq;
     }
     public void setDistribution(Distribution d) {
         this.distributionAUtiliser = d;
@@ -57,34 +62,57 @@ public abstract class ProfilPassager implements Serializable{
         return this.trajet;
     }
         
-    public void pigerDonneesDepartNouvelleJournee()
+    public void pigerDonneesDepart(int nbJournees)
     {
-        frequence = distributionAUtiliser.obtenirProchaineValeurAleatoire();
+                frequence = new double[nbJournees];
+        for(int i = 0; i < nbJournees; i++)
+        {
+            frequence[i] = distributionAUtiliser.obtenirProchaineValeurAleatoire();    
+        }
         reInitialiserValeursDepartSimulation();
     }
     
-    public Passager genererPassager(){
-        Passager nouveauPassager = new Passager(this, trajet, pointDepart);
+    public Passager genererPassager(LocalTime heureCreation){
+        Passager nouveauPassager = new Passager(this, trajet, pointDepart, heureCreation);
         pointDepart.faireArriverNouveauPassager(nouveauPassager);
         return nouveauPassager;
     }
     
     public void retirerTempsGeneration(){
-        frequence = 0;
+        frequence = null;
     }
     
-    public void comptabiliserTempsAttente(double tempsAttente)
+    public void comptabiliserPassager(double temps)
     {
-        statistiques.ajouterDonnee(tempsAttente);
+        statistiques.ajouterDonnee(temps);
     }
     
-    public Statistiques getStatistiques()
+    public void reinitialiserStatistiques()
     {
-        return this.statistiques;
+        if(statistiques == null)
+            statistiques = new Statistiques();
+        else
+            statistiques.reinitialiser();
     }
+    
+    public void commencerNouvelleJourneeStatistiques()
+    {
+        statistiques.creerNouvelleJournee();
+    }
+    
+    public String obtenirStatistiques()
+    {
+        return statistiques.toString();
+    }
+    
+    
+//    public Statistiques getStatistiques()
+//    {
+//        return this.statistiques;
+//    }
     
     public abstract void avancerGeneration(LocalTime heureCourante, double tempsEcouleParRatioEnSeconde);
-    protected abstract void reInitialiserValeursDepartSimulation();
+    public abstract void reInitialiserValeursDepartSimulation();
     
     public abstract String obtenirDescriptionProfil();
     @Override
@@ -92,4 +120,7 @@ public abstract class ProfilPassager implements Serializable{
     {
         return this.obtenirDescriptionProfil();
     }
+    
+    public abstract Map<Passager, LocalTime> genererTousPassagersAvecMoment();
+    
 }

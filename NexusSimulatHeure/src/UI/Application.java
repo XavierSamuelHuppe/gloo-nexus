@@ -75,11 +75,17 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         this.BoutonModeProfilPassager.addActionListener(this);        
     }
 
-    
     @Override
     public void update(Observable o, Object o1) {
         //System.out.println("S'passe de quoi.");
         rafraichir();
+        
+        //Simulation terminée normalement.
+        if(o1 != null && o1 instanceof Boolean && (boolean)o1)
+        {
+            deverrouillerBarreBoutons();
+            afficherStatistiques();
+        }
     }
 
     private void rafraichir()
@@ -158,11 +164,9 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     
     public void afficherParametreSimulation()
     {
-        UI.PanneauxDetails.PanneauDetailsSimu testPanel;
-        testPanel = new UI.PanneauxDetails.PanneauDetailsSimu(this.simulateur);
-        final javax.swing.JDialog frame = new javax.swing.JDialog(this, "Paramètres Simulation", true);
-        frame.getContentPane().add(testPanel);
+        UI.PanneauxDetails.PanneauDetailsSimu frame = new UI.PanneauxDetails.PanneauDetailsSimu(this, this.simulateur);
         frame.setResizable(false);
+        frame.setModal(true);
         frame.pack();
         frame.setLocationRelativeTo(this);
         frame.setVisible(true);
@@ -325,10 +329,10 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         this.revalidate();
     }
     
-    public void afficherPanneauDetailsProfilPassagerNouveauProfil(Metier.Carte.Point point)
+    public void afficherPanneauDetailsProfilPassagerNouveauProfil()
     {
         this.PanneauDetails.removeAll();
-        this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsProfilPassager(point, this.simulateur));
+        this.PanneauDetails.add(new UI.PanneauxDetails.PanneauDetailsProfilPassager(this.simulateur));
         this.PanneauDetails.repaint();
         
         this.revalidate();
@@ -343,6 +347,10 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         this.revalidate();
     }
     
+    public boolean panneauDetailsEstPresentementAffiche()
+    {
+        return this.PanneauDetails.getComponentCount() > 0;
+    }
     
     
     public EspaceTravail getEspaceTravail() {
@@ -404,6 +412,8 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         PanneauEtat = new javax.swing.JPanel();
         PanneauEtatGauche = new javax.swing.JPanel();
         PanneauControleSimulation = new javax.swing.JPanel();
+        BoutonSimulationInfinie = new javax.swing.JButton();
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0));
         BoutonDemarrerPause = new javax.swing.JButton();
         BoutonArreter = new javax.swing.JButton();
         BoutonRedemarrer = new javax.swing.JButton();
@@ -537,7 +547,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         });
         PanneauBarreOutilsBoutons.add(BoutonModeArret);
 
-        BoutonModeIntersection.setText("+");
+        BoutonModeIntersection.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/cross-2x.png"))); // NOI18N
         BoutonModeIntersection.setToolTipText("Édition d'intersections");
         BoutonModeIntersection.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonModeIntersection.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -614,8 +624,24 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
 
         PanneauControleSimulation.setLayout(new javax.swing.BoxLayout(PanneauControleSimulation, javax.swing.BoxLayout.LINE_AXIS));
 
+        BoutonSimulationInfinie.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/infinity-2x.png"))); // NOI18N
+        BoutonSimulationInfinie.setToolTipText("Exécuter la simulation instantanément");
+        BoutonSimulationInfinie.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        BoutonSimulationInfinie.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        BoutonSimulationInfinie.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        BoutonSimulationInfinie.setMaximumSize(new java.awt.Dimension(24, 24));
+        BoutonSimulationInfinie.setMinimumSize(new java.awt.Dimension(24, 24));
+        BoutonSimulationInfinie.setPreferredSize(new java.awt.Dimension(24, 24));
+        BoutonSimulationInfinie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BoutonSimulationInfinieActionPerformed(evt);
+            }
+        });
+        PanneauControleSimulation.add(BoutonSimulationInfinie);
+        PanneauControleSimulation.add(filler2);
+
         BoutonDemarrerPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/media-play-2x.png"))); // NOI18N
-        BoutonDemarrerPause.setToolTipText("Lancer simulation");
+        BoutonDemarrerPause.setToolTipText("Lancer la simulation");
         BoutonDemarrerPause.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonDemarrerPause.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         BoutonDemarrerPause.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -736,9 +762,11 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
             
             this.simulateur = new Simulateur();
             this.simulateur.ajouterObserveurASimulation(this);
+            this.simulateur.modfierVitesse(100 * SliderVitesse.getValue());
             
             this.getEspaceTravail().reinitialiser();
             this.getEspaceTravail().setSimulateur(this.simulateur);
+            
             this.passerEnModeArret();
             this.repaint();
             this.revalidate();
@@ -746,17 +774,21 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     }//GEN-LAST:event_BoutonNouveauActionPerformed
 
     private void BoutonDemarrerPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonDemarrerPauseActionPerformed
+        verrouillerBarreBoutons();
         if(this.simulateur.simulationEstEnAction()) {
             this.simulateur.pauser();
         }
         else {
             this.simulateur.demarerRedemarer();
         }
+        reinitialiserAffichageAvantChangementMode();
         rafraichirIconeBoutonDemarrerPause();
     }//GEN-LAST:event_BoutonDemarrerPauseActionPerformed
 
     private void BoutonArreterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonArreterActionPerformed
         this.simulateur.arreter();
+        deverrouillerBarreBoutons();
+        reinitialiserAffichageAvantChangementMode();
         rafraichirIconeBoutonDemarrerPause();
         afficherHeureCourante();
     }//GEN-LAST:event_BoutonArreterActionPerformed
@@ -820,18 +852,27 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
             JOptionPane.showMessageDialog(this, "Le chargement a explosé!");
         }
     }//GEN-LAST:event_BoutonChargerActionPerformed
+
+    private void BoutonSimulationInfinieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSimulationInfinieActionPerformed
+        this.simulateur.executerSimulationInstantanement();
+        afficherStatistiques();
+    }//GEN-LAST:event_BoutonSimulationInfinieActionPerformed
+    
+    private void afficherStatistiques()
+    {
+        DialogueStatistiques dialog = new DialogueStatistiques(this, this.simulateur);
+        dialog.setResizable(false);
+        dialog.setModal(true);
+        dialog.pack();
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }
     
     public void remplirListeCircuitTrajet(Metier.Carte.Point p)
     {
         List<Circuit> circuits = this.simulateur.circuitsPassantPar(p);
-        if(circuits.size() == 0)
-        {
-            JOptionPane.showMessageDialog(this, "Vous devez choisir un arrêt figurant dans un circuit.", "Création invalide d'un trajet.", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        System.out.println("remove");
+
         ListeCircuitTrajet.removeActionListener(actionListenerListeCircuitTrajet);
-        System.out.println("remplirListeCircuitTrajet");
         
         Metier.Circuit.Circuit circuitCourant = (Metier.Circuit.Circuit)ListeCircuitTrajet.getSelectedItem();
 
@@ -843,7 +884,6 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         
         ListeCircuitTrajet.setSelectedItem(circuitCourant);
         
-        System.out.println("add");
         ListeCircuitTrajet.addActionListener(actionListenerListeCircuitTrajet);
         
         if(!PanneauBarreOutilsChoixCircuitTrajet.isVisible())
@@ -875,6 +915,40 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         ListeCircuitTrajet.removeAllItems();
         PanneauBarreOutilsChoixCircuitTrajet.setVisible(false);
         this.revalidate();
+    }
+    
+    private void verrouillerBarreBoutons()
+    {
+        BoutonNouveau.setEnabled(false);
+        BoutonSauvegarder.setEnabled(false);
+        BoutonCharger.setEnabled(false);
+        BoutonAnnuler.setEnabled(false);
+        BoutonRepeter.setEnabled(false);
+        BoutonParametres.setEnabled(false);
+        BoutonImageFond.setEnabled(false);
+        BoutonModeArret.setEnabled(false);
+        BoutonModeIntersection.setEnabled(false);
+        BoutonModeSegment.setEnabled(false);
+        BoutonModeCircuit.setEnabled(false);
+        BoutonModeSource.setEnabled(false);
+        BoutonModeProfilPassager.setEnabled(false);
+    }
+    
+    private void deverrouillerBarreBoutons()
+    {
+        BoutonNouveau.setEnabled(true);
+        BoutonSauvegarder.setEnabled(true);
+        BoutonCharger.setEnabled(true);
+        BoutonAnnuler.setEnabled(true);
+        BoutonRepeter.setEnabled(true);
+        BoutonParametres.setEnabled(true);
+        BoutonImageFond.setEnabled(true);
+        BoutonModeArret.setEnabled(true);
+        BoutonModeIntersection.setEnabled(true);
+        BoutonModeSegment.setEnabled(true);
+        BoutonModeCircuit.setEnabled(true);
+        BoutonModeSource.setEnabled(true);
+        BoutonModeProfilPassager.setEnabled(true);
     }
     
     /**
@@ -932,6 +1006,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     private javax.swing.JButton BoutonRedemarrer;
     private javax.swing.JButton BoutonRepeter;
     private javax.swing.JButton BoutonSauvegarder;
+    private javax.swing.JButton BoutonSimulationInfinie;
     private javax.swing.JLabel LibelleCircuit;
     private javax.swing.JLabel LibelleCoordonneesGeographiques;
     private javax.swing.JLabel LibelleHeureCourante;
@@ -953,6 +1028,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     private javax.swing.JSlider SliderVitesse;
     private UI.EspaceTravail ZoneEspaceTravail;
     private javax.swing.Box.Filler filler1;
+    private javax.swing.Box.Filler filler2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     // End of variables declaration//GEN-END:variables

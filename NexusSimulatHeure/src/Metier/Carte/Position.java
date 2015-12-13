@@ -36,4 +36,11 @@ public class Position implements Serializable{
         Position autrePosition = (Position)o;
         return (X == autrePosition.getX() && Y == autrePosition.getY());
     }
+    
+    @Override
+    public String toString()
+    {
+        return String.format("%1$.4f, %2$.4f", this.X, this.Y);
+                
+    }
 }

@@ -1,11 +1,11 @@
 package Metier.Simulation;
 
-import Metier.Profil.Passager;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Statistiques {
-    private double tempsMoyen = 0;
-    private double tempsMinimal = 0;
-    private double tempsMaximal = 0;
+    private List<JourneeStatistiques> journees = new LinkedList<>();
+    private JourneeStatistiques journeeCourante;
     
     private int nbElements = 0;
     private double tempsTotal = 0;
@@ -15,27 +15,69 @@ public class Statistiques {
         nbElements += 1;
         tempsTotal += temps;
         
-        if(temps < tempsMinimal)
-            tempsMinimal = temps;
+        if(temps < journeeCourante.tempsMinimal)
+            journeeCourante.tempsMinimal = temps;
         
-        if(temps > tempsMaximal)
-            tempsMaximal = temps;
+        if(temps > journeeCourante.tempsMaximal)
+            journeeCourante.tempsMaximal = temps;
         
-        tempsMoyen = (double)(tempsTotal / nbElements);
+        journeeCourante.tempsMoyen = (double)(tempsTotal / nbElements);
+        
+        journeeCourante.aStats = true;
     }
     
-    public double getTempsMoyen()
+    public void creerNouvelleJournee()
     {
-        return tempsMoyen;
+        journeeCourante = new JourneeStatistiques();
+        journees.add(journeeCourante);
+        nbElements = 0;
+        tempsTotal = 0;
     }
     
-    public double tempsMinimal()
+    public void reinitialiser()
     {
-        return tempsMinimal;
+        journeeCourante = null;
+        journees.clear();
+        nbElements = 0;
+        tempsTotal = 0;
     }
     
-    public double tempsMaximal()
+    @Override
+    public String toString()
+    {    
+        StringBuilder sb = new StringBuilder();
+        int i = 1;
+        for(JourneeStatistiques journee : journees)
+        {
+            sb.append("Journée ");
+            sb.append(i);
+            sb.append(" : ");
+            sb.append(journee.toString());
+            sb.append("\r\n");
+            i++;
+        }
+        return sb.toString();
+    }
+    
+    private class JourneeStatistiques
     {
-        return tempsMaximal;
+        public boolean aStats = false;
+        public double tempsMoyen = 0;
+        public double tempsMinimal = Double.MAX_VALUE;
+        public double tempsMaximal = 0;
+        
+        @Override
+        public String toString()
+        {
+            if(aStats)
+            {
+                return String.format("Min : %1$.2f\tMax : %2$.2f\tMoyen : %3$.2f", tempsMinimal, tempsMaximal, tempsMoyen);    
+            }
+            else
+            {
+                return "Aucune statistique pour cette journée.";
+            }
+            
+        }
     }
 }

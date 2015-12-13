@@ -19,7 +19,7 @@ public abstract class DessinateurSegment {
     }
     
     protected String obtenirTempsSegmentAffiche() {
-        if(this.segment.getSegmentMetier().getTempsTransit() > 0.0)
+        if(this.segment.obtenirEspaceTravail().getSimulateur().simulationEstEnAction() && this.segment.getSegmentMetier().getTempsTransit() > 0.0)
         {
             return UI.Constantes.Formats.formatterDoubleSansDecimal(this.segment.getSegmentMetier().getTempsTransit());
         }

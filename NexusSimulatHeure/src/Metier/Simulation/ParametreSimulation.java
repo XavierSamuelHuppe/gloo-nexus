@@ -27,9 +27,9 @@ public class ParametreSimulation implements Serializable{
     private ConteneurPassagersIllimite conteneurPassagersIllimiteArret;
     
     
-    private static Distribution DISTRIBUTION_TEMPS_TRANSIT_SEGMENT_DEFAUT = new Distribution(300, 300, 300);
+    private static Distribution DISTRIBUTION_TEMPS_TRANSIT_SEGMENT_DEFAUT = new Distribution(180, 300, 600);
     private static Distribution DISTRIBUTION_TEMPS_GENERATION_VEHICULE_DEFAUT = new Distribution(900, 900, 900);
-    private static Distribution DISTRIBUTION_TEMPS_GENERATION_PASSAGER_DEFAUT = new Distribution(1, 1, 1);
+    private static Distribution DISTRIBUTION_TEMPS_GENERATION_PASSAGER_DEFAUT = new Distribution(0, 60, 300);
     private static int NOMBRE_JOUR_SIMULATION_DEFAUT = 1;
     private static LocalTime HEURE_DEBUT_DEFAUT = LocalTime.of(5,0);
     private static LocalTime HEURE_FIN_DEFAUT = LocalTime.of(1,0);

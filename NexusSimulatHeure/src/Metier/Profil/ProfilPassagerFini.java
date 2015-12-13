@@ -5,6 +5,8 @@ import Metier.Distribution;
 import Metier.Simulation.Simulation;
 import Metier.Simulation.Statistiques;
 import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProfilPassagerFini extends ProfilPassager{
     
@@ -30,23 +32,36 @@ public class ProfilPassagerFini extends ProfilPassager{
         if(nombreCree == nombreMax)
             return;
         
-        if(prochaineGeneration.isBefore(heureCourante)){
-            genererPassager();
+        if(this.simulation.heureEstPassee(heureCourante, prochaineGeneration)){
+            genererPassager(prochaineGeneration);
             nombreCree++;
-            prochaineGeneration = heureDebut.plusSeconds((long)(getFrequence() * (double)nombreCree));
+            prochaineGeneration = prochaineGeneration.plusSeconds((long)getFrequence());
         }
     }
     
     @Override
-    protected void reInitialiserValeursDepartSimulation() {
+    public void reInitialiserValeursDepartSimulation() {
         nombreCree = 0;
         prochaineGeneration = heureDebut;
-        statistiques = new Statistiques();
     }
     
     @Override
     public String obtenirDescriptionProfil() {
-        return ((Integer)nombreMax).toString() + " p., à partir de " + heureDebut.format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE);
+        return ((Integer)nombreMax).toString() + " p., à partir de " + heureDebut.format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE) + " : " + trajet.toString();
     }
     
+    @Override
+    public Map<Passager, LocalTime> genererTousPassagersAvecMoment()
+    {
+        Map<Passager, LocalTime> vehicules = new HashMap<>();
+        prochaineGeneration = this.heureDebut;
+        nombreCree = 0;
+        while(nombreCree < nombreMax  && !this.simulation.heureEstPassee(prochaineGeneration, this.simulation.getParametres().getHeureFin()))
+        {
+            vehicules.put(genererPassager(prochaineGeneration), prochaineGeneration);
+            nombreCree += 1;
+            prochaineGeneration = prochaineGeneration.plusSeconds((long)getFrequence());
+        }
+        return vehicules;
+    }
 }

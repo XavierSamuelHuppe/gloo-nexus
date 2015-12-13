@@ -4,8 +4,12 @@ import Metier.Carte.Point;
 import Metier.Circuit.Circuit;
 import Metier.Distribution;
 import Metier.Circuit.ConteneurPassagers;
+import Metier.Circuit.Vehicule;
 import Metier.Simulation.Simulation;
 import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SourceFinie extends Source {
 
@@ -34,10 +38,10 @@ public class SourceFinie extends Source {
         if(nombreCree == nombreMax)
             return;
         
-        if(prochaineGeneration.isBefore(heureCourante)){
+        if(this.simulation.heureEstPassee(heureCourante, prochaineGeneration)){
             genererVehicule();
             nombreCree++;
-            prochaineGeneration = heureDebut.plusSeconds((long)(getFrequence() * (double)nombreCree));
+            prochaineGeneration = prochaineGeneration.plusSeconds((long)getFrequence());
         }
     }
 
@@ -51,4 +55,20 @@ public class SourceFinie extends Source {
     public String obtenirDescriptionSource() {
         return this.getCircuit().getNom() + " : " + ((Integer)nombreMax).toString() + " v., à partir de " + heureDebut.format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE);
     }
+    
+    @Override
+    public Map<Vehicule, LocalTime> genererTousVehiculesAvecMoment()
+    {
+        Map<Vehicule, LocalTime> vehicules = new HashMap<Vehicule, LocalTime>();
+        prochaineGeneration = this.heureDebut;
+        nombreCree = 0;
+        while(nombreCree < nombreMax && !this.simulation.heureEstPassee(prochaineGeneration, this.simulation.getParametres().getHeureFin()))
+        {
+            vehicules.put(genererVehicule(false), prochaineGeneration);
+            nombreCree += 1;
+            prochaineGeneration = prochaineGeneration.plusSeconds((long)getFrequence());
+        }
+        return vehicules;
+    }
+    
 }

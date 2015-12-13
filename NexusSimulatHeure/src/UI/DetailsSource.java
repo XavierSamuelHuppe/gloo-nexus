@@ -8,7 +8,7 @@ public class DetailsSource {
     
     public DetailsSource(Metier.Source.Source s)
     {
-        frequence = ((Double)s.getFrequence()).toString();
+        //frequence = ((Double)s.getFrequence()).toString();
         heureDebut = s.getheureDebut().toString();
         circuit = s.getCircuit().getNom();
     }

@@ -5,10 +5,13 @@ import Metier.Carte.Point;
 import Metier.Circuit.Circuit;
 import Metier.Distribution;
 import Metier.Circuit.ConteneurPassagers;
+import Metier.Circuit.Vehicule;
 import Metier.Simulation.ParametreSimulation;
 import Metier.Simulation.Simulation;
 import java.time.DateTimeException;
 import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SourceHeureFin extends Source {
     private LocalTime heureFin;
@@ -30,42 +33,52 @@ public class SourceHeureFin extends Source {
         heureFin = Fin;
     }
 
-    
+    private boolean generationTerminee = false;
     @Override
     public void avancerCreation(LocalTime heureCourante, double tempsEcouleParRatioEnSeconde) {
-        if(!doitSpawnerVehicule(heureCourante))
+        if(generationTerminee)
             return;
         
-        if(prochaineGeneration.isBefore(heureCourante)){
+        if(doitSpawnerVehicule(heureCourante)){
             genererVehicule();
             nombreCree++;
-            prochaineGeneration = prochaineGeneration.plusSeconds((long)/*(*/getFrequence()/* * (double)nombreCree)*/);
+            prochaineGeneration = prochaineGeneration.plusSeconds((long)getFrequence());
+            if(this.simulation.heureEstPassee(prochaineGeneration, heureFin))
+            {
+                generationTerminee = true;
+            }
+            System.out.println(prochaineGeneration);
         }
     }
     
     private boolean doitSpawnerVehicule(LocalTime heureCourante){
-        LocalTime heureDebutNouvelleJournee = ParametreSimulation.HEURE_DEBUT_NOUVELLE_JOURNEE;
-        LocalTime minuit = LocalTime.MIDNIGHT;
-        LocalTime justeAvantMinuit = LocalTime.MAX;
-        if(heureFin.isBefore(justeAvantMinuit) && heureFin.isAfter(heureDebutNouvelleJournee)){
-            return heureCourante.isBefore(heureFin);
-        }else if(heureFin.isAfter(minuit) && heureFin.isBefore(heureDebutNouvelleJournee)){
-            if(heureCourante.isBefore(justeAvantMinuit) && heureCourante.isAfter(heureDebutNouvelleJournee))
-                return true;
-            else
-                return heureCourante.isBefore(heureFin);
-        }
-        throw new DateTimeException("Les paramètres de la simulation ne sont pas bien réglés.");
+        return this.simulation.heureEstPassee(heureCourante, prochaineGeneration);
     }
     
     @Override
     public void reInitialiserValeursDepartSimulation() {
         prochaineGeneration = heureDebut;
         nombreCree = 0;
+        generationTerminee = false;
     }
     
     @Override
     public String obtenirDescriptionSource() {
         return this.getCircuit().getNom() + " : " + heureDebut.format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE) + " à " + heureFin.format(UI.Constantes.Formats.FORMAT_HEURE_COURANTE);
+    }
+    
+        @Override
+    public Map<Vehicule, LocalTime> genererTousVehiculesAvecMoment()
+    {
+        Map<Vehicule, LocalTime> vehicules = new HashMap<Vehicule, LocalTime>();
+        prochaineGeneration = this.heureDebut;
+        nombreCree = 0;
+        while(!simulation.heureEstPassee(prochaineGeneration, heureFin))
+        {
+            vehicules.put(genererVehicule(false), prochaineGeneration);
+            prochaineGeneration = prochaineGeneration.plusSeconds((long)getFrequence());
+        }
+
+        return vehicules;
     }
 }

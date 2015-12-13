@@ -100,7 +100,7 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         dessinerDetailsSourcesSiRequis(g2);
         dessinerIndicateurSourcesSiRequis(g2);
         dessinerIndicateurProfilsSiRequis(g2);
-        if(this.obtenirEspaceTravail().getSimulateur().simulationEstEnAction())
+        if(this.getPointMetier().estArret() && this.obtenirEspaceTravail().getSimulateur().simulationEstEnAction())
         {
             dessinerDetailsPassagers(g2);
         }
@@ -394,14 +394,18 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
 
     @Override
     public void mouseClicked(MouseEvent me) {
-        //System.out.println("mouseClicked");
+        if(this.obtenirEspaceTravail().obtenirApplication().getSimulateur().estEnModeAucun())
+            return;
+        
         obtenirEspaceTravail().pointClique(this);
     }
     
     @Override
     public void mouseReleased(MouseEvent me) 
     {
-        //System.out.println("mouseReleased");
+        if(this.obtenirEspaceTravail().obtenirApplication().getSimulateur().estEnModeAucun())
+            return;
+        
         if(dragged)
         {
             if(this.obtenirEspaceTravail().obtenirApplication().getSimulateur().estEnModeArret()

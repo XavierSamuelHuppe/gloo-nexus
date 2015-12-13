@@ -5,12 +5,12 @@ import Metier.SituationVehicule;
 import Metier.Exceptions.AucunCheminPossibleException;
 import Metier.Exceptions.AucunCircuitActifException;
 import Metier.Exceptions.AucunPointCreateurException;
+import Metier.Exceptions.CircuitNeContientAucunSegmentException;
 import Metier.Exceptions.EditionEnMauvaisModeException;
 import Metier.Exceptions.MauvaisPointDeDepartException;
 import Metier.Exceptions.PointPasSurCircuitActifException;
 import UI.Constantes.Couleurs;
 import UI.Dessinateurs.DessinateurVehicule;
-import UI.Exceptions.SegmentNonTrouveException;
 import UI.Utils.PaireDoubles;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -166,10 +166,12 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     
     private void _ajouterPoint(MouseEvent me, boolean estArret)
     {
-        PaireDoubles pd = transformerPositionEspaceTravailEnPostionGeorgraphique(transformerPositionViewportEnPositionEspaceTravail(me.getPoint()));
+        java.awt.Point posAjustee = new java.awt.Point(me.getX() - calculerZoom(Point.DIAMETRE / 2), me.getY() - calculerZoom(Point.DIAMETRE / 2));
+        
+        PaireDoubles pd = transformerPositionEspaceTravailEnPostionGeorgraphique(transformerPositionViewportEnPositionEspaceTravail(posAjustee));
         Metier.Carte.Point mp = this.simulateur.ajouterPoint(pd.getPremier(), pd.getSecond(), estArret, "");
         
-        Point p = new Point(me.getX() - (Point.DIAMETRE / 2),me.getY() - (Point.DIAMETRE / 2), this.zoom, mp);
+        Point p = new Point(posAjustee.x, posAjustee.y, this.zoom, mp);
         
         points.add(p);
 
@@ -177,6 +179,11 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         this.repaint();
     }
 
+    private int calculerZoom(double d)
+    {
+        return (int)(d*zoom);
+    }
+        
     public void retirerPoint(Point p){
         points.remove(p);
         this.remove(p);
@@ -271,18 +278,6 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         PaireDoubles pd = transformerPositionEspaceTravailEnPostionGeorgraphique(pET);
         obtenirApplication().mettreAJourCoordonnesGeographiques(pd.getSecond(), pd.getPremier());
     }
-
-    public Segment obtenirSegmentParPoints(Point pD, Point pA)
-    {
-        for(Segment s : segments)
-        {
-            if(s.getDepart() == pD && s.getArrivee() == pA)
-            {
-                return s;
-            }
-        }
-        throw new SegmentNonTrouveException();
-    }
     
     public UI.Point obtenirPointUIParPointMetier(Metier.Carte.Point point)
     {
@@ -313,6 +308,9 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
     //Implémentations MouseListener.
     @Override
     public void mouseClicked(MouseEvent me) {
+        if(simulateur.estEnModeAucun())
+            return;
+        
         if(simulateur.estEnModeArret()){
             ajouterArret(me);
         }
@@ -387,6 +385,9 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
 
     public void pointClique(Point p)
     {
+        if(simulateur.estEnModeAucun())
+            return;
+        
         if(simulateur.estEnModeSegment())
         {
             try
@@ -394,12 +395,10 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
                 Metier.Carte.Segment sp = null;
                 if(fanionClavier1)
                 {
-                    System.out.println("creerSegmentAvecContinuation");
                     sp = this.simulateur.creerSegmentAvecContinuation(p.getPointMetier());
                 }
                 else
                 {
-                    System.out.println("creerSegmentSansContinuation");
                     sp = this.simulateur.creerSegmentSansContinuation(p.getPointMetier());
                 }
 
@@ -413,7 +412,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
             }
             catch(Metier.Exceptions.CreationInvalideException ex)
             {
-                JOptionPane.showMessageDialog(this.obtenirApplication(), "Un tel segment ne peut-être créé : " + ex.getMessage(), "Création invalide d'un segment.", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this.obtenirApplication(), "Un tel segment ne peut-être créé : ", "Création invalide d'un segment.", JOptionPane.ERROR_MESSAGE);
             }
         }
         else if ((simulateur.estEnModeArret() && p.getPointMetier().estArret())
@@ -432,9 +431,13 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
             {
                 System.err.println("AucunPointCreateurException");
             }
+            catch(MauvaisPointDeDepartException ex)
+            {
+                JOptionPane.showMessageDialog(this.obtenirApplication(), "Un nouveau circuit doit commencer sur un arrêt.", "Point de départ de circuit invalide.", JOptionPane.ERROR_MESSAGE);
+            }
             catch(AucunCheminPossibleException ex)
             {
-                JOptionPane.showMessageDialog(this.obtenirApplication(), "Il n'existe pas de segments permettant de relier les deux points sélectionnés." + ex.getMessage(), "Création invalide d'un circuit.", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this.obtenirApplication(), "Il n'existe pas de segments permettant de relier les deux points sélectionnés.", "Création invalide d'un circuit.", JOptionPane.ERROR_MESSAGE);
             }
         }
         else if (simulateur.estEnModeSource() && p.getPointMetier().estArret())
@@ -455,9 +458,9 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
                 this.simulateur.commencerContinuerCreationTrajet(p.getPointMetier());
                 this.obtenirApplication().remplirListeCircuitTrajet(p.getPointMetier());
 
-                if(this.simulateur.estPointCreateur(p.getPointMetier()))
+                if(!this.obtenirApplication().panneauDetailsEstPresentementAffiche())
                 {
-                    this.obtenirApplication().afficherPanneauDetailsProfilPassagerNouveauProfil(p.getPointMetier());
+                    this.obtenirApplication().afficherPanneauDetailsProfilPassagerNouveauProfil();
                 }
             }
             catch(AucunPointCreateurException ex){
@@ -467,16 +470,16 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
                 System.err.println("EditionEnMauvaisModeException");
             }
             catch(AucunCircuitActifException ex){
-                JOptionPane.showMessageDialog(this.obtenirApplication(), "Vous devez choisir un circuit avant de pouvoir tracer un trajet." + ex.getMessage(), "Aucun circuit actif", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this.obtenirApplication(), "Vous devez choisir un circuit avant de pouvoir tracer un trajet.", "Aucun circuit actif", JOptionPane.ERROR_MESSAGE);
             }
             catch(PointPasSurCircuitActifException ex){
-                JOptionPane.showMessageDialog(this.obtenirApplication(), "Le point sélectionné n'est pas un arrêt du circuit actif." + ex.getMessage(), "Arrêt doit être sur circuit actif", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this.obtenirApplication(), "Le point sélectionné n'est pas un arrêt du circuit actif.", "Arrêt doit être sur circuit actif", JOptionPane.ERROR_MESSAGE);
             }
             catch(MauvaisPointDeDepartException ex){
-                JOptionPane.showMessageDialog(this.obtenirApplication(), "Le point de départ du trajet doit être un arrêt par lequel passe au moins un circuit." + ex.getMessage(), "Point de départ de trajet invalide", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this.obtenirApplication(), "Le point de départ du trajet doit être un arrêt par lequel passe au moins un circuit.", "Point de départ de trajet invalide", JOptionPane.ERROR_MESSAGE);
             }
             catch(AucunCheminPossibleException ex){
-                JOptionPane.showMessageDialog(this.obtenirApplication(), "Il n'existe pas de segments permettant de relier les deux arrêts sélectionnés sur le circuit actif." + ex.getMessage(), "Création invalide d'un trajet pour un profil de passager", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this.obtenirApplication(), "Il n'existe pas de segments permettant de relier les deux arrêts sélectionnés sur le circuit actif.", "Création invalide d'un trajet pour un profil de passager", JOptionPane.ERROR_MESSAGE);
             }
         }
         this.repaint();

@@ -16,13 +16,14 @@ import java.util.*;
 
 public abstract class Source implements Serializable{
     
-    private double frequence;
+    private double[] frequence;
+    private int journee;
     protected LocalTime heureDebut;
     private Point pointDepart;
     private Circuit circuitSource;
     private ConteneurPassagers passagers;
     private Distribution distributionAUtiliser;
-    private Simulation simulation;
+    protected Simulation simulation;
 
     public Source(Point pointDepart, LocalTime heureDebut, Distribution distribution, ConteneurPassagers passagers, Circuit circuit, Simulation simulation){
         this.frequence = frequence;
@@ -46,8 +47,14 @@ public abstract class Source implements Serializable{
         return heureDebut;
     }
     public double getFrequence(){
-        return frequence;
+        return frequence[journee];
     }
+    
+    public void setJournee(int journee)
+    {
+        this.journee = journee;
+    }
+
     public ConteneurPassagers getcapacite(){
         return passagers;
     }
@@ -72,12 +79,16 @@ public abstract class Source implements Serializable{
     }
     
     public void retirerTempsGeneration(){
-        frequence = 0;
+        frequence = null;
     }
     
-    public void pigerDonneesDepartNouvelleJournee()
+    public void pigerDonneesDepart(int nbJournees)
     {
-        frequence = distributionAUtiliser.obtenirProchaineValeurAleatoire();
+        frequence = new double[nbJournees];
+        for(int i = 0; i < nbJournees; i++)
+        {
+            frequence[i] = distributionAUtiliser.obtenirProchaineValeurAleatoire();    
+        }
         reInitialiserValeursDepartSimulation();
     }
     
@@ -91,10 +102,18 @@ public abstract class Source implements Serializable{
     
     public Vehicule genererVehicule()
     {
+        return genererVehicule(true);
+    }
+    
+    public Vehicule genererVehicule(boolean ajouterDansSimulation)
+    {
         Segment segment = circuitSource.obtenirProchainSegment(pointDepart);
         Vehicule vehicule = new Vehicule(circuitSource, segment, passagers.obtenirCopieVide());
         vehicule.embarquerAuPointDepart();
-        this.simulation.ajouterVehicule(vehicule);
+        if(ajouterDansSimulation)
+        {
+            this.simulation.ajouterVehicule(vehicule);    
+        }
         return vehicule;
     }
     
@@ -102,6 +121,8 @@ public abstract class Source implements Serializable{
     public abstract void reInitialiserValeursDepartSimulation();
     
     public abstract String obtenirDescriptionSource();
+    
+    public abstract Map<Vehicule, LocalTime> genererTousVehiculesAvecMoment();
     
     @Override
     public String toString()
