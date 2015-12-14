@@ -28,7 +28,7 @@ public class Couleurs {
     public static final java.awt.Color POINT_PASSAGERS_DETAILS = Color.decode("#000000");
     public static final java.awt.Color POINT_TRAJET = Color.decode("#BC53C3");
     public static final java.awt.Color POINT_TRAJET_FOND = Color.decode("#EBAFEF");
-    public static final java.awt.Color POINT_INDICATEUR_SOURCES = Color.decode("#E92525");
+    public static final java.awt.Color POINT_INDICATEUR_SOURCES = Color.decode("#004494");
     public static final java.awt.Color POINT_INDICATEUR_PROFILS = Color.decode("#BC53C3");
     
     public static final java.awt.Color POINT_NOM = Color.decode("#000000");
