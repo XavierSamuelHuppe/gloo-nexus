@@ -442,13 +442,21 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
         }
         else if (simulateur.estEnModeSource() && p.getPointMetier().estArret())
         {
-            try
+            //Validation à déplacer!
+            if(simulateur.circuitsPassantPar(p.getPointMetier()).size() == 0)
             {
-                this.obtenirApplication().afficherPanneauDetailsSourceNouvelleSource(p.getPointMetier());
+                JOptionPane.showMessageDialog(this.obtenirApplication(), "La source doit être créée sur un arrêt sur lequel passe au moins un circuit.", "Création de source invalide", JOptionPane.ERROR_MESSAGE);
             }
-            catch(AucunPointCreateurException ex)
+            else
             {
-                System.err.println("AucunPointCreateurException");
+                try
+                {
+                    this.obtenirApplication().afficherPanneauDetailsSourceNouvelleSource(p.getPointMetier());
+                }
+                catch(AucunPointCreateurException ex)
+                {
+                    System.err.println("AucunPointCreateurException");
+                }
             }
         }
         else if (simulateur.estEnModePassager())

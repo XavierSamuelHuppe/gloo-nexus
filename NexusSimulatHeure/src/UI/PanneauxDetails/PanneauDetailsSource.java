@@ -71,7 +71,7 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
         }
         else
         {
-            JOptionPane.showMessageDialog(this.obtenirApplication(), "L!!!", "Point de départ de trajet invalide", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this.obtenirApplication(), "La source doit être créée sur un arrêt sur lequel passe au moins un circuit.", "Création de source invalide", JOptionPane.ERROR_MESSAGE);
         }
         
     }
