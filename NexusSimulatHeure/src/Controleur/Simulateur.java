@@ -265,6 +265,10 @@ public class Simulateur {
     public void modfierVitesse(int pourcentage){
         simulation.getParametres().setVitesse(pourcentage);
     }
+    public int obtenirVitesse(){
+        return simulation.getParametres().getVitesse();
+    }
+    
     public void modfierFramerate(int pourcentage){
         simulation.getParametres().setFramerate(pourcentage);
     }

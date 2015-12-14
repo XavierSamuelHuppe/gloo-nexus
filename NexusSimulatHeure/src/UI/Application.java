@@ -850,6 +850,8 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         {
             JOptionPane.showMessageDialog(this, "Chargement réussi.");
             this.simulateur.ajouterObserveurASimulation(this);
+            SliderVitesse.setValue(this.simulateur.obtenirVitesse() / 100);
+            afficherVitesseExecution();
             this.ZoneEspaceTravail.rechargerObjetsUI();
             this.revalidate();
             this.repaint();
