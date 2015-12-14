@@ -122,8 +122,7 @@ public class Simulateur {
         else if (simulation.getParametres().estAvantDemarrage())
             simulation.demarrer();
     }
-    public void recommencer()
-    {
+    public void recommencer(){
         this.contexte.passerEnModeAucun();
         simulation.recommencer();
     }
@@ -142,6 +141,9 @@ public class Simulateur {
     }
     public boolean simulationEstEnAction(){
         return this.getParametresSimulation().estEnAction();
+    }
+    public boolean simulationEstEnPause(){
+        return this.getParametresSimulation().estEnPause();
     }
     
     public Point ajouterPoint(double x, double y, boolean estArret){
@@ -231,7 +233,7 @@ public class Simulateur {
     public void modifierSource(Source source, int nombreMax, LocalTime heureDebut, Circuit circuit, double distributionMin, double distributionMode, double distributionMax){
         simulation.modifierSource(source, nombreMax, heureDebut, circuit, distributionMin, distributionMode, distributionMax);
     }  
-
+    
     public void ajouterProfil(LocalTime heureFin, LocalTime heureDebut, double distributionMin, double distributionMode, double distributionMax){
         ProfilBuilder builder = new ProfilBuilder();
         Distribution distributionAUtiliser = new Distribution(distributionMin, distributionMode, distributionMax);

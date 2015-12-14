@@ -84,6 +84,8 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         //Simulation terminée normalement.
         if(o1 != null && o1 instanceof Boolean && (boolean)o1)
         {
+            rafraichirIconeBoutonDemarrerPause();
+            verrouillerDeverrouillerBoutonsControleSelonEtatSimulation();
             deverrouillerBarreBoutons();
             afficherStatistiques();
         }
@@ -797,10 +799,11 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     }//GEN-LAST:event_BoutonArreterActionPerformed
 
     private void BoutonRedemarrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonRedemarrerActionPerformed
-        if(this.simulateur.simulationEstEnAction()) {
-            this.simulateur.arreter();
-        }
-        this.simulateur.demarerRedemarer();
+//        if(this.simulateur.simulationEstEnAction()) {
+//            this.simulateur.arreter();
+//        }
+//        this.simulateur.demarerRedemarer();
+        this.simulateur.recommencer();
         rafraichirIconeBoutonDemarrerPause();
         verrouillerDeverrouillerBoutonsControleSelonEtatSimulation();
     }//GEN-LAST:event_BoutonRedemarrerActionPerformed
@@ -962,6 +965,12 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
             BoutonSimulationInfinie.setEnabled(false);
             BoutonArreter.setEnabled(true);
             BoutonRedemarrer.setEnabled(true);
+        }
+        else if (simulateur.simulationEstEnPause())
+        {
+            BoutonSimulationInfinie.setEnabled(false);
+            BoutonArreter.setEnabled(true);
+            BoutonRedemarrer.setEnabled(false);
         }
         else
         {

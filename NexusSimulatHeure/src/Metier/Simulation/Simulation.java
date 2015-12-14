@@ -85,10 +85,18 @@ public class Simulation extends Observable implements Serializable{
         setChanged();
         notifyObservers();
     }
-    
+
     public void recommencer()
     {
-        
+        System.out.println("recommencer");
+        pauser();
+        JourneeCourante = 1;
+//        for(ProfilPassager pp : profils)
+//        {
+//            pp.reinitialiserStatistiques();
+//        }
+        initialiserDepartNouvelleJournee();
+        redemarrer();
     }
             
     private void terminerSimulation(){
