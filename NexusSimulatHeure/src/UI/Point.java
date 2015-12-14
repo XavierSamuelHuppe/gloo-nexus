@@ -3,7 +3,6 @@ package UI;
 import UI.Constantes.Couleurs;
 import UI.PanneauxDetails.PanneauDetails;
 import UI.PanneauxDetails.PanneauDetailsPoint;
-import java.awt.Color;
 
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -38,7 +37,7 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         }
     }
 
-    enum Mode {ARRET, ARRET_SELECTIONNE, INTERSECTION, INTERSECTION_SELECTIONNEE, CIRCUIT, CIRCUIT_CREATION, CREATION_SEGMENT, TRAJET};
+    enum Mode {ARRET, ARRET_SELECTIONNE, INTERSECTION, INTERSECTION_SELECTIONNEE, CIRCUIT, CIRCUIT_CREATION, CIRCUIT_INTERSECTION, CREATION_SEGMENT, TRAJET};
         
     private java.awt.Point pointPoigneeDrag;
     private Mode modeActuel = Mode.ARRET;
@@ -131,6 +130,10 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         {
             g2.setColor(Couleurs.POINT_CIRCUIT_CREATION);
         }
+        else if(modeActuel == Mode.CIRCUIT_INTERSECTION)
+        {
+            g2.setColor(Couleurs.POINT_CIRCUIT_INTERSECTION );
+        }
         else if(modeActuel == Mode.CREATION_SEGMENT)
         {
             g2.setColor(Couleurs.POINT_CREATION_SEGMENT);
@@ -160,7 +163,7 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         {
             g2.setColor(Couleurs.POINT_INTERSECTION_FOND_SELECTIONNE);    
         }
-        else if(modeActuel == Mode.CIRCUIT)
+        else if(modeActuel == Mode.CIRCUIT || modeActuel == Mode.CIRCUIT_INTERSECTION)
         {
             g2.setColor(Couleurs.POINT_FOND_CIRCUIT);    
         }
@@ -285,7 +288,14 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
             }
             else if((sim.estDansCircuitActif(pointMetier) || sim.estDansAuMoinsUnCircuit(pointMetier)))
             {
-                this.modeActuel = Mode.CIRCUIT;
+                if(this.pointMetier.estArret())
+                {
+                    this.modeActuel = Mode.CIRCUIT;
+                }
+                else
+                {
+                    this.modeActuel = Mode.CIRCUIT_INTERSECTION;
+                }
             }
             else
             {
@@ -301,7 +311,14 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
             else if((!sim.possedeUnTrajetEnCoursDeCreation() && sim.estDansAuMoinsUnCircuit(this.getPointMetier()))
                     || sim.pointEstDansCircuitActifPourCreationTrajet(this.getPointMetier()))
             {
-                this.modeActuel = Mode.CIRCUIT;
+                if(this.pointMetier.estArret())
+                {
+                    this.modeActuel = Mode.CIRCUIT;
+                }
+                else
+                {
+                    this.modeActuel = Mode.CIRCUIT_INTERSECTION;
+                }
             }
             else
             {
@@ -321,7 +338,14 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
             else if(sim.estDansCircuitActif(this.getPointMetier())
                 || (!sim.circuitActifEstConnu() && sim.estDansAuMoinsUnCircuit(this.getPointMetier())))
             {
-                this.modeActuel = Mode.CIRCUIT;
+                 if(this.pointMetier.estArret())
+                {
+                    this.modeActuel = Mode.CIRCUIT;
+                }
+                else
+                {
+                    this.modeActuel = Mode.CIRCUIT_INTERSECTION;
+                }
             }
             else 
             {

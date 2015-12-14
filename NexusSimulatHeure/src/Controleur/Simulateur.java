@@ -122,7 +122,6 @@ public class Simulateur {
         else if (simulation.getParametres().estAvantDemarrage())
             simulation.demarrer();
     }
-    
     public void recommencer()
     {
         this.contexte.passerEnModeAucun();
@@ -213,7 +212,6 @@ public class Simulateur {
         contexte.viderPointActif();
         contexte.viderCircuitActif();
     }
-    
     public void ajouterSource(int nombreMax, Point pointDepart, LocalTime heureDebut, Circuit circuit, double distributionMin, double distributionMode, double distributionMax){
         SourceBuilder builder = new SourceBuilder();
         Distribution distributionAUtiliser = new Distribution(distributionMin, distributionMode, distributionMax);
@@ -224,7 +222,16 @@ public class Simulateur {
         contexte.viderPointActif();
         contexte.viderCircuitActif();
     }  
-    
+    public void retirerSource(Source source){
+        simulation.retirerSource(source);
+    }
+    public void modifierSource(Source source, LocalTime heureFin, LocalTime heureDebut, Circuit circuit, double distributionMin, double distributionMode, double distributionMax){
+        simulation.modifierSource(source, heureFin, heureDebut, circuit, distributionMin, distributionMode, distributionMax);
+    }
+    public void modifierSource(Source source, int nombreMax, LocalTime heureDebut, Circuit circuit, double distributionMin, double distributionMode, double distributionMax){
+        simulation.modifierSource(source, nombreMax, heureDebut, circuit, distributionMin, distributionMode, distributionMax);
+    }  
+
     public void ajouterProfil(LocalTime heureFin, LocalTime heureDebut, double distributionMin, double distributionMode, double distributionMax){
         ProfilBuilder builder = new ProfilBuilder();
         Distribution distributionAUtiliser = new Distribution(distributionMin, distributionMode, distributionMax);
@@ -232,7 +239,6 @@ public class Simulateur {
         ProfilPassager nouveauPassager = builder.ConstruireProfil(heureFin, trajet.obtenirPointDepart(), heureDebut, distributionAUtiliser, trajet, simulation);
         simulation.ajouterProfil(nouveauPassager);
     }
-    
     public void ajouterProfil(int nombreMax, LocalTime heureDebut, double distributionMin, double distributionMode, double distributionMax){
         ProfilBuilder builder = new ProfilBuilder();
         Distribution distributionAUtiliser = new Distribution(distributionMin, distributionMode, distributionMax);
@@ -240,23 +246,9 @@ public class Simulateur {
         ProfilPassager nouveauPassager = builder.ConstruireProfil(nombreMax, trajet.obtenirPointDepart(), heureDebut, distributionAUtiliser, trajet, simulation);
         simulation.ajouterProfil(nouveauPassager);
     }
-    
-    public void retirerSource(Source source){
-        simulation.retirerSource(source);
-    }
-    
     public void retirerProfil(ProfilPassager profil){
         simulation.retirerProfil(profil);
     }
-
-    public void modifierSource(Source source, LocalTime heureFin, LocalTime heureDebut, Circuit circuit, double distributionMin, double distributionMode, double distributionMax){
-        simulation.modifierSource(source, heureFin, heureDebut, circuit, distributionMin, distributionMode, distributionMax);
-    }
-    
-    public void modifierSource(Source source, int nombreMax, LocalTime heureDebut, Circuit circuit, double distributionMin, double distributionMode, double distributionMax){
-        simulation.modifierSource(source, nombreMax, heureDebut, circuit, distributionMin, distributionMode, distributionMax);
-    }  
-    
     public void modifierProfil(ProfilPassager profil, LocalTime heureFin, LocalTime heureDebut, double distributionMin, double distributionMode, double distributionMax){
         simulation.modifierProfil(profil, heureFin, heureDebut, distributionMin, distributionMode, distributionMax);
     }
