@@ -1,5 +1,6 @@
 package Metier;
 
+import Metier.Profil.ElementTrajet;
 import Metier.Carte.*;
 import Metier.Circuit.*;
 import Metier.Exceptions.*;

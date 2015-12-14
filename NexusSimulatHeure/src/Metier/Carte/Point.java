@@ -77,11 +77,7 @@ public class Point extends Observable implements Serializable{
     public void retirerSource(Source source) {
         this.sources.remove(source);
     }
-    
-    public void retirerProfilPassager(Source source) {
-        this.sources.remove(source);
-    }
-    
+        
     public void faireDescendreAuPoint(List<Passager> passagers){
         for(Passager p : passagers){
             if(p.estArriveADestination(this))

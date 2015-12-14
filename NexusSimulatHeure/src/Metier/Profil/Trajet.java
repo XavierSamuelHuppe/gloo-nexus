@@ -1,6 +1,5 @@
 package Metier.Profil;
 
-import Metier.Carte.ElementTrajet;
 import Metier.Carte.Segment;
 import Metier.Carte.Point;
 import java.io.Serializable;

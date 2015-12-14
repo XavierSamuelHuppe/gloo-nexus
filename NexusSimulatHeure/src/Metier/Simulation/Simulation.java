@@ -1,4 +1,5 @@
 package Metier.Simulation;
+import Metier.Profil.ElementTrajet;
 import Metier.Carte.*;
 import Metier.Circuit.Circuit;
 import java.time.*;
@@ -363,7 +364,7 @@ public class Simulation extends Observable implements Serializable{
         carte.retirerPoint(p);
     }
     
-        public void retirerSegmentAvecReferences(Segment segment){
+    public void retirerSegmentAvecReferences(Segment segment){
         List<Source> sourcesAEnlever = new ArrayList();
         
         List<Circuit> circuitsAEnlever = new ArrayList();

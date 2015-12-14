@@ -659,7 +659,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         PanneauControleSimulation.add(BoutonDemarrerPause);
 
         BoutonArreter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/media-stop-2x.png"))); // NOI18N
-        BoutonArreter.setToolTipText("Arrêter simulation");
+        BoutonArreter.setToolTipText("Arrêter la simulation");
         BoutonArreter.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonArreter.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         BoutonArreter.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -674,7 +674,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         PanneauControleSimulation.add(BoutonArreter);
 
         BoutonRedemarrer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/media-step-backward-2x.png"))); // NOI18N
-        BoutonRedemarrer.setToolTipText("Redémarrer la simulation");
+        BoutonRedemarrer.setToolTipText("Recommencer la simulation");
         BoutonRedemarrer.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BoutonRedemarrer.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         BoutonRedemarrer.setMargin(new java.awt.Insets(2, 2, 2, 2));
