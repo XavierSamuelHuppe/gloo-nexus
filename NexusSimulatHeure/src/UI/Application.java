@@ -49,6 +49,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         this.BoutonParametres.addActionListener(this);
         
         initialiserBoutonsModes();
+        verrouillerDeverrouillerBoutonsControleSelonEtatSimulation();
         BoutonModeArret.setBackground(Couleurs.UI_BARRE_BOUTONS_COULEUR_FOND_ACTIF);
         
         
@@ -783,6 +784,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         }
         reinitialiserAffichageAvantChangementMode();
         rafraichirIconeBoutonDemarrerPause();
+        verrouillerDeverrouillerBoutonsControleSelonEtatSimulation();
     }//GEN-LAST:event_BoutonDemarrerPauseActionPerformed
 
     private void BoutonArreterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonArreterActionPerformed
@@ -790,6 +792,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         deverrouillerBarreBoutons();
         reinitialiserAffichageAvantChangementMode();
         rafraichirIconeBoutonDemarrerPause();
+        verrouillerDeverrouillerBoutonsControleSelonEtatSimulation();
         afficherHeureCourante();
     }//GEN-LAST:event_BoutonArreterActionPerformed
 
@@ -799,6 +802,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         }
         this.simulateur.demarerRedemarer();
         rafraichirIconeBoutonDemarrerPause();
+        verrouillerDeverrouillerBoutonsControleSelonEtatSimulation();
     }//GEN-LAST:event_BoutonRedemarrerActionPerformed
 
     private void SliderVitesseStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_SliderVitesseStateChanged
@@ -949,6 +953,22 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         BoutonModeCircuit.setEnabled(true);
         BoutonModeSource.setEnabled(true);
         BoutonModeProfilPassager.setEnabled(true);
+    }
+    
+    private void verrouillerDeverrouillerBoutonsControleSelonEtatSimulation()
+    {
+        if(simulateur.simulationEstEnAction())
+        {
+            BoutonSimulationInfinie.setEnabled(false);
+            BoutonArreter.setEnabled(true);
+            BoutonRedemarrer.setEnabled(true);
+        }
+        else
+        {
+            BoutonSimulationInfinie.setEnabled(true);
+            BoutonArreter.setEnabled(false);
+            BoutonRedemarrer.setEnabled(false);
+        }
     }
     
     /**
