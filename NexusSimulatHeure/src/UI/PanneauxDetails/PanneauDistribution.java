@@ -7,13 +7,14 @@ public class PanneauDistribution extends PanneauDetails {
     private Metier.Distribution distributionCourante;
     
     public PanneauDistribution() {
+        super(null);
         initComponents();
         ajouterFocusListeners();
     }
     
     public PanneauDistribution(Metier.Distribution dt)
     {
-        super();
+        super(null);
         initComponents();
         ajouterFocusListeners();
         setDistribution(dt);

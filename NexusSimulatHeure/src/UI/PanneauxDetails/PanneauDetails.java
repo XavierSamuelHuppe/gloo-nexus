@@ -7,8 +7,12 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 public abstract class PanneauDetails extends JPanel {
-    public PanneauDetails()
+    
+    protected Controleur.Simulateur simulateur;
+    
+    public PanneauDetails(Controleur.Simulateur sim)
     {
+        this.simulateur = sim;
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setAlignmentX(Component.LEFT_ALIGNMENT);
     }

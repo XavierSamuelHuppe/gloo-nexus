@@ -9,14 +9,16 @@ public class PanneauDetailsCircuit extends PanneauDetails implements java.util.O
 
     private Metier.Circuit.Circuit circuitMetierLie;
     
-    public PanneauDetailsCircuit() {
-        super();
+    public PanneauDetailsCircuit(Simulateur sim) {
+        super(sim);
         initComponents();
         this.LibelleEntete.setText("Création d'un nouveau circuit");
     }
     
-    public PanneauDetailsCircuit(Metier.Circuit.Circuit cMetier)
+    public PanneauDetailsCircuit(Metier.Circuit.Circuit cMetier, Simulateur sim)
     {
+        super(sim);
+        initComponents();
         this.circuitMetierLie = cMetier;
         this.LibelleEntete.setText("Détails : Circuit \"" + this.circuitMetierLie.getNom() + "\"");
         rafraichir();

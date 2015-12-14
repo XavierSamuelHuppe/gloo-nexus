@@ -1,5 +1,6 @@
 package UI.PanneauxDetails;
 
+import Controleur.Simulateur;
 import java.util.Observable;
 import javax.swing.JOptionPane;
 
@@ -7,8 +8,8 @@ public class PanneauDetailsPoint extends PanneauDetails implements java.util.Obs
 
     private Metier.Carte.Point pointMetierLie;
     
-    public PanneauDetailsPoint(Metier.Carte.Point p, UI.Point pUI) {
-        super();
+    public PanneauDetailsPoint(Metier.Carte.Point p, Simulateur sim) {
+        super(sim);
         initComponents();
         
         this.pointMetierLie = p;

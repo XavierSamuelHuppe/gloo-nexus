@@ -4,6 +4,7 @@ package UI.PanneauxDetails;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class PanneauDetailsSimu extends javax.swing.JDialog {
 
@@ -96,8 +97,130 @@ public class PanneauDetailsSimu extends javax.swing.JDialog {
         
         
     }
+    private boolean valider()
+    {
+        String validations = "";
+      
+        if(!java.util.regex.Pattern.matches(UI.Constantes.Validations.REGEX_FORMAT_HEURE_SIMULATION, ChampHeureDebut.getText().trim()) &&
+           !java.util.regex.Pattern.matches(UI.Constantes.Validations.REGEX_FORMAT_HEURE, ChampHeureDebut.getText()))
+        {
+            validations += "L'heure de début de génération des passagers doit être inscrite dans un format 00:00 ou 00:00:00.\r\n";
+        }
+        
+        if(!java.util.regex.Pattern.matches(UI.Constantes.Validations.REGEX_FORMAT_HEURE_SIMULATION, ChampHeureFin.getText().trim()) &&
+           !java.util.regex.Pattern.matches(UI.Constantes.Validations.REGEX_FORMAT_HEURE, ChampHeureFin.getText()))
+        {
+            validations += "L'heure de fin de génération des passagers doit être inscrite dans un format 00:00 ou 00:00:00.\r\n";
+        }
+        
+        try{
+            int nMax = Integer.parseInt(this.ChampNbJours.getValue().toString());
+            if(nMax < 0)
+                throw new NumberFormatException();
+        }
+        catch(NumberFormatException ex){
+            validations += "Le nombre maximal de passagers à générer doit être un nombre positif.\r\n";
+        }
+        
+        validations += distributionValiderValeurs();
+        
+        if(!validations.equals(""))
+        {
+            JOptionPane.showMessageDialog(this, "Les erreurs suivantes ont été détectées : \r\n" + validations, "Erreur à la sauvegarde du profil passager", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+        
+    }
+    
+    public String distributionValiderValeurs() {       
+        String retour = "";
+        long min = 0;
+        long max = 0;
+        long mode = 0;
+        long min2 = 0;
+        long max2 = 0;
+        long mode2 = 0;
+        long min3 = 0;
+        long max3 = 0;
+        long mode3 = 0;
+        boolean nombresValides = true;
+        try{
+            min = Long.parseLong(this.ChampDistSegmentMin.getText());  
+            min2 = Long.parseLong(this.ChampDistVehiculeMin.getText()); 
+            min3 = Long.parseLong(this.ChampDistPassagerMin.getText());
+        }
+        catch(NumberFormatException ex){
+            nombresValides = false;
+            retour += "La valeur minimale est obligatoire et doit être un nombre entier.\r\n";
+        }
+        
+        try{
+            max = Long.parseLong(this.ChampDistSegmentMax.getText());  
+            max2 = Long.parseLong(this.ChampDistVehiculeMax.getText()); 
+            max3 = Long.parseLong(this.ChampDistPassagerMax.getText());
+        }
+        catch(NumberFormatException ex){
+            nombresValides = false;
+            retour += "La valeur maximale est obligatoire et doit être un nombre entier.\r\n";
+        }
+        
+        try{
+            mode = Long.parseLong(this.ChampDistSegmentMode.getText()); 
+            mode2 = Long.parseLong(this.ChampDistVehiculeMode.getText()); 
+            mode3 = Long.parseLong(this.ChampDistPassagerMode.getText());
+        }
+        catch(NumberFormatException ex){
+            nombresValides = false;
+            retour += "Le mode est obligatoire et doit être un nombre entier.\r\n";
+        }
+        
+        if(nombresValides)
+        {
+            if(min > mode || min > max)
+            {
+                retour += "La valeur minimale doit être plus petite que le mode et la valeur maximale.\r\n";
+            }
+            if(mode < min  || max < mode)
+            {
+                retour += "Le mode doit être en la valeur minimale et la valeur maximale.\r\n";
+            }
+            if(max < mode || max < min)
+            {
+                retour += "La valeur maximale doit être plus grande que la valeur minimale et le mode.\r\n";
+            }
+            if(min2 > mode2 || min2 > max2)
+            {
+                retour += "La valeur minimale doit être plus petite que le mode et la valeur maximale.\r\n";
+            }
+            if(mode2 < min2  || max2 < mode2)
+            {
+                retour += "Le mode doit être en la valeur minimale et la valeur maximale.\r\n";
+            }
+            if(max2 < mode2 || max2 < min2)
+            {
+                retour += "La valeur maximale doit être plus grande que la valeur minimale et le mode.\r\n";
+            }
+            if(min3 > mode3 || min3 > max3)
+            {
+                retour += "La valeur minimale doit être plus petite que le mode et la valeur maximale.\r\n";
+            }
+            if(mode3 < min3  || max3 < mode3)
+            {
+                retour += "Le mode doit être en la valeur minimale et la valeur maximale.\r\n";
+            }
+            if(max3 < mode3 || max3 < min3)
+            {
+                retour += "La valeur maximale doit être plus grande que la valeur minimale et le mode.\r\n";
+            }
+        }
+        
+        return retour;
+    }
     
     private void sauvegarder(){
+        if(!valider())
+            return;
         simulateur.modifierNombreJourSimulation((int)this.ChampNbJours.getValue());
         simulateur.modifierHeureDebut(LocalTime.parse(this.ChampHeureDebut.getText(), DateTimeFormatter.ISO_LOCAL_TIME));
         simulateur.modifierHeureFin(LocalTime.parse(this.ChampHeureFin.getText(), DateTimeFormatter.ISO_LOCAL_TIME));

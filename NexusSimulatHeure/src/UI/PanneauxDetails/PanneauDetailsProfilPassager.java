@@ -12,30 +12,28 @@ import java.time.LocalTime;
 import java.text.DateFormat;
 import Metier.Carte.Point;
 import Metier.Exceptions.TrajetVideException;
+import Metier.Exceptions.MauvaisPointArriveException;
 import javax.swing.JOptionPane;
 import javax.swing.DefaultComboBoxModel;
 
 public class PanneauDetailsProfilPassager extends PanneauDetails implements java.util.Observer {
 
     private Metier.Profil.ProfilPassager ProfilPassagerMetierLie;
-    private Simulateur simulateur;
     private boolean modeCreationBool;
     
     public PanneauDetailsProfilPassager(Simulateur sim) {
-        super();
+        super(sim);
         initComponents();
         
         this.modeCreationBool = true;
-        this.simulateur = sim;
         this.PanneauDistribution.setDistribution(this.simulateur.obtenirDistributionTempsGenerationPassagersDefaut());
         this.modeCreation(sim);
         
     }
     
     public PanneauDetailsProfilPassager(Metier.Profil.ProfilPassager p, Simulateur sim) {
-        super();
+        super(sim);
         initComponents();
-        this.simulateur = sim;
         this.ProfilPassagerMetierLie = p;
         this.modeCreationBool = false;
         this.PanneauDistribution.setDistribution(p.getDistribution());
@@ -101,6 +99,10 @@ public class PanneauDetailsProfilPassager extends PanneauDetails implements java
         catch(TrajetVideException ex){
             JOptionPane.showMessageDialog(this.obtenirApplication(), "Le trajet ne peut pas être vide.", "Trajet vide", JOptionPane.ERROR_MESSAGE);
         }
+        catch(MauvaisPointArriveException ex)
+        {
+            JOptionPane.showMessageDialog(this.obtenirApplication(), "Le trajet doit se terminer sur un arrêt.", "Mauvais point d'arrivée.", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     private void sauvegarderProfilModifier(){
@@ -125,13 +127,13 @@ public class PanneauDetailsProfilPassager extends PanneauDetails implements java
     {
         String validations = "";
       
-        if(!java.util.regex.Pattern.matches("^(([0-1]?[0-9])|([2][0-3])):([0-5]?[0-9]):([0-5]?[0-9])$", ChampHeureDepart.getText()))
+        if(!java.util.regex.Pattern.matches(UI.Constantes.Validations.REGEX_FORMAT_HEURE, ChampHeureDepart.getText().trim()))
         {
             validations += "L'heure de début de génération des passagers doit être inscrite dans un format 00:00:00.\r\n";
         }
         if(RadioHeureFin.isSelected())
         {
-            if(!java.util.regex.Pattern.matches(UI.Constantes.Validations.REGEX_FORMAT_HEURE, ChampHeureFin.getText()))
+            if(!java.util.regex.Pattern.matches(UI.Constantes.Validations.REGEX_FORMAT_HEURE, ChampHeureFin.getText().trim()))
             {
                 validations += "L'heure de fin de génération des passagers doit être inscrite dans un format 00:00:00.\r\n";
             }

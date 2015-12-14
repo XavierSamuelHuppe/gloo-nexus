@@ -456,6 +456,6 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
 
     @Override
     public PanneauDetails obtenirPanneauDetails() {
-        return new PanneauDetailsPoint(this.getPointMetier(), this);
+        return new PanneauDetailsPoint(this.getPointMetier(), this.obtenirEspaceTravail().obtenirApplication().getSimulateur());
     }
 }

@@ -272,7 +272,7 @@ public class ContexteEdition {
     public void commencerContinuerCreationTrajet(Point p){
         if(!estEnModePassager())
             throw new EditionEnMauvaisModeException();
-        if(simulation.circuitsPassantPar(p).size() == 0)
+        if(simulation.circuitsPassantPar(p).size() == 0 || (!possedePointCreateur() && p.estIntersection()))
             throw new MauvaisPointDeDepartException();
         if(!possedePointCreateur()){
             setPointCreateur(p);
