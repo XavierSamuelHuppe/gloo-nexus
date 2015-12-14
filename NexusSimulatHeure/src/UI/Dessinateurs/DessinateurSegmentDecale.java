@@ -67,11 +67,11 @@ public class DessinateurSegmentDecale extends DessinateurSegment {
         double facteurOrientation = (orientation == Segment.Orientation.SO || orientation == Segment.Orientation.NO) ? 1 : -1;
         
         //Calculer point depart prime.
-        java.awt.Point pDepart = new Point((int)(segment.getDepart().calculerCentreX() + (DISTANCE_POINTE_FLECHE * segment.obtenirZoom() * java.lang.Math.cos(angle))), (int)(segment.getDepart().calculerCentreY() + (DISTANCE_POINTE_FLECHE * java.lang.Math.sin(angle))));
+        java.awt.Point pDepart = new Point((int)(segment.getDepart().calculerCentreX() + (DISTANCE_POINTE_FLECHE * segment.obtenirZoom() * java.lang.Math.cos(angle))), (int)(segment.getDepart().calculerCentreY() + (DISTANCE_POINTE_FLECHE * segment.obtenirZoom() * java.lang.Math.sin(angle))));
         AffineTransform.getRotateInstance(Math.toRadians(facteurOrientation * 90.0), segment.getDepart().calculerCentreX(), segment.getDepart().calculerCentreY()).transform(pDepart, pDepart);
 
         //Calculer point arrivée prime.
-        java.awt.Point pArrivee = new Point((int)(segment.getArrivee().calculerCentreX() + (DISTANCE_POINTE_FLECHE * segment.obtenirZoom() * java.lang.Math.cos(angle))), (int)(segment.getArrivee().calculerCentreY() + (DISTANCE_POINTE_FLECHE * java.lang.Math.sin(angle))));
+        java.awt.Point pArrivee = new Point((int)(segment.getArrivee().calculerCentreX() + (DISTANCE_POINTE_FLECHE * segment.obtenirZoom() * java.lang.Math.cos(angle))), (int)(segment.getArrivee().calculerCentreY() + (DISTANCE_POINTE_FLECHE * segment.obtenirZoom()* java.lang.Math.sin(angle))));
         AffineTransform.getRotateInstance(Math.toRadians(facteurOrientation * 90.0), segment.getArrivee().calculerCentreX(), segment.getArrivee().calculerCentreY()).transform(pArrivee, pArrivee);
         
         return new java.awt.Point[] {pDepart, pArrivee};
