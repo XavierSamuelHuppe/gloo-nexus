@@ -38,11 +38,10 @@ public class DialogueStatistiques extends javax.swing.JDialog {
         ZoneTexteStatistiques = new javax.swing.JTextArea();
 
         setPreferredSize(new java.awt.Dimension(800, 400));
-        setLayout(new java.awt.BorderLayout());
 
         LIbelleEntete.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         LIbelleEntete.setText("Statistiques de l'exécution de la simulation");
-        add(LIbelleEntete, java.awt.BorderLayout.PAGE_START);
+        getContentPane().add(LIbelleEntete, java.awt.BorderLayout.PAGE_START);
         LIbelleEntete.getAccessibleContext().setAccessibleName("LibelleEntete");
 
         PanneauBoutons.setMinimumSize(new java.awt.Dimension(100, 20));
@@ -57,13 +56,13 @@ public class DialogueStatistiques extends javax.swing.JDialog {
         });
         PanneauBoutons.add(BoutonFermer);
 
-        add(PanneauBoutons, java.awt.BorderLayout.PAGE_END);
+        getContentPane().add(PanneauBoutons, java.awt.BorderLayout.PAGE_END);
 
         ZoneTexteStatistiques.setColumns(20);
         ZoneTexteStatistiques.setRows(5);
         jScrollPane2.setViewportView(ZoneTexteStatistiques);
 
-        add(jScrollPane2, java.awt.BorderLayout.CENTER);
+        getContentPane().add(jScrollPane2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void BoutonFermerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonFermerActionPerformed

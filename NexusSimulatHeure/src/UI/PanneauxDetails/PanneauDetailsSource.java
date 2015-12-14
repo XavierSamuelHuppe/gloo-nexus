@@ -22,7 +22,6 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
     private Metier.Source.Source sourceMetierLie;
     private Metier.Carte.Point pointMetierLie;
     private Metier.Circuit.Circuit circuitActuel;
-    private Simulateur simulateur;
     private boolean modeCreationBool;
         
     public PanneauDetailsSource(Metier.Carte.Point point, Simulateur sim) {

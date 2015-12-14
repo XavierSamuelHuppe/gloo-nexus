@@ -893,7 +893,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         }
     }
     
-    public Metier.Circuit.Circuit obtenirCircuitDansListeChoixCircuit()
+    private Metier.Circuit.Circuit obtenirCircuitDansListeChoixCircuit()
     {
         return (Metier.Circuit.Circuit)ListeCircuitTrajet.getSelectedItem();
     }

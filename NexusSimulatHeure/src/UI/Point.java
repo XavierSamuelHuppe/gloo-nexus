@@ -21,7 +21,7 @@ import java.util.Observable;
 import java.util.Observer;
 import javax.swing.SwingUtilities;
 
-public class Point extends ElementEspaceTravail implements MouseListener, MouseMotionListener, IDetailsAffichables, Observer {
+public class Point extends ElementEspaceTravail implements MouseListener, MouseMotionListener {
 
     @Override
     public void update(Observable o, Object o1) {
@@ -97,7 +97,6 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
         dessinerFond(g2);
         dessinerCentre(g2);
         dessinerNomSiRequis(g2);
-        dessinerDetailsSourcesSiRequis(g2);
         dessinerIndicateurSourcesSiRequis(g2);
         dessinerIndicateurProfilsSiRequis(g2);
         if(this.getPointMetier().estArret() && this.obtenirEspaceTravail().getSimulateur().simulationEstEnAction())
@@ -188,27 +187,6 @@ public class Point extends ElementEspaceTravail implements MouseListener, MouseM
             g2.setColor(Couleurs.POINT_NOM);
             g2.setFont(new Font(null, Font.PLAIN, (int)(UI.Constantes.Rendu.TAILLE_POLICE_POINTS * this.zoom)));
             g2.drawString(this.getPointMetier().getNom(), this.getX() + (int)(this.zoom * AJUSTEMENT_POSITION_NOM_X), this.getY() + (int)(this.zoom * AJUSTEMENT_POSITION_NOM_Y));
-        }
-    }
-    
-    private void dessinerDetailsSourcesSiRequis(Graphics2D g2)
-    {
-        if(!this.pointMetier.getSources().isEmpty())
-        {
-            LinkedList<DetailsSource> liste = new LinkedList<DetailsSource>();
-            for(Metier.Source.Source s : this.pointMetier.getSources())
-            {
-                liste.add(new DetailsSource(s));
-            }
-
-            g2.setColor(Couleurs.POINT_SOURCE_DETAILS);
-            g2.setFont(new Font(null, Font.PLAIN, (int)(UI.Constantes.Rendu.TAILLE_POLICE_POINTS * this.zoom)));
-            int offsetY = 0;
-//            for(DetailsSource ds : liste)
-//            {
-//                g2.drawString(this.getPointMetier().getNom(), (int)(this.zoom * 50), offsetY);
-//                offsetY += (int)(UI.Constantes.Rendu.TAILLE_POLICE_POINTS * this.zoom);
-//            }
         }
     }
     

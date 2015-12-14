@@ -1,6 +1,8 @@
 package UI;
 
-public abstract class ElementEspaceTravail extends javax.swing.JPanel{
+import java.util.Observer;
+
+public abstract class ElementEspaceTravail extends javax.swing.JPanel implements Observer, IDetailsAffichables{
     protected double zoom = 1;
     
     public void setZoom(double d)
