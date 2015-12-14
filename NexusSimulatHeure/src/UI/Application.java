@@ -840,15 +840,15 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
 
     private void BoutonSauvegarderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonSauvegarderActionPerformed
         if(simulateur.enregistrer())
-            JOptionPane.showMessageDialog(this, "La sauvegarde a réussie.");
+            JOptionPane.showMessageDialog(this, "Sauvegarde réussie.");
         else
-            JOptionPane.showMessageDialog(this, "La sauvegarde a explosé!");
+            JOptionPane.showMessageDialog(this, "Sauvegarde échouée.");
     }//GEN-LAST:event_BoutonSauvegarderActionPerformed
 
     private void BoutonChargerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonChargerActionPerformed
         if(simulateur.charger())
         {
-            JOptionPane.showMessageDialog(this, "Le chargement a réussie.");
+            JOptionPane.showMessageDialog(this, "Chargement réussi.");
             this.simulateur.ajouterObserveurASimulation(this);
             this.ZoneEspaceTravail.rechargerObjetsUI();
             this.revalidate();
@@ -856,7 +856,7 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         }
         else
         {
-            JOptionPane.showMessageDialog(this, "Le chargement a explosé!");
+            JOptionPane.showMessageDialog(this, "Chargement échoué.");
         }
     }//GEN-LAST:event_BoutonChargerActionPerformed
 

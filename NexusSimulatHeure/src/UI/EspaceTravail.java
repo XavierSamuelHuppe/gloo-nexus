@@ -412,7 +412,7 @@ public class EspaceTravail extends javax.swing.JPanel implements MouseListener, 
             }
             catch(Metier.Exceptions.CreationInvalideException ex)
             {
-                JOptionPane.showMessageDialog(this.obtenirApplication(), "Un tel segment ne peut-être créé : ", "Création invalide d'un segment.", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this.obtenirApplication(), "Un tel segment ne peut-être créé.", "Création invalide d'un segment.", JOptionPane.ERROR_MESSAGE);
             }
         }
         else if ((simulateur.estEnModeArret() && p.getPointMetier().estArret())
