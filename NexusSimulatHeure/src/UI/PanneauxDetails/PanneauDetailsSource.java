@@ -362,8 +362,8 @@ public class PanneauDetailsSource extends PanneauDetails implements java.util.Ob
         if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this.obtenirApplication(), "Désirez-vous vraiment retirer cette source?", "Retirer cette source?", JOptionPane.YES_NO_OPTION))
         {
             this.obtenirApplication().getSimulateur().retirerSource(sourceMetierLie);
-            this.obtenirApplication().viderPanneauDetails();
             this.obtenirApplication().repaint();
+            this.obtenirApplication().viderPanneauDetails();
         }  
     }//GEN-LAST:event_BoutonSupprimerActionPerformed
 

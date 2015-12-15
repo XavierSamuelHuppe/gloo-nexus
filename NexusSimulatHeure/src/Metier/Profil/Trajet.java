@@ -2,6 +2,7 @@ package Metier.Profil;
 
 import Metier.Carte.Segment;
 import Metier.Carte.Point;
+import Metier.Circuit.Circuit;
 import java.io.Serializable;
 import java.util.LinkedList;
 import javax.swing.text.Element;
@@ -37,6 +38,11 @@ public class Trajet implements Serializable {
     public boolean utilise(Segment s)
     {
         return elementsTrajet.stream().anyMatch((t) -> t.getCircuit().utilise(s, t.getPointMontee(), t.getPointDescente()));
+    }
+    
+    public boolean utilise(Circuit c)
+    {
+        return elementsTrajet.stream().anyMatch((t) -> t.getCircuit().equals(c));
     }
     
     public Point obtenirPointDepart()

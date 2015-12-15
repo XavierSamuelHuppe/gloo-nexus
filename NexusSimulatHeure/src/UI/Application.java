@@ -862,9 +862,9 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         {
             JOptionPane.showMessageDialog(this, "Chargement réussi.");
             this.simulateur.ajouterObserveurASimulation(this);
+            this.ZoneEspaceTravail.rechargerObjetsUI();
             SliderVitesse.setValue(this.simulateur.obtenirVitesse() / 100);
             afficherVitesseExecution();
-            this.ZoneEspaceTravail.rechargerObjetsUI();
             this.revalidate();
             this.repaint();
         }
@@ -880,24 +880,26 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
     }//GEN-LAST:event_BoutonSimulationInfinieActionPerformed
 
     private void BoutonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonAnnulerActionPerformed
-        if(simulateur.undoDePlebs())
+        if(simulateur.annuler())
         {
             this.simulateur.ajouterObserveurASimulation(this);
+            this.viderPanneauDetails();
+            this.ZoneEspaceTravail.rechargerObjetsUI();
             SliderVitesse.setValue(this.simulateur.obtenirVitesse() / 100);
             afficherVitesseExecution();
-            this.ZoneEspaceTravail.rechargerObjetsUI();
             this.revalidate();
             this.repaint();
         }
     }//GEN-LAST:event_BoutonAnnulerActionPerformed
 
     private void BoutonRepeterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonRepeterActionPerformed
-        if(simulateur.redoDePlebs())
+        if(simulateur.repeter())
         {
             this.simulateur.ajouterObserveurASimulation(this);
+            this.viderPanneauDetails();
+            this.ZoneEspaceTravail.rechargerObjetsUI();
             SliderVitesse.setValue(this.simulateur.obtenirVitesse() / 100);
             afficherVitesseExecution();
-            this.ZoneEspaceTravail.rechargerObjetsUI();
             this.revalidate();
             this.repaint();
         }

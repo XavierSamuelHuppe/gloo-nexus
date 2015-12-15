@@ -305,8 +305,8 @@ public class PanneauDetailsProfilPassager extends PanneauDetails implements java
         if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this.obtenirApplication(), "Désirez-vous vraiment retirer ce profil de passager?", "Retirer ce profil de passager?", JOptionPane.YES_NO_OPTION))
         {
             this.obtenirApplication().getSimulateur().retirerProfil(ProfilPassagerMetierLie);
-            this.obtenirApplication().viderPanneauDetails();
             this.obtenirApplication().repaint();
+            this.obtenirApplication().viderPanneauDetails();
         }
     }//GEN-LAST:event_BoutonSupprimerActionPerformed
 

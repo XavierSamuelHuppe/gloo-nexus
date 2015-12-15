@@ -337,18 +337,19 @@ public class Simulation extends Observable implements Serializable{
     
     public void retirerPointAvecReferences(Point p){
         List<Source> sourcesAEnlever = p.getSources();
-        List<ProfilPassager> profilsAEnlever = p.getProfilsPassagers();
-        for(ProfilPassager pp: profilsAEnlever){
-            if(pp.estSurPoint(p)){
-                profilsAEnlever.add(pp);
-            }
-        }
+
         List<Segment> segmentsAEnlever = carte.obtenirSegmentsEntrantEtSortant(p);
         
         List<Circuit> circuitsAEnlever = new ArrayList();
+        List<ProfilPassager> profilsAEnlever = new ArrayList();
         for(Circuit c: circuits){
             if(c.utilise(p)){
                 circuitsAEnlever.add(c);
+                for(ProfilPassager pp : profils){
+                    if(pp.estSurCircuit(c)){
+                        profilsAEnlever.add(pp);
+                    }
+                }
                 for(Source s: sources){
                     if(s.estSurCircuit(c)){
                         sourcesAEnlever.add(s);
@@ -356,8 +357,31 @@ public class Simulation extends Observable implements Serializable{
                 }
             }
         }
+        
+        for(Source s : sourcesAEnlever)
+        {
+            for(Point p2 : carte.getPoints())
+            {
+                if(p.equals(p2))
+                    continue;
+                if(p2.getSources().contains(s))
+                    p2.getSources().remove(s);
+            }
+        }
         sources.removeAll(sourcesAEnlever);
+        for(ProfilPassager pp : profilsAEnlever)
+        {
+            for(Point p2 : carte.getPoints())
+            {
+                if(p.equals(p2))
+                    continue;
+                if(p2.getProfilsPassagers().contains(pp))
+                    p2.getProfilsPassagers().remove(pp);
+            }
+            profils.remove(pp);
+        }
         profils.removeAll(profilsAEnlever);
+        
         carte.retirerSegments(segmentsAEnlever);
         circuits.removeAll(circuitsAEnlever);
         
@@ -368,18 +392,41 @@ public class Simulation extends Observable implements Serializable{
         List<Source> sourcesAEnlever = new ArrayList();
         
         List<Circuit> circuitsAEnlever = new ArrayList();
+        List<ProfilPassager> profilsAEnlever = new ArrayList();
         for(Circuit c: circuits){
             if(c.utilise(segment)){
                 circuitsAEnlever.add(c);
+                for(ProfilPassager pp : profils){
+                    if(pp.estSurCircuit(c)){
+                        profilsAEnlever.add(pp);
+                    }
+                }
                 for(Source s: sources){
                     if(s.estSurCircuit(c)){
                         sourcesAEnlever.add(s);
-
                     }
                 }
             }
         }
-        sources.removeAll(sourcesAEnlever);
+        
+        for(Source s : sourcesAEnlever)
+        {
+            for(Point p : carte.getPoints())
+            {
+                if(p.getSources().contains(s))
+                    p.getSources().remove(s);
+            }
+            sources.remove(s);
+        }
+        for(ProfilPassager pp : profilsAEnlever)
+        {
+            for(Point p : carte.getPoints())
+            {
+                if(p.getProfilsPassagers().contains(pp))
+                    p.getProfilsPassagers().remove(pp);
+            }
+            profils.remove(pp);
+        }
         circuits.removeAll(circuitsAEnlever);
         carte.retirerSegment(segment);
     }

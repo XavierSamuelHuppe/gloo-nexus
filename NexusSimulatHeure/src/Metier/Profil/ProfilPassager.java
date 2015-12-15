@@ -3,6 +3,7 @@ package Metier.Profil;
 
 import Metier.Carte.Point;
 import Metier.Carte.Segment;
+import Metier.Circuit.Circuit;
 import Metier.Circuit.Vehicule;
 import Metier.Distribution;
 import Metier.Simulation.Simulation;
@@ -34,6 +35,9 @@ public abstract class ProfilPassager implements Serializable{
     }
     public boolean estSurPoint(Point point){
         return point.equals(pointDepart);
+    }
+    public boolean estSurCircuit(Circuit circuit){
+        return trajet.utilise(circuit);
     }
     public Distribution getDistribution(){
         return distributionAUtiliser;

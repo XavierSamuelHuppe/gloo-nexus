@@ -378,4 +378,12 @@ public class ContexteEdition {
     public boolean estDansTrajetEnCreation(Segment segment){
         return trajetEnCreationEnSegments.stream().anyMatch((s) -> s.equals(segment));
     }
+    
+    public void viderElementsActifs()
+    {
+        viderCircuitActif();
+        viderPointActif();
+        viderSegmentActif();
+        viderTrajetActif();
+    }
 }

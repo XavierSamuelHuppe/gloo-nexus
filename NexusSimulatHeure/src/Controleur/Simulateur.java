@@ -27,6 +27,58 @@ public class Simulateur {
         contexte = new ContexteEdition(carte, simulation);
     }
     
+    
+    public boolean annuler(){
+        saveRedoDePlebs();//pour le redo de plebs
+        
+        try{
+            FileInputStream fileIn = new FileInputStream("undo.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            simulation = (Simulation) in.readObject();
+            carte = simulation.getCarte();
+            contexte.setCarte(carte);
+            contexte.setSimulation(simulation);
+            contexte.viderElementsActifs();
+            in.close();
+            fileIn.close();
+            System.out.println("undo");
+            return true;
+        }catch(IOException i){
+            i.printStackTrace();
+            System.out.println("undo pas marché");
+            return false;
+        }catch(ClassNotFoundException c){
+         c.printStackTrace();
+            System.out.println("undo pas marché");
+            return false;
+        }
+    }
+    public boolean repeter(){
+        saveUndoDePlebs();//pour le undo de plebs
+        
+        try{
+            FileInputStream fileIn = new FileInputStream("redo.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            simulation = (Simulation) in.readObject();
+            carte = simulation.getCarte();
+            contexte.setCarte(carte);
+            contexte.setSimulation(simulation);
+            contexte.viderElementsActifs();
+            in.close();
+            fileIn.close();
+            System.out.println("redo");
+            return true;
+        }catch(IOException i){
+            i.printStackTrace();
+            System.out.println("redo pas marché");
+            return false;
+        }catch(ClassNotFoundException c){
+            c.printStackTrace();
+            System.out.println("redo pas marché");
+            return false;
+        }
+    }
+    
     private void saveUndoDePlebs(){
         try{
            FileOutputStream fileOut = new FileOutputStream("undo.ser");
@@ -51,54 +103,6 @@ public class Simulateur {
         }catch(IOException i){
             System.out.println("save pas marché");
             i.printStackTrace();
-        }
-    }
-    public boolean undoDePlebs(){
-        saveRedoDePlebs();//pour le redo de plebs
-        
-        try{
-            FileInputStream fileIn = new FileInputStream("undo.ser");
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            simulation = (Simulation) in.readObject();
-            carte = simulation.getCarte();
-            contexte.setCarte(carte);
-            contexte.setSimulation(simulation);
-            in.close();
-            fileIn.close();
-            System.out.println("undo");
-            return true;
-        }catch(IOException i){
-            i.printStackTrace();
-            System.out.println("undo pas marché");
-            return false;
-        }catch(ClassNotFoundException c){
-         c.printStackTrace();
-            System.out.println("undo pas marché");
-            return false;
-        }
-    }
-    public boolean redoDePlebs(){
-        saveUndoDePlebs();//pour le undo de plebs
-        
-        try{
-            FileInputStream fileIn = new FileInputStream("redo.ser");
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            simulation = (Simulation) in.readObject();
-            carte = simulation.getCarte();
-            contexte.setCarte(carte);
-            contexte.setSimulation(simulation);
-            in.close();
-            fileIn.close();
-            System.out.println("redo");
-            return true;
-        }catch(IOException i){
-            i.printStackTrace();
-            System.out.println("redo pas marché");
-            return false;
-        }catch(ClassNotFoundException c){
-            c.printStackTrace();
-            System.out.println("redo pas marché");
-            return false;
         }
     }
     
@@ -357,7 +361,7 @@ public class Simulateur {
     }
     
     public void modfierVitesse(int pourcentage){
-        saveUndoDePlebs();
+        //saveUndoDePlebs();
         simulation.getParametres().setVitesse(pourcentage);
     }
     public int obtenirVitesse(){
@@ -373,30 +377,30 @@ public class Simulateur {
     }
     
     public void modifierDistributionTempsTransitSegment(double distributionMin, double distributionMode, double distributionMax){
-        saveUndoDePlebs();
+        //saveUndoDePlebs();
         Distribution distributionAUtiliser = new Distribution(distributionMin, distributionMode, distributionMax);
         simulation.getParametres().setDistributionTempsTransitSegment(distributionAUtiliser);
     }
     public void modifierDistributionTempsGenerationVehicule(double distributionMin, double distributionMode, double distributionMax){
-        saveUndoDePlebs();
+        //saveUndoDePlebs();
         Distribution distributionAUtiliser = new Distribution(distributionMin, distributionMode, distributionMax);
         simulation.getParametres().setDistributionTempsGenerationVehicule(distributionAUtiliser);
     }
     public void modifierDistributionTempsGenerationPassager(double distributionMin, double distributionMode, double distributionMax){
-        saveUndoDePlebs();
+        //saveUndoDePlebs();
         Distribution distributionAUtiliser = new Distribution(distributionMin, distributionMode, distributionMax);
         simulation.getParametres().setDistributionTempsGenerationPassager(distributionAUtiliser);
     }
     public void modifierNombreJourSimulation(int nombreJours){
-        saveUndoDePlebs();
+        //saveUndoDePlebs();
         simulation.getParametres().setNombreJourSimulation(nombreJours);
     }
     public void modifierHeureDebut(LocalTime heure){
-        saveUndoDePlebs();
+        //saveUndoDePlebs();
         simulation.getParametres().setHeureDebut(heure);
     }
     public void modifierHeureFin(LocalTime heure){
-        saveUndoDePlebs();
+        //saveUndoDePlebs();
         simulation.getParametres().setHeureFin(heure);
     }
         
