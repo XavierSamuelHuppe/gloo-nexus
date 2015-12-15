@@ -132,6 +132,9 @@
                   <Dimension value="[24, 24]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BoutonAnnulerActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="BoutonRepeter">
               <Properties>
@@ -154,6 +157,9 @@
                   <Dimension value="[24, 24]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BoutonRepeterActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="BoutonParametres">
               <Properties>

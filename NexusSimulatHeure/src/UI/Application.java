@@ -493,6 +493,11 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         BoutonAnnuler.setMaximumSize(new java.awt.Dimension(24, 24));
         BoutonAnnuler.setMinimumSize(new java.awt.Dimension(24, 24));
         BoutonAnnuler.setPreferredSize(new java.awt.Dimension(24, 24));
+        BoutonAnnuler.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BoutonAnnulerActionPerformed(evt);
+            }
+        });
         PanneauBarreOutilsBoutons.add(BoutonAnnuler);
 
         BoutonRepeter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/action-redo-2x.png"))); // NOI18N
@@ -503,6 +508,11 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         BoutonRepeter.setMaximumSize(new java.awt.Dimension(24, 24));
         BoutonRepeter.setMinimumSize(new java.awt.Dimension(24, 24));
         BoutonRepeter.setPreferredSize(new java.awt.Dimension(24, 24));
+        BoutonRepeter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BoutonRepeterActionPerformed(evt);
+            }
+        });
         PanneauBarreOutilsBoutons.add(BoutonRepeter);
 
         BoutonParametres.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Icones/wrench-2x.png"))); // NOI18N
@@ -868,6 +878,30 @@ public class Application extends javax.swing.JFrame implements KeyListener, Acti
         this.simulateur.executerSimulationInstantanement();
         afficherStatistiques();
     }//GEN-LAST:event_BoutonSimulationInfinieActionPerformed
+
+    private void BoutonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonAnnulerActionPerformed
+        if(simulateur.undoDePlebs())
+        {
+            this.simulateur.ajouterObserveurASimulation(this);
+            SliderVitesse.setValue(this.simulateur.obtenirVitesse() / 100);
+            afficherVitesseExecution();
+            this.ZoneEspaceTravail.rechargerObjetsUI();
+            this.revalidate();
+            this.repaint();
+        }
+    }//GEN-LAST:event_BoutonAnnulerActionPerformed
+
+    private void BoutonRepeterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoutonRepeterActionPerformed
+        if(simulateur.redoDePlebs())
+        {
+            this.simulateur.ajouterObserveurASimulation(this);
+            SliderVitesse.setValue(this.simulateur.obtenirVitesse() / 100);
+            afficherVitesseExecution();
+            this.ZoneEspaceTravail.rechargerObjetsUI();
+            this.revalidate();
+            this.repaint();
+        }
+    }//GEN-LAST:event_BoutonRepeterActionPerformed
     
     private void afficherStatistiques()
     {

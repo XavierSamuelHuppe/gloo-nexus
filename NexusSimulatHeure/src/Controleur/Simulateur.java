@@ -27,6 +27,81 @@ public class Simulateur {
         contexte = new ContexteEdition(carte, simulation);
     }
     
+    private void saveUndoDePlebs(){
+        try{
+           FileOutputStream fileOut = new FileOutputStream("undo.ser");
+           ObjectOutputStream out = new ObjectOutputStream(fileOut);
+           out.writeObject(simulation);
+           out.close();
+           fileOut.close();
+            System.out.println("save");
+        }catch(IOException i){
+            System.out.println("save pas marché");
+            i.printStackTrace();
+        }
+    }
+    private void saveRedoDePlebs(){
+        try{
+           FileOutputStream fileOut = new FileOutputStream("redo.ser");
+           ObjectOutputStream out = new ObjectOutputStream(fileOut);
+           out.writeObject(simulation);
+           out.close();
+           fileOut.close();
+            System.out.println("save");
+        }catch(IOException i){
+            System.out.println("save pas marché");
+            i.printStackTrace();
+        }
+    }
+    public boolean undoDePlebs(){
+        saveRedoDePlebs();//pour le redo de plebs
+        
+        try{
+            FileInputStream fileIn = new FileInputStream("undo.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            simulation = (Simulation) in.readObject();
+            carte = simulation.getCarte();
+            contexte.setCarte(carte);
+            contexte.setSimulation(simulation);
+            in.close();
+            fileIn.close();
+            System.out.println("undo");
+            return true;
+        }catch(IOException i){
+            i.printStackTrace();
+            System.out.println("undo pas marché");
+            return false;
+        }catch(ClassNotFoundException c){
+         c.printStackTrace();
+            System.out.println("undo pas marché");
+            return false;
+        }
+    }
+    public boolean redoDePlebs(){
+        saveUndoDePlebs();//pour le undo de plebs
+        
+        try{
+            FileInputStream fileIn = new FileInputStream("redo.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            simulation = (Simulation) in.readObject();
+            carte = simulation.getCarte();
+            contexte.setCarte(carte);
+            contexte.setSimulation(simulation);
+            in.close();
+            fileIn.close();
+            System.out.println("redo");
+            return true;
+        }catch(IOException i){
+            i.printStackTrace();
+            System.out.println("redo pas marché");
+            return false;
+        }catch(ClassNotFoundException c){
+            c.printStackTrace();
+            System.out.println("redo pas marché");
+            return false;
+        }
+    }
+    
     public boolean enregistrer(){
         try{
            FileOutputStream fileOut = new FileOutputStream("sauvegarde.ser");
@@ -62,7 +137,7 @@ public class Simulateur {
          System.out.println("Classe pas trouvée");
          c.printStackTrace();
          return false;
-      }
+        }
     }
     
     public List<Point> obtenirToutLesPoints(){
@@ -147,46 +222,55 @@ public class Simulateur {
     }
     
     public Point ajouterPoint(double x, double y, boolean estArret){
+        saveUndoDePlebs();
         PointFactory factory = new PointFactory();
         Point nouveauPoint = factory.nouveauPoint(estArret).enPosition(x,y).construire();
         carte.ajouterPoint(nouveauPoint);
         return nouveauPoint;
     }
     public Point ajouterPoint(double x, double y, boolean estArret, String nom){
+        saveUndoDePlebs();
         PointFactory factory = new PointFactory();
         Point nouveauPoint = factory.nouveauPoint(estArret).avecUnNom(nom).enPosition(x,y).construire();
         carte.ajouterPoint(nouveauPoint);
         return nouveauPoint;
     }
     public Point ajouterPoint(double x, double y, boolean estArret, String nom, ConteneurPassagers passagers){
+        saveUndoDePlebs();
         PointFactory factory = new PointFactory();
         Point nouveauPoint = factory.nouveauPointAvecCapacite(passagers, estArret).avecUnNom(nom).enPosition(x,y).construire();
         carte.ajouterPoint(nouveauPoint);
         return nouveauPoint;
     }
     public void retirerPoint(Point point){
+        saveUndoDePlebs();
         simulation.retirerPointAvecReferences(point);
     }
     public void modifierPoint(Point pointCible, double x, double y, String nouveauNom){
+        saveUndoDePlebs();
         Position nouvellePosition = new Position(x, y);
         carte.modifierPoint(pointCible, nouvellePosition, nouveauNom);
     }
     
     private Segment ajouterSegment(Point depart, Point arrivee){
+        saveUndoDePlebs();
         Segment segment = new Segment(depart, arrivee, simulation.getParametres().getDistributionTempsTransitSegmentDefaut());
         carte.ajouterSegment(segment);
         return segment;
     }
     private Segment ajouterSegment(Point depart, Point arrivee, Distribution tempsTransit){
+        saveUndoDePlebs();
         Segment segment = new Segment(depart, arrivee, tempsTransit);
         carte.ajouterSegment(segment);
         return segment;
     }
     public void retirerSegment(Segment segment){
+        saveUndoDePlebs();
         simulation.retirerSegmentAvecReferences(segment);
         contexte.viderSegmentActif();
     }
     public void modifierSegment(Segment segmentCible, double min, double mode, double max){
+        saveUndoDePlebs();
         Distribution nouvelleDistribution = new Distribution(min, mode, max);
         carte.modifierSegment(segmentCible, nouvelleDistribution);
     }
@@ -205,6 +289,7 @@ public class Simulateur {
     }
 
     public void ajouterSource(LocalTime heureFin, Point pointDepart, LocalTime heureDebut, Circuit circuit, double distributionMin, double distributionMode, double distributionMax){
+        saveUndoDePlebs();
         SourceBuilder builder = new SourceBuilder();
         ConteneurPassagersIllimite conteneurPassagersIllimiteParDefaut = simulation.getParametres().getConteneurPassagersIllimiteSource();
         Distribution distributionAUtiliser = new Distribution(distributionMin, distributionMode, distributionMax);
@@ -215,6 +300,7 @@ public class Simulateur {
         contexte.viderCircuitActif();
     }
     public void ajouterSource(int nombreMax, Point pointDepart, LocalTime heureDebut, Circuit circuit, double distributionMin, double distributionMode, double distributionMax){
+        saveUndoDePlebs();
         SourceBuilder builder = new SourceBuilder();
         Distribution distributionAUtiliser = new Distribution(distributionMin, distributionMode, distributionMax);
         ConteneurPassagersIllimite conteneurPassagersIllimiteParDefaut = simulation.getParametres().getConteneurPassagersIllimiteSource();
@@ -225,16 +311,20 @@ public class Simulateur {
         contexte.viderCircuitActif();
     }  
     public void retirerSource(Source source){
+        saveUndoDePlebs();
         simulation.retirerSource(source);
     }
     public void modifierSource(Source source, LocalTime heureFin, LocalTime heureDebut, Circuit circuit, double distributionMin, double distributionMode, double distributionMax){
+        saveUndoDePlebs();
         simulation.modifierSource(source, heureFin, heureDebut, circuit, distributionMin, distributionMode, distributionMax);
     }
     public void modifierSource(Source source, int nombreMax, LocalTime heureDebut, Circuit circuit, double distributionMin, double distributionMode, double distributionMax){
+        saveUndoDePlebs();
         simulation.modifierSource(source, nombreMax, heureDebut, circuit, distributionMin, distributionMode, distributionMax);
     }  
     
     public void ajouterProfil(LocalTime heureFin, LocalTime heureDebut, double distributionMin, double distributionMode, double distributionMax){
+        saveUndoDePlebs();
         ProfilBuilder builder = new ProfilBuilder();
         Distribution distributionAUtiliser = new Distribution(distributionMin, distributionMode, distributionMax);
         Trajet trajet = this.sauvegarderTrajetPourProfilPassager();
@@ -242,6 +332,7 @@ public class Simulateur {
         simulation.ajouterProfil(nouveauPassager);
     }
     public void ajouterProfil(int nombreMax, LocalTime heureDebut, double distributionMin, double distributionMode, double distributionMax){
+        saveUndoDePlebs();
         ProfilBuilder builder = new ProfilBuilder();
         Distribution distributionAUtiliser = new Distribution(distributionMin, distributionMode, distributionMax);
         Trajet trajet = this.sauvegarderTrajetPourProfilPassager();
@@ -249,12 +340,15 @@ public class Simulateur {
         simulation.ajouterProfil(nouveauPassager);
     }
     public void retirerProfil(ProfilPassager profil){
+        saveUndoDePlebs();
         simulation.retirerProfil(profil);
     }
     public void modifierProfil(ProfilPassager profil, LocalTime heureFin, LocalTime heureDebut, double distributionMin, double distributionMode, double distributionMax){
+        saveUndoDePlebs();
         simulation.modifierProfil(profil, heureFin, heureDebut, distributionMin, distributionMode, distributionMax);
     }
     public void modifierProfil(ProfilPassager profil, int nombreMax, LocalTime heureDebut, double distributionMin, double distributionMode, double distributionMax){
+        saveUndoDePlebs();
         simulation.modifierProfil(profil, nombreMax, heureDebut, distributionMin, distributionMode, distributionMax);
     }
     
@@ -263,6 +357,7 @@ public class Simulateur {
     }
     
     public void modfierVitesse(int pourcentage){
+        saveUndoDePlebs();
         simulation.getParametres().setVitesse(pourcentage);
     }
     public int obtenirVitesse(){
@@ -278,24 +373,30 @@ public class Simulateur {
     }
     
     public void modifierDistributionTempsTransitSegment(double distributionMin, double distributionMode, double distributionMax){
+        saveUndoDePlebs();
         Distribution distributionAUtiliser = new Distribution(distributionMin, distributionMode, distributionMax);
         simulation.getParametres().setDistributionTempsTransitSegment(distributionAUtiliser);
     }
     public void modifierDistributionTempsGenerationVehicule(double distributionMin, double distributionMode, double distributionMax){
+        saveUndoDePlebs();
         Distribution distributionAUtiliser = new Distribution(distributionMin, distributionMode, distributionMax);
         simulation.getParametres().setDistributionTempsGenerationVehicule(distributionAUtiliser);
     }
     public void modifierDistributionTempsGenerationPassager(double distributionMin, double distributionMode, double distributionMax){
+        saveUndoDePlebs();
         Distribution distributionAUtiliser = new Distribution(distributionMin, distributionMode, distributionMax);
         simulation.getParametres().setDistributionTempsGenerationPassager(distributionAUtiliser);
     }
     public void modifierNombreJourSimulation(int nombreJours){
+        saveUndoDePlebs();
         simulation.getParametres().setNombreJourSimulation(nombreJours);
     }
     public void modifierHeureDebut(LocalTime heure){
+        saveUndoDePlebs();
         simulation.getParametres().setHeureDebut(heure);
     }
     public void modifierHeureFin(LocalTime heure){
+        saveUndoDePlebs();
         simulation.getParametres().setHeureFin(heure);
     }
         
@@ -373,6 +474,7 @@ public class Simulateur {
         contexte.commencerContinuerCreationCircuit(p);
     }
     public void sauvergarderCircuit(String nom){
+        saveUndoDePlebs();
         if(contexte.circuitEstEnCoursDeCreation()){
             Circuit nouveauCircuit = contexte.obtenirNouveauCircuit(nom);
             simulation.ajouterCircuit(nouveauCircuit);
