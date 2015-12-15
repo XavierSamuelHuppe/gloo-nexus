@@ -497,13 +497,13 @@ public class Simulation extends Observable implements Serializable{
         
         tout = genererTout();
 
-        debugTout(tout);
+        //debugTout(tout);
 
         Map<Passager, LocalTime> passagers = genererTousPassagers();
-        debugPassagers(passagers);
+        //debugPassagers(passagers);
         for(Passager passagerCourant : passagers.keySet())
         {
-            LocalTime heureCourante = passagers.get(passagerCourant);
+            LocalTime heureCouranteInstant = passagers.get(passagerCourant);
 
             int etape = 0;
             Trajet trajetCourant = passagerCourant.getTrajet();
@@ -517,12 +517,13 @@ public class Simulation extends Observable implements Serializable{
                     Map<Circuit, SortedSet<LocalTime>> circuitsParPoint = tout.get(etapeCourante.getPointMontee());
                     if(circuitsParPoint.containsKey(etapeCourante.getCircuit()))
                     {
-                        LocalTime heurePassage = obtenirProchaineHeurePassage(heureCourante, circuitsParPoint.get(etapeCourante.getCircuit()));
+                        LocalTime heurePassage = obtenirProchaineHeurePassage(heureCouranteInstant, circuitsParPoint.get(etapeCourante.getCircuit()));
+                        
                         if(heurePassage != null)
                         {
-                            heureCourante = heurePassage;
+                            heureCouranteInstant = heurePassage;
 
-                            heureCourante = heureCourante.plusSeconds((long)etapeCourante.getCircuit().obtenirTempsTransitTotalSousCircuitEnSecondes(etapeCourante.getPointMontee(), etapeCourante.getPointDescente()));
+                            heureCouranteInstant = heureCouranteInstant.plusSeconds((long)etapeCourante.getCircuit().obtenirTempsTransitTotalSousCircuitEnSecondes(etapeCourante.getPointMontee(), etapeCourante.getPointDescente()));
 
                             etape += 1;
                             continue;
@@ -535,28 +536,53 @@ public class Simulation extends Observable implements Serializable{
 
             if(passagerRenduADestination)
             {
-                passagerCourant.comptabiliserPassagerDansStatistiquesProfilPassager(heureCourante);
+                passagerCourant.comptabiliserPassagerDansStatistiquesProfilPassager(heureCouranteInstant);
             }
         }
     }
     
     private LocalTime obtenirProchaineHeurePassage(LocalTime heureReference, SortedSet<LocalTime> heures)
     {
+        
+        LocalTime heurePassage = null;
         //Derp.
         LinkedList listeHeures = new LinkedList(heures);
         int i = 0;
         while(i < listeHeures.size() - 1)
         {
-            if(listeHeures.get(i) == heureReference)
-                return (LocalTime)listeHeures.get(i);
+            if(listeHeures.get(i).equals(heureReference))
+                heurePassage = (LocalTime)listeHeures.get(i);
             if(heureReference.isAfter((LocalTime)listeHeures.get(i)) && heureReference.isBefore((LocalTime)listeHeures.get(i+1)))
-                return (LocalTime)listeHeures.get(i+1);
+                heurePassage = (LocalTime)listeHeures.get(i+1);
             i++;
         }
         
-        if (((LocalTime)listeHeures.getLast()) == heureReference || ((LocalTime)listeHeures.getLast()).isAfter(heureReference))
-            return (LocalTime)listeHeures.getLast();
+        System.out.println("!" + heureReference.toString());
+        if (((LocalTime)listeHeures.getLast()).equals(heureReference))
+            heurePassage = (LocalTime)listeHeures.getLast();
         
+        
+        //Valider que l'heure est bien dans le range de la journée de simulation.
+        if(heurePassage != null)
+        {
+            //Simulation avant minuit.
+            if(parametres.getHeureDebut().isBefore(parametres.getHeureFin()))
+            {
+                if(heurePassage.isBefore(parametres.getHeureFin()) || heurePassage.equals(parametres.getHeureFin()))
+                {
+                    return heurePassage;
+                }
+            }
+            else
+            {
+                if(!(heureReference.isBefore(parametres.getHeureFin()) || heureReference.equals(parametres.getHeureFin())
+                        && heurePassage.isAfter(parametres.getHeureDebut())))
+                {
+                    return heurePassage;
+                }
+            }
+        }
+
         return null;
     }
     
